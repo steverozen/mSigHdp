@@ -59,7 +59,7 @@ Runhdp3 <-
                           sessionInfo(),
                           file = file.path(out.dir, "call.and.session.info.txt"))
 
-    retval <- RunhdpInternal3(
+    retval <- mSigHdp::RunhdpInternal3(
       input.catalog   = spectra,
       CPU.cores       = CPU.cores,
       seedNumber      = seedNumber,
