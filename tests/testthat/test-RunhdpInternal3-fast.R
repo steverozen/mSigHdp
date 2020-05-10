@@ -2,16 +2,9 @@
 test_that("RunhdpInternal3-fast", {
 
   input.catalog <-
-    ICAMS::ReadCatalog(
-      system.file(
-        "tests/SBS96.ground.truth/ground.truth.syn.catalog.csv",
-        package = "SynSigRun",
-        mustWork = TRUE))
+    ICAMS::ReadCatalog("SBS96.ground.truth/ground.truth.syn.catalog.csv")
 
-  load(
-    system.file("tests/RunhdpInternal.testdata/test.RunhdpInternal.2.Rdata",
-                package = "SynSigRun",
-                mustWork = TRUE))
+  load("RunhdpInternal.testdata/test.RunhdpInternal.2.Rdata")
 
   retvalx <- RunhdpInternal3(
     input.catalog = input.catalog[1:10 , 1:15],

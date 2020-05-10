@@ -1,3 +1,7 @@
+# Test status
+# devtools::test(filter = "Runhdp3-fast96")
+
+
 #' Run hdp extraction and attribution on a spectra catalog file
 #'
 #' @inheritParams RunhdpInternal3

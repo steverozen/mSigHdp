@@ -3,22 +3,13 @@ test_that("Runhdp3-fast96", {
   skip_on_cran() # Uses mulitple cores
   skip_on_travis() # Uses multiple cores
 
-  input.catalog.file <-
-    system.file(
-      "tests/SBS96.ground.truth/ground.truth.syn.catalog.csv",
-      package = "SynSigRun",
-      mustWork = TRUE)
+  input.catalog.file <- "SBS96.ground.truth/ground.truth.syn.catalog.csv"
 
   regression <- new.env()
-  load(
-    system.file("tests/RunhdpInternal.testdata/RunhdpInternal-fast96-2-cores.Rdata",
-                package = "SynSigRun",
-                mustWork = TRUE),
+  load("RunhdpInternal.testdata/RunhdpInternal-fast96-2-cores.Rdata",
     envir = regression)
 
-  out.dir.root <- system.file("tests/Runhdp3-fast96-2-cores",
-                              package = "SynSigRun",
-                              mustWork = TRUE)
+  out.dir.root <- "Runhdp3-fast96-2-cores"
 
   retvalx <- Runhdp3(
     input.catalog.file = input.catalog.file,
