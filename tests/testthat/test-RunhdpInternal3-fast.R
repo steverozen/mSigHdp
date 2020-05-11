@@ -1,12 +1,14 @@
 
-test_that("RunhdpInternal3-fast", {
+test_that("RunhdpInternal4-fast", {
 
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/ground.truth.syn.catalog.csv")
 
-  load("RunhdpInternal.testdata/test.RunhdpInternal.2.Rdata")
+  reg <- new.env()
+  load("RunhdpInternal.testdata/test.RunhdpInternal.2.Rdata",
+       envir = reg)
 
-  retvalx <- RunhdpInternal3(
+  retvalx <- RunhdpInternal4(
     input.catalog = input.catalog[1:10 , 1:15],
     CPU.cores     = 1,
     seedNumber    = 44,
@@ -17,6 +19,7 @@ test_that("RunhdpInternal3-fast", {
     num.posterior = 1
   )
 
-  testthat::expect_equal(retvalx$signature, test.RunhdpInternal.2$signature)
-  testthat::expect_equal(retvalx$exposure, test.RunhdpInternal.2$exposure)
+  save(retvalx, file = "RunhdpInternal.testdata/test.RunhdpInternal.2.Rdata")
+
+  expect_equal(retvalx, reg$retvalx)
 })
