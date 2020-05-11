@@ -92,7 +92,7 @@ RunAndEvalHdp5 <- function(
 
   # Writes bi-directional matching and cos.sim calculation
   write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
-  write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0csv"))
+  write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
 
   #==== Duplicated code, analyse without the 0 signature
   sigAnalysis <- SynSigEval::MatchSigsAndRelabel(
