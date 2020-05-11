@@ -3,3 +3,5 @@
 export(RunAndEvalHdp4)
 export(Runhdp4)
 export(RunhdpInternal4)
+export(RunhdpInternal5)
+export(xmake.s)

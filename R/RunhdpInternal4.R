@@ -1,61 +1,6 @@
 #' Run hdp extraction and attribution on a spectra catalog file
 #'
-#' @param input.catalog A catalog of spectra catalog
-#' in \code{\link[ICAMS]{ICAMS}} format.
-#'
-#' @param CPU.cores Number of CPUs to use in running
-#'    \code{\link[hdpx]{hdp_posterior}}; this is used to parallize
-#'    running the posterior sampling chains, so there is no
-#'    point in making this larger than \code{num.posterior}.
-#'
-#' @param seedNumber An integer that is used to generate separate
-#'   random seeds for each call to \code{\link[hdpx]{dp_activate}},
-#'   and each call of \code{\link[hdpx]{hdp_posterior}}; please see the code
-#'   on how this is done. But repeated calls with same value of
-#'   \code{seedNumber} and other inputs should produce the same results.
-#'
-#' @param K.guess Suggested initial value of the number of
-#' signatures, passed to \code{\link[hdpx]{dp_activate}} as
-#' \code{initcc}.
-#'
-#' @param multi.types A logical scalar or
-#' a character vector.
-#' If \code{FALSE}, hdp will regard all input spectra as one tumor type.
-#'
-#' If \code{TRUE}, hdp will infer tumor types based on the string before "::" in their names.
-#' e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
-#'
-#' If \code{multi.types} is a character vector, then it should be of the same length
-#' as the number of columns in \code{input.catalog}, and each value is the
-#' name of the tumor type of the corresponding column in \code{input.catalog},
-#' e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.
-#'
-#' @param verbose If \code{TRUE} then \code{message} progress information.
-#'
-#' @param num.posterior Number of posterior sampling chains; can set to
-#'   1 for testing.
-#'
-#' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{burnin}.
-#'
-#' @param post.n Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{n}.
-#'
-#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{space}.
-#'
-#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{cpiter}.
-#'
-#' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{verbosity}.
-#'
-#' @param cos.merge The cosine similarity threshhold for merging raw clusters
-#'      from the posterior sampling chains into "components" i.e. signatures;
-#'      passed to \code{\link[hdpx]{hdp_extract_components}}.
-#'
-#' @param min.sample A "component" (i.e. signature) must have at least
-#'      this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.
+#' @inheritParams RunhdpInternal5
 #'
 #' @return A list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
@@ -93,13 +38,13 @@ RunhdpInternal4 <-
 ) { # 14 arguments
 
     if (!exists("stir.closure", envir = .GlobalEnv)) {
-      assign("stir.closure", hdpx::make.stirling(), envir = .GlobalEnv)
+      assign("stir.closure", xmake.s(), envir = .GlobalEnv)
     }
 
     # hdp gets confused if the class of its input is not matrix.
-    convSpectra <- input.catalog
-    class(convSpectra) <- "matrix"
-    convSpectra <- t(convSpectra)
+    convSpectra <- t(input.catalog)
+    # class(convSpectra) <- "matrix"
+    # convSpectra <- t(convSpectra)
 
     number.channels <- nrow(input.catalog)
     number.samples  <- ncol(input.catalog)
