@@ -1,4 +1,5 @@
-debug(mSigHdp::RunhdpInternal5)
+
+test_that("RunhdpInternal5-fast", {
 
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/ground.truth.syn.catalog.csv")
@@ -18,5 +19,9 @@ debug(mSigHdp::RunhdpInternal5)
     num.posterior = 1
   )
 
+  expect_equal(retvalx$signature, reg$retvalx$signature)
 
-  expect_equal(retvalx, reg$retvalx)
+  expect_equal(retvalx$exposure, reg$retvalx$exposure)
+
+
+})

@@ -1,3 +1,5 @@
 Runhdp3-fast96-2-cores
 RunhdpInternal.testdata
-SBS96.ground.truth/ground*
+SBS96.ground.truth/ground
+RunAndEvalHdp5-fast96-2-cores
+RunAndEvalHdp5-fast96-2-cores

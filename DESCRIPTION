@@ -1,15 +1,15 @@
 Package: mSigHdp
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Mutational signature extraction using hdp
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "First",
            family = "Last",
            role = c("aut", "cre"),
            email = "first.last@example.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+Description: Calls hdp for mutational signature analysis, with performance
+             issues in hdp:::stirling() corrected.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

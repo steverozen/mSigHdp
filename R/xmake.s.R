@@ -42,6 +42,7 @@ xmake.s <- function() {
     retval <- allss[[nn]]
     retval <- c(retval, rep(0, nn - length(retval)))
     stopifnot(length(retval) == nn)
+    attr(retval, "closure") <- TRUE
     return(retval)
   }
 

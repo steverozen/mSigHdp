@@ -1,0 +1,51 @@
+[1] "Mon May 11 22:25:26 2020"
+
+
+Runhdp5(input.catalog.file = input.catalog.file, out.dir = out.dir, 
+    CPU.cores = CPU.cores, seedNumber = seedNumber, K.guess = K.guess, 
+    multi.types = multi.types, test.only = test.only, overwrite = overwrite, 
+    verbose = verbose, num.posterior = num.posterior, post.burnin = post.burnin, 
+    post.n = post.n, post.space = post.space, post.cpiter = post.cpiter, 
+    post.verbosity = post.verbosity, cos.merge = cos.merge, min.sample = min.sample)
+
+
+R version 4.0.0 (2020-04-24)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS:   /opt/R/R-4.0.0/lib64/R/lib/libRblas.so
+LAPACK: /opt/R/R-4.0.0/lib64/R/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=en_US.UTF-8        LC_COLLATE=C              
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8    LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C             LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mSigHdp_0.0.0.9000 testthat_2.3.2    
+
+loaded via a namespace (and not attached):
+ [1] Biobase_2.48.0              pkgload_1.0.2               ICAMS_2.1.2                 assertthat_0.2.1           
+ [5] stats4_4.0.0                BSgenome_1.56.0             GenomeInfoDbData_1.2.3      Rsamtools_2.4.0            
+ [9] remotes_2.1.1               sessioninfo_1.1.1           pillar_1.4.4                backports_1.1.6            
+[13] lattice_0.20-41             glue_1.4.0                  digest_0.6.25               GenomicRanges_1.40.0       
+[17] XVector_0.28.0              Matrix_1.2-18               lsa_0.73.2                  XML_3.99-0.3               
+[21] pkgconfig_2.0.3             devtools_2.3.0              zlibbioc_1.34.0             flexclust_1.4-0            
+[25] purrr_0.3.4                 SynSigGen_1.0.2.9004        processx_3.4.2              BiocParallel_1.22.0        
+[29] tibble_3.0.1                IRanges_2.22.1              usethis_1.6.1               ellipsis_0.3.0             
+[33] withr_2.2.0                 SummarizedExperiment_1.18.1 BiocGenerics_0.34.0         cli_2.0.2                  
+[37] magrittr_1.5                crayon_1.3.4                memoise_1.1.0               ps_1.3.3                   
+[41] fs_1.4.1                    fansi_0.4.1                 SnowballC_0.7.0             class_7.3-17               
+[45] pkgbuild_1.0.8              tools_4.0.0                 data.table_1.12.8           prettyunits_1.1.1          
+[49] lifecycle_0.2.0             matrixStats_0.56.0          S4Vectors_0.26.0            cluster_2.1.0              
+[53] zip_2.0.4                   DelayedArray_0.14.0         hdpx_0.1.5.0010             callr_3.4.3                
+[57] Biostrings_2.56.0           compiler_4.0.0              GenomeInfoDb_1.24.0         rlang_0.4.6                
+[61] grid_4.0.0                  RCurl_1.98-1.2              rstudioapi_0.11             bitops_1.0-6               
+[65] hdp_0.1.5                   R6_2.4.1                    GenomicAlignments_1.24.0    dplyr_0.8.5                
+[69] rtracklayer_1.48.0          SynSigEval_0.0.4.9001       clue_0.3-57                 rprojroot_1.3-2            
+[73] desc_1.2.0                  modeltools_0.2-23           stringi_1.4.6               parallel_4.0.0             
+[77] Rcpp_1.0.4.6                vctrs_0.2.4                 tidyselect_1.0.0            coda_0.19-3                
