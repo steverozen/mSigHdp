@@ -2,7 +2,7 @@
 % Please edit documentation in R/Runhdp5.R
 \name{Runhdp5}
 \alias{Runhdp5}
-\title{Run hdp extraction and attribution on a spectra catalog file}
+\title{Run hdp extraction and attribution on a spectra catalog file using the original hdp package.}
 \usage{
 Runhdp5(
   input.catalog.file,
@@ -65,6 +65,9 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC"
 \item{test.only}{If > 0, only analyze the first \code{test.only} columns
 in \code{input.catalog.file}.}
 
+\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
+raise an error.}
+
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
 \item{num.posterior}{Number of posterior sampling chains; can set to
@@ -93,10 +96,10 @@ passed to \code{\link[hdp]{hdp_extract_components}}.}
 this many samples; passed to \code{\link[hdp]{hdp_extract_components}}.}
 }
 \value{
-The same list as returned by \code{\link{RunhdpInternal}}.
+The same list as returned by \code{\link{RunhdpInternal5}}.
 }
 \description{
-Run hdp extraction and attribution on a spectra catalog file
+Run hdp extraction and attribution on a spectra catalog file using the original hdp package.
 }
 \details{
 Creates several files in \code{out.dir}. These are:

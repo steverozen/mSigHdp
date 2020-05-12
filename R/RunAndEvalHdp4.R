@@ -90,10 +90,10 @@ RunAndEvalHdp4 <- function(
                           file.path(out.dir, "extracted.sigs.pdf"))
 
   # Writes bi-directional matching and cos.sim calculation
-  write.csv(sigAnalysis$match1, file = file.path(out.dir, "match1.csv"))
-  write.csv(sigAnalysis$match2, file = file.path(out.dir, "match2.csv"))
-  # Dumps other outputs into "other.results.txt"
-  capture.output(
+  utils::write.csv(sigAnalysis$match1, file = file.path(out.dir, "match1.csv"))
+  utils::write.csv(sigAnalysis$match2, file = file.path(out.dir, "match2.csv"))
+
+  utils::capture.output(
     cat("Call\n"),
     match.call(),
     cat("\nAverage cosine similarity\n"),

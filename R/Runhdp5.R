@@ -1,8 +1,4 @@
-# Test status
-# devtools::test(filter = "Runhdp3-fast96")
-
-
-#' Run hdp extraction and attribution on a spectra catalog file
+#' Run hdp extraction and attribution on a spectra catalog file using the original hdp package.
 #'
 #' @inheritParams RunhdpInternal5
 #'
@@ -18,7 +14,10 @@
 #' @param test.only If > 0, only analyze the first \code{test.only} columns
 #'  in \code{input.catalog.file}.
 #'
-#' @return The same list as returned by \code{\link{RunhdpInternal}}.
+#' @param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
+#'  raise an error.
+#'
+#' @return The same list as returned by \code{\link{RunhdpInternal5}}.
 #'
 #' @details Creates several files in \code{out.dir}. These are:
 #'  TODO(Steve): list the files
@@ -60,7 +59,7 @@ Runhdp5 <-
 
     utils::capture.output(date(), cat("\n\n"),
                           match.call(), cat("\n\n"),
-                          sessionInfo(),
+                          utils::sessionInfo(),
                           file = file.path(out.dir, "call.and.session.info.txt"))
 
     retval <- mSigHdp::RunhdpInternal5(

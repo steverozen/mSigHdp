@@ -1,24 +1,9 @@
-# Test status
-# devtools::test(filter = "Runhdp3-fast96")
 
-
-#' Run hdp extraction and attribution on a spectra catalog file
+#' Run hdp extraction and attribution on a spectra catalog file using hdpx
 #'
-#' @inheritParams RunhdpInternal4
+#' @inheritParams Runhdp5
 #'
-#' @param input.catalog.file File containing a spectra catalog
-#' in \code{\link[ICAMS]{ICAMS}} format.
-#'
-#' @param out.dir Directory that will be created for the output;
-#'   if \code{overwrite} is \code{FALSE} then
-#'   abort if \code{out.dir} already exits.
-#'
-#' @param remove.noise Deprecated; ignored
-#'
-#' @param test.only If > 0, only analyze the first \code{test.only} columns
-#'  in \code{input.catalog.file}.
-#'
-#' @return The same list as returned by \code{\link{RunhdpInternal}}.
+#' @return The same list as returned by \code{\link{RunhdpInternal4}}.
 #'
 #' @details Creates several files in \code{out.dir}. These are:
 #'  TODO(Steve): list the files
@@ -60,7 +45,7 @@ Runhdp4 <-
 
     utils::capture.output(date(), cat("\n\n"),
                           match.call(), cat("\n\n"),
-                          sessionInfo(),
+                          utils::sessionInfo(),
                           file = file.path(out.dir, "call.and.session.info.txt"))
 
     retval <- mSigHdp::RunhdpInternal4(

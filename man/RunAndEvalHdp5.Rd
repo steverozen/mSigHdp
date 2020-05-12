@@ -76,6 +76,9 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC"
 \item{test.only}{If > 0, only analyze the first \code{test.only} columns
 in \code{input.catalog.file}.}
 
+\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
+raise an error.}
+
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
 \item{num.posterior}{Number of posterior sampling chains; can set to

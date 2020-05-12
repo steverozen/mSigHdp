@@ -23,7 +23,7 @@ test_that("Runhdp4-fast96", {
     post.burnin   = 50, # Super low for fast testing
     post.space    = 5,  # Low for fast testing
     post.cpiter   = 1,  # Low for fast testing
-    out.dir       = file.path(out.dir.root, "test_Runhdp2-fast96_out_dir"),
+    out.dir       = "test_Runhdp4-fast96_out_dir",
     overwrite     = TRUE
   )
 

@@ -1,18 +1,29 @@
 Package: mSigHdp
 Title: Mutational signature extraction using hdp
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Steven",
+           family = "Rozen",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "steverozen@gmail.com",
+           comment = c(ORCID = "0000-0002-4288-0056"))
 Description: Calls hdp for mutational signature analysis, with performance
              issues in hdp:::stirling() corrected.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
+Depends: R (>= 3.5)
 RoxygenNote: 7.1.0
+Remotes: github::nicolaroberts/hdp,
+    github::steverozen/hdpx,
+    github::steverozen/SynSigGen,
+    github::WuyangFF95/SynSigEval
 Suggests: 
-    testthat
+    testthat,
+    ICAMS,
+    hdp,
+    hdpx,
+    SynSigEval,
+    SynSigGen,
+    utils

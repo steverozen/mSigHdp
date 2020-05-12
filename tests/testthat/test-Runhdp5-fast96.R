@@ -9,8 +9,6 @@ test_that("Runhdp5-fast96", {
   load("RunhdpInternal.testdata/RunhdpInternal-fast96-2-cores.Rdata",
     envir = regression)
 
-  out.dir.root <- "Runhdp3-fast96-2-cores"
-
   retvalx <- Runhdp5(
     input.catalog.file = input.catalog.file,
     test.only     = 10, # Only use columns 1:10 of input.catalog
@@ -23,7 +21,7 @@ test_that("Runhdp5-fast96", {
     post.burnin   = 50, # Super low for fast testing
     post.space    = 5,  # Low for fast testing
     post.cpiter   = 1,  # Low for fast testing
-    out.dir       = file.path(out.dir.root, "test_Runhdp2-fast96_out_dir"),
+    out.dir       = "test_Runhdp5-fast96_out_dir",
     overwrite     = TRUE
   )
 

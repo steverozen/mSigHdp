@@ -13,8 +13,6 @@ test_that("RunAndEvalHdp4-fast96", {
   load("RunhdpInternal.testdata/RunhdpInternal-fast96-2-cores.Rdata",
     envir = regression)
 
-  out.dir.root <- "Runhdp3-fast96-2-cores"
-
   retvalx <- RunAndEvalHdp4(
     input.catalog.file         = input.catalog.file, # The spectra
     ground.truth.exposure.file = input.exposure.file,
@@ -29,11 +27,11 @@ test_that("RunAndEvalHdp4-fast96", {
     post.burnin   = 50, # Super low for fast testing
     post.space    = 5,  # Low for fast testing
     post.cpiter   = 1,  # Low for fast testing
-    out.dir       = file.path(out.dir.root, "test_Runhdp2-fast96_out_dir"),
+    out.dir       = "test-RunAnd..etc4_out_dir",
     overwrite     = TRUE
   )
 
   # save(retvalx, file = "RunhdpInternal.testdata/RunhdpInternal-fast96-2-cores.Rdata")
-
-  testthat::expect_equal(retvalx, regression$retvalx)
+  testthat::expect_equal(retvalx$signature, regression$retvalx$signature)
+  testthat::expect_equal(retvalx$exposure, regression$retvalx$exposure)
 })

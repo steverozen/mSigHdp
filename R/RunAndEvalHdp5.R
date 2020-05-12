@@ -91,8 +91,8 @@ RunAndEvalHdp5 <- function(
                           file.path(out.dir, "extracted.sigs.w0.pdf"))
 
   # Writes bi-directional matching and cos.sim calculation
-  write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
-  write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
+  utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
+  utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
 
   #==== Duplicated code, analyse without the 0 signature
   sigAnalysis <- SynSigEval::MatchSigsAndRelabel(
@@ -109,10 +109,10 @@ RunAndEvalHdp5 <- function(
                           file.path(out.dir, "extracted.sigs.pdf"))
 
   # Writes bi-directional matching and cos.sim calculation
-  write.csv(sigAnalysis$match1, file = file.path(out.dir, "match1.csv"))
-  write.csv(sigAnalysis$match2, file = file.path(out.dir, "match2.csv"))
-  # Dumps other outputs into "other.results.txt"
-  capture.output(
+  utils::write.csv(sigAnalysis$match1, file = file.path(out.dir, "match1.csv"))
+  utils::write.csv(sigAnalysis$match2, file = file.path(out.dir, "match2.csv"))
+
+  utils::capture.output(
     cat("Call\n"),
     match.call(),
     cat("\nAverage cosine similarity\n"),

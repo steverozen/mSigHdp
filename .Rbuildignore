@@ -1,3 +1,4 @@
 ^mSigHdp\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^tests/testthat/.*_out_dir$

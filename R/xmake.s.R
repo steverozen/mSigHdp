@@ -7,10 +7,12 @@
 #' each divided by the maxium Stirling number in the series.
 #' The returned function is a closure with state that includes
 #' a list of all the unsigned Stirling number series \eqn{<=} the argument, \eqn{n},
+#'
 #' i.e. \eqn{[s(1, 1)], [s(2, 1), s(2, 2)], ..., [s(n, 1), ..., s(n, n)]}.
 #' Memory usage could be substantial, but the stored state
 #' does not include the many trailing zeros in the vectors.
-#' For this to work within the \code{\link[hdp]{hdp}} package the
+#' For this to work within the hdp (https://github.com/nicolaroberts/hdp)
+#' package the
 #' function returned *must* be called \code{stir.closure}.
 
 xmake.s <- function() {
