@@ -65,7 +65,7 @@ Runhdp4 <-
       min.sample      = min.sample
     ) # 14 Arguments
 
-    save(retval, file = file.path(out.dir, "Runhdp3.retval.Rdata"))
+    save(retval, file = file.path(out.dir, "Runhdp4.retval.Rdata"))
 
     multi <- retval[["multi.chains"]] # class hdpSampleMulti
     chains <- hdpx::chains(multi)      # list of hdpSampleChain
