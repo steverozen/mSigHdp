@@ -22,6 +22,5 @@ test_that("RunhdpInternal4-fast", {
   # save(retvalx, file = "RunhdpInternal.testdata/test.RunhdpInternal.2.Rdata")
 
   expect_equal(retvalx$signature, reg$retvalx$signature)
-
   expect_equal(retvalx$exposure, reg$retvalx$exposure)
 })

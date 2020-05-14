@@ -23,6 +23,7 @@ test_that("RunhdpInternal4-fast-2-chains", {
 
   # save(retvalx, file = "RunhdpInternal.testdata/test.RunhdpInternal3-fast-2-chains.Rdata")
 
-  testthat::expect_equal(retvalx, reg$retvalx)
+  expect_equal(retvalx$signature, reg$retvalx$signature)
+  expect_equal(retvalx$exposure,  reg$retvalx$exposure)
 })
 

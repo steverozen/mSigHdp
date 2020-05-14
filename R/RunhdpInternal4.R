@@ -161,6 +161,23 @@ RunhdpInternal4 <-
 
     # Generate the original multi_chain for the sample
     if (verbose) message("calling hdp_multi_chain")
+    # If a child dies the corresponding element of chlist has
+    # class try-error.
+    #
+    # We filter these and generate a warning. This is a bit
+    # tricky and I am not sure I have anticipated all possible
+    # returns, so I do this in a loop.
+    ii <- 1
+    clean.chlist <- list()
+    for (i in 1:length(chlist)) {
+      if ("try-error" %in% class(chlist[[i]])) {
+        warning("class of element", i, "was", class(chlist[[i]]))
+      } else {
+        clean.chlist[[ii]] <- chlist[[i]]
+        ii <- ii + 1
+      }
+    }
+
     multi.chains <- hdpx::hdp_multi_chain(chlist)
 
     if (verbose) message("calling hdp_extract_components")

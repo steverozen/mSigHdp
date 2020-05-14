@@ -22,5 +22,6 @@ test_that("RunhdpInternal4-slow", {
 
   save(retval, file = "RunhdpInternal.testdata/t2.out.Rdata")
 
-  testthat::expect_equal(retval, reg$retval)
+  expect_equal(retval$signature, regression$retval$signature)
+  expect_equal(retval$exposure,  regression$retval$exposure)
 })

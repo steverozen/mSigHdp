@@ -69,14 +69,6 @@ RunAndEvalHdp5 <- function(
     cos.merge                  = cos.merge,
     min.sample                 = min.sample)
 
-  sig.without.0 <- retval$signature
-  hdp.0.col <- which(colnames(sig.without.0) == "hdp.0")
-  stopifnot(length(hdp.0.col) == 1)
-  sig.without.0 <- sig.without.0[ , -hdp.0.col]
-  ICAMS::WriteCatalog(ICAMS::as.catalog(retval$signature),
-                      file.path(out.dir,"extracted.signatures.no.0.csv"))
-
-  #==== Analyze with the 0 signature
   sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
     ex.sigs  = retval$signature,
     gt.sigs  = ground.truth.sig.catalog,
@@ -94,39 +86,48 @@ RunAndEvalHdp5 <- function(
   utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
   utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
 
-  #==== Duplicated code, analyse without the 0 signature
-  sigAnalysis <- SynSigEval::MatchSigsAndRelabel(
-    ex.sigs  = sig.without.0,
-    gt.sigs  = ground.truth.sig.catalog,
-    exposure = ground.truth.exp)
+  if (FALSE) {
+    # Disconnected code -- we probably do not need analysis without the "0 component"
+    sig.without.0 <- retval$signature
+    hdp.0.col <- which(colnames(sig.without.0) == "hdp.0")
+    stopifnot(length(hdp.0.col) == 1)
+    sig.without.0 <- sig.without.0[ , -hdp.0.col]
+    ICAMS::WriteCatalog(ICAMS::as.catalog(sig.without.0),
+                        file.path(out.dir,"extracted.signatures.no.0.csv"))
 
-  ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis$gt.sigs,
-                                            catalog.type = "counts.signature"), # Need to fix this
-                          file.path(out.dir, "ground.truth.sigs.pdf"))
+    sigAnalysis <- SynSigEval::MatchSigsAndRelabel(
+      ex.sigs  = sig.without.0,
+      gt.sigs  = ground.truth.sig.catalog,
+      exposure = ground.truth.exp)
 
-  ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis$ex.sigs,
-                                            catalog.type = "counts.signature"),
-                          file.path(out.dir, "extracted.sigs.pdf"))
+    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis$gt.sigs,
+                                              catalog.type = "counts.signature"), # Need to fix this
+                            file.path(out.dir, "ground.truth.sigs.pdf"))
 
-  # Writes bi-directional matching and cos.sim calculation
-  utils::write.csv(sigAnalysis$match1, file = file.path(out.dir, "match1.csv"))
-  utils::write.csv(sigAnalysis$match2, file = file.path(out.dir, "match2.csv"))
+    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis$ex.sigs,
+                                              catalog.type = "counts.signature"),
+                            file.path(out.dir, "extracted.sigs.pdf"))
+
+    # Writes bi-directional matching and cos.sim calculation
+    utils::write.csv(sigAnalysis$match1, file = file.path(out.dir, "match1.csv"))
+    utils::write.csv(sigAnalysis$match2, file = file.path(out.dir, "match2.csv"))
+  }
 
   utils::capture.output(
     cat("Call\n"),
     match.call(),
     cat("\nAverage cosine similarity\n"),
-    sigAnalysis$averCosSim,
+    sigAnalysis0$averCosSim,
     cat("\nAverage cosine similarity to each ground-truth signature\n"),
-    sigAnalysis$cosSim,
+    sigAnalysis0$cosSim,
     cat("\nNumber of ground-truth signatures\n"),
-    ncol(sigAnalysis$gt.sigs),
+    ncol(sigAnalysis0$gt.sigs),
     cat("\nNumber of extracted signatures\n"),
-    ncol(sigAnalysis$ex.sigs),
-    cat("\nsigAnalysis$extracted.with.no.best.match\n"),
-    sigAnalysis$extracted.with.no.best.match,
-    cat("\nsigAnalysis$ground.truth.with.no.best.match\n"),
-    sigAnalysis$ground.truth.with.no.best.match,
+    ncol(sigAnalysis0$ex.sigs),
+    cat("\nsigAnalysis0$extracted.with.no.best.match\n"),
+    sigAnalysis0$extracted.with.no.best.match,
+    cat("\nsigAnalysis0$ground.truth.with.no.best.match\n"),
+    sigAnalysis0$ground.truth.with.no.best.match,
     file = file.path(out.dir,"other.results.txt"))
 
   if (FALSE) {

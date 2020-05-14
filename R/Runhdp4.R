@@ -94,7 +94,7 @@ Runhdp4 <-
     # 95% credibility intervals
     hdpx::plot_comp_distn(multi)
 
-    # TODO, need argument dpinices and col_comp;
+    # TODO, need argument dpindices and col_comp;
     # Need to return the hdp object (perhaps) from RunhdpInternal
     # to get the required values.
     if (FALSE) { # Not finished

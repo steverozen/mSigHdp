@@ -32,6 +32,6 @@ test_that("RunAndEvalHdp4-fast96", {
   )
 
   # save(retvalx, file = "RunhdpInternal.testdata/RunhdpInternal-fast96-2-cores.Rdata")
-  testthat::expect_equal(retvalx$signature, regression$retvalx$signature)
-  testthat::expect_equal(retvalx$exposure, regression$retvalx$exposure)
+  expect_equal(retvalx$signature, regression$retvalx$signature)
+  expect_equal(retvalx$exposure, regression$retvalx$exposure)
 })

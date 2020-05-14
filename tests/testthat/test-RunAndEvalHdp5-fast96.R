@@ -31,6 +31,6 @@ test_that("RunAndEvalHdp5-fast96", {
     overwrite     = TRUE
   )
 
-  testthat::expect_equal(retvalx$signature, regression$retvalx$signature)
-  testthat::expect_equal(retvalx$exposure, regression$retvalx$exposure)
+  expect_equal(retvalx$signature, regression$retvalx$signature)
+  expect_equal(retvalx$exposure, regression$retvalx$exposure)
 })
