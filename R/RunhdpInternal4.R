@@ -170,15 +170,23 @@ RunhdpInternal4 <-
     ii <- 1
     clean.chlist <- list()
     for (i in 1:length(chlist)) {
-      if ("try-error" %in% class(chlist[[i]])) {
-        warning("class of element", i, "was", class(chlist[[i]]))
+      cclass <- class(chlist[[i]])
+      cat("chlist element", i, "has class", cclass, "\n")
+      if ("try-error" %in% cclass) {
+        warning("class of element", i, "\n")
       } else {
-        clean.chlist[[ii]] <- chlist[[i]]
-        ii <- ii + 1
+        if (!("hdpSampleChain" %in% cclass)) {
+          warning("A different incorrect class for i =", i, cclass)
+        } else{
+          clean.chlist[[ii]] <- chlist[[i]]
+          ii <- ii + 1
+        }
       }
     }
 
-    multi.chains <- hdpx::hdp_multi_chain(chlist)
+    multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
+    rm(chlist)
+    rm(clean.chlist)
 
     if (verbose) message("calling hdp_extract_components")
     # Group raw "clusters" into "components" (i.e. signatures).
