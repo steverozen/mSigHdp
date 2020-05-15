@@ -1,7 +1,5 @@
 
 test_that("RunAndEvalHdp4-fast96", {
-  # skip_on_cran() # Uses mulitple cores
-  # skip_on_travis() # Uses multiple cores
 
   input.catalog.file <- "SBS96.ground.truth/ground.truth.syn.catalog.csv"
 
@@ -14,7 +12,7 @@ test_that("RunAndEvalHdp4-fast96", {
     envir = regression)
 
   retvalx <- RunAndEvalHdp4(
-    input.catalog.file         = input.catalog.file, # The spectra
+    input.catalog = input.catalog.file, # The spectra
     ground.truth.exposure.file = input.exposure.file,
     ground.truth.sig.file      = input.signature.file,
     test.only     = 10, # Only use columns 1:10 of input.catalog

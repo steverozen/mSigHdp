@@ -1,24 +1,24 @@
-# Example script for running RunAndEvalHdp5 or RunAndEvalHdp4
+# Example script for running Runhdp{4,5}
 
 library(mSigHdp)
 
 prog.number <- 4
 if (prog.number == 4) {
-  my.fn    <- RunAndEvalHdp4
+  my.fn    <- Runhdp4
 } else if (prog.number == 5) {
-  my.fn <- RunAndEvalHdp5
+  my.fn <- Runhdp5
 }
 
 root.dir <- "."
 seed     <- 7744
 num.jobs <- 10
-burnin   <- 10000
+burnin   <- 1000 # SUPER LOW FOR TESTING FOR BUGS!
 K.guess  <- 25
-n        <- 2000
+n        <- 200 # SUPER LOW FOR TESTING FOR BUGS!
 
 out.dir  <-
   file.path(root.dir,
-            paste("y.out.dir",
+            paste("WES.id.out.dir",
                   "seed", seed,
                   "burnin", burnin,
                   "K", K.guess,
@@ -31,15 +31,14 @@ ef <- file(file.path(out.dir, "err.txt"), open = "wt")
 sink(file = ef, type = "message")
 my.fn
 
+cat1 <- ICAMS::ReadCatalog("WES_TCGA.indels.csv")
+cat2 <- ICAMS::ReadCatalog("catKumar+Murphy.csv")
+in.cat <- cbind(cat1, cat2)
+
 system.time(
   retval <- my.fn(
-    input.catalog.file         = file.path(root.dir,
-                                           "ground.truth.syn.catalog.csv"),
-    ground.truth.exposure.file = file.path(root.dir,
-                                           "ground.truth.syn.exposures.csv"),
-    ground.truth.sig.file      = file.path(root.dir,
-                                           "ground.truth.syn.sigs.csv"),
-    out.dir                    = out.dir,
+    input.catalog      = in.cat,
+    out.dir            = out.dir,
     CPU.cores          = num.jobs,
     seedNumber         = seed,
     K.guess            = K.guess,
@@ -48,7 +47,8 @@ system.time(
     post.space         = 10,
     multi.types        = FALSE,
     overwrite          = TRUE,
-    num.posterior      = num.jobs))
+    num.posterior      = num.jobs,
+    plot.extracted.sig = TRUE))
 
-# nice R --vanilla < y4K25b10000n2000.R > out.y4K25b10000n2000.txt &> err.y4K25.b10000n2000.txt &
+# nice R --vanilla < WES.id.R > out.WES.id.K25.b10000n2000.txt &> err.WES.idK25.b10000n2000.txt &
 

@@ -83,7 +83,7 @@ RunhdpInternal4 <-
       process.index <- c(0, rep(1, num.tumor.types))
 
       # Each tumor type gets its own number.
-      process.index <- c(process.index, 1 + as.numeric(as.factor(tumor.types)))
+      process.index <- c(process.index, 1 + as.numeric(as.factor(tumor.types))) # To do, update this with the more transparent code
       cat(process.index, "\n")
       # process.index is now something like
       # c(0, 1, 1, 2, 2, 2, 3, 3)

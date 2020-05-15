@@ -13,7 +13,7 @@
 #' @export
 
 RunAndEvalHdp4 <- function(
-  input.catalog.file,
+  input.catalog,
   ground.truth.exposure.file,
   ground.truth.sig.file      = NULL,
   ground.truth.sig.catalog   = NULL,
@@ -51,23 +51,23 @@ RunAndEvalHdp4 <- function(
   ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exposure.file)
 
   retval <- Runhdp4(
-    input.catalog.file         = input.catalog.file,
-    out.dir                    = out.dir,
-    CPU.cores                  = CPU.cores,
-    seedNumber                 = seedNumber,
-    K.guess                    = K.guess,
-    multi.types                = multi.types,
-    test.only                  = test.only,
-    overwrite                  = overwrite,
-    verbose                    = verbose,
-    num.posterior              = num.posterior,
-    post.burnin                = post.burnin,
-    post.n                     = post.n,
-    post.space                 = post.space,
-    post.cpiter                = post.cpiter,
-    post.verbosity             = post.verbosity,
-    cos.merge                  = cos.merge,
-    min.sample                 = min.sample)
+    input.catalog         = input.catalog,
+    out.dir               = out.dir,
+    CPU.cores             = CPU.cores,
+    seedNumber            = seedNumber,
+    K.guess               = K.guess,
+    multi.types           = multi.types,
+    test.only             = test.only,
+    overwrite             = overwrite,
+    verbose               = verbose,
+    num.posterior         = num.posterior,
+    post.burnin           = post.burnin,
+    post.n                = post.n,
+    post.space            = post.space,
+    post.cpiter           = post.cpiter,
+    post.verbosity        = post.verbosity,
+    cos.merge             = cos.merge,
+    min.sample            = min.sample)
 
   sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
     ex.sigs  = retval$signature,
@@ -132,11 +132,11 @@ RunAndEvalHdp4 <- function(
 
   if (FALSE) {
     # See file AssessExtracted.R
-    exposureDiff <- ReadAndAnalyzeExposures(
-      extracted.sigs = NULL,
-      ground.truth.sigs = NULL ,
-      inferred.exp.path = NULL,
-      ground.truth.exposures = NULL)
+    exposureDiff <- SynSigEval::ReadAndAnalyzeExposures(
+      extracted.sigs         = NULL,
+      ground.truth.sigs      = NULL ,
+      inferred.exp.path      = NULL,
+      ground.truth.exposures = ground.truth.exposure.file)
   }
 
   invisible(retval)

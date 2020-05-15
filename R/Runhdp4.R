@@ -1,17 +1,37 @@
 
 #' Run hdp extraction and attribution on a spectra catalog file using hdpx
 #'
-#' @inheritParams Runhdp5
+#' @inheritParams RunhdpInternal4
+#'
+#' @param input.catalog Either a character string, in which case this
+#'   is the path to a file containing a spectra catalog
+#' in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.
+#'
+#' @param out.dir Directory that will be created for the output;
+#'   if \code{overwrite} is \code{FALSE} then
+#'   abort if \code{out.dir} already exits.
+#'
+#' @param remove.noise Deprecated; ignored
+#'
+#' @param test.only If > 0, only analyze the first \code{test.only} columns
+#'  in \code{input.catalog}.
+#'
+#' @param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
+#'  raise an error.
+#'
+#' @param plot.extracted.sig If \code{TRUE} then plot the extracted signatures.
 #'
 #' @return The same list as returned by \code{\link{RunhdpInternal4}}.
 #'
 #' @details Creates several files in \code{out.dir}. These are:
-#'  TODO(Steve): list the files
+#'  call.and.session.info.txt, hdp.diagnostics.pdf, Runhdp4.retval.Rdata,
+#'  extracted.signatures.csv, extracted.signature.pdf (optional),
+#'  inferred.exposures.csv.
 #'
 #' @export
 
 Runhdp4 <-
-  function(input.catalog.file,
+  function(input.catalog,
            out.dir,
            CPU.cores           = 1,
            seedNumber          = 1,
@@ -28,10 +48,15 @@ Runhdp4 <-
            post.cpiter         = 3,
            post.verbosity      = 0,
            cos.merge           = 0.9,
-           min.sample          = 1) {
+           min.sample          = 1,
+           plot.extracted.sig  = FALSE) {
 
-    if (verbose) message("Reading input catalog file ", input.catalog.file)
-    spectra <- ICAMS::ReadCatalog(input.catalog.file, strict = FALSE)
+    if (mode(input.catalog) == "character") {
+      if (verbose) message("Reading input catalog file ", input.catalog)
+      spectra <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
+    } else {
+      spectra <- input.catalog
+    }
     if (test.only > 0) spectra <- spectra[ , 1:test.only]
 
     ## Create output directory
@@ -114,9 +139,14 @@ Runhdp4 <-
     ICAMS::WriteCatalog(extractedSignatures,
                         paste0(out.dir,"/extracted.signatures.csv"))
 
+    ICAMS::PlotCatalogToPdf(extractedSignatures,
+                            file.path(out.dir, "extracted.signature.pdf"))
+
     if (verbose) message("Writing exposures")
-    SynSigGen::WriteExposure(retval$exposure.p,
-                  paste0(out.dir,"/exposure.probs.csv"))
+
+    # Probably not needed; easily computed by caller:
+    # SynSigGen::WriteExposure(retval$exposure.p,
+    #              paste0(out.dir,"/exposure.probs.csv"))
     SynSigGen::WriteExposure(retval$exposure,
                   paste0(out.dir,"/inferred.exposures.csv"))
 

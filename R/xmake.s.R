@@ -20,7 +20,7 @@ xmake.s <- function() {
   allss <- list(1)
 
   stir <- function(nn) {
-    cat(".\n")
+    # cat(".\n")
 
     if (nn == 0) return(1)
 
