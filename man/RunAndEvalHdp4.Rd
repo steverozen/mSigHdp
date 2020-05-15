@@ -5,7 +5,7 @@
 \title{Run and evaluate hdp}
 \usage{
 RunAndEvalHdp4(
-  input.catalog.file,
+  input.catalog,
   ground.truth.exposure.file,
   ground.truth.sig.file = NULL,
   ground.truth.sig.catalog = NULL,
@@ -29,8 +29,9 @@ RunAndEvalHdp4(
 )
 }
 \arguments{
-\item{input.catalog.file}{File containing a spectra catalog
-in \code{\link[ICAMS]{ICAMS}} format.}
+\item{input.catalog}{Either a character string, in which case this
+is the path to a file containing a spectra catalog
+in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.}
 
 \item{ground.truth.exposure.file}{Path to file with ground truth exposures.}
 
@@ -74,7 +75,7 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC"
 \item{remove.noise}{Deprecated; ignored}
 
 \item{test.only}{If > 0, only analyze the first \code{test.only} columns
-in \code{input.catalog.file}.}
+in \code{input.catalog}.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
 raise an error.}

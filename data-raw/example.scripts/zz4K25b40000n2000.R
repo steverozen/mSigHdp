@@ -12,7 +12,7 @@ if (prog.number == 4) {
 root.dir <- "."
 seed     <- 7744
 num.jobs <- 10
-burnin   <- 10000
+burnin   <- 40000
 K.guess  <- 25
 n        <- 2000
 
@@ -33,7 +33,7 @@ my.fn
 
 system.time(
   retval <- my.fn(
-    input.catalog       = file.path(root.dir, "ground.truth.syn.catalog.csv"),
+    input.catalog      = file.path(root.dir, "ground.truth.syn.catalog.csv"),
     ground.truth.exposure.file = file.path(root.dir,
                                            "ground.truth.syn.exposures.csv"),
     ground.truth.sig.file      = file.path(root.dir,
@@ -49,5 +49,5 @@ system.time(
     overwrite          = TRUE,
     num.posterior      = num.jobs))
 
-# nice R --vanilla < z4K25b10000n2000.R > out.z4K25b10000n2000.txt &> err.z4K25.b10000n2000.txt &
+# nice R --vanilla < zz4K25b10000n2000.R > out.zz4K25b10000n2000.txt &> err.zz4K25.b10000n2000.txt &
 

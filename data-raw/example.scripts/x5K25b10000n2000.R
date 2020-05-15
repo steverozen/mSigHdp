@@ -32,8 +32,7 @@ sink(file = ef, type = "message")
 my.fn
 
 retval <- my.fn(
-  input.catalog.file         = file.path(root.dir,
-                                         "ground.truth.syn.catalog.csv"),
+  input.catalog      = file.path(root.dir, "ground.truth.syn.catalog.csv"),
   ground.truth.exposure.file = file.path(root.dir,
                                          "ground.truth.syn.exposures.csv"),
   ground.truth.sig.file      = file.path(root.dir,

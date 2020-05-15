@@ -5,7 +5,7 @@
 \title{Run hdp extraction and attribution on a spectra catalog file using hdpx}
 \usage{
 Runhdp4(
-  input.catalog.file,
+  input.catalog,
   out.dir,
   CPU.cores = 1,
   seedNumber = 1,
@@ -22,12 +22,14 @@ Runhdp4(
   post.cpiter = 3,
   post.verbosity = 0,
   cos.merge = 0.9,
-  min.sample = 1
+  min.sample = 1,
+  plot.extracted.sig = FALSE
 )
 }
 \arguments{
-\item{input.catalog.file}{File containing a spectra catalog
-in \code{\link[ICAMS]{ICAMS}} format.}
+\item{input.catalog}{Either a character string, in which case this
+is the path to a file containing a spectra catalog
+in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then
@@ -63,7 +65,7 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC"
 \item{remove.noise}{Deprecated; ignored}
 
 \item{test.only}{If > 0, only analyze the first \code{test.only} columns
-in \code{input.catalog.file}.}
+in \code{input.catalog}.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
 raise an error.}
@@ -94,6 +96,8 @@ passed to \code{\link[hdp]{hdp_extract_components}}.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdp]{hdp_extract_components}}.}
+
+\item{plot.extracted.sig}{If \code{TRUE} then plot the extracted signatures.}
 }
 \value{
 The same list as returned by \code{\link{RunhdpInternal4}}.
@@ -103,5 +107,7 @@ Run hdp extraction and attribution on a spectra catalog file using hdpx
 }
 \details{
 Creates several files in \code{out.dir}. These are:
-TODO(Steve): list the files
+call.and.session.info.txt, hdp.diagnostics.pdf, Runhdp4.retval.Rdata,
+extracted.signatures.csv, extracted.signature.pdf (optional),
+inferred.exposures.csv.
 }
