@@ -20,8 +20,8 @@ test_that("RunhdpInternal4-slow", {
     num.posterior = 1
   )
 
-  save(retval, file = "RunhdpInternal.testdata/t2.out.Rdata")
+  # save(retval, file = "RunhdpInternal.testdata/t2.out.Rdata")
 
-  expect_equal(retval$signature, regression$retval$signature)
-  expect_equal(retval$exposure,  regression$retval$exposure)
+  expect_equal(retval$signature, reg$retval$signature)
+  expect_equal(retval$exposure,  reg$retval$exposure)
 })

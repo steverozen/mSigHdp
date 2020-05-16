@@ -4,6 +4,8 @@
 * Added reference manual and README.
 * Updated DESCRIPTION to include `biocViews` and `Imports` as field name.
 * Fixed typos and updated WORDLIST for spelling check.
+* Added test data for test-RunhdpInternal4-fast-2types.R.
+* Fixed a bug in test-RunhdpInternal4-slow.R.
 
 # [0.0.0.9004]- 2020-05-15
 * Still trying to make the code robust to errors in `mclapply` children
