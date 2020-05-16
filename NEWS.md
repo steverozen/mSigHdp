@@ -3,6 +3,7 @@
   `input.catalog`; starting to retire `Runhpd5`, `RunAndEvalHdp5`, `RunhdpInternal5`.
 * Added reference manual and README.
 * Updated DESCRIPTION to include `biocViews` and `Imports` as field name.
+* Fixed typos and updated WORDLIST for spelling check.
 
 # [0.0.0.9004]- 2020-05-15
 * Still trying to make the code robust to errors in `mclapply` children
