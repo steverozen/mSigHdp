@@ -1,4 +1,3 @@
-
 #' Run hdp extraction and attribution on a spectra catalog file using hdpx
 #'
 #' @inheritParams RunhdpInternal4
@@ -96,28 +95,35 @@ Runhdp4 <-
     chains <- hdpx::chains(multi)      # list of hdpSampleChain
 
     # Plot the diagnostics of sampling chains.
-    if (verbose) message("Writing hdp.diagnostics.pdf")
-    grDevices::pdf(file = paste0(out.dir,"/hdp.diagnostics.pdf"))
+    if (verbose) message("Writing HDP diagnostics")
     graphics::par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
-
-    # This is the likelihood plot along each chain
+    grDevices::pdf(file = file.path(out.dir,"diagnostics.likelihood.pdf"))
     lapply(chains, hdpx::plot_lik, bty = "L")
+    grDevices::dev.off()
 
+    grDevices::pdf(file = file.path(out.dir,"diagnostics.numcluster.pdf"))
     # This is the number of raw clusters sampled along each chain
     lapply(chains, hdpx::plot_numcluster, bty = "L")
+    grDevices::dev.off()
 
+    grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
     # This is the number of mutations assigned as a function of
     # the number of raw clusters
     lapply(chains, hdpx::plot_data_assigned, bty = "L")
+    grDevices::dev.off()
 
+    grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
     graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
     # Components were already extracted, so this call will work
     hdpx::plot_comp_size(multi, bty="L")
+    grDevices::dev.off()
 
+    grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
     graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
     # This plots the component (signature) profiles with
     # 95% credibility intervals
     hdpx::plot_comp_distn(multi)
+    grDevices::dev.off()
 
     # TODO, need argument dpindices and col_comp;
     # Need to return the hdp object (perhaps) from RunhdpInternal
@@ -130,14 +136,12 @@ Runhdp4 <-
       dpnames = colnames(retval$exposure))
     }
 
-    grDevices::dev.off()
-
     if (verbose) message("Writing signatures")
     extractedSignatures <- ICAMS::as.catalog(retval$signature,
                                              region       = "unknown",
                                              catalog.type = "counts.signature")
     ICAMS::WriteCatalog(extractedSignatures,
-                        paste0(out.dir,"/extracted.signatures.csv"))
+                        file.path(out.dir,"extracted.signatures.csv"))
 
     ICAMS::PlotCatalogToPdf(extractedSignatures,
                             file.path(out.dir, "extracted.signature.pdf"))
@@ -148,7 +152,7 @@ Runhdp4 <-
     # SynSigGen::WriteExposure(retval$exposure.p,
     #              paste0(out.dir,"/exposure.probs.csv"))
     SynSigGen::WriteExposure(retval$exposure,
-                  paste0(out.dir,"/inferred.exposures.csv"))
+                  file.path(out.dir,"inferred.exposures.csv"))
 
     invisible(retval)
   }
