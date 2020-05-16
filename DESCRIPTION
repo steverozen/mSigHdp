@@ -1,5 +1,5 @@
 Package: mSigHdp
-Title: Mutational signature extraction using hdp
+Title: Mutational signature extraction using hdp (Hierarchical Dirichlet Process)
 Version: 0.0.0.9005
 Authors@R: 
     person(given = "Steven",
@@ -28,8 +28,4 @@ Remotes: github::nicolaroberts/hdp,
 Suggests: 
     testthat,
     ICAMS,
-    hdp,
-    hdpx,
-    SynSigEval,
-    SynSigGen,
     utils
