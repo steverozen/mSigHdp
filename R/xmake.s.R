@@ -2,9 +2,9 @@
 #'
 #' @export
 #'
-#' @return A function to caluculate a vector of unsigned Stirling numbers,
+#' @return A function to calculate a vector of unsigned Stirling numbers,
 #' \eqn{s(n ,k), k = 1...n},
-#' each divided by the maxium Stirling number in the series.
+#' each divided by the maximum Stirling number in the series.
 #' The returned function is a closure with state that includes
 #' a list of all the unsigned Stirling number series \eqn{<=} the argument, \eqn{n},
 #'

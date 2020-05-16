@@ -4,7 +4,7 @@
 #' in \code{\link[ICAMS]{ICAMS}} format.
 #'
 #' @param CPU.cores Number of CPUs to use in running
-#'    \code{\link[hdp]{hdp_posterior}}; this is used to parallize
+#'    \code{\link[hdp]{hdp_posterior}}; this is used to parallelize
 #'    running the posterior sampling chains, so there is no
 #'    point in making this larger than \code{num.posterior}.
 #'
@@ -50,7 +50,7 @@
 #' @param post.verbosity Pass to \code{\link[hdp]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
-#' @param cos.merge The cosine similarity threshhold for merging raw clusters
+#' @param cos.merge The cosine similarity threshold for merging raw clusters
 #'      from the posterior sampling chains into "components" i.e. signatures;
 #'      passed to \code{\link[hdp]{hdp_extract_components}}.
 #'

@@ -36,7 +36,7 @@ if \code{overwrite} is \code{FALSE} then
 abort if \code{out.dir} already exits.}
 
 \item{CPU.cores}{Number of CPUs to use in running
-\code{\link[hdp]{hdp_posterior}}; this is used to parallize
+\code{\link[hdp]{hdp_posterior}}; this is used to parallelize
 running the posterior sampling chains, so there is no
 point in making this larger than \code{num.posterior}.}
 
@@ -90,7 +90,7 @@ raise an error.}
 \item{post.verbosity}{Pass to \code{\link[hdp]{hdp_posterior}}
 \code{verbosity}.}
 
-\item{cos.merge}{The cosine similarity threshhold for merging raw clusters
+\item{cos.merge}{The cosine similarity threshold for merging raw clusters
 from the posterior sampling chains into "components" i.e. signatures;
 passed to \code{\link[hdp]{hdp_extract_components}}.}
 
