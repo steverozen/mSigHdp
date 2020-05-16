@@ -12,6 +12,12 @@ Description: Calls hdp for mutational signature analysis, with performance
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Language: en-US
+biocViews:
+Imports: hdp,
+    hdpx,
+    SynSigGen,
+    SynSigEval
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 3.5)
 RoxygenNote: 7.1.0
