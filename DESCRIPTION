@@ -1,6 +1,6 @@
 Package: mSigHdp
 Title: Mutational signature extraction using hdp (Hierarchical Dirichlet Process)
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R: 
     person(given = "Steven",
            family = "Rozen",
@@ -16,8 +16,7 @@ Language: en-US
 biocViews:
 Imports: hdp,
     hdpx,
-    SynSigGen,
-    SynSigEval
+    SynSigGen
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 3.5)
 RoxygenNote: 7.1.0
@@ -28,4 +27,5 @@ Remotes: github::nicolaroberts/hdp,
 Suggests: 
     testthat,
     ICAMS,
-    utils
+    utils,
+    SynSigEval
