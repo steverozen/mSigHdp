@@ -1,90 +1,103 @@
-### Plot exposures broken up by ranges
-PlotExposureByRange <- function(spectrum,
-                             sigs,
-                             exp,
-                             ranges, # A list of vectors
-                             col=NULL,
-                             main=NULL,
-                             xlab=NULL,
-                             ylab=NULL,
-                             mfrow=c(3,1) # 3 exposure graphs per page by default
+#' Plot exposures in multple plots each with a manageable number of samples.
+#'
+#' @param exp Exposures as a numerical matrix (or data.frame) with
+#'    signatures in rows and samples in columns. Rownames are taken
+#'    as the signature names and column names are taken as the
+#'    sample IDs. If you want \code{exp} sorted from largest to smallest
+#'    use \code{\link{SortExp }}. Do not use column names that start
+#'    with multipe underscores. The exposures will often be mutation
+#'    counts, but could also be e.g. mutations per megabase.
+#'
+#' @param plot.proportion Plot exposure proprotions rather than counts.
+#'
+#' @param num.per.line Number of samples to show in each plot.
+#'
+#' @param ... Other arguments pased to \code{\link{PlotExposure}}. If \code{ylab}
+#'    is not included, it defaults to a value depending on \code{plot.proportion}.
+#'    If \code{col} is not supplied the function tries to do something
+#'    reasonable.
+#'
+#' @export
+#'
+PlotExposureByRange <- function(
+  exp,
+  num.per.line    = 30,
+  plot.proportion = FALSE,
+  ...
 ) {
 
-  par(
-    mfrow=mfrow,
-    # mar  =c(1.5,1,2,2), # space between plot and figure, for axis labels etc
-    oma  =rep(3, 4) # outer margin between figure and device.
-  )
-  if (is.null(ylab)) ylab <- 'Number of mutations'
-  first=T
-  for (range in ranges) {
-    if (first) {
-      PlotExposure(exp[ ,range], signatures=sigs,
-                     input.genomes = spectrum[ , range],
-                     plot.proprtion = F,
-                     col=col,
-                     main=main,
-                     ylab=ylab, xlab=xlab)
-      first=F
-    } else {
-      PlotExposure(exp[ ,range], signatures=sigs,
-                     input.genomes = spectrum[ , range],
-                     plot.proprtion = F, plot.legend=F,
-                     main=main,
-                     col=col,
-                     ylab=ylab, xlab=xlab)
-    }
+  args <- list(...)
+  ylab <- args$ylab
+  if (is.null(ylab)) {
+    ylab <- ifelse(plot.proportion,
+                   "Proportion of mutations",
+                   "Number of mutations")
+  }
+
+  n.sample <- ncol(exp)
+  num.ranges <- n.sample %/% num.per.line
+  size.of.last.range <- n.sample %% num.per.line
+  padding.len <- num.per.line - size.of.last.range
+  padding <- matrix(0,nrow = nrow(exp), ncol = padding.len)
+
+  # The column names starting with lots of underscore
+  # will not be plotted in the final output.
+  colnames(padding) <- paste("_____", 1:ncol(padding), sep = "_")
+  exp <- cbind(exp, padding)
+
+  starts <- 0:num.ranges * num.per.line + 1
+  ends   <- starts + num.per.line - 1
+
+  plot.legend <- TRUE
+  for (i in 1:length(starts)) {
+    PlotExposure(exp[ , starts[i]:ends[i]],
+                 plot.proportion = plot.proportion,
+                 plot.legend    = plot.legend,
+                 ...)
+    plot.legend <- FALSE
   }
 }
 
 
-PDFExposureByRange <- function(path,   # Out file path
-                            spectrum,
-                            sigs,
-                            exp,
-                            ranges, # A list of vectors
-                            col=NULL,
-                            main=NULL,
-                            xlab=NULL,
-                            ylab=NULL
-) {
-  pdf(path, width=8.2677, height=11.6929, # for A4
-      onefile=T, useDingbats=F)
-  PlotExposureByRange(spectrum, sigs, exp, ranges, col, main, xlab, ylab)
-  dev.off()
-}
-
+#' Plot a single exposure plot
+#'
+#' @param exp Exposures as a numerical matrix (or data.frame) with
+#'    signatures in rows and samples in columns. Rownames are taken
+#'    as the signature names and column names are taken as the
+#'    sample IDs. If you want \code{exp} sorted from largest to smallest
+#'    use \code{\link{SortExp }}. Do not use column names that start
+#'    with multipe underscores. The exposures will often be mutation
+#'    counts, but could also be e.g. mutations per megabase.
+#'
+#' @param plot.proportion Plot exposure proprotions rather than counts.
+#'
+#' @param plot.legend If \code{TRUE} plot a legend.
+#'
+#' @param ... Parameters passed to \code{\link[graphics]{barplot}}.
+#'
+#' @export
 
 PlotExposure <-
   function(s.weights, # This is actually the exposure "counts"
-           # (or floats approximating the exposure counts)
-           signames=NULL,
-           scale.num=NULL,
-           signatures=NULL,
-           input.genomes=NULL,
-           plot.proprtion=T,
-           plot.legend=T,
-           ylim=NULL,
-           main=NULL,
-           ylab=NULL,
-           xlab=NULL,
-           col=NULL
+           plot.proportion = FALSE,
+           plot.legend     = TRUE,
+           ...
   ) {
 
     # note - might be reals > 1, not necessary colSum==1
     s.weights <- as.matrix(s.weights) # in case it is a data frame
-    signature_proportions <- t(s.weights)
-    num.sigs = dim(s.weights)[1]
-    num.samples = dim(s.weights)[2]
+    num.sigs  <- nrow(s.weights)
+    num.samples <- ncol(s.weights)
 
+    col <- list(...)$col
     if (is.null(col)) {
       if (num.sigs <= 8) {
-        col = # c('skyblue', 'black', 'grey', 'yellow', 'blue', 'brown', 'green4', 'red')
+        col <- # c('skyblue', 'black', 'grey', 'yellow', 'blue', 'brown', 'green4', 'red')
           c('red', 'black', 'grey', 'yellow', 'blue', 'brown', 'green4', 'skyblue')
 
       } else {
         # lots of signatures; use shaded lines to differentiate
-        col = rainbow(num.sigs)
+        col <- grDevices::rainbow(num.sigs, alpha = 1)
       }
     }
     if (num.sigs <= 12) {
@@ -101,40 +114,25 @@ PlotExposure <-
     p.dense.rev = rev(rep(p.dense,num.repeats)[1:num.sigs])
     p.angle.rev = rev(rep(p.angle,num.repeats)[1:num.sigs])
 
-    # add names (if not already set as row.names in the original input frame)
-    # for sorting. (needs a "Sample" column in the signature_proportions frame)
-    # if (length(colnames(s.weights))==0) colnames(s.weights) = signature_proportions$Sample
-    if (is.null(scale.num)) {
-      ylabel = '# mutations'
-    } else {# show as rate instead of count
-      if (scale.num < 3000 || scale.num > 3300) {
-        warning('assuming "scale.num" should be divisor for human genome. using 3000')
-        scale.num = 3000
-      }
-      s.weights = s.weights/scale.num
-      ylabel = '# mutations/Mbase'
-    }
     l.cex = if (num.sigs > 15) .5 else 1 # char expansion for legend (was 0.7)
     direction = 2 # 1=always horizontal, 2=perpendicular to axis
 
-    # if we weights file and counts file have samples in different order
-    if (!all(colnames(s.weights) == colnames(input.genomes))) {
-      input.genomes = input.genomes[,colnames(s.weights)]
-      warning('weights file and counts file are ordered differently; re-ordering counts.')
+    if (plot.proportion) {
+      # Matrix divided by vector goes col-wise, not row-wise, so transpose twice
+     plot.what <- t(t(s.weights)/colSums(s.weights))
+    } else {
+      plot.what <- s.weights
     }
 
     # ignore column names; we'll plot them separately to make them fit
-    bp = barplot(s.weights,
-                 ylim=ylim,
+    bp = barplot(plot.what,
                  las=1,
-                 col=col,
-                 ylab=ylab,
-                 yaxt='s',
-                 xaxt='n',
-                 xlab=xlab,
+                 yaxt = 's',
+                 xaxt = 'n', # Do not plot the X axis
                  density=p.dense, angle=p.angle,
-                 border=ifelse(num.samples>200,NA,1),
-                 main=main, cex.main=1.2)
+                 border= F, # ifelse(num.samples>200,NA,1),
+                 cex.main=1.2,
+                 ...) # removed xlab, main, ylim, ylab
 
     # get max y values for plot region, put legend at top right
     dims = par('usr') # c(x.min, x.max, y.min, y.max)
@@ -152,7 +150,7 @@ PlotExposure <-
              fill=col[num.sigs:1],
              x.intersp=.4, y.intersp=.8,
              bty='n', cex=l.cex * 0.9)
-      text(x=legend.x, y = legend.y, "Mutational signature", adj=-0.09)
+      text(x=legend.x, y = legend.y, "Signature", adj=-0.09)
     }
 
     # now add sample names, rotated to hopefully fit
@@ -164,15 +162,44 @@ PlotExposure <-
       else if (length(bp)<120) size.adj = .4
       else if (length(bp)<150) size.adj = .3
       else size.adj = .3
-      mtext(colnames(s.weights), side=1, at=bp, las=direction, cex=size.adj)
+      cnames <- colnames(s.weights)
+      cnames <- sub("_____.*", "", cnames)
+      mtext(cnames, side=1, at=bp, las=direction, cex=size.adj)
     }
+   }
 
-    if (plot.proprtion) {
-      # add proportion panel; eg col should sum() to 1. matrix divided by
-      # a vector goes col-wise, not row-wise, so transpose twice :(
-      bp = barplot(t(t(s.weights)/colSums(s.weights)), las=1, col=col, ylab='Proportion',
-                   density=p.dense, angle=p.angle.rev,
-                   main='', axisnames=F, border=NA)
-    }
+#' Sort columns of an exposure matrix from largest to smaller (or vice versa).
+#'
+#' @param exposures The exposures to sort; columns are samples.
+#'
+#' @param decreasing If \code{TRUE} sort from largest to smallest.
+#'
+#' @export
+#'
+SortExp <- function(exposures, decreasing = TRUE) {
+  retval <- exposures[   , order(colSums(exposures), decreasing = decreasing)]
+  return(retval)
+}
 
-  }
+# This one is trivial -- not needed
+PDFExposureByRange <- function(path,   # Out file path
+                               exp,
+                               num.per.line,
+                               plot.proportion,
+                               col=NULL,
+                               main=NULL,
+                               xlab=NULL,
+                               ylab=NULL
+) {
+  pdf(path, width = 8.2677, height = 11.6929, # for A4
+      onefile = TRUE, useDingbats = FALSE)
+  PlotExposureByRange(
+    exp             = exp,
+    num.per.line    = num.per.line,
+    plot.proportion = plot.proportion,
+    col = col,  main = main,
+    xlab = xlab,
+    ylab = ylab)
+  dev.off()
+}
+
