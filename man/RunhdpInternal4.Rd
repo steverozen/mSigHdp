@@ -18,7 +18,8 @@ RunhdpInternal4(
   post.cpiter = 3,
   post.verbosity = 0,
   cos.merge = 0.9,
-  min.sample = 1
+  min.sample = 1,
+  checkpoint.aft.post = NULL
 )
 }
 \arguments{
@@ -78,6 +79,10 @@ passed to \code{\link[hdp]{hdp_extract_components}}.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdp]{hdp_extract_components}}.}
+
+\item{checkpoint.aft.post}{If non-\code{NULL}, a file path to checkpoint
+the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
+as a .Rdata file.}
 }
 \value{
 A list with the following elements:\describe{

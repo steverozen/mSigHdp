@@ -23,6 +23,7 @@ Runhdp4(
   post.verbosity = 0,
   cos.merge = 0.9,
   min.sample = 1,
+  checkpoint.aft.post = NULL,
   plot.extracted.sig = FALSE
 )
 }
@@ -96,6 +97,10 @@ passed to \code{\link[hdp]{hdp_extract_components}}.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdp]{hdp_extract_components}}.}
+
+\item{checkpoint.aft.post}{If non-\code{NULL}, a file path to checkpoint
+the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
+as a .Rdata file.}
 
 \item{plot.extracted.sig}{If \code{TRUE} then plot the extracted signatures.}
 }
