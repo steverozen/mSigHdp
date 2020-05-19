@@ -48,6 +48,7 @@ Runhdp4 <-
            post.verbosity      = 0,
            cos.merge           = 0.9,
            min.sample          = 1,
+           checkpoint.aft.post = NULL,
            plot.extracted.sig  = FALSE) {
 
     if (mode(input.catalog) == "character") {
@@ -73,20 +74,21 @@ Runhdp4 <-
                           file = file.path(out.dir, "call.and.session.info.txt"))
 
     retval <- mSigHdp::RunhdpInternal4(
-      input.catalog   = spectra,
-      CPU.cores       = CPU.cores,
-      seedNumber      = seedNumber,
-      K.guess         = K.guess,
-      multi.types     = multi.types,
-      num.posterior   = num.posterior,
-      verbose         = verbose,
-      post.burnin     = post.burnin,
-      post.n          = post.n,
-      post.space      = post.space,
-      post.cpiter     = post.cpiter,
-      post.verbosity  = post.verbosity,
-      cos.merge       = cos.merge,
-      min.sample      = min.sample
+      input.catalog       = spectra,
+      CPU.cores           = CPU.cores,
+      seedNumber          = seedNumber,
+      K.guess             = K.guess,
+      multi.types         = multi.types,
+      num.posterior       = num.posterior,
+      verbose             = verbose,
+      post.burnin         = post.burnin,
+      post.n              = post.n,
+      post.space          = post.space,
+      post.cpiter         = post.cpiter,
+      post.verbosity      = post.verbosity,
+      cos.merge           = cos.merge,
+      min.sample          = min.sample,
+      checkpoint.aft.post = checkpoint.aft.post
     ) # 14 Arguments
 
     save(retval, file = file.path(out.dir, "Runhdp4.retval.Rdata"))
@@ -156,3 +158,4 @@ Runhdp4 <-
 
     invisible(retval)
   }
+

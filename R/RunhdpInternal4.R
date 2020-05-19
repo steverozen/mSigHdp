@@ -1,6 +1,65 @@
 #' Run hdp extraction and attribution on a spectra catalog file
 #'
-#' @inheritParams RunhdpInternal5
+#' @param input.catalog Input spectra catalog as a matrix or
+#' in \code{\link[ICAMS]{ICAMS}} format.
+#'
+#' @param CPU.cores Number of CPUs to use in running
+#'    \code{\link[hdp]{hdp_posterior}}; this is used to parallelize
+#'    running the posterior sampling chains, so there is no
+#'    point in making this larger than \code{num.posterior}.
+#'
+#' @param seedNumber An integer that is used to generate separate
+#'   random seeds for each call to \code{\link[hdp]{dp_activate}},
+#'   and each call of \code{\link[hdp]{hdp_posterior}}; please see the code
+#'   on how this is done. But repeated calls with same value of
+#'   \code{seedNumber} and other inputs should produce the same results.
+#'
+#' @param K.guess Suggested initial value of the number of
+#' signatures, passed to \code{\link[hdp]{dp_activate}} as
+#' \code{initcc}.
+#'
+#' @param multi.types A logical scalar or
+#' a character vector.
+#' If \code{FALSE}, hdp will regard all input spectra as one tumor type.
+#'
+#' If \code{TRUE}, hdp will infer tumor types based on the string before "::" in their names.
+#' e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
+#'
+#' If \code{multi.types} is a character vector, then it should be of the same length
+#' as the number of columns in \code{input.catalog}, and each value is the
+#' name of the tumor type of the corresponding column in \code{input.catalog},
+#' e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.
+#'
+#' @param verbose If \code{TRUE} then \code{message} progress information.
+#'
+#' @param num.posterior Number of posterior sampling chains; can set to
+#'   1 for testing.
+#'
+#' @param post.burnin Pass to \code{\link[hdp]{hdp_posterior}}
+#'      \code{burnin}.
+#'
+#' @param post.n Pass to \code{\link[hdp]{hdp_posterior}}
+#'      \code{n}.
+#'
+#' @param post.space Pass to \code{\link[hdp]{hdp_posterior}}
+#'      \code{space}.
+#'
+#' @param post.cpiter Pass to \code{\link[hdp]{hdp_posterior}}
+#'      \code{cpiter}.
+#'
+#' @param post.verbosity Pass to \code{\link[hdp]{hdp_posterior}}
+#'      \code{verbosity}.
+#'
+#' @param cos.merge The cosine similarity threshold for merging raw clusters
+#'      from the posterior sampling chains into "components" i.e. signatures;
+#'      passed to \code{\link[hdp]{hdp_extract_components}}.
+#'
+#' @param min.sample A "component" (i.e. signature) must have at least
+#'      this many samples; passed to \code{\link[hdp]{hdp_extract_components}}.
+#'
+#' @param checkpoint.aft.post If non-\code{NULL}, a file path to checkpoint
+#'      the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
+#'      as a .Rdata file.
 #'
 #' @return A list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
@@ -34,8 +93,9 @@ RunhdpInternal4 <-
            post.cpiter         = 3,
            post.verbosity      = 0,
            cos.merge           = 0.9,
-           min.sample          = 1
-) { # 14 arguments
+           min.sample          = 1,
+           checkpoint.aft.post = NULL
+) { # 15 arguments
 
     if (!exists("stir.closure", envir = .GlobalEnv)) {
       assign("stir.closure", xmake.s(), envir = .GlobalEnv)
@@ -103,8 +163,7 @@ RunhdpInternal4 <-
 
     al <- rep(1,dp.levels)
 
-    ## initialise hdp
-    if (verbose) message("calling hdp_init")
+    if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = ppindex,
                                cpindex = cpindex,
                                hh = rep(1,number.channels),
@@ -114,12 +173,11 @@ RunhdpInternal4 <-
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)
 
-    if (verbose) message("calling hdp_setdata")
+    if (verbose) message("calling hdp_setdata ", Sys.time())
 
     # (hdp/hdpx)::hdp_setdata generates the warning:
     # In if (!class(data) %in% c("matrix", "data.frame")) { :
     #     the condition has length > 1 and only the first element will be used
-
     # We circumvent this here
 
     tmp.cs <- convSpectra
@@ -133,7 +191,7 @@ RunhdpInternal4 <-
     # Run num.posterior independent sampling chains
     activate.and.sample <- function(my.seed) {
 
-      if (verbose) message("calling dp_activate")
+      if (verbose) message("calling dp_activate ", Sys.time())
       # dp_activate requires that stir.closure exists in .GlobalEnv;
       # see above in this function.
       hdp.state <- hdpx::dp_activate(hdpObject,
@@ -141,7 +199,7 @@ RunhdpInternal4 <-
                                     initcc = K.guess,
                                     seed = my.seed + 3e6)
 
-      if (verbose) message("calling hdp_posterior")
+      if (verbose) message("calling hdp_posterior ", Sys.time())
       sample.chain <- hdpx::hdp_posterior(
         hdp       = hdp.state,
         verbosity = post.verbosity,
@@ -153,14 +211,26 @@ RunhdpInternal4 <-
       return(sample.chain)
     }
 
-    chlist <- parallel::mclapply(
-      # Must choose a different seed for each of the chains
-      X = (seedNumber + 1:num.posterior * 10^6) ,
-      FUN = activate.and.sample,
-      mc.cores = CPU.cores)
+    parallel.time <- system.time(
+      chlist <- parallel::mclapply(
+        # Must choose a different seed for each of the chains
+        X = (seedNumber + 1:num.posterior * 10^6) ,
+        FUN = activate.and.sample,
+        mc.cores = CPU.cores)
+    )
+    if (verbose) {
+      message("compute chlist time: ")
+      for (xn in names(parallel.time)) {
+        message(" ", xn, " ", parallel.time[[xn]])
+      }
+    }
+
+    if (!is.null(checkpoint.aft.post)) {
+      save(chlist, file = checkpoint.aft.post)
+    }
 
     # Generate the original multi_chain for the sample
-    if (verbose) message("calling hdp_multi_chain")
+    if (verbose) message("calling hdp_multi_chain ", Sys.time())
     # If a child dies the corresponding element of chlist has
     # class try-error.
     #
@@ -184,18 +254,32 @@ RunhdpInternal4 <-
       }
     }
 
+    if (length(clean.chlist) == 0) {
+      fname <- "chlist.from.aborted.run.of.RunhdpInternal4.Rdata"
+      save(chlist, file = fname)
+      stop("No usable result in chlist, look in ", fname)
+    }
+
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
     rm(chlist)
     rm(clean.chlist)
 
-    if (verbose) message("calling hdp_extract_components")
+    if (verbose) message("calling hdp_extract_components ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
-    multi.chains <-
-      hdpx::hdp_extract_components(multi.chains,
-                                  cos.merge  = cos.merge,
-                                  min.sample = min.sample)
+    extract.time <- system.time(
+      multi.chains <-
+        hdpx::hdp_extract_components(multi.chains,
+                                     cos.merge  = cos.merge,
+                                     min.sample = min.sample)
+    )
+    if (verbose) {
+      message("hdp_extract_components time: ")
+      for (xn in names(extract.time)) {
+        message(" ", xn, " ", extract.time[[xn]])
+      }
+    }
 
-    if (verbose) message("calling hdpx::comp_categ_distn")
+    if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
     extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
 
     rownames(extractedSignatures) <- rownames(input.catalog)
@@ -210,7 +294,7 @@ RunhdpInternal4 <-
     ## signature exposure all tumor samples # TODO Wuyang, what do you mean
     # by normalize?
 
-    if (verbose) message("Calling hdpx::comp_dp_distn")
+    if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
     exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
 
     # Remove columns corresponding to parent or grandparent nodes
@@ -219,7 +303,7 @@ RunhdpInternal4 <-
     exposureProbs <- t(exposureProbs[-(1:(num.tumor.types + 1)), ])
     # Now rows are signatures, columns are samples
 
-    # Calculate exposure counts from exposure probabilies and total mutation
+    # Calculate exposure counts from exposure probabilities and total mutation
     # counts
     exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
     colnames(exposureCounts) <- colnames(input.catalog)
