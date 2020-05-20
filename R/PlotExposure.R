@@ -37,15 +37,17 @@ PlotExposureByRange <- function(
   n.sample <- ncol(exp)
   num.ranges <- n.sample %/% num.per.line
   size.of.last.range <- n.sample %% num.per.line
-  padding.len <- num.per.line - size.of.last.range
-  padding <- matrix(0,nrow = nrow(exp), ncol = padding.len)
-
-  # The column names starting with lots of underscore
-  # will not be plotted in the final output.
-  colnames(padding) <- paste("_____", 1:ncol(padding), sep = "_")
-  exp <- cbind(exp, padding)
-
-  starts <- 0:num.ranges * num.per.line + 1
+  if (size.of.last.range > 0) {
+    padding.len <- num.per.line - size.of.last.range
+    padding <- matrix(0,nrow = nrow(exp), ncol = padding.len)
+    # The column names starting with lots of underscore
+    # will not be plotted in the final output.
+    colnames(padding) <- paste("_____", 1:ncol(padding), sep = "_")
+    exp <- cbind(exp, padding)
+    starts <- 0:num.ranges * num.per.line + 1
+  } else {
+    starts <- 0:(num.ranges - 1) *num.per.line + 1
+  }
   ends   <- starts + num.per.line - 1
 
   plot.legend <- TRUE
@@ -126,12 +128,14 @@ PlotExposure <-
 
     # ignore column names; we'll plot them separately to make them fit
     bp = barplot(plot.what,
-                 las=1,
-                 yaxt = 's',
-                 xaxt = 'n', # Do not plot the X axis
-                 density=p.dense, angle=p.angle,
-                 border= F, # ifelse(num.samples>200,NA,1),
-                 cex.main=1.2,
+                 las      = 1,
+                 yaxt     = 's',
+                 xaxt     = 'n', # Do not plot the X axis
+                 density  = p.dense,
+                 angle    = p.angle,
+                 border   = F, # ifelse(num.samples>200,NA,1),
+                 cex.main = 1.2,
+                 col      = col,
                  ...) # removed xlab, main, ylim, ylab
 
     # get max y values for plot region, put legend at top right
