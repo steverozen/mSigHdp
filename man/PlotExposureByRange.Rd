@@ -2,7 +2,7 @@
 % Please edit documentation in R/PlotExposure.R
 \name{PlotExposureByRange}
 \alias{PlotExposureByRange}
-\title{Plot exposures in multple plots each with a manageable number of samples.}
+\title{Plot exposures in multiple plots each with a manageable number of samples.}
 \usage{
 PlotExposureByRange(exp, num.per.line = 30, plot.proportion = FALSE, ...)
 }
@@ -12,18 +12,18 @@ signatures in rows and samples in columns. Rownames are taken
 as the signature names and column names are taken as the
 sample IDs. If you want \code{exp} sorted from largest to smallest
 use \code{\link{SortExp }}. Do not use column names that start
-with multipe underscores. The exposures will often be mutation
+with multiple underscores. The exposures will often be mutation
 counts, but could also be e.g. mutations per megabase.}
 
 \item{num.per.line}{Number of samples to show in each plot.}
 
-\item{plot.proportion}{Plot exposure proprotions rather than counts.}
+\item{plot.proportion}{Plot exposure proportions rather than counts.}
 
-\item{...}{Other arguments pased to \code{\link{PlotExposure}}. If \code{ylab}
+\item{...}{Other arguments passed to \code{\link{PlotExposure}}. If \code{ylab}
 is not included, it defaults to a value depending on \code{plot.proportion}.
 If \code{col} is not supplied the function tries to do something
 reasonable.}
 }
 \description{
-Plot exposures in multple plots each with a manageable number of samples.
+Plot exposures in multiple plots each with a manageable number of samples.
 }

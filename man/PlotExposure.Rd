@@ -7,7 +7,7 @@
 PlotExposure(s.weights, plot.proportion = FALSE, plot.legend = TRUE, ...)
 }
 \arguments{
-\item{plot.proportion}{Plot exposure proprotions rather than counts.}
+\item{plot.proportion}{Plot exposure proportions rather than counts.}
 
 \item{plot.legend}{If \code{TRUE} plot a legend.}
 
@@ -18,7 +18,7 @@ signatures in rows and samples in columns. Rownames are taken
 as the signature names and column names are taken as the
 sample IDs. If you want \code{exp} sorted from largest to smallest
 use \code{\link{SortExp }}. Do not use column names that start
-with multipe underscores. The exposures will often be mutation
+with multiple underscores. The exposures will often be mutation
 counts, but could also be e.g. mutations per megabase.}
 }
 \description{
