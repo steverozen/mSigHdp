@@ -17,6 +17,9 @@ test_that("PlotExposureByRange function", {
   PlotExposureByRange(exp = SortExp(ex[, 1:43 ]),
                       num.per.line = 20, main = "xxxxx")
 
+  PlotExposureByRange(exp = SortExp(ex[, 1:20 ]),  # Test a trick edge case
+                      num.per.line = 20, main = "xxxxx")
+
   PlotExposureByRange(exp = SortExp(ex[, 3:6 ]),
                       num.per.line = 20)
 

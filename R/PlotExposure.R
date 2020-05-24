@@ -94,15 +94,14 @@ PlotExposure <-
     num.sigs  <- nrow(exposures)
     num.samples <- ncol(exposures)
 
-    col <- list(...)$col
-    if (is.null(col)) {
+    three.dots <- list(...)
+    if (is.null(three.dots$col)) {
       if (num.sigs <= 8) {
-        col <- # c('skyblue', 'black', 'grey', 'yellow', 'blue', 'brown', 'green4', 'red')
+        three.dots$col <- # c('skyblue', 'black', 'grey', 'yellow', 'blue', 'brown', 'green4', 'red')
           c('red', 'black', 'grey', 'yellow', 'blue', 'brown', 'green4', 'skyblue')
-
       } else {
         # lots of signatures; use shaded lines to differentiate
-        col <- grDevices::rainbow(num.sigs, alpha = 1)
+        three.dots$col <- grDevices::rainbow(num.sigs, alpha = 1)
       }
     }
     if (num.sigs <= 12) {
@@ -130,16 +129,17 @@ PlotExposure <-
     }
 
     # ignore column names; we'll plot them separately to make them fit
-    bp = barplot(plot.what,
-                 las      = 1,
-                 yaxt     = 's',
-                 xaxt     = 'n', # Do not plot the X axis
-                 density  = p.dense,
-                 angle    = p.angle,
-                 border   = F, # ifelse(num.samples>200,NA,1),
-                 cex.main = 1.2,
-                 col      = col,
-                 ...) # removed xlab, main, ylim, ylab
+    bp = do.call(
+      barplot,
+      args = c(list(height = plot.what,
+                    las      = 1,
+                    yaxt     = 's',
+                    xaxt     = 'n', # Do not plot the X axis
+                    density  = p.dense,
+                    angle    = p.angle,
+                    border   = F, # ifelse(num.samples>200,NA,1),
+                    cex.main = 1.2),
+               three.dots))
 
     # get max y values for plot region, put legend at top right
     dims = par('usr') # c(x.min, x.max, y.min, y.max)
@@ -147,16 +147,21 @@ PlotExposure <-
 
     if (plot.legend) {
       # less space between rows (y.intersp), and between box & label (x.intersp)
-      # reverse the order, so sig 1 is at bottom (to match bargraph)
-      legend.x <- ncol(exposures) * .7
+      # reverse the order, so sig 1 is at bottom (to match the stacked bar graph)
+      legend.x <- ncol(exposures) * .7   # Nanhai, we could pass in legend.x and legend.y as optional arguments from the caller
       legend.y <- y.max * 0.8
-      legend(x=legend.x, y=legend.y,
-             rev(row.names(exposures)),
-             density=p.dense.rev, angle=p.angle.rev,
-             bg=NA, xpd=NA,
-             fill=col[num.sigs:1],
-             x.intersp=.4, y.intersp=.8,
-             bty='n', cex=l.cex * 0.9)
+      legend(x         = legend.x,
+             y         = legend.y,
+             legend    = rev(row.names(exposures)),
+             density   = p.dense.rev,
+             angle     = p.angle.rev,
+             bg        = NA,
+             xpd       = NA,
+             fill      = three.dots$col[num.sigs:1],
+             x.intersp = .4,
+             y.intersp = .8,
+             bty       = 'n',
+             cex       = l.cex * 0.9)
       text(x=legend.x, y = legend.y, "Signature", adj=-0.09)
     }
 
@@ -173,6 +178,9 @@ PlotExposure <-
       cnames <- sub("_____.*", "", cnames)
       mtext(cnames, side=1, at=bp, las=direction, cex=size.adj)
     }
+
+    return(bp)
+
    }
 
 #' Sort columns of an exposure matrix from largest to smaller (or vice versa).
