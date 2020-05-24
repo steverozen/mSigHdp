@@ -1,9 +1,9 @@
 
-test_that("RunAndEvalHdp4-fast96", {
+test_that("RunAndEvalHdp4-fast96-null-ex", {
 
   input.catalog.file <- "SBS96.ground.truth/ground.truth.syn.catalog.csv"
 
-  input.exposure.file <- "SBS96.ground.truth/ground.truth.syn.exposures.csv"
+  # input.exposure.file <- "SBS96.ground.truth/ground.truth.syn.exposures.csv"
 
   input.signature.file <- "SBS96.ground.truth/ground.truth.syn.sigs.csv"
 
@@ -13,7 +13,7 @@ test_that("RunAndEvalHdp4-fast96", {
 
   retvalx <- RunAndEvalHdp4(
     input.catalog         = input.catalog.file, # The spectra
-    ground.truth.exp      = input.exposure.file,
+    ground.truth.exp      = NULL,
     ground.truth.sig.file = input.signature.file,
     test.only     = 10, # Only use columns 1:10 of input.catalog
     CPU.cores     = 2,

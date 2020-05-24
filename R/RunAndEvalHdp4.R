@@ -2,7 +2,9 @@
 #'
 #' @inheritParams Runhdp4
 #'
-#' @param ground.truth.exposure.file Path to file with ground truth exposures.
+#' @param ground.truth.exp Ground truth exposure matrix or
+#'   path to file with ground truth exposures.
+#'   If \code{NULL} skip checks that need this information.
 #'
 #' @param ground.truth.sig.file Path to file with ground truth signatures.
 #'
@@ -14,9 +16,9 @@
 
 RunAndEvalHdp4 <- function(
   input.catalog,
-  ground.truth.exposure.file,
-  ground.truth.sig.file      = NULL,
-  ground.truth.sig.catalog   = NULL,
+  ground.truth.exp         = NULL,
+  ground.truth.sig.file    = NULL,
+  ground.truth.sig.catalog = NULL,
   out.dir,
   CPU.cores                  = 1,
   seedNumber                 = 1,
@@ -48,7 +50,10 @@ RunAndEvalHdp4 <- function(
 
   # Do this early to catch any possible error before we do a lot
   # of computation
-  ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exposure.file)
+  if (!is.null(ground.truth.exp) &&
+      class(ground.truth.exp) == "character") {
+    ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
+  }
 
   retval <- Runhdp4(
     input.catalog         = input.catalog,
@@ -130,14 +135,7 @@ RunAndEvalHdp4 <- function(
     sigAnalysis0$ground.truth.with.no.best.match,
     file = file.path(out.dir,"other.results.txt"))
 
-  if (FALSE) {
-    # See file AssessExtracted.R
-    exposureDiff <- SynSigEval::ReadAndAnalyzeExposures(
-      extracted.sigs         = NULL,
-      ground.truth.sigs      = NULL ,
-      inferred.exp.path      = NULL,
-      ground.truth.exposures = ground.truth.exposure.file)
-  }
+  # Put analysis and plotting of exposures here
 
   invisible(retval)
 
