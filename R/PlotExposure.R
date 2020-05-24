@@ -1,18 +1,18 @@
-#' Plot exposures in multple plots each with a manageable number of samples.
+#' Plot exposures in multiple plots each with a manageable number of samples.
 #'
 #' @param exp Exposures as a numerical matrix (or data.frame) with
 #'    signatures in rows and samples in columns. Rownames are taken
 #'    as the signature names and column names are taken as the
 #'    sample IDs. If you want \code{exp} sorted from largest to smallest
 #'    use \code{\link{SortExp }}. Do not use column names that start
-#'    with multipe underscores. The exposures will often be mutation
+#'    with multiple underscores. The exposures will often be mutation
 #'    counts, but could also be e.g. mutations per megabase.
 #'
-#' @param plot.proportion Plot exposure proprotions rather than counts.
+#' @param plot.proportion Plot exposure proportions rather than counts.
 #'
 #' @param num.per.line Number of samples to show in each plot.
 #'
-#' @param ... Other arguments pased to \code{\link{PlotExposure}}. If \code{ylab}
+#' @param ... Other arguments passed to \code{\link{PlotExposure}}. If \code{ylab}
 #'    is not included, it defaults to a value depending on \code{plot.proportion}.
 #'    If \code{col} is not supplied the function tries to do something
 #'    reasonable.
@@ -68,10 +68,10 @@ PlotExposureByRange <- function(
 #'    as the signature names and column names are taken as the
 #'    sample IDs. If you want \code{exp} sorted from largest to smallest
 #'    use \code{\link{SortExp }}. Do not use column names that start
-#'    with multipe underscores. The exposures will often be mutation
+#'    with multiple underscores. The exposures will often be mutation
 #'    counts, but could also be e.g. mutations per megabase.
 #'
-#' @param plot.proportion Plot exposure proprotions rather than counts.
+#' @param plot.proportion Plot exposure proportions rather than counts.
 #'
 #' @param plot.legend If \code{TRUE} plot a legend.
 #'
