@@ -4,14 +4,14 @@
 \alias{PlotExposureByRange}
 \title{Plot exposures in multiple plots each with a manageable number of samples.}
 \usage{
-PlotExposureByRange(exp, num.per.line = 30, plot.proportion = FALSE, ...)
+PlotExposureByRange(exposures, num.per.line = 30, plot.proportion = FALSE, ...)
 }
 \arguments{
-\item{exp}{Exposures as a numerical matrix (or data.frame) with
+\item{exposures}{Exposures as a numerical matrix (or data.frame) with
 signatures in rows and samples in columns. Rownames are taken
 as the signature names and column names are taken as the
-sample IDs. If you want \code{exp} sorted from largest to smallest
-use \code{\link{SortExp }}. Do not use column names that start
+sample IDs. If you want \code{exposures} sorted from largest to smallest
+use \code{\link{SortExp}}. Do not use column names that start
 with multiple underscores. The exposures will often be mutation
 counts, but could also be e.g. mutations per megabase.}
 

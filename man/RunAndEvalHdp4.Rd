@@ -6,7 +6,7 @@
 \usage{
 RunAndEvalHdp4(
   input.catalog,
-  ground.truth.exposure.file,
+  ground.truth.exp = NULL,
   ground.truth.sig.file = NULL,
   ground.truth.sig.catalog = NULL,
   out.dir,
@@ -33,7 +33,9 @@ RunAndEvalHdp4(
 is the path to a file containing a spectra catalog
 in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.}
 
-\item{ground.truth.exposure.file}{Path to file with ground truth exposures.}
+\item{ground.truth.exp}{Ground truth exposure matrix or
+path to file with ground truth exposures.
+If \code{NULL} skip checks that need this information.}
 
 \item{ground.truth.sig.file}{Path to file with ground truth signatures.}
 

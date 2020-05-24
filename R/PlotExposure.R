@@ -1,10 +1,10 @@
 #' Plot exposures in multiple plots each with a manageable number of samples.
 #'
-#' @param exp Exposures as a numerical matrix (or data.frame) with
+#' @param exposures Exposures as a numerical matrix (or data.frame) with
 #'    signatures in rows and samples in columns. Rownames are taken
 #'    as the signature names and column names are taken as the
-#'    sample IDs. If you want \code{exp} sorted from largest to smallest
-#'    use \code{\link{SortExp }}. Do not use column names that start
+#'    sample IDs. If you want \code{exposures} sorted from largest to smallest
+#'    use \code{\link{SortExp}}. Do not use column names that start
 #'    with multiple underscores. The exposures will often be mutation
 #'    counts, but could also be e.g. mutations per megabase.
 #'
@@ -20,7 +20,7 @@
 #' @export
 #'
 PlotExposureByRange <- function(
-  exp,
+  exposures,
   num.per.line    = 30,
   plot.proportion = FALSE,
   ...
@@ -34,16 +34,16 @@ PlotExposureByRange <- function(
                    "Number of mutations")
   }
 
-  n.sample <- ncol(exp)
+  n.sample <- ncol(exposures)
   num.ranges <- n.sample %/% num.per.line
   size.of.last.range <- n.sample %% num.per.line
   if (size.of.last.range > 0) {
     padding.len <- num.per.line - size.of.last.range
-    padding <- matrix(0,nrow = nrow(exp), ncol = padding.len)
+    padding <- matrix(0,nrow = nrow(exposures), ncol = padding.len)
     # The column names starting with lots of underscore
     # will not be plotted in the final output.
     colnames(padding) <- paste("_____", 1:ncol(padding), sep = "_")
-    exp <- cbind(exp, padding)
+    exposures <- cbind(exposures, padding)
     starts <- 0:num.ranges * num.per.line + 1
   } else {
     starts <- 0:(num.ranges - 1) *num.per.line + 1
@@ -52,7 +52,7 @@ PlotExposureByRange <- function(
 
   plot.legend <- TRUE
   for (i in 1:length(starts)) {
-    PlotExposure(exp[ , starts[i]:ends[i]],
+    PlotExposure(exposures[ , starts[i]:ends[i]],
                  plot.proportion = plot.proportion,
                  plot.legend    = plot.legend,
                  ...)
@@ -63,11 +63,11 @@ PlotExposureByRange <- function(
 
 #' Plot a single exposure plot
 #'
-#' @param exp Exposures as a numerical matrix (or data.frame) with
+#' @param exposures Exposures as a numerical matrix (or data.frame) with
 #'    signatures in rows and samples in columns. Rownames are taken
 #'    as the signature names and column names are taken as the
 #'    sample IDs. If you want \code{exp} sorted from largest to smallest
-#'    use \code{\link{SortExp }}. Do not use column names that start
+#'    use \code{\link{SortExp}}. Do not use column names that start
 #'    with multiple underscores. The exposures will often be mutation
 #'    counts, but could also be e.g. mutations per megabase.
 #'
@@ -77,19 +77,22 @@ PlotExposureByRange <- function(
 #'
 #' @param ... Parameters passed to \code{\link[graphics]{barplot}}.
 #'
+#' @importFrom grDevices dev.off pdf
+#' @importFrom graphics barplot legend mtext par text
+#'
 #' @export
 
 PlotExposure <-
-  function(s.weights, # This is actually the exposure "counts"
+  function(exposures, # This is actually the exposure "counts"
            plot.proportion = FALSE,
            plot.legend     = TRUE,
            ...
   ) {
 
     # note - might be reals > 1, not necessary colSum==1
-    s.weights <- as.matrix(s.weights) # in case it is a data frame
-    num.sigs  <- nrow(s.weights)
-    num.samples <- ncol(s.weights)
+    exposures <- as.matrix(exposures) # in case it is a data frame
+    num.sigs  <- nrow(exposures)
+    num.samples <- ncol(exposures)
 
     col <- list(...)$col
     if (is.null(col)) {
@@ -121,9 +124,9 @@ PlotExposure <-
 
     if (plot.proportion) {
       # Matrix divided by vector goes col-wise, not row-wise, so transpose twice
-     plot.what <- t(t(s.weights)/colSums(s.weights))
+     plot.what <- t(t(exposures)/colSums(exposures))
     } else {
-      plot.what <- s.weights
+      plot.what <- exposures
     }
 
     # ignore column names; we'll plot them separately to make them fit
@@ -145,10 +148,10 @@ PlotExposure <-
     if (plot.legend) {
       # less space between rows (y.intersp), and between box & label (x.intersp)
       # reverse the order, so sig 1 is at bottom (to match bargraph)
-      legend.x <- ncol(s.weights) * .7
+      legend.x <- ncol(exposures) * .7
       legend.y <- y.max * 0.8
       legend(x=legend.x, y=legend.y,
-             rev(row.names(s.weights)),
+             rev(row.names(exposures)),
              density=p.dense.rev, angle=p.angle.rev,
              bg=NA, xpd=NA,
              fill=col[num.sigs:1],
@@ -166,7 +169,7 @@ PlotExposure <-
       else if (length(bp)<120) size.adj = .4
       else if (length(bp)<150) size.adj = .3
       else size.adj = .3
-      cnames <- colnames(s.weights)
+      cnames <- colnames(exposures)
       cnames <- sub("_____.*", "", cnames)
       mtext(cnames, side=1, at=bp, las=direction, cex=size.adj)
     }
@@ -184,26 +187,3 @@ SortExp <- function(exposures, decreasing = TRUE) {
   retval <- exposures[   , order(colSums(exposures), decreasing = decreasing)]
   return(retval)
 }
-
-# This one is trivial -- not needed
-PDFExposureByRange <- function(path,   # Out file path
-                               exp,
-                               num.per.line,
-                               plot.proportion,
-                               col=NULL,
-                               main=NULL,
-                               xlab=NULL,
-                               ylab=NULL
-) {
-  pdf(path, width = 8.2677, height = 11.6929, # for A4
-      onefile = TRUE, useDingbats = FALSE)
-  PlotExposureByRange(
-    exp             = exp,
-    num.per.line    = num.per.line,
-    plot.proportion = plot.proportion,
-    col = col,  main = main,
-    xlab = xlab,
-    ylab = ylab)
-  dev.off()
-}
-
