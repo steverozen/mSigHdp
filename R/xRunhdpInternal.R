@@ -1,6 +1,6 @@
-#' Run hdp extraction and attribution on a spectra catalog file
+#' Debugging scaffold for c code in hdpx/hdp
 #'
-#' @param input.catalog Input spectra catalog as a matrix or
+#'  @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
 #'
 #' @param CPU.cores Number of CPUs to use in running
@@ -79,7 +79,7 @@
 #'
 #' @export
 
-RunhdpInternal4 <-
+xRunhdpInternal <-
   function(input.catalog,
            CPU.cores           = 1,
            seedNumber          = 1,
@@ -198,6 +198,7 @@ RunhdpInternal4 <-
                                     1:num.process,
                                     initcc = K.guess,
                                     seed = my.seed + 3e6)
+      save(hdp.state, file = paste0(my.seed, ".activated.hdp.state.Rdata"))
 
       if (verbose) message("calling hdp_posterior ", Sys.time())
       sample.chain <- hdpx::hdp_posterior(
@@ -212,11 +213,13 @@ RunhdpInternal4 <-
     }
 
     parallel.time <- system.time(
-      chlist <- parallel::mclapply(
+        chlist <- lapply(
+      # chlist <- parallel::mclapply(
         # Must choose a different seed for each of the chains
         X = (seedNumber + 1:num.posterior * 10^6) ,
-        FUN = activate.and.sample,
-        mc.cores = CPU.cores)
+        FUN = activate.and.sample
+        # mc.cores = CPU.cores
+        )
     )
     if (verbose) {
       message("compute chlist time: ")

@@ -48,18 +48,18 @@ if \code{overwrite} is \code{FALSE} then
 abort if \code{out.dir} already exits.}
 
 \item{CPU.cores}{Number of CPUs to use in running
-\code{\link[hdp]{hdp_posterior}}; this is used to parallelize
+\code{\link[hdpx]{hdp_posterior}}; this is used to parallelize
 running the posterior sampling chains, so there is no
 point in making this larger than \code{num.posterior}.}
 
 \item{seedNumber}{An integer that is used to generate separate
-random seeds for each call to \code{\link[hdp]{dp_activate}},
-and each call of \code{\link[hdp]{hdp_posterior}}; please see the code
+random seeds for each call to \code{\link[hdpx]{dp_activate}},
+and each call of \code{\link[hdpx]{hdp_posterior}}; please see the code
 on how this is done. But repeated calls with same value of
 \code{seedNumber} and other inputs should produce the same results.}
 
 \item{K.guess}{Suggested initial value of the number of
-signatures, passed to \code{\link[hdp]{dp_activate}} as
+signatures, passed to \code{\link[hdpx]{dp_activate}} as
 \code{initcc}.}
 
 \item{multi.types}{A logical scalar or
@@ -87,27 +87,27 @@ raise an error.}
 \item{num.posterior}{Number of posterior sampling chains; can set to
 1 for testing.}
 
-\item{post.burnin}{Pass to \code{\link[hdp]{hdp_posterior}}
+\item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{burnin}.}
 
-\item{post.n}{Pass to \code{\link[hdp]{hdp_posterior}}
+\item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{n}.}
 
-\item{post.space}{Pass to \code{\link[hdp]{hdp_posterior}}
+\item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{space}.}
 
-\item{post.cpiter}{Pass to \code{\link[hdp]{hdp_posterior}}
+\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{cpiter}.}
 
-\item{post.verbosity}{Pass to \code{\link[hdp]{hdp_posterior}}
+\item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{verbosity}.}
 
 \item{cos.merge}{The cosine similarity threshold for merging raw clusters
 from the posterior sampling chains into "components" i.e. signatures;
-passed to \code{\link[hdp]{hdp_extract_components}}.}
+passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
-this many samples; passed to \code{\link[hdp]{hdp_extract_components}}.}
+this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 }
 \description{
 Run and evaluate hdp
