@@ -82,21 +82,7 @@ the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
 as a .Rdata file.}
 }
 \value{
-A list with the following elements:\describe{
-\item{signature}{The extracted signature profiles as a matrix;
-rows are mutation types, columns are
-samples (e.g. tumors).}
-\item{exposure}{The inferred exposures as a matrix of mutation counts;
-rows are signatures, columns are samples (e.g. tumors).}
-\item{exposure.p}{\code{exposure} converted to proportions.}
-
-\item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
-This object has the method \code{\link[hdpx]{chains}} which returns
-a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
-sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
-(actually the methods seems to be just \code{hdp})
-that returns the \code{hdpState} from which it was generated.}
-}
+The list of sample changes returned by \code{hdp_posterior}.
 }
 \description{
 @param input.catalog Input spectra catalog as a matrix or

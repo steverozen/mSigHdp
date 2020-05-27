@@ -61,21 +61,7 @@
 #'      the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
 #'      as a .Rdata file.
 #'
-#' @return A list with the following elements:\describe{
-#' \item{signature}{The extracted signature profiles as a matrix;
-#'             rows are mutation types, columns are
-#'             samples (e.g. tumors).}
-#' \item{exposure}{The inferred exposures as a matrix of mutation counts;
-#'            rows are signatures, columns are samples (e.g. tumors).}
-#' \item{exposure.p}{\code{exposure} converted to proportions.}
-#'
-#' \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
-#'     This object has the method \code{\link[hdpx]{chains}} which returns
-#'     a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
-#'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
-#'     (actually the methods seems to be just \code{hdp})
-#'     that returns the \code{hdpState} from which it was generated.}
-#' }
+#' @return The list of sample changes returned by \code{hdp_posterior}.
 #'
 #' @export
 
@@ -232,88 +218,5 @@ xRunhdpInternal <-
       save(chlist, file = checkpoint.aft.post)
     }
 
-    # Generate the original multi_chain for the sample
-    if (verbose) message("calling hdp_multi_chain ", Sys.time())
-    # If a child dies the corresponding element of chlist has
-    # class try-error.
-    #
-    # We filter these and generate a warning. This is a bit
-    # tricky and I am not sure I have anticipated all possible
-    # returns, so I do this in a loop.
-    ii <- 1
-    clean.chlist <- list()
-    for (i in 1:length(chlist)) {
-      cclass <- class(chlist[[i]])
-      cat("chlist element", i, "has class", cclass, "\n")
-      if ("try-error" %in% cclass) {
-        warning("class of element", i, "\n")
-      } else {
-        if (!("hdpSampleChain" %in% cclass)) {
-          warning("A different incorrect class for i =", i, cclass)
-        } else{
-          clean.chlist[[ii]] <- chlist[[i]]
-          ii <- ii + 1
-        }
-      }
-    }
-
-    if (length(clean.chlist) == 0) {
-      fname <- "chlist.from.aborted.run.of.RunhdpInternal4.Rdata"
-      save(chlist, file = fname)
-      stop("No usable result in chlist, look in ", fname)
-    }
-
-    multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-    rm(chlist)
-    rm(clean.chlist)
-
-    if (verbose) message("calling hdp_extract_components ", Sys.time())
-    # Group raw "clusters" into "components" (i.e. signatures).
-    extract.time <- system.time(
-      multi.chains <-
-        hdpx::hdp_extract_components(multi.chains,
-                                     cos.merge  = cos.merge,
-                                     min.sample = min.sample)
-    )
-    if (verbose) {
-      message("hdp_extract_components time: ")
-      for (xn in names(extract.time)) {
-        message(" ", xn, " ", extract.time[[xn]])
-      }
-    }
-
-    if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
-    extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
-
-    rownames(extractedSignatures) <- rownames(input.catalog)
-    # Set signature names to "hdp.0","hdp.1","hdp.2", ...
-    colnames(extractedSignatures) <-
-      paste("hdp", colnames(extractedSignatures), sep = ".")
-
-    ## Calculate the exposure probability of each signature (component) for each
-    ## tumor sample (posterior sample corresponding to a dirichlet process node).
-    ## This is the probability distribution of signatures (components) for all
-    ## tumor samples (DP nodes); exposureProbs is the normalized
-    ## signature exposure all tumor samples # TODO Wuyang, what do you mean
-    # by normalize?
-
-    if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
-    exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
-
-    # Remove columns corresponding to parent or grandparent nodes
-    # (leaving only columns corresponding to samples.
-    # Transpose so it conforms to SynSigEval format
-    exposureProbs <- t(exposureProbs[-(1:(num.tumor.types + 1)), ])
-    # Now rows are signatures, columns are samples
-
-    # Calculate exposure counts from exposure probabilities and total mutation
-    # counts
-    exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
-    colnames(exposureCounts) <- colnames(input.catalog)
-    rownames(exposureCounts) <- colnames(extractedSignatures)
-
-    invisible(list(signature       = extractedSignatures,
-                   exposure        = exposureCounts,
-                   exposure.p      = exposureProbs,
-                   multi.chains    = multi.chains))
+    invisible(chlist)
   }
