@@ -72,7 +72,8 @@ RunAndEvalHdp4 <- function(
     post.cpiter           = post.cpiter,
     post.verbosity        = post.verbosity,
     cos.merge             = cos.merge,
-    min.sample            = min.sample)
+    min.sample            = min.sample,
+    checkpoint.aft.post   = checkpoint.aft.post)
 
   sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
     ex.sigs  = retval$signature,
