@@ -35,7 +35,8 @@ RunAndEvalHdp4 <- function(
   post.cpiter                = 3,
   post.verbosity             = 0,
   cos.merge                  = 0.9,
-  min.sample                 = 1) {
+  min.sample                 = 1,
+  checkpoint.aft.post        = NULL) {
 
   if (!is.null(ground.truth.sig.catalog)
       && !is.null(ground.truth.sig.file)) {
