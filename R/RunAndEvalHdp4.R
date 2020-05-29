@@ -6,19 +6,27 @@
 #'   path to file with ground truth exposures.
 #'   If \code{NULL} skip checks that need this information.
 #'
-#' @param ground.truth.sig.file Path to file with ground truth signatures.
+#' @param ground.truth.sig.file Deprecated alias for argument
+#'   \code{ground.truth.sig}.
 #'
-#' @param ground.truth.sig.catalog \code{\link[ICAMS]{ICAMS}} catalog with signatures
-#'   used to construct the ground truth spectra.  Specify only one of
-#'   \code{ground.truth.sig.file.path} or \code{ground.truth.sig.catalog}.
+#' @param ground.truth.sig.catalog Deprecated alias for argument
+#'   \code{ground.truth.sig}.
+#'
+#' @param ground.truth.sig Use this one. Either a string with the
+#'   path to file with ground truth signatures or and
+#'   \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
+#'   These are the signatures used to construct the ground truth spectra.
 #'
 #' @export
+#'
+#' @return See the return value for \code{\link{RunhdpInternal4}}.
 
 RunAndEvalHdp4 <- function(
   input.catalog,
   ground.truth.exp         = NULL,
   ground.truth.sig.file    = NULL,
   ground.truth.sig.catalog = NULL,
+  ground.truth.sig         = NULL,
   out.dir,
   CPU.cores                  = 1,
   seedNumber                 = 1,
@@ -38,16 +46,31 @@ RunAndEvalHdp4 <- function(
   min.sample                 = 1,
   checkpoint.aft.post        = NULL) {
 
-  if (!is.null(ground.truth.sig.catalog)
-      && !is.null(ground.truth.sig.file)) {
-    stop("Specify only one of ground.truth.sig.catalog or ",
-         "ground.truth.sig.file.path")
+  if (is.null(ground.truth.sig)) {
+    # Caller is possibly using deprecated arguments
+    if (!is.null(ground.truth.sig.catalog)
+        && !is.null(ground.truth.sig.file)) {
+      stop("Specify only one of ground.truth.sig.catalog or ",
+           "ground.truth.sig.file.path")
+    }
+    if (!is.null(ground.truth.sig.catalog)) {
+      ground.truth.sig <- ground.truth.sig.catalog
+    } else if (!is.null(ground.truth.sig.file)) {
+      ground.truth.sig <- ground.truth.sig.file
+    } else {
+      stop("Please provide a value for argument ground.truth.sig")
+    }
   }
 
-  if (is.null(ground.truth.sig.catalog)) {
-    ground.truth.sig.catalog <- ICAMS::ReadCatalog(ground.truth.sig.file)
+  if (mode(ground.truth.sig) == "character") {
+    if (verbose) {
+      message("Reading ground truth signatures from ",
+              ground.truth.sig)
+    }
+    ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig, strict = FALSE)
   }
-  stopifnot(is.matrix(ground.truth.sig.catalog))
+
+  stopifnot(is.matrix(ground.truth.sig))
 
   # Do this early to catch any possible error before we do a lot
   # of computation
@@ -78,7 +101,7 @@ RunAndEvalHdp4 <- function(
 
   sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
     ex.sigs  = retval$signature,
-    gt.sigs  = ground.truth.sig.catalog,
+    gt.sigs  = ground.truth.sig,
     exposure = ground.truth.exp)
 
   ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$gt.sigs,
@@ -92,33 +115,6 @@ RunAndEvalHdp4 <- function(
   # Writes bi-directional matching and cos.sim calculation
   utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
   utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
-
-  if (FALSE) {
-    # Disconnected code -- we probably do not need analysis without the "0 component"
-    sig.without.0 <- retval$signature
-    hdp.0.col <- which(colnames(sig.without.0) == "hdp.0")
-    stopifnot(length(hdp.0.col) == 1)
-    sig.without.0 <- sig.without.0[ , -hdp.0.col]
-    ICAMS::WriteCatalog(ICAMS::as.catalog(sig.without.0),
-                        file.path(out.dir,"extracted.signatures.no.0.csv"))
-
-    sigAnalysis <- SynSigEval::MatchSigsAndRelabel(
-      ex.sigs  = sig.without.0,
-      gt.sigs  = ground.truth.sig.catalog,
-      exposure = ground.truth.exp)
-
-    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis$gt.sigs,
-                                              catalog.type = "counts.signature"), # Need to fix this
-                            file.path(out.dir, "ground.truth.sigs.pdf"))
-
-    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis$ex.sigs,
-                                              catalog.type = "counts.signature"),
-                            file.path(out.dir, "extracted.sigs.pdf"))
-
-    # Writes bi-directional matching and cos.sim calculation
-    utils::write.csv(sigAnalysis$match1, file = file.path(out.dir, "match1.csv"))
-    utils::write.csv(sigAnalysis$match2, file = file.path(out.dir, "match2.csv"))
-  }
 
   utils::capture.output(
     cat("Call\n"),

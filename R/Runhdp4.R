@@ -4,7 +4,7 @@
 #'
 #' @param input.catalog Either a character string, in which case this
 #'   is the path to a file containing a spectra catalog
-#' in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.
+#'   in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.
 #'
 #' @param out.dir Directory that will be created for the output;
 #'   if \code{overwrite} is \code{FALSE} then

@@ -9,6 +9,7 @@ RunAndEvalHdp4(
   ground.truth.exp = NULL,
   ground.truth.sig.file = NULL,
   ground.truth.sig.catalog = NULL,
+  ground.truth.sig = NULL,
   out.dir,
   CPU.cores = 1,
   seedNumber = 1,
@@ -25,7 +26,8 @@ RunAndEvalHdp4(
   post.cpiter = 3,
   post.verbosity = 0,
   cos.merge = 0.9,
-  min.sample = 1
+  min.sample = 1,
+  checkpoint.aft.post = NULL
 )
 }
 \arguments{
@@ -37,11 +39,16 @@ in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.}
 path to file with ground truth exposures.
 If \code{NULL} skip checks that need this information.}
 
-\item{ground.truth.sig.file}{Path to file with ground truth signatures.}
+\item{ground.truth.sig.file}{Deprecated alias for argument
+\code{ground.truth.sig}.}
 
-\item{ground.truth.sig.catalog}{\code{\link[ICAMS]{ICAMS}} catalog with signatures
-used to construct the ground truth spectra.  Specify only one of
-\code{ground.truth.sig.file.path} or \code{ground.truth.sig.catalog}.}
+\item{ground.truth.sig.catalog}{Deprecated alias for argument
+\code{ground.truth.sig}.}
+
+\item{ground.truth.sig}{Use this one. Either a string with the
+path to file with ground truth signatures or and
+\code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
+These are the signatures used to construct the ground truth spectra.}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then
@@ -108,6 +115,13 @@ passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
+
+\item{checkpoint.aft.post}{If non-\code{NULL}, a file path to checkpoint
+the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
+as a .Rdata file.}
+}
+\value{
+See the return value for \code{\link{RunhdpInternal4}}.
 }
 \description{
 Run and evaluate hdp
