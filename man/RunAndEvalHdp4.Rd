@@ -7,9 +7,7 @@
 RunAndEvalHdp4(
   input.catalog,
   ground.truth.exp = NULL,
-  ground.truth.sig.file = NULL,
-  ground.truth.sig.catalog = NULL,
-  ground.truth.sig = NULL,
+  ground.truth.sig,
   out.dir,
   CPU.cores = 1,
   seedNumber = 1,
@@ -38,12 +36,6 @@ in \code{\link[ICAMS]{ICAMS}} format, or an \code{\link[ICAMS]{ICAMS}} catalog.}
 \item{ground.truth.exp}{Ground truth exposure matrix or
 path to file with ground truth exposures.
 If \code{NULL} skip checks that need this information.}
-
-\item{ground.truth.sig.file}{Deprecated alias for argument
-\code{ground.truth.sig}.}
-
-\item{ground.truth.sig.catalog}{Deprecated alias for argument
-\code{ground.truth.sig}.}
 
 \item{ground.truth.sig}{Use this one. Either a string with the
 path to file with ground truth signatures or and

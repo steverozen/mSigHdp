@@ -12,9 +12,9 @@ test_that("RunAndEvalHdp4-fast96-null-ex", {
     envir = regression)
 
   retvalx <- RunAndEvalHdp4(
-    input.catalog         = input.catalog.file, # The spectra
-    ground.truth.exp      = NULL,
-    ground.truth.sig.file = input.signature.file,
+    input.catalog    = input.catalog.file, # The spectra
+    ground.truth.exp = NULL,
+    ground.truth.sig = input.signature.file,
     test.only     = 10, # Only use columns 1:10 of input.catalog
     CPU.cores     = 2,
     seedNumber    = 44,

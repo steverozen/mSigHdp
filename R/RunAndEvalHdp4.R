@@ -6,12 +6,6 @@
 #'   path to file with ground truth exposures.
 #'   If \code{NULL} skip checks that need this information.
 #'
-#' @param ground.truth.sig.file Deprecated alias for argument
-#'   \code{ground.truth.sig}.
-#'
-#' @param ground.truth.sig.catalog Deprecated alias for argument
-#'   \code{ground.truth.sig}.
-#'
 #' @param ground.truth.sig Use this one. Either a string with the
 #'   path to file with ground truth signatures or and
 #'   \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
@@ -24,9 +18,7 @@
 RunAndEvalHdp4 <- function(
   input.catalog,
   ground.truth.exp         = NULL,
-  ground.truth.sig.file    = NULL,
-  ground.truth.sig.catalog = NULL,
-  ground.truth.sig         = NULL,
+  ground.truth.sig,
   out.dir,
   CPU.cores                  = 1,
   seedNumber                 = 1,
@@ -43,24 +35,8 @@ RunAndEvalHdp4 <- function(
   post.cpiter                = 3,
   post.verbosity             = 0,
   cos.merge                  = 0.9,
-  min.sample                 = 1,
-  checkpoint.aft.post        = NULL) {
-
-  if (is.null(ground.truth.sig)) {
-    # Caller is possibly using deprecated arguments
-    if (!is.null(ground.truth.sig.catalog)
-        && !is.null(ground.truth.sig.file)) {
-      stop("Specify only one of ground.truth.sig.catalog or ",
-           "ground.truth.sig.file.path")
-    }
-    if (!is.null(ground.truth.sig.catalog)) {
-      ground.truth.sig <- ground.truth.sig.catalog
-    } else if (!is.null(ground.truth.sig.file)) {
-      ground.truth.sig <- ground.truth.sig.file
-    } else {
-      stop("Please provide a value for argument ground.truth.sig")
-    }
-  }
+  min.sample          = 1,
+  checkpoint.aft.post = NULL) {
 
   if (mode(ground.truth.sig) == "character") {
     if (verbose) {
