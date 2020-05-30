@@ -98,7 +98,7 @@ RunhdpInternal4 <-
 ) { # 15 arguments
 
     if (!exists("stir.closure", envir = .GlobalEnv)) {
-      assign("stir.closure", xmake.s(), envir = .GlobalEnv)
+      assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
     }
 
     # hdp gets confused if the class of its input is not matrix.
