@@ -22,10 +22,10 @@
 #'
 #' @return The same list as returned by \code{\link{RunhdpInternal4}}.
 #'
-#' @details Creates several files in \code{out.dir}. These are:
-#'  call.and.session.info.txt, hdp.diagnostics.pdf, Runhdp4.retval.Rdata,
-#'  extracted.signatures.csv, extracted.signature.pdf (optional),
-#'  inferred.exposures.csv.
+#' @details Creates multiple files in \code{out.dir}.
+#'
+#' @importFrom grDevices dev.off pdf
+#' @importFrom graphics par
 #'
 #' @export
 
@@ -98,10 +98,10 @@ Runhdp4 <-
 
     # Plot the diagnostics of sampling chains.
     if (verbose) message("Writing HDP diagnostics")
-    graphics::par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
-    grDevices::pdf(file = file.path(out.dir,"diagnostics.likelihood.pdf"))
+    par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
+    pdf(file = file.path(out.dir,"diagnostics.likelihood.pdf"))
     lapply(chains, hdpx::plot_lik, bty = "L")
-    grDevices::dev.off()
+    dev.off()
 
     grDevices::pdf(file = file.path(out.dir,"diagnostics.numcluster.pdf"))
     # This is the number of raw clusters sampled along each chain
@@ -155,6 +155,20 @@ Runhdp4 <-
     #              paste0(out.dir,"/exposure.probs.csv"))
     SynSigGen::WriteExposure(retval$exposure,
                   file.path(out.dir,"inferred.exposures.csv"))
+
+    pdf(file = file.path(out.dir,"inferred.exposure.count.pdf"),
+        paper = "a4")
+    PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
+                        num.per.line = 40)
+    dev.off()
+
+    pdf(file = file.path(out.dir,"inferred.exposure.proportion.pdf"),
+        paper = "a4")
+    PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
+                        num.per.line = 40,
+                        plot.proportion = TRUE)
+    dev.off()
+
 
     invisible(retval)
   }

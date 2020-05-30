@@ -118,3 +118,6 @@ See the return value for \code{\link{RunhdpInternal4}}.
 \description{
 Run and evaluate hdp
 }
+\details{
+Creates multiple files in \code{out.dir}.
+}

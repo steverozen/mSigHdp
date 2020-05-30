@@ -111,8 +111,5 @@ The same list as returned by \code{\link{RunhdpInternal4}}.
 Run hdp extraction and attribution on a spectra catalog file using hdpx
 }
 \details{
-Creates several files in \code{out.dir}. These are:
-call.and.session.info.txt, hdp.diagnostics.pdf, Runhdp4.retval.Rdata,
-extracted.signatures.csv, extracted.signature.pdf (optional),
-inferred.exposures.csv.
+Creates multiple files in \code{out.dir}.
 }

@@ -13,6 +13,8 @@
 #'
 #' @export
 #'
+#' @details Creates multiple files in \code{out.dir}.
+#'
 #' @return See the return value for \code{\link{RunhdpInternal4}}.
 
 RunAndEvalHdp4 <- function(
@@ -80,6 +82,10 @@ RunAndEvalHdp4 <- function(
     gt.sigs  = ground.truth.sig,
     exposure = ground.truth.exp)
 
+  # Writes bi-directional matching and cos.sim calculation
+  utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
+  utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
+
   ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$gt.sigs,
                                             catalog.type = "counts.signature"), # Need to fix this
                           file.path(out.dir, "ground.truth.sigs.w0.pdf"))
@@ -88,9 +94,22 @@ RunAndEvalHdp4 <- function(
                                             catalog.type = "counts.signature"),
                           file.path(out.dir, "extracted.sigs.w0.pdf"))
 
-  # Writes bi-directional matching and cos.sim calculation
-  utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
-  utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
+  if (!is.null(ground.truth.exp)) {
+    pdf(file = file.path(out.dir,"ground.truth.exposure.count.pdf"),
+        paper = "a4")
+    PlotExposureByRange(mSigHdp::SortExp(ground.truth.exp),
+                        num.per.line = 40)
+    dev.off()
+
+    pdf(file = file.path(out.dir,"ground.truth.proportion.pdf"),
+        paper = "a4")
+    PlotExposureByRange(mSigHdp::SortExp(ground.truth.exp),
+                        num.per.line = 40,
+                        plot.proportion = TRUE)
+    dev.off()
+
+
+  }
 
   utils::capture.output(
     cat("Call\n"),
