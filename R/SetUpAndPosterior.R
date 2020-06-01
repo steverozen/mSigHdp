@@ -50,13 +50,6 @@
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
-#' @param cos.merge The cosine similarity threshold for merging raw clusters
-#'      from the posterior sampling chains into "components" i.e. signatures;
-#'      passed to \code{\link[hdpx]{hdp_extract_components}}.
-#'
-#' @param min.sample A "component" (i.e. signature) must have at least
-#'      this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.
-#'
 #' @param checkpoint.aft.post If non-\code{NULL}, a file path to checkpoint
 #'      the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
 #'      as a .Rdata file.
@@ -88,7 +81,7 @@
 #'
 #' @export
 
-RunhdpInternal4 <-
+SetUpAndPosterior <-
   function(input.catalog,
            CPU.cores           = 1,
            seedNumber          = 1,
@@ -101,8 +94,6 @@ RunhdpInternal4 <-
            post.space          = 50,
            post.cpiter         = 3,
            post.verbosity      = 0,
-           cos.merge           = 0.9,
-           min.sample          = 1,
            checkpoint.aft.post = NULL,
            stop.after.hdp.posterior = NULL
 ) { # 16 arguments
@@ -275,57 +266,4 @@ RunhdpInternal4 <-
       return(invisible(clean.chlist))
     }
 
-    multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-    rm(chlist)
-    rm(clean.chlist)
-
-    if (verbose) message("calling hdp_extract_components ", Sys.time())
-    # Group raw "clusters" into "components" (i.e. signatures).
-    extract.time <- system.time(
-      multi.chains <-
-        hdpx::hdp_extract_components(multi.chains,
-                                     cos.merge  = cos.merge,
-                                     min.sample = min.sample)
-    )
-    if (verbose) {
-      message("hdp_extract_components time: ")
-      for (xn in names(extract.time)) {
-        message(" ", xn, " ", extract.time[[xn]])
-      }
-    }
-
-    if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
-    extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
-
-    rownames(extractedSignatures) <- rownames(input.catalog)
-    # Set signature names to "hdp.0","hdp.1","hdp.2", ...
-    colnames(extractedSignatures) <-
-      paste("hdp", colnames(extractedSignatures), sep = ".")
-
-    ## Calculate the exposure probability of each signature (component) for each
-    ## tumor sample (posterior sample corresponding to a dirichlet process node).
-    ## This is the probability distribution of signatures (components) for all
-    ## tumor samples (DP nodes); exposureProbs is the normalized
-    ## signature exposure all tumor samples # TODO Wuyang, what do you mean
-    # by normalize?
-
-    if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
-    exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
-
-    # Remove columns corresponding to parent or grandparent nodes
-    # (leaving only columns corresponding to samples.
-    # Transpose so it conforms to SynSigEval format
-    exposureProbs <- t(exposureProbs[-(1:(num.tumor.types + 1)), ])
-    # Now rows are signatures, columns are samples
-
-    # Calculate exposure counts from exposure probabilities and total mutation
-    # counts
-    exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
-    colnames(exposureCounts) <- colnames(input.catalog)
-    rownames(exposureCounts) <- colnames(extractedSignatures)
-
-    invisible(list(signature       = extractedSignatures,
-                   exposure        = exposureCounts,
-                   exposure.p      = exposureProbs,
-                   multi.chains    = multi.chains))
   }
