@@ -44,7 +44,7 @@
 #'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
-#'
+#'}
 #'  @export
 
 CombinePosteriorChains <-
