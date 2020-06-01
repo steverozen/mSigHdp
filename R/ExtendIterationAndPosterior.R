@@ -80,6 +80,8 @@
 #' }
 #'
 #' @export
+#'
+#'
 
 ExtendIterationAndPosterior <-
   function(input.catalog,
