@@ -85,7 +85,7 @@ this value.}
 \value{
 Invisibly,
 the clean
-\code{chlist} (output of the hdp_posterior calls}.
+\code{chlist} (output of the hdp_posterior calls).
 }
 \description{
 Generate HDP gibs sampling chains from a spectra catalog.

@@ -94,7 +94,7 @@ this value.}
 \value{
 If \code{stop.after.hdp.posterior} is not NULL, then invisibly,
 the clean
-\code{chlist} (output of the hdp_posterior calls}.
+\code{chlist} (output of the hdp_posterior calls).
 Otherwise, invisibly, a list with the following elements:\describe{
 \item{signature}{The extracted signature profiles as a matrix;
 rows are mutation types, columns are

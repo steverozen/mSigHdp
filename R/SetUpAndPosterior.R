@@ -62,7 +62,7 @@
 #'
 #' @return Invisibly,
 #'    the clean
-#'    \code{chlist} (output of the hdp_posterior calls}.
+#'    \code{chlist} (output of the hdp_posterior calls).
 #'
 #' @export
 
