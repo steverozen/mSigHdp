@@ -13,6 +13,8 @@ CombinePosteriorChains(
 )
 }
 \arguments{
+\item{clean.chlist}{It collects the output of multiple independent hdp_posterior calls.}
+
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
 
@@ -25,21 +27,6 @@ passed to \code{\link[hdpx]{hdp_extract_components}}.}
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
-\item{CPU.cores}{Number of CPUs to use in running
-\code{\link[hdpx]{hdp_posterior}}; this is used to parallelize
-running the posterior sampling chains, so there is no
-point in making this larger than \code{num.posterior}.}
-
-\item{seedNumber}{An integer that is used to generate separate
-random seeds for each call to \code{\link[hdpx]{dp_activate}},
-and each call of \code{\link[hdpx]{hdp_posterior}}; please see the code
-on how this is done. But repeated calls with same value of
-\code{seedNumber} and other inputs should produce the same results.}
-
-\item{K.guess}{Suggested initial value of the number of
-signatures, passed to \code{\link[hdpx]{dp_activate}} as
-\code{initcc}.}
-
 \item{multi.types}{A logical scalar or
 a character vector.
 If \code{FALSE}, hdp will regard all input spectra as one tumor type.
@@ -51,34 +38,6 @@ If \code{multi.types} is a character vector, then it should be of the same lengt
 as the number of columns in \code{input.catalog}, and each value is the
 name of the tumor type of the corresponding column in \code{input.catalog},
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
-
-\item{num.posterior}{Number of posterior sampling chains; can set to
-1 for testing.}
-
-\item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior}}
-\code{burnin}.}
-
-\item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior}}
-\code{n}.}
-
-\item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior}}
-\code{space}.}
-
-\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior}}
-\code{cpiter}.}
-
-\item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior}}
-\code{verbosity}.}
-
-\item{checkpoint.aft.post}{If non-\code{NULL}, a file path to checkpoint
-the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
-as a .Rdata file.}
-
-\item{stop.after.hdp.posterior}{If non-\code{NULL}, then
-a file path to checkpoint
-the return value from the call to \code{\link[hdpx]{hdp_posterior}}
-as a .Rdata file. The function will then also invisibly return
-this value.}
 }
 \value{
 If \code{stop.after.hdp.posterior} is not NULL, then invisibly,
@@ -98,7 +57,8 @@ a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
 sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 (actually the methods seems to be just \code{hdp})
 that returns the \code{hdpState} from which it was generated.}
-}
+
+@export
 }
 \description{
 XXXXX

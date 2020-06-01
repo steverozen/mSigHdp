@@ -1,21 +1,23 @@
-#' Generate HDP gibs sampling chains from a spectra catalog.
+#' Run hdp extraction and attribution on a spectra catalog file
+#' This repeats what Nicola do in her thesis. It starts four independent initial chains with post.burnin iterations, then pick up from the end of each initial chain, started another num.posterior MCMC chains for another post.burnin iterations and then collected post.n posterior samples at intervals of post.space iterations. In total, this collects 4 times num.posterior times post.n posterior samples from 4 times y seperate chains.
+#'
 #'
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
 #'
 #' @param CPU.cores Number of CPUs to use in running
-#'    \code{\link[hdpx]{hdp_posterior}}; this is used to parallelize
+#'    \code{\link[hdp]{hdp_posterior}}; this is used to parallelize
 #'    running the posterior sampling chains, so there is no
 #'    point in making this larger than \code{num.posterior}.
 #'
 #' @param seedNumber An integer that is used to generate separate
-#'   random seeds for each call to \code{\link[hdpx]{dp_activate}},
-#'   and each call of \code{\link[hdpx]{hdp_posterior}}; please see the code
+#'   random seeds for each call to \code{\link[hdp]{dp_activate}},
+#'   and each call of \code{\link[hdp]{hdp_posterior}}; please see the code
 #'   on how this is done. But repeated calls with same value of
 #'   \code{seedNumber} and other inputs should produce the same results.
 #'
 #' @param K.guess Suggested initial value of the number of
-#' signatures, passed to \code{\link[hdpx]{dp_activate}} as
+#' signatures, passed to \code{\link[hdp]{dp_activate}} as
 #' \code{initcc}.
 #'
 #' @param multi.types A logical scalar or
@@ -35,38 +37,51 @@
 #' @param num.posterior Number of posterior sampling chains; can set to
 #'   1 for testing.
 #'
-#' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.burnin Pass to \code{\link[hdp]{hdp_posterior}}
 #'      \code{burnin}.
 #'
-#' @param post.n Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.n Pass to \code{\link[hdp]{hdp_posterior}}
 #'      \code{n}.
 #'
-#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.space Pass to \code{\link[hdp]{hdp_posterior}}
 #'      \code{space}.
 #'
-#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.cpiter Pass to \code{\link[hdp]{hdp_posterior}}
 #'      \code{cpiter}.
 #'
-#' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.verbosity Pass to \code{\link[hdp]{hdp_posterior}}
 #'      \code{verbosity}.
+#'
+#' @param cos.merge The cosine similarity threshold for merging raw clusters
+#'      from the posterior sampling chains into "components" i.e. signatures;
+#'      passed to \code{\link[hdp]{hdp_extract_components}}.
+#'
+#' @param min.sample A "component" (i.e. signature) must have at least
+#'      this many samples; passed to \code{\link[hdp]{hdp_extract_components}}.
 #'
 #' @param checkpoint.aft.post If non-\code{NULL}, a file path to checkpoint
 #'      the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
 #'      as a .Rdata file.
 #'
-#' @param stop.after.hdp.posterior If non-\code{NULL}, then
-#'      a file path to checkpoint
-#'      the return value from the call to \code{\link[hdpx]{hdp_posterior}}
-#'      as a .Rdata file. The function will then also invisibly return
-#'      this value.
+#' @return A list with the following elements:\describe{
+#' \item{signature}{The extracted signature profiles as a matrix;
+#'             rows are mutation types, columns are
+#'             samples (e.g. tumors).}
+#' \item{exposure}{The inferred exposures as a matrix of mutation counts;
+#'            rows are signatures, columns are samples (e.g. tumors).}
+#' \item{exposure.p}{\code{exposure} converted to proportions.}
 #'
-#' @return Invisibly,
-#'    the clean
-#'    \code{chlist} (output of the hdp_posterior calls}.
+#' \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
+#'     This object has the method \code{\link[hdpx]{chains}} which returns
+#'     a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
+#'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
+#'     (actually the methods seems to be just \code{hdp})
+#'     that returns the \code{hdpState} from which it was generated.}
+#' }
 #'
 #' @export
 
-SetUpAndPosterior <-
+ExtendIterationAndPosterior <-
   function(input.catalog,
            CPU.cores           = 1,
            seedNumber          = 1,
@@ -79,12 +94,13 @@ SetUpAndPosterior <-
            post.space          = 50,
            post.cpiter         = 3,
            post.verbosity      = 0,
-           checkpoint.aft.post = NULL,
-           stop.after.hdp.posterior = NULL
-) { # 14 arguments
+           cos.merge           = 0.9,
+           min.sample          = 1,
+           checkpoint.aft.post = NULL
+  ) { # 15 arguments
 
     if (!exists("stir.closure", envir = .GlobalEnv)) {
-      assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
+      assign("stir.closure", xmake.s(), envir = .GlobalEnv)
     }
 
     # hdp gets confused if the class of its input is not matrix.
@@ -149,12 +165,14 @@ SetUpAndPosterior <-
 
     al <- rep(1,dp.levels)
 
+
+
     if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = ppindex,
-                               cpindex = cpindex,
-                               hh = rep(1,number.channels),
-                               alphaa = al,
-                               alphab = al)
+                                cpindex = cpindex,
+                                hh = rep(1,number.channels),
+                                alphaa = al,
+                                alphab = al)
 
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)
@@ -174,36 +192,50 @@ SetUpAndPosterior <-
                         tmp.cs)
     rm(tmp.cs)
 
-    # Run num.posterior independent sampling chains
-    activate.and.sample <- function(my.seed) {
 
-      if (verbose) message("calling dp_activate ", Sys.time())
-      # dp_activate requires that stir.closure exists in .GlobalEnv;
-      # see above in this function.
-      hdp.state <- hdpx::dp_activate(hdpObject,
-                                    1:num.process,
-                                    initcc = K.guess,
-                                    seed = my.seed + 3e6)
+    # Run num.posterior independent sampling chains for burned-in hdp
+    hdp_posterior_sample <- function(my.seed) {
 
       if (verbose) message("calling hdp_posterior ", Sys.time())
+      print(my.seed)
       sample.chain <- hdpx::hdp_posterior(
-        hdp       = hdp.state,
+        hdp       = hdp.state.burned,
         verbosity = post.verbosity,
         burnin    = post.burnin,
         n         = post.n,
         space     = post.space,
         cpiter    = post.cpiter,
         seed      = my.seed)
+
       return(sample.chain)
     }
 
-    parallel.time <- system.time(
-      chlist <- parallel::mclapply(
-        # Must choose a different seed for each of the chains
-        X = (seedNumber + 1:num.posterior * 10^6) ,
-        FUN = activate.and.sample,
-        mc.cores = CPU.cores)
-    )
+    chlist <- {}
+    for(i in 1:4){
+      print(paste0("init_chain",i))
+      seed <- seedNumber + i
+      if (verbose) message("calling dp_activate ", Sys.time())
+      # dp_activate requires that stir.closure exists in .GlobalEnv;
+      # see above in this function.
+      hdp.state <- hdpx::dp_activate(hdpObject,
+                                     1:num.process,
+                                     initcc = K.guess,
+                                     seed = seed + 3e6)
+
+      hdplist <- hdpx::as.list(hdp.state)
+      output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
+      hdplist <- output[[1]]
+      hdp.state.burned <- hdpx:::as.hdpState(hdplist)
+
+      parallel.time <- system.time(
+        chlist <- c(chlist,parallel::mclapply(
+          # Must choose a different seed for each of the chains
+          X = (seed + 1:num.posterior * 10^6) ,
+          FUN = hdp_posterior_sample,
+          mc.cores = CPU.cores))
+
+      )
+    }
     if (verbose) {
       message("compute chlist time: ")
       for (xn in names(parallel.time)) {
@@ -227,9 +259,9 @@ SetUpAndPosterior <-
     clean.chlist <- list()
     for (i in 1:length(chlist)) {
       cclass <- class(chlist[[i]])
-      cat("chlist element", i, "has class ", cclass, "\n")
+      cat("chlist element", i, "has class", cclass, "\n")
       if ("try-error" %in% cclass) {
-        warning("class of element", i, "is try-error\n")
+        warning("class of element", i, "\n")
       } else {
         if (!("hdpSampleChain" %in% cclass)) {
           warning("A different incorrect class for i =", i, cclass)
@@ -246,9 +278,57 @@ SetUpAndPosterior <-
       stop("No usable result in chlist, look in ", fname)
     }
 
-    if (!is.null(stop.after.hdp.posterior)) { # To do, probablm move this to the caller
-      save(clean.chlist, file = stop.after.hdp.posterior)
-    }
-    return(invisible(clean.chlist))
+    multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
+    rm(chlist)
+    rm(clean.chlist)
 
+    if (verbose) message("calling hdp_extract_components ", Sys.time())
+    # Group raw "clusters" into "components" (i.e. signatures).
+    extract.time <- system.time(
+      multi.chains <-
+        hdpx::hdp_extract_components(multi.chains,
+                                     cos.merge  = cos.merge,
+                                     min.sample = min.sample)
+    )
+    if (verbose) {
+      message("hdp_extract_components time: ")
+      for (xn in names(extract.time)) {
+        message(" ", xn, " ", extract.time[[xn]])
+      }
+    }
+
+    if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
+    extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
+
+    rownames(extractedSignatures) <- rownames(input.catalog)
+    # Set signature names to "hdp.0","hdp.1","hdp.2", ...
+    colnames(extractedSignatures) <-
+      paste("hdp", colnames(extractedSignatures), sep = ".")
+
+    ## Calculate the exposure probability of each signature (component) for each
+    ## tumor sample (posterior sample corresponding to a dirichlet process node).
+    ## This is the probability distribution of signatures (components) for all
+    ## tumor samples (DP nodes); exposureProbs is the normalized
+    ## signature exposure all tumor samples # TODO Wuyang, what do you mean
+    # by normalize?
+
+    if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
+    exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
+
+    # Remove columns corresponding to parent or grandparent nodes
+    # (leaving only columns corresponding to samples.
+    # Transpose so it conforms to SynSigEval format
+    exposureProbs <- t(exposureProbs[-(1:(num.tumor.types + 1)), ])
+    # Now rows are signatures, columns are samples
+
+    # Calculate exposure counts from exposure probabilities and total mutation
+    # counts
+    exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
+    colnames(exposureCounts) <- colnames(input.catalog)
+    rownames(exposureCounts) <- colnames(extractedSignatures)
+
+    invisible(list(signature       = extractedSignatures,
+                   exposure        = exposureCounts,
+                   exposure.p      = exposureProbs,
+                   multi.chains    = multi.chains))
   }
