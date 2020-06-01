@@ -1,4 +1,4 @@
-#' Run hdp extraction and attribution on a spectra catalog file
+#' Generate HDP gibs sampling chains from a spectra catalog.
 #'
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
@@ -60,24 +60,9 @@
 #'      as a .Rdata file. The function will then also invisibly return
 #'      this value.
 #'
-#' @return If \code{stop.after.hdp.posterior} is not NULL, then invisibly,
+#' @return Invisibly,
 #'    the clean
 #'    \code{chlist} (output of the hdp_posterior calls}.
-#'    Otherwise, invisibly, a list with the following elements:\describe{
-#' \item{signature}{The extracted signature profiles as a matrix;
-#'             rows are mutation types, columns are
-#'             samples (e.g. tumors).}
-#' \item{exposure}{The inferred exposures as a matrix of mutation counts;
-#'            rows are signatures, columns are samples (e.g. tumors).}
-#' \item{exposure.p}{\code{exposure} converted to proportions.}
-#'
-#' \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
-#'     This object has the method \code{\link[hdpx]{chains}} which returns
-#'     a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
-#'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
-#'     (actually the methods seems to be just \code{hdp})
-#'     that returns the \code{hdpState} from which it was generated.}
-#' }
 #'
 #' @export
 
@@ -261,9 +246,9 @@ SetUpAndPosterior <-
       stop("No usable result in chlist, look in ", fname)
     }
 
-    if (!is.null(stop.after.hdp.posterior)) {
+    if (!is.null(stop.after.hdp.posterior)) { # To do, probablm move this to the caller
       save(clean.chlist, file = stop.after.hdp.posterior)
-      return(invisible(clean.chlist))
     }
+    return(invisible(clean.chlist))
 
   }

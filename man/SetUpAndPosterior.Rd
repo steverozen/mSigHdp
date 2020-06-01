@@ -2,7 +2,7 @@
 % Please edit documentation in R/SetUpAndPosterior.R
 \name{SetUpAndPosterior}
 \alias{SetUpAndPosterior}
-\title{Run hdp extraction and attribution on a spectra catalog file}
+\title{Generate HDP gibs sampling chains from a spectra catalog.}
 \usage{
 SetUpAndPosterior(
   input.catalog,
@@ -83,25 +83,10 @@ as a .Rdata file. The function will then also invisibly return
 this value.}
 }
 \value{
-If \code{stop.after.hdp.posterior} is not NULL, then invisibly,
+Invisibly,
 the clean
 \code{chlist} (output of the hdp_posterior calls}.
-Otherwise, invisibly, a list with the following elements:\describe{
-\item{signature}{The extracted signature profiles as a matrix;
-rows are mutation types, columns are
-samples (e.g. tumors).}
-\item{exposure}{The inferred exposures as a matrix of mutation counts;
-rows are signatures, columns are samples (e.g. tumors).}
-\item{exposure.p}{\code{exposure} converted to proportions.}
-
-\item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
-This object has the method \code{\link[hdpx]{chains}} which returns
-a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
-sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
-(actually the methods seems to be just \code{hdp})
-that returns the \code{hdpState} from which it was generated.}
-}
 }
 \description{
-Run hdp extraction and attribution on a spectra catalog file
+Generate HDP gibs sampling chains from a spectra catalog.
 }
