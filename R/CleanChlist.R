@@ -1,12 +1,12 @@
 # Generate the original multi_chain for the sample
-if (verbose) message("calling hdp_multi_chain ", Sys.time())
+# if (verbose) message("calling hdp_multi_chain ", Sys.time())
 # If a child dies the corresponding element of chlist has
 # class try-error.
 #
 # We filter these and generate a warning. This is a bit
 # tricky and I am not sure I have anticipated all possible
 # returns, so I do this in a loop.
-#'@import
+# @import
 
 CleanChlist <- function(chlist){
 

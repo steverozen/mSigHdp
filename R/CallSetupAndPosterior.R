@@ -51,16 +51,16 @@
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
-#' @param cos.merge The cosine similarity threshold for merging raw clusters
-#'      from the posterior sampling chains into "components" i.e. signatures;
-#'      passed to \code{\link[hdpx]{hdp_extract_components}}.
+# @param cos.merge The cosine similarity threshold for merging raw clusters
+#      from the posterior sampling chains into "components" i.e. signatures;
+#      passed to \code{\link[hdpx]{hdp_extract_components}}.
 #'
-#' @param min.sample A "component" (i.e. signature) must have at least
-#'      this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.
-#'
-#' @param checkpoint.aft.post If non-\code{NULL}, a file path to checkpoint
-#'      the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
-#'      as a .Rdata file.
+# @param min.sample A "component" (i.e. signature) must have at least
+#      this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.
+#
+# @param checkpoint.aft.post If non-\code{NULL}, a file path to checkpoint
+#      the list of values returned from the calls to \code{\link[hdpx]{hdp_posterior}}
+#      as a .Rdata file.
 #'
 #' @param stop.after.hdp.posterior If non-\code{NULL}, then
 #'      a file path to checkpoint

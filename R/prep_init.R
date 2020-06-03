@@ -1,11 +1,15 @@
 #' Initialize hdp object
 #' Allocate process index for hdp initialization.
 #' Prepare for hdp_init
-#' @param multi.types
-#' @param input.catalog
-#' @import
+#' @param multi.types TODO
+#' @param input.catalog TODO
+#' @param verbose TODO
+#' @param K.guess TODO
+#  @import
 prep_init <- function(multi.types,
-                      input.catalog){
+                      input.catalog,
+                      verbose,
+                      K.guess){
   if (!exists("stir.closure", envir = .GlobalEnv)) {
     assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
   }

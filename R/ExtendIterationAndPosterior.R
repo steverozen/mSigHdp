@@ -1,8 +1,8 @@
 #' Run hdp extraction and attribution on a spectra catalog file
-#' This repeats what Nicola do in her thesis. It starts four independent initial chains with post.burnin iterations, 
-#' then pick up from the end of each initial chain, 
-#' started another num.posterior MCMC chains for another post.burnin iterations 
-#' and then collected post.n posterior samples at intervals of post.space iterations. 
+#' This repeats what Nicola do in her thesis. It starts four independent initial chains with post.burnin iterations,
+#' then pick up from the end of each initial chain,
+#' started another num.posterior MCMC chains for another post.burnin iterations
+#' and then collected post.n posterior samples at intervals of post.space iterations.
 #' In total, this collects 4 times num.posterior times post.n posterior samples from 4 times y seperate chains.
 #'
 #'
@@ -106,7 +106,7 @@ ExtendIterationAndPosterior <-
   ) { # 15 arguments
 
     if (!exists("stir.closure", envir = .GlobalEnv)) {
-      assign("stir.closure", xmake.s(), envir = .GlobalEnv)
+      assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
     }
 
     # hdp gets confused if the class of its input is not matrix.
@@ -231,7 +231,8 @@ ExtendIterationAndPosterior <-
       hdplist <- hdpx::as.list(hdp.state)
       output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
       hdplist <- output[[1]]
-      hdp.state.burned <- hdpx:::as.hdpState(hdplist)
+      as.hdpState <- utils::getFromNamespace(x = "as.hdpState", ns = "hdpx")
+      hdp.state.burned <- as.hdpState(hdplist)
 
       parallel.time <- system.time(
         chlist <- c(chlist,parallel::mclapply(

@@ -7,6 +7,7 @@
 CombinePosteriorChains(
   clean.chlist,
   input.catalog,
+  multi.types,
   verbose = TRUE,
   cos.merge = 0.9,
   min.sample = 1
@@ -17,15 +18,6 @@ CombinePosteriorChains(
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
-
-\item{verbose}{If \code{TRUE} then \code{message} progress information.}
-
-\item{cos.merge}{The cosine similarity threshold for merging raw clusters
-from the posterior sampling chains into "components" i.e. signatures;
-passed to \code{\link[hdpx]{hdp_extract_components}}.}
-
-\item{min.sample}{A "component" (i.e. signature) must have at least
-this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
 \item{multi.types}{A logical scalar or
 a character vector.
@@ -38,6 +30,15 @@ If \code{multi.types} is a character vector, then it should be of the same lengt
 as the number of columns in \code{input.catalog}, and each value is the
 name of the tumor type of the corresponding column in \code{input.catalog},
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
+
+\item{verbose}{If \code{TRUE} then \code{message} progress information.}
+
+\item{cos.merge}{The cosine similarity threshold for merging raw clusters
+from the posterior sampling chains into "components" i.e. signatures;
+passed to \code{\link[hdpx]{hdp_extract_components}}.}
+
+\item{min.sample}{A "component" (i.e. signature) must have at least
+this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 }
 \value{
 If \code{stop.after.hdp.posterior} is not NULL, then invisibly,
