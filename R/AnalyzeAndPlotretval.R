@@ -1,0 +1,186 @@
+#' Evaluate and plot retval from CombinePosteriorChains
+
+#'@param retval the return from function CombinePosteriorChains
+#'
+#'@param out.dir Directory that will be created for the output;
+#'   if \code{overwrite} is \code{FALSE} then
+#'   abort if \code{out.dir} already exits.
+#'@param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
+#'  raise an error.
+#'
+#'@param verbose If \code{TRUE} then \code{message} progress information.
+#'
+#' @param ground.truth.exp Ground truth exposure matrix or
+#'   path to file with ground truth exposures.
+#'   If \code{NULL} skip checks that need this information.
+#'
+#' @param ground.truth.sig Use this one. Either a string with the
+#'   path to file with ground truth signatures or and
+#'   \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
+#'   These are the signatures used to construct the ground truth spectra.
+#'
+#' @export
+AnalyzeAndPlotretval <- function(retval,
+                                 out.dir,
+                                 ground.truth.sig,
+                                 ground.truth.exp,
+                                 verbose,
+                                 overwrite){
+
+  if (dir.exists(out.dir)) {
+    if (!overwrite) stop(out.dir, " already exits")
+    if (verbose) message("Using existing out.dir ", out.dir)
+  } else {
+    dir.create(out.dir, recursive = T)
+    if (verbose) message("Created new out.dir", out.dir)
+  }
+
+  if (mode(ground.truth.sig) == "character") {
+    if (verbose) {
+      message("Reading ground truth signatures from ",
+              ground.truth.sig)
+    }
+    ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig, strict = FALSE)
+  }
+
+  stopifnot(is.matrix(ground.truth.sig))
+
+  # Do this early to catch any possible error before we do a lot
+  # of computation
+  if (!is.null(ground.truth.exp) &&
+      class(ground.truth.exp) == "character") {
+    ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
+  }
+
+  save(retval, file = file.path(out.dir, "Runhdp4.retval.Rdata"))
+
+  multi <- retval[["multi.chains"]] # class hdpSampleMulti
+  chains <- hdpx::chains(multi)      # list of hdpSampleChain
+
+  # Plot the diagnostics of sampling chains.
+  if (verbose) message("Writing HDP diagnostics")
+  par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
+  pdf(file = file.path(out.dir,"diagnostics.likelihood.pdf"))
+  lapply(chains, hdpx::plot_lik, bty = "L")
+  dev.off()
+
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.numcluster.pdf"))
+  # This is the number of raw clusters sampled along each chain
+  lapply(chains, hdpx::plot_numcluster, bty = "L")
+  grDevices::dev.off()
+
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
+  # This is the number of mutations assigned as a function of
+  # the number of raw clusters
+  lapply(chains, hdpx::plot_data_assigned, bty = "L")
+  grDevices::dev.off()
+
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
+  graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
+  # Components were already extracted, so this call will work
+  hdpx::plot_comp_size(multi, bty="L")
+  grDevices::dev.off()
+
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
+  graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
+  # This plots the component (signature) profiles with
+  # 95% credibility intervals
+  hdpx::plot_comp_distn(multi)
+  grDevices::dev.off()
+
+  # TODO, need argument dpindices and col_comp;
+  # Need to return the hdp object (perhaps) from RunhdpInternal
+  # to get the required values.
+  if (FALSE) { # Not finished
+    num.dpindices <- length(chains[[1]]@hdp@ppindex)
+    hdpx::plot_dp_comp_exposure(
+      multi, dpindices = 3:num.dpindices,
+      col_comp = myCol[1:ncol(retval$signature)],
+      dpnames = colnames(retval$exposure))
+  }
+
+  if (verbose) message("Writing signatures")
+  extractedSignatures <- ICAMS::as.catalog(retval$signature,
+                                           region       = "unknown",
+                                           catalog.type = "counts.signature")
+  ICAMS::WriteCatalog(extractedSignatures,
+                      file.path(out.dir,"extracted.signatures.csv"))
+
+  ICAMS::PlotCatalogToPdf(extractedSignatures,
+                          file.path(out.dir, "extracted.signature.pdf"))
+
+  if (verbose) message("Writing exposures")
+
+  # Probably not needed; easily computed by caller:
+  # SynSigGen::WriteExposure(retval$exposure.p,
+  #              paste0(out.dir,"/exposure.probs.csv"))
+  SynSigGen::WriteExposure(retval$exposure,
+                           file.path(out.dir,"inferred.exposures.csv"))
+
+  pdf(file = file.path(out.dir,"inferred.exposure.count.pdf"),
+      paper = "a4")
+  mSigHdp::PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
+                               num.per.line = 40)
+  dev.off()
+
+  pdf(file = file.path(out.dir,"inferred.exposure.proportion.pdf"),
+      paper = "a4")
+  mSigHdp::PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
+                               num.per.line = 40,
+                               plot.proportion = TRUE)
+  dev.off()
+
+
+  sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
+    ex.sigs  = retval$signature,
+    gt.sigs  = ground.truth.sig,
+    exposure = ground.truth.exp)
+
+  # Writes bi-directional matching and cos.sim calculation
+  utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
+  utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
+
+  ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$gt.sigs,
+                                            catalog.type = "counts.signature"), # Need to fix this
+                          file.path(out.dir, "ground.truth.sigs.w0.pdf"))
+
+  ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$ex.sigs,
+                                            catalog.type = "counts.signature"),
+                          file.path(out.dir, "extracted.sigs.w0.pdf"))
+
+  if (!is.null(ground.truth.exp)) {
+    pdf(file = file.path(out.dir,"ground.truth.exposure.count.pdf"),
+        paper = "a4")
+    PlotExposureByRange(mSigHdp::SortExp(ground.truth.exp),
+                        num.per.line = 40)
+    dev.off()
+
+    pdf(file = file.path(out.dir,"ground.truth.proportion.pdf"),
+        paper = "a4")
+    PlotExposureByRange(mSigHdp::SortExp(ground.truth.exp),
+                        num.per.line = 40,
+                        plot.proportion = TRUE)
+    dev.off()
+
+
+  }
+
+  utils::capture.output(
+    cat("Call\n"),
+    match.call(),
+    cat("\nAverage cosine similarity\n"),
+    sigAnalysis0$averCosSim,
+    cat("\nAverage cosine similarity to each ground-truth signature\n"),
+    sigAnalysis0$cosSim,
+    cat("\nNumber of ground-truth signatures\n"),
+    ncol(sigAnalysis0$gt.sigs),
+    cat("\nNumber of extracted signatures\n"),
+    ncol(sigAnalysis0$ex.sigs),
+    cat("\nsigAnalysis0$extracted.with.no.best.match\n"),
+    sigAnalysis0$extracted.with.no.best.match,
+    cat("\nsigAnalysis0$ground.truth.with.no.best.match\n"),
+    sigAnalysis0$ground.truth.with.no.best.match,
+    file = file.path(out.dir,"other.results.txt"))
+}
+
+

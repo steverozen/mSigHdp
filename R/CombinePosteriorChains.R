@@ -47,18 +47,47 @@
 #'}
 #' @export
 #'
-
 CombinePosteriorChains <-
   function(clean.chlist,
            input.catalog,
+           multi.types,
            verbose             = TRUE,
            cos.merge           = 0.9,
            min.sample          = 1
-) { # 5 arguments
-
-
+  ) { # 6 arguments
+    if (mode(input.catalog) == "character") {
+      if (verbose) message("Reading input catalog file ", input.catalog)
+      spectra <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
+    } else {
+      spectra <- input.catalog
+    }
+    # hdp gets confused if the class of its input is not matrix.
+    convSpectra <- t(input.catalog)
+    # class(convSpectra) <- "matrix"
+    # convSpectra <- t(convSpectra)
+    number.channels <- nrow(input.catalog)
+    number.samples  <- ncol(input.catalog)
+    if (multi.types == FALSE) { # All tumors belong to one tumor type
+      num.tumor.types <- 1
+      process.index <- c(0,1,rep(2,number.samples))
+    } else {
+      if (multi.types == TRUE) {
+        sample.names <- colnames(input.catalog)
+        if (!all(grepl("::", sample.names)))
+          stop("Every sample name needs to be of",
+               " the form <sample_type>::<sample_id>")
+        tumor.types <- sapply(
+          sample.names,
+          function(x) {strsplit(x, split = "::", fixed = T)[[1]][1]})
+        num.tumor.types <- length(unique(tumor.types))
+      } else if (is.character(multi.types)) {
+        num.tumor.types <- length(unique(multi.types))
+        tumor.types <- multi.types
+      } else {
+        stop("multi.types should be TRUE, FALSE, or a character vector of tumor types")
+      }
+    }
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-
     if (verbose) message("calling hdp_extract_components ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
     extract.time <- system.time(
@@ -73,37 +102,30 @@ CombinePosteriorChains <-
         message(" ", xn, " ", extract.time[[xn]])
       }
     }
-
     if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
     extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
-
     rownames(extractedSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
     colnames(extractedSignatures) <-
       paste("hdp", colnames(extractedSignatures), sep = ".")
-
     ## Calculate the exposure probability of each signature (component) for each
     ## tumor sample (posterior sample corresponding to a dirichlet process node).
     ## This is the probability distribution of signatures (components) for all
     ## tumor samples (DP nodes); exposureProbs is the normalized
     ## signature exposure all tumor samples # TODO Wuyang, what do you mean
     # by normalize?
-
     if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
     exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
-
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.
     # Transpose so it conforms to SynSigEval format
     exposureProbs <- t(exposureProbs[-(1:(num.tumor.types + 1)), ])
     # Now rows are signatures, columns are samples
-
     # Calculate exposure counts from exposure probabilities and total mutation
     # counts
     exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
     colnames(exposureCounts) <- colnames(input.catalog)
     rownames(exposureCounts) <- colnames(extractedSignatures)
-
     invisible(list(signature       = extractedSignatures,
                    exposure        = exposureCounts,
                    exposure.p      = exposureProbs,
