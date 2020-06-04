@@ -28,7 +28,11 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       num.child.process   = 4){
 
   run.setup.and.posterior <- function(seedNumber) {
+<<<<<<< HEAD
     if (verbose) message("Runing run.setup.and.posterior on ", my.seed)
+=======
+    if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
+>>>>>>> bdece76336b40ca7c7f180f6249597b98bfa79b6
     sample.chain <-SetupAndPosterior(
       input.catalog,
       seedNumber     = seedNumber,
