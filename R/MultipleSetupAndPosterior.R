@@ -28,8 +28,8 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       num.child.process   = 4){
 
   run.setup.and.posterior <- function(seedNumber) {
-    if (verbose) message("Runing run.setup.and.posterior on ", my.seed)
-    sample.chain <-SetUpAndPosterior(
+    if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
+    sample.chain <-SetupAndPosterior(
       input.catalog,
       seedNumber     = seedNumber,
       K.guess        = K.guess,
