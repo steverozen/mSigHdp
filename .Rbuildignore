@@ -4,3 +4,4 @@
 ^tests/testthat/.*_out_dir$
 ^data-raw$
 ^README\.Rmd$
+^\.travis\.yml$
