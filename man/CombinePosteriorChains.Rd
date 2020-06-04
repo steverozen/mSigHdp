@@ -50,7 +50,6 @@ rows are mutation types, columns are
 samples (e.g. tumors).}
 \item{exposure}{The inferred exposures as a matrix of mutation counts;
 rows are signatures, columns are samples (e.g. tumors).}
-\item{exposure.p}{\code{exposure} converted to proportions.}
 
 \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
 This object has the method \code{\link[hdpx]{chains}} which returns

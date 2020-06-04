@@ -19,7 +19,6 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
-#'
 #' @param cos.merge The cosine similarity threshold for merging raw clusters
 #'      from the posterior sampling chains into "components" i.e. signatures;
 #'      passed to \code{\link[hdpx]{hdp_extract_components}}.
@@ -36,7 +35,6 @@
 #'             samples (e.g. tumors).}
 #' \item{exposure}{The inferred exposures as a matrix of mutation counts;
 #'            rows are signatures, columns are samples (e.g. tumors).}
-#' \item{exposure.p}{\code{exposure} converted to proportions.}
 #'
 #' \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
 #'     This object has the method \code{\link[hdpx]{chains}} which returns
@@ -87,6 +85,7 @@ CombinePosteriorChains <-
         stop("multi.types should be TRUE, FALSE, or a character vector of tumor types")
       }
     }
+
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
     if (verbose) message("calling hdp_extract_components ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
@@ -96,6 +95,7 @@ CombinePosteriorChains <-
                                      cos.merge  = cos.merge,
                                      min.sample = min.sample)
     )
+
     if (verbose) {
       message("hdp_extract_components time: ")
       for (xn in names(extract.time)) {
@@ -108,12 +108,13 @@ CombinePosteriorChains <-
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
     colnames(extractedSignatures) <-
       paste("hdp", colnames(extractedSignatures), sep = ".")
+
     ## Calculate the exposure probability of each signature (component) for each
-    ## tumor sample (posterior sample corresponding to a dirichlet process node).
+    ## tumor sample (posterior sample corresponding to a Dirichlet process node).
     ## This is the probability distribution of signatures (components) for all
     ## tumor samples (DP nodes); exposureProbs is the normalized
-    ## signature exposure all tumor samples # TODO Wuyang, what do you mean
-    # by normalize?
+    ## signature exposure all tumor samples # TODO what is this?
+
     if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
     exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
     # Remove columns corresponding to parent or grandparent nodes
@@ -126,8 +127,8 @@ CombinePosteriorChains <-
     exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
     colnames(exposureCounts) <- colnames(input.catalog)
     rownames(exposureCounts) <- colnames(extractedSignatures)
+
     invisible(list(signature       = extractedSignatures,
                    exposure        = exposureCounts,
-                   exposure.p      = exposureProbs,
                    multi.chains    = multi.chains))
   }
