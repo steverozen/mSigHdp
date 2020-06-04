@@ -6,7 +6,7 @@
 #' @param verbose TODO
 #' @param K.guess TODO
 #  @import
-prep_init <- function(multi.types,
+PrepInit <- function(multi.types,
                       input.catalog,
                       verbose,
                       K.guess){

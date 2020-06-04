@@ -51,7 +51,7 @@
 #'
 #' @export
 
-SetupAndPosterior <-
+SetUpAndPosterior <-
   function(input.catalog,
            seedNumber          = 1,
            K.guess,
