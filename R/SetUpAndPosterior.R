@@ -64,7 +64,10 @@ SetupAndPosterior <-
            post.verbosity      = 0)
 { # 14 arguments
 
-    prep_val <- PrepInit(multi.types, input.catalog)
+    prep_val <- PrepInit(multi.types = multi.types,
+                         input.catalog = input.catalog,
+                         verbose       = verbose,
+                         K.guess       = K.guess)
 
     if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
