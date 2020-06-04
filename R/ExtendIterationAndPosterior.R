@@ -229,6 +229,7 @@ ExtendIterationAndPosterior <-
                                      seed = seed + 3e6)
 
       hdplist <- hdpx::as.list(hdp.state)
+      iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
       output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
       hdplist <- output[[1]]
       as.hdpState <- utils::getFromNamespace(x = "as.hdpState", ns = "hdpx")
