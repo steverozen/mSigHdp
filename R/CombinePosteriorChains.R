@@ -1,4 +1,4 @@
-#' XXXXX
+#' Extract components and exposures from multiple posterior sample chains
 #'
 #' @param clean.chlist It collects the output of multiple independent hdp_posterior calls.
 #'
@@ -26,10 +26,7 @@
 #' @param min.sample A "component" (i.e. signature) must have at least
 #'      this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.
 #'
-#' @return If \code{stop.after.hdp.posterior} is not NULL, then invisibly,
-#'    the clean
-#'    \code{chlist} (output of the hdp_posterior calls).
-#'    Otherwise, invisibly, a list with the following elements:\describe{
+#' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
 #'             samples (e.g. tumors).}
@@ -67,8 +64,7 @@ CombinePosteriorChains <-
     number.samples  <- ncol(input.catalog)
     if (multi.types == FALSE) { # All tumors belong to one tumor type
       num.tumor.types <- 1
-      process.index <- c(0,1,rep(2,number.samples))
-    } else {
+     } else {
       if (multi.types == TRUE) {
         sample.names <- colnames(input.catalog)
         if (!all(grepl("::", sample.names)))

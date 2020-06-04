@@ -2,7 +2,7 @@
 % Please edit documentation in R/CombinePosteriorChains.R
 \name{CombinePosteriorChains}
 \alias{CombinePosteriorChains}
-\title{XXXXX}
+\title{Extract components and exposures from multiple posterior sample chains}
 \usage{
 CombinePosteriorChains(
   clean.chlist,
@@ -41,10 +41,7 @@ passed to \code{\link[hdpx]{hdp_extract_components}}.}
 this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 }
 \value{
-If \code{stop.after.hdp.posterior} is not NULL, then invisibly,
-the clean
-\code{chlist} (output of the hdp_posterior calls).
-Otherwise, invisibly, a list with the following elements:\describe{
+Invisibly, a list with the following elements:\describe{
 \item{signature}{The extracted signature profiles as a matrix;
 rows are mutation types, columns are
 samples (e.g. tumors).}
@@ -60,5 +57,5 @@ that returns the \code{hdpState} from which it was generated.}
 }
 }
 \description{
-XXXXX
+Extract components and exposures from multiple posterior sample chains
 }

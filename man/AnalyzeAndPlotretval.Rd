@@ -14,7 +14,7 @@ AnalyzeAndPlotretval(
 )
 }
 \arguments{
-\item{retval}{the return from function CombinePosteriorChains}
+\item{retval}{the output from function CombinePosteriorChains}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then

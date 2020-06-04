@@ -29,7 +29,7 @@ MultipleSetupAndPosterior <- function(input.catalog,
 
   run.setup.and.posterior <- function(seedNumber) {
     if (verbose) message("Runing run.setup.and.posterior on ", my.seed)
-    sample.chain <-SetUpAndPosterior(
+    sample.chain <-SetupAndPosterior(
       input.catalog,
       seedNumber     = seedNumber,
       K.guess        = K.guess,
@@ -51,5 +51,5 @@ MultipleSetupAndPosterior <- function(input.catalog,
 
   clean.chlist <- CleanChlist(chlist)
 
-  return(invisible(retval))
+  return(invisible(clean.chlist))
 }
