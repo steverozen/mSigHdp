@@ -2,7 +2,8 @@
 % Please edit documentation in R/RunHdpParallel.R
 \name{RunHdpParallel}
 \alias{RunHdpParallel}
-\title{A caller function combines MultipleSetupandPosterior, CombinePosteriorChains and AnalyzeAndPlotretval}
+\title{A caller function combines MultipleSetupandPosterior, CombinePosteriorChains and AnalyzeAndPlotretval
+If out.dir was not provided, please run e.g. save(retval,"~/retval.RData") to save the result.}
 \usage{
 RunHdpParallel(
   input.catalog,
@@ -10,6 +11,7 @@ RunHdpParallel(
   K.guess,
   multi.types = FALSE,
   verbose = TRUE,
+  overwrite = TRUE,
   post.burnin = 4000,
   post.n = 50,
   post.space = 50,
@@ -53,6 +55,9 @@ name of the tumor type of the corresponding column in \code{input.catalog},
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
+
+\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
+raise an error.}
 
 \item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{burnin}.}
@@ -106,4 +111,5 @@ that returns the \code{hdpState} from which it was generated.}
 }
 \description{
 A caller function combines MultipleSetupandPosterior, CombinePosteriorChains and AnalyzeAndPlotretval
+If out.dir was not provided, please run e.g. save(retval,"~/retval.RData") to save the result.
 }

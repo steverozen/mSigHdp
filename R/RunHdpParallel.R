@@ -1,8 +1,10 @@
 #' A caller function combines MultipleSetupandPosterior, CombinePosteriorChains and AnalyzeAndPlotretval
+#' If out.dir was not provided, please run e.g. save(retval,"~/retval.RData") to save the result.
 #'
 #' @inheritParams MultipleSetupAndPosterior
 #' @inheritParams AnalyzeAndPlotretval
 #' @param out.dir Directory that will be created for the output
+#'
 #' @return  If \code{out.dir} is not NULL, output including data and plots
 #'          will be saved in \code{out.dir}.
 #'          Else,invisibly, a list with the following elements:\describe{
@@ -29,6 +31,7 @@ RunHdpParallel <- function(input.catalog,
                            K.guess,
                            multi.types         = FALSE,
                            verbose             = TRUE,
+                           overwrite           = TRUE,
                            post.burnin         = 4000,
                            post.n              = 50,
                            post.space          = 50,
