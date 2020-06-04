@@ -10,6 +10,7 @@
 #'
 #' @return Invisibly,
 #'    the clean \code{chlist} (output of the hdp_posterior calls).
+#'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 #'
 #' @export
 

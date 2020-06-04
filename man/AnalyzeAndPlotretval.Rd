@@ -6,11 +6,11 @@
 \usage{
 AnalyzeAndPlotretval(
   retval,
-  out.dir,
+  out.dir = NUL,
   ground.truth.sig,
-  ground.truth.exp,
-  verbose,
-  overwrite
+  ground.truth.exp = NULL,
+  verbose = TRUE,
+  overwrite = TRUE
 )
 }
 \arguments{

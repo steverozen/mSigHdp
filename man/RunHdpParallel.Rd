@@ -2,8 +2,7 @@
 % Please edit documentation in R/RunHdpParallel.R
 \name{RunHdpParallel}
 \alias{RunHdpParallel}
-\title{A caller function combines MultipleSetupandPosterior, CombinePosteriorChains and AnalyzeAndPlotretval
-If out.dir was not provided, please run e.g. save(retval,"~/retval.RData") to save the result.}
+\title{Extract mutational signatures and optionally compare them to existing signatures and exposures.}
 \usage{
 RunHdpParallel(
   input.catalog,
@@ -11,7 +10,6 @@ RunHdpParallel(
   K.guess,
   multi.types = FALSE,
   verbose = TRUE,
-  overwrite = TRUE,
   post.burnin = 4000,
   post.n = 50,
   post.space = 50,
@@ -20,7 +18,8 @@ RunHdpParallel(
   CPU.cores = 1,
   num.child.process = 4,
   ground.truth.sig,
-  ground.truth.exp,
+  ground.truth.exp = NULL,
+  overwrite = TRUE,
   out.dir = NULL
 )
 }
@@ -56,9 +55,6 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC"
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
-raise an error.}
-
 \item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{burnin}.}
 
@@ -89,15 +85,18 @@ These are the signatures used to construct the ground truth spectra.}
 path to file with ground truth exposures.
 If \code{NULL} skip checks that need this information.}
 
-\item{out.dir}{Directory that will be created for the output}
+\item{overwrite}{If \code{TRUE}, overwrite \code{out.dir} if it is
+non-NULL and exists.}
+
+\item{out.dir}{If not NULL, output including data and plots
+will be saved in \code{out.dir}.}
 }
 \value{
-If \code{out.dir} is not NULL, output including data and plots
-will be saved in \code{out.dir}.
-Else,invisibly, a list with the following elements:\describe{
+Invisibly, a list with the following elements:\describe{
 \item{signature}{The extracted signature profiles as a matrix;
 rows are mutation types, columns are
 samples (e.g. tumors).}
+
 \item{exposure}{The inferred exposures as a matrix of mutation counts;
 rows are signatures, columns are samples (e.g. tumors).}
 
@@ -110,6 +109,5 @@ that returns the \code{hdpState} from which it was generated.}
 }
 }
 \description{
-A caller function combines MultipleSetupandPosterior, CombinePosteriorChains and AnalyzeAndPlotretval
-If out.dir was not provided, please run e.g. save(retval,"~/retval.RData") to save the result.
+Extract mutational signatures and optionally compare them to existing signatures and exposures.
 }

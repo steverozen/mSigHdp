@@ -23,11 +23,11 @@
 #'
 #'
 AnalyzeAndPlotretval <- function(retval,
-                                 out.dir,
+                                 out.dir          = NUL,
                                  ground.truth.sig,
-                                 ground.truth.exp,
-                                 verbose,
-                                 overwrite){
+                                 ground.truth.exp = NULL,
+                                 verbose          = TRUE,
+                                 overwrite        = TRUE) {
 
   if (dir.exists(out.dir)) {
     if (!overwrite) stop(out.dir, " already exits")
@@ -54,9 +54,7 @@ AnalyzeAndPlotretval <- function(retval,
     ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
   }
 
-  save(retval, file = file.path(out.dir, "Runhdp4.retval.Rdata"))
-
-
+  save(retval, file = file.path(out.dir, "hdp.retval.Rdata"))
 
   # Plot the diagnostics of sampling chains.
   ChainsDiagnosticPlot(retval  = retval,

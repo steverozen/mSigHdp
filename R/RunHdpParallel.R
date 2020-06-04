@@ -1,19 +1,21 @@
-#' A caller function combines MultipleSetupandPosterior, CombinePosteriorChains and AnalyzeAndPlotretval
-#' If out.dir was not provided, please run e.g. save(retval,"~/retval.RData") to save the result.
+#' Extract mutational signatures and optionally compare them to existing signatures and exposures.
 #'
 #' @inheritParams MultipleSetupAndPosterior
 #' @inheritParams AnalyzeAndPlotretval
-#' @param out.dir Directory that will be created for the output
 #'
-#' @return  If \code{out.dir} is not NULL, output including data and plots
+#' @param out.dir If not NULL, output including data and plots
 #'          will be saved in \code{out.dir}.
-#'          Else,invisibly, a list with the following elements:\describe{
+#'
+#' @param overwrite If \code{TRUE}, overwrite \code{out.dir} if it is
+#'  non-NULL and exists.
+#'
+#' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
 #'             samples (e.g. tumors).}
+#'
 #' \item{exposure}{The inferred exposures as a matrix of mutation counts;
 #'            rows are signatures, columns are samples (e.g. tumors).}
-
 #'
 #' \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
 #'     This object has the method \code{\link[hdpx]{chains}} which returns
@@ -31,7 +33,6 @@ RunHdpParallel <- function(input.catalog,
                            K.guess,
                            multi.types         = FALSE,
                            verbose             = TRUE,
-                           overwrite           = TRUE,
                            post.burnin         = 4000,
                            post.n              = 50,
                            post.space          = 50,
@@ -40,42 +41,47 @@ RunHdpParallel <- function(input.catalog,
                            CPU.cores           = 1,
                            num.child.process   = 4,
                            ground.truth.sig,
-                           ground.truth.exp,
-                           out.dir             =NULL
+                           ground.truth.exp    = NULL,
+                           overwrite           = TRUE,
+                           out.dir             = NULL
 ){
 
-  ##Step 1: Activate hierarchical Dirichlet processes and run posterior sampling in parallel.
-  ##This returns a list of multiple posterior chains
+  # Step 1: Activate hierarchical Dirichlet processes and
+  # run posterior sampling in parallel;
+  # chlist is a list of hdpSampleChain-class objects.
 
-  multi.chlist <- MultipleSetupAndPosterior(input.catalog,
-                                            seedNumber          = 1,
-                                            K.guess,
-                                            multi.types         = FALSE,
-                                            verbose             = TRUE,
-                                            post.burnin         = 4000,
-                                            post.n              = 50,
-                                            post.space          = 50,
-                                            post.cpiter         = 3,
-                                            post.verbosity      = 0,
-                                            CPU.cores           = 1,
-                                            num.child.process   = 4)
+  chlist <- MultipleSetupAndPosterior(input.catalog,
+                                      seedNumber          = 1,
+                                      K.guess,
+                                      multi.types         = FALSE,
+                                      verbose             = TRUE,
+                                      post.burnin         = 4000,
+                                      post.n              = 50,
+                                      post.space          = 50,
+                                      post.cpiter         = 3,
+                                      post.verbosity      = 0,
+                                      CPU.cores           = 1,
+                                      num.child.process   = 4)
 
-  ##Step 2: Combine the multiple posterior chains and extract signatures and exposures
-  ##This returns signatures and exposures
+  # Step 2: Combine the posterior chains and extract
+  # signatures and exposures;
+  # retval has signatures, exposures, and multi.chains, a
+  # hdpSampleMulti-class object.
 
-  retval <- CombinePosteriorChains(multi.chlist,
+  retval <- CombinePosteriorChains(chlist,
                                    input.catalog=input.catalog,
                                    multi.types=multi.types)
-  ##Step 3: Plot diagnostic plots, signatures, exposurs and compare with ground truth signature and exposures
-  if(!is.null(out.dir)){
+
+  # Step 3: Plot diagnostic plots, signatures, exposures
+  # and compare with ground truth signature and exposures.
+
+  if(!is.null(out.dir)) {
     AnalyzeAndPlotretval(retval,
                          out.dir,
                          ground.truth.sig,
                          ground.truth.exp,
                          verbose,
                          overwrite)
-  }else{
-    return(invisible(retval))
   }
-
+  return(invisible(retval))
 }

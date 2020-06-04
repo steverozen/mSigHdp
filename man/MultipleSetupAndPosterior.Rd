@@ -75,6 +75,7 @@ point in making this larger than \code{num.child.process}.}
 \value{
 Invisibly,
 the clean \code{chlist} (output of the hdp_posterior calls).
+This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 }
 \description{
 Activate hierarchical Dirichlet processes and run posterior sampling in parallel.
