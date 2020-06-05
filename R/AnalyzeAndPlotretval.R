@@ -10,11 +10,11 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
-#' @param ground.truth.exp Ground truth exposure matrix or
+#' @param ground.truth.exp Optional.Ground truth exposure matrix or
 #'   path to file with ground truth exposures.
 #'   If \code{NULL} skip checks that need this information.
 #'
-#' @param ground.truth.sig Use this one. Either a string with the
+#' @param ground.truth.sig Optional. Either a string with the
 #'   path to file with ground truth signatures or and
 #'   \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
 #'   These are the signatures used to construct the ground truth spectra.
@@ -23,8 +23,8 @@
 #'
 #'
 AnalyzeAndPlotretval <- function(retval,
-                                 out.dir          = NUL,
-                                 ground.truth.sig,
+                                 out.dir          = NULL,
+                                 ground.truth.sig = NULL,
                                  ground.truth.exp = NULL,
                                  verbose          = TRUE,
                                  overwrite        = TRUE) {
@@ -37,33 +37,13 @@ AnalyzeAndPlotretval <- function(retval,
     if (verbose) message("Created new out.dir", out.dir)
   }
 
-  if (mode(ground.truth.sig) == "character") {
-    if (verbose) {
-      message("Reading ground truth signatures from ",
-              ground.truth.sig)
-    }
-    ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig, strict = FALSE)
-  }
-
-  stopifnot(is.matrix(ground.truth.sig))
-
-  # Do this early to catch any possible error before we do a lot
-  # of computation
-  if (!is.null(ground.truth.exp) &&
-      class(ground.truth.exp) == "character") {
-    ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
-  }
-
   save(retval, file = file.path(out.dir, "hdp.retval.Rdata"))
 
   # Plot the diagnostics of sampling chains.
   ChainsDiagnosticPlot(retval  = retval,
                        out.dir = out.dir,
                        verbose = verbose)
-
-
-  # Plot signatures, exposures and compare with ground truth
-
+  # We want to plot the hdp signtures and exposures
   if (verbose) message("Writing signatures")
   extractedSignatures <- ICAMS::as.catalog(retval$signature,
                                            region       = "unknown",
@@ -93,25 +73,24 @@ AnalyzeAndPlotretval <- function(retval,
                                plot.proportion = TRUE)
   dev.off()
 
+###here is optional.
 
-  sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
-    ex.sigs  = retval$signature,
-    gt.sigs  = ground.truth.sig,
-    exposure = ground.truth.exp)
 
-  # Writes bi-directional matching and cos.sim calculation
-  utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
-  utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
+  # Do this early to catch any possible error before we do a lot
+  # of computation
+  # Exposure related plotting
 
-  ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$gt.sigs,
-                                            catalog.type = "counts.signature"), # Need to fix this
-                          file.path(out.dir, "ground.truth.sigs.w0.pdf"))
+  if(!is.null(ground.truth.exp)){
+    ##read ground.truth.exp
+    if (mode(ground.truth.exp) == "character") {
+      if (verbose) {
+        message("Reading ground truth exposures from ",
+                ground.truth.exp)
+      }
+      ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
+    }
+    stopifnot(is.matrix(ground.truth.sig))
 
-  ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$ex.sigs,
-                                            catalog.type = "counts.signature"),
-                          file.path(out.dir, "extracted.sigs.w0.pdf"))
-
-  if (!is.null(ground.truth.exp)) {
     pdf(file = file.path(out.dir,"ground.truth.exposure.count.pdf"),
         paper = "a4")
     PlotExposureByRange(mSigHdp::SortExp(ground.truth.exp),
@@ -126,24 +105,52 @@ AnalyzeAndPlotretval <- function(retval,
     dev.off()
 
 
+
   }
 
-  utils::capture.output(
-    cat("Call\n"),
-    match.call(),
-    cat("\nAverage cosine similarity\n"),
-    sigAnalysis0$averCosSim,
-    cat("\nAverage cosine similarity to each ground-truth signature\n"),
-    sigAnalysis0$cosSim,
-    cat("\nNumber of ground-truth signatures\n"),
-    ncol(sigAnalysis0$gt.sigs),
-    cat("\nNumber of extracted signatures\n"),
-    ncol(sigAnalysis0$ex.sigs),
-    cat("\nsigAnalysis0$extracted.with.no.best.match\n"),
-    sigAnalysis0$extracted.with.no.best.match,
-    cat("\nsigAnalysis0$ground.truth.with.no.best.match\n"),
-    sigAnalysis0$ground.truth.with.no.best.match,
-    file = file.path(out.dir,"other.results.txt"))
+  # Compare with ground truth
+  # Only proceed if both ground.truth.sig and ground.truth.exp are provided
+
+
+  if(!is.null(ground.truth.sig) && !is.null(ground.truth.exp)){
+    sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
+      ex.sigs  = retval$signature,
+      gt.sigs  = ground.truth.sig,
+      exposure = ground.truth.exp)
+
+    # Writes bi-directional matching and cos.sim calculation
+    utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
+    utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
+
+    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$gt.sigs,
+                                              catalog.type = "counts.signature"), # Need to fix this
+                            file.path(out.dir, "ground.truth.sigs.w0.pdf"))
+
+    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$ex.sigs,
+                                              catalog.type = "counts.signature"),
+                            file.path(out.dir, "extracted.sigs.w0.pdf"))
+
+
+
+    utils::capture.output(
+      cat("Call\n"),
+      match.call(),
+      cat("\nAverage cosine similarity\n"),
+      sigAnalysis0$averCosSim,
+      cat("\nAverage cosine similarity to each ground-truth signature\n"),
+      sigAnalysis0$cosSim,
+      cat("\nNumber of ground-truth signatures\n"),
+      ncol(sigAnalysis0$gt.sigs),
+      cat("\nNumber of extracted signatures\n"),
+      ncol(sigAnalysis0$ex.sigs),
+      cat("\nsigAnalysis0$extracted.with.no.best.match\n"),
+      sigAnalysis0$extracted.with.no.best.match,
+      cat("\nsigAnalysis0$ground.truth.with.no.best.match\n"),
+      sigAnalysis0$ground.truth.with.no.best.match,
+      file = file.path(out.dir,"other.results.txt"))
+  }
+
+
 }
 
 

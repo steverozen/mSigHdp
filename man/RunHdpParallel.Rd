@@ -17,7 +17,7 @@ RunHdpParallel(
   post.verbosity = 0,
   CPU.cores = 1,
   num.child.process = 4,
-  ground.truth.sig,
+  ground.truth.sig = NULL,
   ground.truth.exp = NULL,
   overwrite = TRUE,
   out.dir = NULL
@@ -76,12 +76,12 @@ point in making this larger than \code{num.child.process}.}
 \item{num.child.process}{Number of posterior sampling chains; can set to
 1 for testing.}
 
-\item{ground.truth.sig}{Use this one. Either a string with the
+\item{ground.truth.sig}{Optional. Either a string with the
 path to file with ground truth signatures or and
 \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
 These are the signatures used to construct the ground truth spectra.}
 
-\item{ground.truth.exp}{Ground truth exposure matrix or
+\item{ground.truth.exp}{Optional.Ground truth exposure matrix or
 path to file with ground truth exposures.
 If \code{NULL} skip checks that need this information.}
 

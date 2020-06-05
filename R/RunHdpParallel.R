@@ -40,7 +40,7 @@ RunHdpParallel <- function(input.catalog,
                            post.verbosity      = 0,
                            CPU.cores           = 1,
                            num.child.process   = 4,
-                           ground.truth.sig,
+                           ground.truth.sig    = NULL,
                            ground.truth.exp    = NULL,
                            overwrite           = TRUE,
                            out.dir             = NULL
@@ -55,13 +55,13 @@ RunHdpParallel <- function(input.catalog,
                                       K.guess,
                                       multi.types         = FALSE,
                                       verbose             = TRUE,
-                                      post.burnin         = 4000,
-                                      post.n              = 50,
-                                      post.space          = 50,
-                                      post.cpiter         = 3,
-                                      post.verbosity      = 0,
-                                      CPU.cores           = 1,
-                                      num.child.process   = 4)
+                                      post.burnin         = post.burnin,
+                                      post.n              = post.n,
+                                      post.space          = post.space,
+                                      post.cpiter         = post.cpiter,
+                                      post.verbosity      = post.verbosity,
+                                      CPU.cores           = CPU.cores,
+                                      num.child.process   = num.child.process)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
