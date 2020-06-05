@@ -56,8 +56,8 @@ RunHdpParallel <- function(input.catalog,
   # chlist is a list of hdpSampleChain-class objects.
 
   chlist <- MultipleSetupAndPosterior(input.catalog,
-                                      seedNumber          = 1,
-                                      K.guess,
+                                      seedNumber          = seedNumber,
+                                      K.guess             = K.guess,
                                       multi.types         = multi.types,
                                       verbose             = verbose,
                                       post.burnin         = post.burnin,
