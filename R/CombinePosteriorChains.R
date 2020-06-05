@@ -52,9 +52,9 @@ CombinePosteriorChains <-
   ) { # 6 arguments
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
-      spectra <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
+      input.catalog <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
     } else {
-      spectra <- input.catalog
+      input.catalog <- input.catalog
     }
     # hdp gets confused if the class of its input is not matrix.
     convSpectra <- t(input.catalog)

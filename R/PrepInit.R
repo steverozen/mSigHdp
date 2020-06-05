@@ -10,8 +10,12 @@ PrepInit <- function(multi.types,
                       input.catalog,
                       verbose,
                       K.guess){
-  if (!exists("stir.closure", envir = .GlobalEnv)) {
-    assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
+
+  if (mode(input.catalog) == "character") {
+    if (verbose) message("Reading input catalog file ", input.catalog)
+    input.catalog <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
+  } else {
+    input.catalog <- input.catalog
   }
 
   # hdp gets confused if the class of its input is not matrix.

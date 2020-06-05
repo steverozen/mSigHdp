@@ -14,7 +14,7 @@ test_that("CombinePosteriorChains", {
                                         multi.types         = FALSE,
                                         verbose             = TRUE,
                                         post.burnin         = 50,
-                                        post.n              = 5,
+                                        post.n              = 50,
                                         post.space          = 50,
                                         post.cpiter         = 3,
                                         post.verbosity      = 0,
