@@ -17,6 +17,8 @@ RunHdpParallel(
   post.verbosity = 0,
   CPU.cores = 1,
   num.child.process = 4,
+  cos.merge = 0.9,
+  min.sample = 1,
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
   overwrite = TRUE,
@@ -75,6 +77,13 @@ point in making this larger than \code{num.child.process}.}
 
 \item{num.child.process}{Number of posterior sampling chains; can set to
 1 for testing.}
+
+\item{cos.merge}{The cosine similarity threshold for merging raw clusters
+from the posterior sampling chains into "components" i.e. signatures;
+passed to \code{\link[hdpx]{hdp_extract_components}}.}
+
+\item{min.sample}{A "component" (i.e. signature) must have at least
+this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
 \item{ground.truth.sig}{Optional. Either a string with the
 path to file with ground truth signatures or and

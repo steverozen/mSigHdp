@@ -1,7 +1,10 @@
 #' Extract mutational signatures and optionally compare them to existing signatures and exposures.
 #'
 #' @inheritParams MultipleSetupAndPosterior
+#'
 #' @inheritParams AnalyzeAndPlotretval
+#'
+#' @inheritParams CombinePosteriorChains
 #'
 #' @param out.dir If not NULL, output including data and plots
 #'          will be saved in \code{out.dir}.
@@ -40,6 +43,8 @@ RunHdpParallel <- function(input.catalog,
                            post.verbosity      = 0,
                            CPU.cores           = 1,
                            num.child.process   = 4,
+                           cos.merge           = 0.9,
+                           min.sample          = 1,
                            ground.truth.sig    = NULL,
                            ground.truth.exp    = NULL,
                            overwrite           = TRUE,
@@ -69,8 +74,11 @@ RunHdpParallel <- function(input.catalog,
   # hdpSampleMulti-class object.
 
   retval <- CombinePosteriorChains(chlist,
-                                   input.catalog=input.catalog,
-                                   multi.types=multi.types)
+                                   input.catalog = input.catalog,
+                                   multi.types   = multi.types,
+                                   verbose       = verbose,
+                                   cos.merge     = cos.merge,
+                                   min.sample    = min.sample)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.
