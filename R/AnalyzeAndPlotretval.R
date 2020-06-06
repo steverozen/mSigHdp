@@ -89,7 +89,7 @@ AnalyzeAndPlotretval <- function(retval,
       }
       ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
     }
-    stopifnot(is.matrix(ground.truth.sig))
+    stopifnot(is.matrix(ground.truth.exp))
 
     pdf(file = file.path(out.dir,"ground.truth.exposure.count.pdf"),
         paper = "a4")
@@ -111,6 +111,17 @@ AnalyzeAndPlotretval <- function(retval,
   # Compare with ground truth
   # Only proceed if both ground.truth.sig and ground.truth.exp are provided
 
+  if(!is.null(ground.truth.sig)){
+    ##read ground.truth.exp
+    if (mode(ground.truth.sig) == "character") {
+      if (verbose) {
+        message("Reading ground truth exposures from ",
+                ground.truth.sig)
+      }
+      ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig)
+    }
+    stopifnot(is.matrix(ground.truth.sig))
+  }
 
   if(!is.null(ground.truth.sig) && !is.null(ground.truth.exp)){
     sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
