@@ -89,7 +89,7 @@ AnalyzeAndPlotretval <- function(retval,
       }
       ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
     }
-    stopifnot(is.matrix(ground.truth.exp))
+    #stopifnot(is.matrix(ground.truth.exp))
 
     pdf(file = file.path(out.dir,"ground.truth.exposure.count.pdf"),
         paper = "a4")
