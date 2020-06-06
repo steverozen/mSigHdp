@@ -1,3 +1,6 @@
+# [0.0.0.9015]- 2020-06-06
+* Stable version with package source file available to download for installation. See [README.md](https://github.com/steverozen/mSigHdp/blob/master/README.md) for more details.
+
 # [0.0.0.9005]- 2020-05-16
 * Changed arg for `Runhdp4` and `RundAndEvalHdp4` from `input.catalog.file` to
   `input.catalog`; starting to retire `Runhpd5`, `RunAndEvalHdp5`, `RunhdpInternal5`.

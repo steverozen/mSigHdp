@@ -7,7 +7,7 @@ This repeats what Nicola do in her thesis. It starts four independent initial ch
 then pick up from the end of each initial chain,
 started another num.posterior MCMC chains for another post.burnin iterations
 and then collected post.n posterior samples at intervals of post.space iterations.
-In total, this collects 4 times num.posterior times post.n posterior samples from 4 times y seperate chains.}
+In total, this collects 4 times num.posterior times post.n posterior samples from 4 times y separate chains.}
 \usage{
 ExtendIterationAndPosterior(
   input.catalog,
@@ -112,5 +112,5 @@ This repeats what Nicola do in her thesis. It starts four independent initial ch
 then pick up from the end of each initial chain,
 started another num.posterior MCMC chains for another post.burnin iterations
 and then collected post.n posterior samples at intervals of post.space iterations.
-In total, this collects 4 times num.posterior times post.n posterior samples from 4 times y seperate chains.
+In total, this collects 4 times num.posterior times post.n posterior samples from 4 times y separate chains.
 }
