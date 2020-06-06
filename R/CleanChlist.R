@@ -1,52 +1,34 @@
-# Generate the original multi_chain for the sample
-# if (verbose) message("calling hdp_multi_chain ", Sys.time())
-# If a child dies the corresponding element of chlist has
-# class try-error.
+# If a child dies with an error caught by R,
+# the corresponding element of chlist has class try-error,
+# if the child dies with e.g. a segfault the chlist element
+# is NULL.
 #
-# We filter these and generate a warning. This is a bit
+# We filter these out and generate a warning. This is a bit
 # tricky and I am not sure I have anticipated all possible
 # returns, so I do this in a loop.
-# @import
 
-CleanChlist <- function(chlist){
+CleanChlist <- function(chlist, verbose = FALSE) {
 
   clean.chlist <- list()
 
-  if(length(chlist)>1){
-    ii <- 1
-    for (i in 1:length(chlist)) {
-      cclass <- class(chlist[[i]])
-      cat("chlist element", i, "has class ", cclass, "\n")
-      if ("try-error" %in% cclass) {
-        warning("class of element", i, "is try-error\n")
-      } else {
-        if (!("hdpSampleChain" %in% cclass)) {
-          warning("A different incorrect class for i =", i, cclass)
-        } else{
-          clean.chlist[[ii]] <- chlist[[i]]
-          ii <- ii + 1
-        }
-      }
-    }
-    return(clean.chlist)
+  if (!is.list(chlist)) chlist <- list(chlist)
 
-  }else if(length(chlist)==1){
-    cclass <- class(chlist)
-    cat("chlist element", 1, "has class ", cclass, "\n")
+  ii <- 1
+  for (i in 1:length(chlist)) {
+    cclass <- class(chlist[[i]])
+    if (verbose) message("chlist element", i, "has class ", cclass)
     if ("try-error" %in% cclass) {
-      warning("class of element", 1, "is try-error\n")
+      warning("class of element", i, "is try-error\n")
     } else {
       if (!("hdpSampleChain" %in% cclass)) {
-        warning("A different incorrect class for i =", 1, cclass)
+        warning("An incorrect class for i = ", i, " ", cclass)
       } else{
-        clean.chlist <- chlist
+        clean.chlist[[ii]] <- chlist[[i]]
+        ii <- ii + 1
       }
     }
-    return(clean.chlist)
-
-  }else if(length(clean.chlist) == 0) {
-    stop("No usable result in chlist")
   }
-
+  if (length(clean.chlist) == 0) stop("No usable result in chlist")
+  return(clean.chlist)
 
 }
