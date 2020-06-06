@@ -1,4 +1,4 @@
-test_that("SetupAndPosterior-fast", {
+test_that("chlist", {
 
   reg <- new.env()
   load("RunhdpInternal.testdata/test.CleanChlist.Rdata",
@@ -47,8 +47,8 @@ test_that("SetupAndPosterior-fast", {
 
   expect_equal(retvalx,reg$retvalx)
 
-  v2 <- CleanChlist(chlist[[1]])
-  expect_equal(v2, chlist[1])
+  v2 <- CleanChlist(c.env$chlist[[1]])
+  expect_equal(v2, c.env$chlist[1])
   expect_error(expect_warning(CleanChlist(NULL)))
 
 })
