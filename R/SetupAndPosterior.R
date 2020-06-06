@@ -64,9 +64,9 @@ SetupAndPosterior <-
            post.verbosity      = 0)
 { # 14 arguments
 
-    if (!exists("stir.closure", envir = .GlobalEnv)) {
-      assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
-    }
+    # if (!exists("stir.closure", envir = .GlobalEnv)) {
+    #   assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
+    # }
 
 
     prep_val <- PrepInit(multi.types = multi.types,

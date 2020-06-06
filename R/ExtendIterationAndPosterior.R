@@ -105,9 +105,9 @@ ExtendIterationAndPosterior <-
            checkpoint.aft.post = NULL
   ) { # 15 arguments
 
-    if (!exists("stir.closure", envir = .GlobalEnv)) {
-      assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
-    }
+    # if (!exists("stir.closure", envir = .GlobalEnv)) {
+    #  assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
+    # }
 
     # hdp gets confused if the class of its input is not matrix.
     convSpectra <- t(input.catalog)
