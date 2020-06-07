@@ -43,7 +43,7 @@ AnalyzeAndPlotretval <- function(retval,
   ChainsDiagnosticPlot(retval  = retval,
                        out.dir = out.dir,
                        verbose = verbose)
-  # We want to plot the hdp signtures and exposures
+
   if (verbose) message("Writing signatures")
   extractedSignatures <- ICAMS::as.catalog(retval$signature,
                                            region       = "unknown",

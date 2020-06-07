@@ -30,19 +30,22 @@ ChainsDiagnosticPlot <- function(retval,
   chains <- hdpx::chains(multi)      # list of hdpSampleChain
 
   if (verbose) message("Writing HDP diagnostics")
-  par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
+
   pdf(file = file.path(out.dir,"diagnostics.likelihood.pdf"))
+  par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
   lapply(chains, hdpx::plot_lik, bty = "L")
   dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.numcluster.pdf"))
   # This is the number of raw clusters sampled along each chain
+  par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
   lapply(chains, hdpx::plot_numcluster, bty = "L")
   grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
   # This is the number of mutations assigned as a function of
   # the number of raw clusters
+  par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
   lapply(chains, hdpx::plot_data_assigned, bty = "L")
   grDevices::dev.off()
 

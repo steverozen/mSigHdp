@@ -14,6 +14,18 @@ The goal of mSigHdp is to do mutational signature extraction using hdp
 
 ## Installation
 
+### Stable version
+
+Download the [package
+source](https://raw.githubusercontent.com/steverozen/mSigHdp/master/data-raw/source-file/mSigHdp_0.0.0.9015.tar.gz?token=AKPYULDJID7QLDIJJEXSTMC64S2TS)
+file to your computer and install mSigHdp locally:
+
+``` r
+install.packages(pkgs = "path-to-package-source", repos = NULL, type = "source")
+```
+
+### Development version
+
 Install the development version of mSigHdp from
 [GitHub](https://github.com/) with the R command line:
 
@@ -28,4 +40,4 @@ devtools::install_github("steverozen/mSigHdp", auth_token = "abc")
 
 ## Reference manual
 
-<https://github.com/steverozen/mSigHdp/blob/master/data-raw/mSigHdp_0.0.0.9005.pdf>
+<https://github.com/steverozen/mSigHdp/blob/master/data-raw/mSigHdp_0.0.0.9015.pdf>
