@@ -80,6 +80,11 @@ PrepInit <- function(multi.types,
   ## Calculate the number of levels in the DP node tree.
   dp.levels <- length(unique(ppindex))
 
+  if (verbose) {
+    message("Gamma distribution was set to shape = ", gamma.alpha,
+            "inverse scale = ", gamma.beta)
+  }
+
   alphaa <- rep(gamma.alpha,dp.levels)
   alphab <- rep(gamma.beta,dp.levels)
   invisible(list(num.tumor.types       = num.tumor.types,
