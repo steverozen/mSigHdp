@@ -46,6 +46,9 @@
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
+#' @param gamma.alpha shape of gamma distribution
+#' @param gamma.beta inverse scale of gamma distribution
+#'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 #'  as returned from \code{\link[hdpx]{hdp_posterior}}.
 #'
@@ -61,8 +64,10 @@ SetupAndPosterior <-
            post.n              = 50,
            post.space          = 50,
            post.cpiter         = 3,
-           post.verbosity      = 0)
-{ # 14 arguments
+           post.verbosity      = 0,
+           gamma.alpha         = 1,
+           gamma.beta          = 1)
+{ # 12 arguments
 
     # if (!exists("stir.closure", envir = .GlobalEnv)) {
     #   assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
@@ -72,14 +77,16 @@ SetupAndPosterior <-
     prep_val <- PrepInit(multi.types = multi.types,
                          input.catalog = input.catalog,
                          verbose       = verbose,
-                         K.guess       = K.guess)
+                         K.guess       = K.guess,
+                         gamma.alpha   = gamma.alpha,
+                         gamma.beta    = gamma.beta)
 
     if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
                                 cpindex = prep_val$cpindex,
                                 hh      = rep(1,prep_val$number.channels),
-                                alphaa  = prep_val$al,
-                                alphab  = prep_val$al)
+                                alphaa  = prep_val$alphaa, ##The prior is a gamma with shape alphaa, and inverse scale alphab
+                                alphab  = prep_val$alphab)
 
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)

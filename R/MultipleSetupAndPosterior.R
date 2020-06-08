@@ -26,7 +26,9 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       post.cpiter         = 3,
                                       post.verbosity      = 0,
                                       CPU.cores           = 1,
-                                      num.child.process   = 4){
+                                      num.child.process   = 4,
+                                      gamma.alpha         = 1,
+                                      gamma.beta          = 1)){
 
   run.setup.and.posterior <- function(seedNumber) {
 

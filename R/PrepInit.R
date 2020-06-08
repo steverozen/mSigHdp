@@ -5,11 +5,15 @@
 #' @param input.catalog TODO
 #' @param verbose TODO
 #' @param K.guess TODO
+#' @param gamma.alpha shape of gamma distribution
+#' @param gamma.beta inverse scale of gamma distribution
 #  @import
 PrepInit <- function(multi.types,
                       input.catalog,
                       verbose,
-                      K.guess){
+                      K.guess,
+                      gamma.alpha=1,
+                     gamma.beta=1){
 
   if (mode(input.catalog) == "character") {
     if (verbose) message("Reading input catalog file ", input.catalog)
@@ -76,11 +80,13 @@ PrepInit <- function(multi.types,
   ## Calculate the number of levels in the DP node tree.
   dp.levels <- length(unique(ppindex))
 
-  al <- rep(1,dp.levels)
+  alphaa <- rep(gamma.alpha,dp.levels)
+  alphab <- rep(gamma.beta,dp.levels)
   invisible(list(num.tumor.types       = num.tumor.types,
                  number.channels        = number.channels,
                  convSpectra      = convSpectra,
                  ppindex    = ppindex,
                  cpindex = cpindex,
-                 al = al))
+                 alphaa = alphaa,
+                 alphab = alphab))
 }
