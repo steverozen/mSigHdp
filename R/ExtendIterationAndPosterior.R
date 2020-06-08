@@ -99,11 +99,10 @@ ExtendIterationAndPosterior <-
            post.n              = 50,
            post.space          = 50,
            post.cpiter         = 3,
-           post.verbosity      = 0,
-           cos.merge           = 0.9,
-           min.sample          = 1,
-           checkpoint.aft.post = NULL
+           post.verbosity      = 0
+
   ) { # 15 arguments
+
 
     prep_val <- PrepInit(multi.types = multi.types,
                          input.catalog = input.catalog,
@@ -157,33 +156,31 @@ ExtendIterationAndPosterior <-
     }
 
     chlist <- {}
-    for(i in 1:4){
-      print(paste0("init_chain",i))
-      seed <- seedNumber + i
-      if (verbose) message("calling dp_activate ", Sys.time())
-      # dp_activate requires that stir.closure exists in .GlobalEnv;
-      # see above in this function.
-      hdp.state <- hdpx::dp_activate(hdpObject,
-                                     1:num.process,
-                                     initcc = K.guess,
-                                     seed = seed + 3e6)
+    seed <- seedNumber
+    if (verbose) message("calling dp_activate ", Sys.time())
+    # dp_activate requires that stir.closure exists in .GlobalEnv;
+    # see above in this function.
+    hdp.state <- hdpx::dp_activate(hdpObject,
+                                   1:num.process,
+                                   initcc = K.guess,
+                                   seed = seed + 3e6)
 
-      hdplist <- hdpx::as.list(hdp.state)
-      iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
-      output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
-      hdplist <- output[[1]]
-      as.hdpState <- utils::getFromNamespace(x = "as.hdpState", ns = "hdpx")
-      hdp.state.burned <- as.hdpState(hdplist)
+    hdplist <- hdpx::as.list(hdp.state)
+    iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
+    output <- hdpx:::iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
+    hdplist <- output[[1]]
+    as.hdpState <- utils::getFromNamespace(x = "as.hdpState", ns = "hdpx")
+    hdp.state.burned <- as.hdpState(hdplist)
 
-      parallel.time <- system.time(
-        chlist <- c(chlist,parallel::mclapply(
-          # Must choose a different seed for each of the chains
-          X = (seed + 1:num.posterior * 10^6) ,
-          FUN = hdp_posterior_sample,
-          mc.cores = CPU.cores))
+    parallel.time <- system.time(
+      chlist <- c(chlist,parallel::mclapply(
+        # Must choose a different seed for each of the chains
+        X = (seed + 1:num.posterior * 10^6) ,
+        FUN = hdp_posterior_sample,
+        mc.cores = CPU.cores))
 
-      )
-    }
+    )
+
     if (verbose) {
       message("compute chlist time: ")
       for (xn in names(parallel.time)) {
@@ -222,61 +219,11 @@ ExtendIterationAndPosterior <-
 
     if (length(clean.chlist) == 0) {
       fname <- "chlist.from.aborted.run.of.RunhdpInternal4.Rdata"
-      save(chlist, file = fname)
+      save(clean.chlist, file = fname)
       stop("No usable result in chlist, look in ", fname)
+    }else{
+      save(clean.chlist, file = paste0("/home/mo/clean.chlist.from.seed.",seed,".RData"))
     }
 
-    multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-    rm(chlist)
-    rm(clean.chlist)
 
-    if (verbose) message("calling hdp_extract_components ", Sys.time())
-    # Group raw "clusters" into "components" (i.e. signatures).
-    extract.time <- system.time(
-      multi.chains <-
-        hdpx::hdp_extract_components(multi.chains,
-                                     cos.merge  = cos.merge,
-                                     min.sample = min.sample)
-    )
-    if (verbose) {
-      message("hdp_extract_components time: ")
-      for (xn in names(extract.time)) {
-        message(" ", xn, " ", extract.time[[xn]])
-      }
-    }
-
-    if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
-    extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
-
-    rownames(extractedSignatures) <- rownames(input.catalog)
-    # Set signature names to "hdp.0","hdp.1","hdp.2", ...
-    colnames(extractedSignatures) <-
-      paste("hdp", colnames(extractedSignatures), sep = ".")
-
-    ## Calculate the exposure probability of each signature (component) for each
-    ## tumor sample (posterior sample corresponding to a dirichlet process node).
-    ## This is the probability distribution of signatures (components) for all
-    ## tumor samples (DP nodes); exposureProbs is the normalized
-    ## signature exposure all tumor samples # TODO Wuyang, what do you mean
-    # by normalize?
-
-    if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
-    exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
-
-    # Remove columns corresponding to parent or grandparent nodes
-    # (leaving only columns corresponding to samples.
-    # Transpose so it conforms to SynSigEval format
-    exposureProbs <- t(exposureProbs[-(1:(num.tumor.types + 1)), ])
-    # Now rows are signatures, columns are samples
-
-    # Calculate exposure counts from exposure probabilities and total mutation
-    # counts
-    exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
-    colnames(exposureCounts) <- colnames(input.catalog)
-    rownames(exposureCounts) <- colnames(extractedSignatures)
-
-    invisible(list(signature       = extractedSignatures,
-                   exposure        = exposureCounts,
-                   exposure.p      = exposureProbs,
-                   multi.chains    = multi.chains))
   }
