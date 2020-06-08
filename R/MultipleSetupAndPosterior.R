@@ -44,7 +44,7 @@ MultipleSetupAndPosterior <- function(input.catalog,
       post.space     = post.space,
       post.cpiter    = post.cpiter,
       post.verbosity = post.verbosity,
-      amma.alpha    = gamma.alpha,
+      gamma.alpha    = gamma.alpha,
       gamma.beta    = gamma.beta)
     return(sample.chain)
   }

@@ -82,7 +82,7 @@ PrepInit <- function(multi.types,
 
   if (verbose) {
     message("Gamma distribution was set to shape = ", gamma.alpha,
-            "inverse scale = ", gamma.beta)
+            " inverse scale = ", gamma.beta)
   }
 
   alphaa <- rep(gamma.alpha,dp.levels)

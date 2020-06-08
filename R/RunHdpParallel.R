@@ -69,8 +69,8 @@ RunHdpParallel <- function(input.catalog,
                                       post.verbosity      = post.verbosity,
                                       CPU.cores           = CPU.cores,
                                       num.child.process   = num.child.process,
-                                      gamma.alpha         = 1,
-                                      gamma.beta          = 1)
+                                      gamma.alpha         = gamma.alpha,
+                                      gamma.beta          = gamma.beta)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
