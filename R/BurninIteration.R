@@ -1,7 +1,11 @@
-#' Generate an HDP Gibbs sampling chain from a spectra catalog.
+#' Run hdp extraction and attribution on a spectra catalog file
+#' A function to do burn-in iteration only. This returns a list of hdp object.
+#' This needs to be converted to a hdpState object before hdp_posterior
+#' (hdpx:::as.hdpState(hdplist))
 #'
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
+#'
 #'
 #' @param seedNumber An integer that is used to generate separate
 #'   random seeds for each call to \code{\link[hdpx]{dp_activate}},
@@ -9,19 +13,15 @@
 #'   on how this is done. But repeated calls with same value of
 #'   \code{seedNumber} and other inputs should produce the same results.
 #'
-#' @param K.guess Initial guess of the number of "raw clusters",
-#' which may be larger than the number of signatures
-#' (sometimes called "components" in the hdpx code);
-#'  passed to \code{\link[hdpx]{dp_activate}} as
+#' @param K.guess Suggested initial value of the number of
+#' signatures, passed to \code{\link[hdpx]{dp_activate}} as
 #' \code{initcc}.
 #'
 #' @param multi.types A logical scalar or
 #' a character vector.
-#' If \code{FALSE}, The HDP analysis
-#'   will regard all input spectra as one tumor type.
+#' If \code{FALSE}, hdp will regard all input spectra as one tumor type.
 #'
-#' If \code{TRUE}, the HDP analysis
-#'   will infer tumor types based on the string before "::" in their names.
+#' If \code{TRUE}, hdp will infer tumor types based on the string before "::" in their names.
 #' e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
 #'
 #' If \code{multi.types} is a character vector, then it should be of the same length
@@ -31,14 +31,9 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
+#'
 #' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{burnin}.
-#'
-#' @param post.n Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{n}.
-#'
-#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{space}.
 #'
 #' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{cpiter}.
@@ -46,47 +41,36 @@
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
-#' @param gamma.alpha shape of gamma distribution
-#' @param gamma.beta inverse scale of gamma distribution
 #'
-#' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
-#'  as returned from \code{\link[hdpx]{hdp_posterior}}.
+#' @return A list with hdp object after burn-in iteration
 #'
 #' @export
+#'
+#'
 
-SetupAndPosterior <-
+BurninIteration <-
   function(input.catalog,
            seedNumber          = 1,
            K.guess,
            multi.types         = FALSE,
            verbose             = TRUE,
            post.burnin         = 4000,
-           post.n              = 50,
-           post.space          = 50,
            post.cpiter         = 3,
-           post.verbosity      = 0,
-           gamma.alpha         = 1,
-           gamma.beta          = 1)
-{ # 12 arguments
+           post.verbosity      = 0
 
-    # if (!exists("stir.closure", envir = .GlobalEnv)) {
-    #   assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
-    # }
-
+  ) { # 8 arguments
 
     prep_val <- PrepInit(multi.types = multi.types,
                          input.catalog = input.catalog,
                          verbose       = verbose,
-                         K.guess       = K.guess,
-                         gamma.alpha   = gamma.alpha,
-                         gamma.beta    = gamma.beta)
+                         K.guess       = K.guess)
 
     if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
                                 cpindex = prep_val$cpindex,
                                 hh      = rep(1,prep_val$number.channels),
-                                alphaa  = prep_val$alphaa, ##The prior is a gamma with shape alphaa, and inverse scale alphab
-                                alphab  = prep_val$alphab)
+                                alphaa  = prep_val$al,
+                                alphab  = prep_val$al)
 
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)
@@ -105,35 +89,19 @@ SetupAndPosterior <-
                         tmp.cs)
     rm(tmp.cs)
 
+    seed <- seedNumber
     if (verbose) message("calling dp_activate ", Sys.time())
     # dp_activate requires that stir.closure exists in .GlobalEnv;
     # see above in this function.
+    hdp.state <- hdpx::dp_activate(hdpObject,
+                                   1:num.process,
+                                   initcc = K.guess,
+                                   seed = seed + 3e6)
 
-    hdp.state <- hdpx::dp_activate(hdp     = hdpObject,
-                                   dpindex = 1:num.process,
-                                   initcc  = K.guess,
-                                   seed    = seedNumber)
-
-    if (verbose) message("calling hdp_posterior, seed = ",
-                         seedNumber, " ", Sys.time())
-    posterior.time <- system.time(
-      sample.chain <- hdpx::hdp_posterior(
-        hdp       = hdp.state,
-        verbosity = post.verbosity,
-        burnin    = post.burnin,
-        n         = post.n,
-        space     = post.space,
-        cpiter    = post.cpiter,
-        seed      = seedNumber)
-    )
-
-    if (verbose) {
-      message("compute sample.chain time: ")
-      for (xn in names(posterior.time)) {
-        message(" ", xn, " ", posterior.time[[xn]])
-      }
-    }
-
-    return(invisible(sample.chain))
+    hdplist <- hdpx::as.list(hdp.state)
+    iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
+    output <- hdpx:::iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
+    hdplist <- output[[1]]
+    return(hdplist)
 
   }

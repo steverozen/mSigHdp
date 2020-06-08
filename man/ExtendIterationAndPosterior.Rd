@@ -21,10 +21,7 @@ ExtendIterationAndPosterior(
   post.n = 50,
   post.space = 50,
   post.cpiter = 3,
-  post.verbosity = 0,
-  cos.merge = 0.9,
-  min.sample = 1,
-  checkpoint.aft.post = NULL
+  post.verbosity = 0
 )
 }
 \arguments{
