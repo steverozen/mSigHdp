@@ -1,11 +1,18 @@
-# If a child dies with an error caught by R,
-# the corresponding element of chlist has class try-error,
-# if the child dies with e.g. a segfault the chlist element
-# is NULL.
-#
-# We filter these out and generate a warning. This is a bit
-# tricky and I am not sure I have anticipated all possible
-# returns, so I do this in a loop.
+#' If the job of Gibbs sampling from \code{MultipleSetupAndPosterior}
+#' has an error caught by R, the corresponding element
+#' of chlist has class try-error.
+#' If the job is stopped with, e.g. a segfault,
+#' the \code{chlist} element is NULL.
+#'
+#'
+#'
+#'
+#' @param chlist A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+#'
+#' @return Invisibly, the clean, non-error \code{chlist}
+#'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+#'
+
 
 CleanChlist <- function(chlist, verbose = FALSE) {
 

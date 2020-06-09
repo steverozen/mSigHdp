@@ -6,12 +6,6 @@
 #'
 #' @inheritParams CombinePosteriorChains
 #'
-#' @param out.dir If not NULL, output including data and plots
-#'          will be saved in \code{out.dir}.
-#'
-#' @param overwrite If \code{TRUE}, overwrite \code{out.dir} if it is
-#'  non-NULL and exists.
-#'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are

@@ -9,7 +9,7 @@ test_that("BurninIteration-fast", {
        envir = reg)
 
   retvalx <- BurninIteration(input.catalog = input.catalog[1:10 , 1:15],
-                             seedNumber          = 44 + 3e6,
+                             seedNumber          = (44 + 3e6),
                              K.guess             = 5,
                              multi.types         = FALSE,
                              verbose             = TRUE,
@@ -18,10 +18,11 @@ test_that("BurninIteration-fast", {
                              post.verbosity      = 0,
                              gamma.alpha    = 1,
                              gamma.beta     = 1
-
   )
 
   #save(retvalx, file = "RunhdpInternal.testdata/test.BurninIteration.Rdata")
 
-  expect_equal(retvalx, reg$retvalx)
+  expect_equal(retvalx$hdplist, reg$retvalx$hdplist)
+  expect_equal(retvalx$likelihood, reg$retvalx$likelihood)
+
 })

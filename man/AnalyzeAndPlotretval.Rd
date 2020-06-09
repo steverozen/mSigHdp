@@ -25,7 +25,7 @@ path to file with ground truth signatures or and
 \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
 These are the signatures used to construct the ground truth spectra.}
 
-\item{ground.truth.exp}{Optional.Ground truth exposure matrix or
+\item{ground.truth.exp}{Optional. Ground truth exposure matrix or
 path to file with ground truth exposures.
 If \code{NULL} skip checks that need this information.}
 

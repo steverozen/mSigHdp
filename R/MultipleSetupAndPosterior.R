@@ -1,15 +1,15 @@
 #' Activate hierarchical Dirichlet processes and run posterior sampling in parallel.
 #'
+#' @inheritParams SetupAndPosterior
+#'
 #' @param CPU.cores Number of CPUs to use; there is no
 #'    point in making this larger than \code{num.child.process}.
 #'
 #' @param num.child.process Number of posterior sampling chains; can set to
 #'   1 for testing.
 #'
-#' @inheritParams SetupAndPosterior
-#'
 #' @return Invisibly,
-#'    the clean \code{chlist} (output of the hdp_posterior calls).
+#'    the clean \code{chlist} (output of \code{CleanChlist}).
 #'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 #'
 #' @export

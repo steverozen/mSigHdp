@@ -4,7 +4,7 @@
 \alias{PrepInit}
 \title{Initialize hdp object
 Allocate process index for hdp initialization.
-Prepare for hdp_init}
+Prepare for \code{\link[hdpx]{hdp_init}}}
 \usage{
 PrepInit(
   multi.types,
@@ -27,8 +27,9 @@ e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA
 
 If \code{multi.types} is a character vector, then it should be of the same length
 as the number of columns in \code{input.catalog}, and each value is the
-name of the tumor type of the corresponding column in \code{input.catalog},
-e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
+name of the tumor type of the corresponding column in \code{input.catalog}.
+
+e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
@@ -50,5 +51,5 @@ function the gamma distributions for all Dirichlet processes are the same.}
 \description{
 Initialize hdp object
 Allocate process index for hdp initialization.
-Prepare for hdp_init
+Prepare for \code{\link[hdpx]{hdp_init}}
 }

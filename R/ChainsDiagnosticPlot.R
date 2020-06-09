@@ -1,4 +1,4 @@
-#' Diagnostic plot for hdp multi sample chains (output from CombinePosteriorChains)
+#' Diagnostic plot for a hdpSampleMulti object
 #' @param retval output from CombinePosteriorChains.A list with the following elements:\describe{
 #'    \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are

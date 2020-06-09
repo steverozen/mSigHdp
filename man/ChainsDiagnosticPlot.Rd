@@ -2,7 +2,7 @@
 % Please edit documentation in R/ChainsDiagnosticPlot.R
 \name{ChainsDiagnosticPlot}
 \alias{ChainsDiagnosticPlot}
-\title{Diagnostic plot for hdp multi sample chains (output from CombinePosteriorChains)}
+\title{Diagnostic plot for a hdpSampleMulti object}
 \usage{
 ChainsDiagnosticPlot(retval, out.dir, verbose)
 }
@@ -29,5 +29,5 @@ abort if \code{out.dir} already exits.}
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 }
 \description{
-Diagnostic plot for hdp multi sample chains (output from CombinePosteriorChains)
+Diagnostic plot for a hdpSampleMulti object
 }

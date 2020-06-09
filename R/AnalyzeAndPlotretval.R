@@ -10,7 +10,7 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
-#' @param ground.truth.exp Optional.Ground truth exposure matrix or
+#' @param ground.truth.exp Optional. Ground truth exposure matrix or
 #'   path to file with ground truth exposures.
 #'   If \code{NULL} skip checks that need this information.
 #'
@@ -62,13 +62,13 @@ AnalyzeAndPlotretval <- function(retval,
 
   pdf(file = file.path(out.dir,"inferred.exposure.count.pdf"),
       paper = "a4")
-  mSigHdp::PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
+  PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
                                num.per.line = 40)
   dev.off()
 
   pdf(file = file.path(out.dir,"inferred.exposure.proportion.pdf"),
       paper = "a4")
-  mSigHdp::PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
+  PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
                                num.per.line = 40,
                                plot.proportion = TRUE)
   dev.off()

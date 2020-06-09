@@ -42,8 +42,9 @@ e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA
 
 If \code{multi.types} is a character vector, then it should be of the same length
 as the number of columns in \code{input.catalog}, and each value is the
-name of the tumor type of the corresponding column in \code{input.catalog},
-e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
+name of the tumor type of the corresponding column in \code{input.catalog}.
+
+e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
@@ -78,7 +79,7 @@ function the gamma distributions for all Dirichlet processes are the same.}
 }
 \value{
 Invisibly,
-the clean \code{chlist} (output of the hdp_posterior calls).
+the clean \code{chlist} (output of \code{CleanChlist}).
 This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 }
 \description{
