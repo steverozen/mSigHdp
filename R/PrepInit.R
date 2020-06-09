@@ -1,6 +1,15 @@
 #' Initialize hdp object
 #' Allocate process index for hdp initialization.
 #' Prepare for hdp_init
+#'
+#' @param input.catalog Input spectra catalog as a matrix or
+#' in \code{\link[ICAMS]{ICAMS}} format.
+#'
+#' @param K.guess Suggested initial value of the number of
+#' signatures, passed to \code{\link[hdpx]{dp_activate}} as
+#' \code{initcc}.
+#'
+#'
 #' @param multi.types A logical scalar or
 #' a character vector.
 #' If \code{FALSE}, The HDP analysis
@@ -16,19 +25,20 @@
 #' e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
-#' @param input.catalog Input spectra catalog as a matrix or
-#' in \code{\link[ICAMS]{ICAMS}} format.
-#' @param K.guess Suggested initial value of the number of
-#' signatures, passed to \code{\link[hdpx]{dp_activate}} as
-#' \code{initcc}.
-#' @param gamma.alpha shape of gamma distribution
-#' @param gamma.beta inverse scale of gamma distribution
-#  @import
+#'
+#' @param gamma.alpha Shape parameter of gamma distribution from which
+#'   the Dirichlet process concentration parameters are drawn; in this
+#'   function the gamma distributions for all Dirichlet processes are the same.
+#'
+#' @param gamma.beta Inverse scale parameter (rate parameter) of gamma distribution
+#'   from which the Dirichlet process concentration parameters are drawn; in this
+#'   function the gamma distributions for all Dirichlet processes are the same.
+
 PrepInit <- function(multi.types,
-                      input.catalog,
-                      verbose,
-                      K.guess,
-                      gamma.alpha=1,
+                     input.catalog,
+                     verbose,
+                     K.guess,
+                     gamma.alpha=1,
                      gamma.beta=1){
 
   if (mode(input.catalog) == "character") {
@@ -50,7 +60,6 @@ PrepInit <- function(multi.types,
     message("Guessed number of signatures ",
             "(= Dirichlet process data clusters) = ", K.guess)
   }
-
 
   if (multi.types == FALSE) { # All tumors belong to one tumor type
     num.tumor.types <- 1
@@ -103,11 +112,11 @@ PrepInit <- function(multi.types,
 
   alphaa <- rep(gamma.alpha,dp.levels)
   alphab <- rep(gamma.beta,dp.levels)
-  invisible(list(num.tumor.types       = num.tumor.types,
-                 number.channels        = number.channels,
-                 convSpectra      = convSpectra,
-                 ppindex    = ppindex,
-                 cpindex = cpindex,
-                 alphaa = alphaa,
-                 alphab = alphab))
+  invisible(list(num.tumor.types = num.tumor.types,
+                 number.channels = number.channels,
+                 convSpectra     = convSpectra,
+                 ppindex         = ppindex,
+                 cpindex         = cpindex,
+                 alphaa          = alphaa,
+                 alphab          = alphab))
 }

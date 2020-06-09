@@ -22,23 +22,19 @@ RunHdpParallel(
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
   overwrite = TRUE,
-  out.dir = NULL
+  out.dir = NULL,
+  gamma.alpha = 1,
+  gamma.beta = 1
 )
 }
 \arguments{
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
 
-\item{seedNumber}{An integer that is used to generate separate
-random seeds for each call to \code{\link[hdpx]{dp_activate}},
-and each call of \code{\link[hdpx]{hdp_posterior}}; please see the code
-on how this is done. But repeated calls with same value of
-\code{seedNumber} and other inputs should produce the same results.}
+\item{seedNumber}{A random seeds passed to \code{\link[hdpx]{dp_activate}}.}
 
-\item{K.guess}{Initial guess of the number of "raw clusters",
-which may be larger than the number of signatures
-(sometimes called "components" in the hdpx code);
-passed to \code{\link[hdpx]{dp_activate}} as
+\item{K.guess}{Suggested initial value of the number of
+signatures, passed to \code{\link[hdpx]{dp_activate}} as
 \code{initcc}.}
 
 \item{multi.types}{A logical scalar or
@@ -99,6 +95,14 @@ non-NULL and exists.}
 
 \item{out.dir}{If not NULL, output including data and plots
 will be saved in \code{out.dir}.}
+
+\item{gamma.alpha}{Shape parameter of gamma distribution from which
+the Dirichlet process concentration parameters are drawn; in this
+function the gamma distributions for all Dirichlet processes are the same.}
+
+\item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
+from which the Dirichlet process concentration parameters are drawn; in this
+function the gamma distributions for all Dirichlet processes are the same.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

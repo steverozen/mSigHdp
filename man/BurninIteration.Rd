@@ -15,7 +15,9 @@ BurninIteration(
   verbose = TRUE,
   post.burnin = 4000,
   post.cpiter = 3,
-  post.verbosity = 0
+  post.verbosity = 0,
+  gamma.alpha = 1,
+  gamma.beta = 1
 )
 }
 \arguments{
@@ -34,9 +36,11 @@ signatures, passed to \code{\link[hdpx]{dp_activate}} as
 
 \item{multi.types}{A logical scalar or
 a character vector.
-If \code{FALSE}, hdp will regard all input spectra as one tumor type.
+If \code{FALSE}, The HDP analysis
+will regard all input spectra as one tumor type.
 
-If \code{TRUE}, hdp will infer tumor types based on the string before "::" in their names.
+If \code{TRUE}, the HDP analysis
+will infer tumor types based on the string before "::" in their names.
 e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
 
 If \code{multi.types} is a character vector, then it should be of the same length
@@ -54,6 +58,14 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC"
 
 \item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{verbosity}.}
+
+\item{gamma.alpha}{Shape parameter of gamma distribution from which
+the Dirichlet process concentration parameters are drawn; in this
+function the gamma distributions for all Dirichlet processes are the same.}
+
+\item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
+from which the Dirichlet process concentration parameters are drawn; in this
+function the gamma distributions for all Dirichlet processes are the same.}
 }
 \value{
 A list with hdp object after burn-in iteration

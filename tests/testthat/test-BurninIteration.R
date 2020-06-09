@@ -9,15 +9,17 @@ test_that("BurninIteration-fast", {
        envir = reg)
 
   retvalx <- BurninIteration(input.catalog = input.catalog[1:10 , 1:15],
-             seedNumber          = 44,
-             K.guess             =5,
-             multi.types         = FALSE,
-             verbose             = TRUE,
-             post.burnin         = 100,
-             post.cpiter         = 3,
-             post.verbosity      = 0
+                             seedNumber          = 44 + 3e6,
+                             K.guess             = 5,
+                             multi.types         = FALSE,
+                             verbose             = TRUE,
+                             post.burnin         = 100,
+                             post.cpiter         = 3,
+                             post.verbosity      = 0,
+                             gamma.alpha    = 1,
+                             gamma.beta     = 1
 
-            )
+  )
 
   #save(retvalx, file = "RunhdpInternal.testdata/test.BurninIteration.Rdata")
 

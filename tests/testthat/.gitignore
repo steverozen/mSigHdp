@@ -3,4 +3,4 @@ SBS96.ground.truth/ground
 test-RunAnd..etc4_out_dir
 test-RunAnd..etc5_out_dir
 RunAndEvalHdp5-fast96-2-cores
-/*_out_dir/*
+*_out_dir/*
