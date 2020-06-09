@@ -99,22 +99,27 @@ ExtendIterationAndPosterior <-
            post.n              = 50,
            post.space          = 50,
            post.cpiter         = 3,
-           post.verbosity      = 0
+           post.verbosity      = 0,
+           chlist.path         = NULL,
+           gamma.alpha         = 1,
+           gamma.beta          = 1
 
-  ) { # 15 arguments
+  ) { # 13 arguments
 
 
     prep_val <- PrepInit(multi.types = multi.types,
                          input.catalog = input.catalog,
                          verbose       = verbose,
-                         K.guess       = K.guess)
+                         K.guess       = K.guess,
+                         gamma.alpha   = gamma.alpha,
+                         gamma.beta    = gamma.beta)
 
     if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
                                 cpindex = prep_val$cpindex,
                                 hh      = rep(1,prep_val$number.channels),
-                                alphaa  = prep_val$al,
-                                alphab  = prep_val$al)
+                                alphaa  = prep_val$alphaa,
+                                alphab  = prep_val$alphab)
 
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)
@@ -138,22 +143,6 @@ ExtendIterationAndPosterior <-
     # see above in this function.
 
 
-    # Run num.posterior independent sampling chains for burned-in hdp
-    hdp_posterior_sample <- function(my.seed) {
-
-      if (verbose) message("calling hdp_posterior ", Sys.time())
-      print(my.seed)
-      sample.chain <- hdpx::hdp_posterior(
-        hdp       = hdp.state.burned,
-        verbosity = post.verbosity,
-        burnin    = post.burnin,
-        n         = post.n,
-        space     = post.space,
-        cpiter    = post.cpiter,
-        seed      = my.seed)
-
-      return(sample.chain)
-    }
 
     chlist <- {}
     seed <- seedNumber
@@ -172,6 +161,24 @@ ExtendIterationAndPosterior <-
     as.hdpState <- utils::getFromNamespace(x = "as.hdpState", ns = "hdpx")
     hdp.state.burned <- as.hdpState(hdplist)
 
+    # Run num.posterior independent sampling chains for burned-in hdp
+    hdp_posterior_sample <- function(my.seed) {
+
+      if (verbose) message("calling hdp_posterior ", Sys.time())
+      print(my.seed)
+      sample.chain <- hdpx::hdp_posterior(
+        hdp       = hdp.state.burned,
+        verbosity = post.verbosity,
+        burnin    = post.burnin,
+        n         = post.n,
+        space     = post.space,
+        cpiter    = post.cpiter,
+        seed      = my.seed)
+
+      return(sample.chain)
+    }
+
+
     parallel.time <- system.time(
       chlist <- c(chlist,parallel::mclapply(
         # Must choose a different seed for each of the chains
@@ -188,10 +195,6 @@ ExtendIterationAndPosterior <-
       }
     }
 
-    if (!is.null(checkpoint.aft.post)) {
-      save(chlist, file = checkpoint.aft.post)
-    }
-
     # Generate the original multi_chain for the sample
     if (verbose) message("calling hdp_multi_chain ", Sys.time())
     # If a child dies the corresponding element of chlist has
@@ -200,29 +203,15 @@ ExtendIterationAndPosterior <-
     # We filter these and generate a warning. This is a bit
     # tricky and I am not sure I have anticipated all possible
     # returns, so I do this in a loop.
-    ii <- 1
-    clean.chlist <- list()
-    for (i in 1:length(chlist)) {
-      cclass <- class(chlist[[i]])
-      cat("chlist element", i, "has class", cclass, "\n")
-      if ("try-error" %in% cclass) {
-        warning("class of element", i, "\n")
-      } else {
-        if (!("hdpSampleChain" %in% cclass)) {
-          warning("A different incorrect class for i =", i, cclass)
-        } else{
-          clean.chlist[[ii]] <- chlist[[i]]
-          ii <- ii + 1
-        }
-      }
-    }
+
+    clean.chlist <- CleanChlist(chlist)
 
     if (length(clean.chlist) == 0) {
       fname <- "chlist.from.aborted.run.of.RunhdpInternal4.Rdata"
       save(clean.chlist, file = fname)
       stop("No usable result in chlist, look in ", fname)
     }else{
-      save(clean.chlist, file = paste0("/home/mo/clean.chlist.from.seed.",seed,".RData"))
+      save(clean.chlist, file = chlist.path)
     }
 
 
