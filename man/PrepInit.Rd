@@ -6,16 +6,46 @@
 Allocate process index for hdp initialization.
 Prepare for hdp_init}
 \usage{
-PrepInit(multi.types, input.catalog, verbose, K.guess)
+PrepInit(
+  multi.types,
+  input.catalog,
+  verbose,
+  K.guess,
+  gamma.alpha = 1,
+  gamma.beta = 1
+)
 }
 \arguments{
-\item{multi.types}{TODO}
+\item{multi.types}{A logical scalar or
+a character vector.
+If \code{FALSE}, The HDP analysis
+will regard all input spectra as one tumor type.
 
-\item{input.catalog}{TODO}
+If \code{TRUE}, the HDP analysis
+will infer tumor types based on the string before "::" in their names.
+e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
 
-\item{verbose}{TODO}
+If \code{multi.types} is a character vector, then it should be of the same length
+as the number of columns in \code{input.catalog}, and each value is the
+name of the tumor type of the corresponding column in \code{input.catalog},
+e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
-\item{K.guess}{TODO}
+\item{input.catalog}{Input spectra catalog as a matrix or
+in \code{\link[ICAMS]{ICAMS}} format.}
+
+\item{verbose}{If \code{TRUE} then \code{message} progress information.}
+
+\item{K.guess}{Suggested initial value of the number of
+signatures, passed to \code{\link[hdpx]{dp_activate}} as
+\code{initcc}.}
+
+\item{gamma.alpha}{Shape parameter of gamma distribution from which
+the Dirichlet process concentration parameters are drawn; in this
+function the gamma distributions for all Dirichlet processes are the same.}
+
+\item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
+from which the Dirichlet process concentration parameters are drawn; in this
+function the gamma distributions for all Dirichlet processes are the same.}
 }
 \description{
 Initialize hdp object
