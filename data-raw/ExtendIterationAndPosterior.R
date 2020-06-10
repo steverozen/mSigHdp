@@ -107,52 +107,13 @@ ExtendIterationAndPosterior <-
   ) { # 13 arguments
 
 
-    prep_val <- PrepInit(multi.types = multi.types,
-                         input.catalog = input.catalog,
-                         verbose       = verbose,
-                         K.guess       = K.guess,
-                         gamma.alpha   = gamma.alpha,
-                         gamma.beta    = gamma.beta)
-
-    if (verbose) message("calling hdp_init ", Sys.time())
-    hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
-                                cpindex = prep_val$cpindex,
-                                hh      = rep(1,prep_val$number.channels),
-                                alphaa  = prep_val$alphaa,
-                                alphab  = prep_val$alphab)
-
-    # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
-    num.process <- hdpx::numdp(hdpObject)
-
-    if (verbose) message("calling hdp_setdata ", Sys.time())
-
-    # (hdp/hdpx)::hdp_setdata generates the warning:
-    # In if (!class(data) %in% c("matrix", "data.frame")) { :
-    #     the condition has length > 1 and only the first element will be used
-    # We circumvent this here
-    tmp.cs <- prep_val$convSpectra
-    attr(tmp.cs, "class") <- "matrix"
-    hdpObject <-
-      hdpx::hdp_setdata(hdpObject,
-                        (1 + prep_val$num.tumor.types + 1):num.process,
-                        tmp.cs)
-    rm(tmp.cs)
-
-    if (verbose) message("calling dp_activate ", Sys.time())
-    # dp_activate requires that stir.closure exists in .GlobalEnv;
-    # see above in this function.
-
-
-
-    chlist <- {}
-    seed <- seedNumber
-    if (verbose) message("calling dp_activate ", Sys.time())
-    # dp_activate requires that stir.closure exists in .GlobalEnv;
-    # see above in this function.
-    hdp.state <- hdpx::dp_activate(hdpObject,
-                                   1:num.process,
-                                   initcc = K.guess,
-                                   seed = seed + 3e6)
+    hdp.state <- SetupAndActivate(input.catalog = input.catalog,
+                                  seedNumber    = seedNumber,
+                                  K.guess       = K.guess,
+                                  multi.types   = multi.types,
+                                  verbose       = verbose,
+                                  gamma.alpha   = gamma.alpha,
+                                  gamma.beta    = gamma.beta)
 
     hdplist <- hdpx::as.list(hdp.state)
     iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
