@@ -4,16 +4,13 @@
 #' If the job is stopped with, e.g. a segfault,
 #' the \code{chlist} element is NULL.
 #'
-#'
-#'
-#'
 #' @param chlist A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+#'
+#' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
 #' @return Invisibly, the clean, non-error \code{chlist}
 #'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 #'
-
-
 CleanChlist <- function(chlist, verbose = FALSE) {
 
   clean.chlist <- list()
