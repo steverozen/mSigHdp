@@ -50,7 +50,7 @@ BurninIteration <-
 
     hdplist <- hdpx::as.list(hdp.state)
     iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
-    output <- hdpx:::iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
+    output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
     return(invisible(list(hdplist    = output[[1]],
                           likelihood = output[[2]])))
   }
