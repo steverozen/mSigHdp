@@ -42,7 +42,7 @@ BurninIteration <-
 
   ) { # 8 arguments
 
-    if(is.null(hdp.list)){
+    if(is.null(hdplist)){
       hdp.state <- SetupAndActivate(input.catalog = input.catalog,
                                     seedNumber    = seedNumber,
                                     K.guess       = K.guess,
