@@ -41,28 +41,6 @@ ParallelPosteriorafterBurnin <-
 
     hdp.state <- hdpx:::as.hdpState(retval$hdplist)
 
-    if (verbose) message("calling hdp_posterior, seed = ",
-                         seedNumber, " ", Sys.time())
-    posterior.time <- system.time(
-      sample.chain <- hdpx::hdp_posterior(
-        hdp       = hdp.state,
-        verbosity = post.verbosity,
-        burnin    = post.burnin,
-        n         = post.n,
-        space     = post.space,
-        cpiter    = post.cpiter,
-        seed      = seedNumber)
-    )
-
-    if (verbose) {
-      message("compute sample.chain time: ")
-      for (xn in names(posterior.time)) {
-        message(" ", xn, " ", posterior.time[[xn]])
-      }
-    }
-
-    return(invisible(sample.chain))
-
     run.posterior <- function(seedNumber) {
 
       if (verbose) message("Runing run.posterior on ", seedNumber)
