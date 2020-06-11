@@ -21,6 +21,7 @@
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
+#' @param hdplist If a hdplist is provided, SetupAndActivate will be skipped.
 #'
 #' @return A list with hdp object after burn-in iteration and likelihood of iteration
 #'
@@ -36,19 +37,22 @@ BurninIteration <-
            post.cpiter    = 3,
            post.verbosity = 0,
            gamma.alpha    = 1,
-           gamma.beta     = 1
+           gamma.beta     = 1,
+           hdplist        = NULL
 
   ) { # 8 arguments
 
-    hdp.state <- SetupAndActivate(input.catalog = input.catalog,
-                                  seedNumber    = seedNumber,
-                                  K.guess       = K.guess,
-                                  multi.types   = multi.types,
-                                  verbose       = verbose,
-                                  gamma.alpha   = gamma.alpha,
-                                  gamma.beta    = gamma.beta)
+    if(is.null(hdp.list)){
+      hdp.state <- SetupAndActivate(input.catalog = input.catalog,
+                                    seedNumber    = seedNumber,
+                                    K.guess       = K.guess,
+                                    multi.types   = multi.types,
+                                    verbose       = verbose,
+                                    gamma.alpha   = gamma.alpha,
+                                    gamma.beta    = gamma.beta)
 
-    hdplist <- hdpx::as.list(hdp.state)
+      hdplist <- hdpx::as.list(hdp.state)
+    }
     iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
     output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
     return(invisible(list(hdplist    = output[[1]],

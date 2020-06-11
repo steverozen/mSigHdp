@@ -17,7 +17,8 @@ BurninIteration(
   post.cpiter = 3,
   post.verbosity = 0,
   gamma.alpha = 1,
-  gamma.beta = 1
+  gamma.beta = 1,
+  hdplist = NULL
 )
 }
 \arguments{
@@ -67,6 +68,8 @@ function the gamma distributions for all Dirichlet processes are the same.}
 \item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
 from which the Dirichlet process concentration parameters are drawn; in this
 function the gamma distributions for all Dirichlet processes are the same.}
+
+\item{hdplist}{If a hdplist is provided, SetupAndActivate will be skipped.}
 }
 \value{
 A list with hdp object after burn-in iteration and likelihood of iteration
