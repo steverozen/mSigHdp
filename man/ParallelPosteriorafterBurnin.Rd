@@ -23,6 +23,8 @@ and likelihood from \code{BurninIteration}.}
 
 \item{seedNumber}{Pass to \code{\link[hdpx]{hdp_posterior}}}
 
+\item{verbose}{If \code{TRUE} then \code{message} progress information.}
+
 \item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{burnin}. This can be set to a small number}
 
@@ -37,6 +39,12 @@ and likelihood from \code{BurninIteration}.}
 
 \item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{verbosity}.}
+
+\item{num.child.process}{Number of posterior sampling chains; can set to
+1 for testing.}
+
+\item{CPU.cores}{Number of CPUs to use; there is no
+point in making this larger than \code{num.child.process}.}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object

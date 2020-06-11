@@ -53,6 +53,10 @@ BurninIteration <-
 
       hdplist <- hdpx::as.list(hdp.state)
     }
+    # Using ::: in the code will generate a NOTE during R CMD check.
+    # See the note in ?`:::` for more details.
+    # The workaround is to use function getFromNamespace() to access the
+    # non-exported functions in a namespace.
     iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
     output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
     return(invisible(list(hdplist    = output[[1]],
