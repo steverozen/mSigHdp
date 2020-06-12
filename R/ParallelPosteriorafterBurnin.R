@@ -5,6 +5,8 @@
 #'
 #' @param seedNumber Pass to \code{\link[hdpx]{hdp_posterior}}
 #'
+#' @param verbose If \code{TRUE} then \code{message} progress information.
+#'
 #' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{burnin}. This can be set to a small number
 #'
@@ -19,6 +21,12 @@
 #'
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
+#'
+#' @param num.child.process Number of posterior sampling chains; can set to
+#'   1 for testing.
+#'
+#' @param CPU.cores Number of CPUs to use; there is no
+#'    point in making this larger than \code{num.child.process}.
 #'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 #'  as returned from \code{\link[hdpx]{hdp_posterior}}.
@@ -39,7 +47,12 @@ ParallelPosteriorafterBurnin <-
           )
 { # 12 arguments
 
-    hdp.state <- hdpx:::as.hdpState(retval$hdplist)
+    # Using ::: in the code will generate a NOTE during R CMD check.
+    # See the note in ?`:::` for more details.
+    # The workaround is to use function getFromNamespace() to access the
+    # non-exported functions in a namespace.
+    as.hdpState <- utils::getFromNamespace(x = "as.hdpState", ns = "hdpx")
+    hdp.state <- as.hdpState(retval$hdplist)
 
     run.posterior <- function(seedNumber) {
 
