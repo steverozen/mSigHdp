@@ -42,7 +42,7 @@ BurninIteration <-
 
   ) { # 8 arguments
 
-    if(is.null(hdp.list)){
+    if(is.null(hdplist)){
       hdp.state <- SetupAndActivate(input.catalog = input.catalog,
                                     seedNumber    = seedNumber,
                                     K.guess       = K.guess,
@@ -51,10 +51,14 @@ BurninIteration <-
                                     gamma.alpha   = gamma.alpha,
                                     gamma.beta    = gamma.beta)
 
-      hdplist <- hdpx::as.list(hdp.state)
+
+    }else{
+      hdp.state <- hdpx:::as.hdpState(hdplist)
     }
-    iterate <- utils::getFromNamespace(x = "iterate", ns = "hdpx")
-    output <- iterate(hdplist, post.burnin, post.cpiter, post.verbosity)##burn-in first, then return the hdplist after burnt in.
-    return(invisible(list(hdplist    = output[[1]],
-                          likelihood = output[[2]])))
+    set.seed(seedNumber)
+    output <- hdpx::hdp_burnin (hdp         = hdp.state,
+                                burnin      = post.burnin,
+                                cpiter      = post.cpiter,
+                                verbosity   = post.verbosity)
+    return(invisible(output))
   }
