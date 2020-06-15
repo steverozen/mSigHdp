@@ -11,7 +11,7 @@ if (file.exists("parameters.csv")) {
   burnin <- params$burnin
 } else {
   cpiter <- 3
-  burnin <- 4000
+  burnin <- 100
   write.csv(data.frame(cpiter = cpiter, burnin = burnin),
             "parameters.csv")
 }
@@ -37,5 +37,5 @@ burnin.output$all.lik <- burnin.output$likelihood
 save(burnin.output, file = "1.burnin.output.Rdata")
 
 pdf(file = "1.burnin.lik.pdf", paper = "a4")
-plot(burnin.output$likelihood, pch = ".", col = "blue")
+plot(burnin.output$likelihood, pch=16, cex=0.5) ##change to a bigger dot
 dev.off()

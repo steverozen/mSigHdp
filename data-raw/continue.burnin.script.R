@@ -30,6 +30,6 @@ burnin.output <- burnin.output2
 save(burnin.output, file = paste0(this.burnin, ".burnin.output.Rdata"))
 
 pdf(file = paste0(this.burnin, ".burnin.lik.pdf"), paper = "a4")
-plot(burnin.output$likelihood, pch = ".")
-plot(burnin.output$all.lik, pch = ".")
+plot(burnin.output$likelihood,  pch=16, cex=0.5) ##change to a bigger dot
+plot(burnin.output$all.lik,  pch=16, cex=0.5)
 dev.off()
