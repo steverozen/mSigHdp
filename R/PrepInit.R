@@ -9,7 +9,6 @@
 #' signatures, passed to \code{\link[hdpx]{dp_activate}} as
 #' \code{initcc}.
 #'
-#'
 #' @param multi.types A logical scalar or
 #' a character vector.
 #' If \code{FALSE}, The HDP analysis
@@ -34,13 +33,17 @@
 #' @param gamma.beta Inverse scale parameter (rate parameter) of gamma distribution
 #'   from which the Dirichlet process concentration parameters are drawn; in this
 #'   function the gamma distributions for all Dirichlet processes are the same.
+#'
+#' @param one.parent.hack IF TRUE, the vector of parents for the Dirichlet
+#'   processes looks like c(0, 1, 1, 1, 1, ...), not c(0, 1, 2, 2, 2, ....).
 
 PrepInit <- function(multi.types,
                      input.catalog,
                      verbose,
                      K.guess,
                      gamma.alpha=1,
-                     gamma.beta=1){
+                     gamma.beta=1,
+                     one.parent.hack = FALSE){
 
   if (mode(input.catalog) == "character") {
     if (verbose) message("Reading input catalog file ", input.catalog)
@@ -65,6 +68,7 @@ PrepInit <- function(multi.types,
   if (multi.types == FALSE) { # All tumors belong to one tumor type
     num.tumor.types <- 1
     process.index <- c(0,1,rep(2,number.samples))
+    if (one.parent.hack) process.index <- c(0, rep(1, number.samples))
   } else {
     if (multi.types == TRUE) {
       sample.names <- colnames(input.catalog)
