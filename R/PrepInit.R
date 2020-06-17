@@ -67,8 +67,8 @@ PrepInit <- function(multi.types,
 
   if (multi.types == FALSE) { # All tumors belong to one tumor type
     num.tumor.types <- 1
-    process.index <- c(0,1,rep(2,number.samples))
-    if (one.parent.hack) process.index <- c(0, rep(1, number.samples))
+    ppindex <- c(0,1,rep(2,number.samples)) # Parent Dirichlet process index
+    if (one.parent.hack) ppindex <- c(0, rep(1, number.samples))
   } else {
     if (multi.types == TRUE) {
       sample.names <- colnames(input.catalog)
@@ -87,24 +87,22 @@ PrepInit <- function(multi.types,
     } else {
       stop("multi.types should be TRUE, FALSE, or a character vector of tumor types")
     }
-    # 0 refers to the grandparent Dirichelet process node.
+    # 0 refers to the grandparent Dirichlet process node.
     # There is a level-one node for each tumor type, indicated by a 1.
-    process.index <- c(0, rep(1, num.tumor.types))
+    ppindex <- c(0, rep(1, num.tumor.types))
 
     # Each tumor type gets its own number.
-    process.index <- c(process.index, 1 + as.numeric(as.factor(tumor.types))) # To do, update this with the more transparent code
-    cat(process.index, "\n")
+    ppindex <- c(ppindex, 1 + as.numeric(as.factor(tumor.types))) # To do, update this with the more transparent code
+    # cat(process.index, "\n")
     # process.index is now something like
     # c(0, 1, 1, 2, 2, 2, 3, 3)
     # 0 is grandparent
     # 1 is a parent of one type (there are 2 types)
-    # 2 indcates tumors of the first type
+    # 2 indicates tumors of the first type
     # 3 indicates tumors of second type
   }
 
-  ## Specify ppindex as process.index, TODO, why introduce a new variable here?
-  ## and cpindex (concentration parameter) as 1 + process.index
-  ppindex <- process.index
+  # cpindex (concentration parameter) as 1 + process.index
   cpindex <- 1 + process.index
 
   ## Calculate the number of levels in the DP node tree.
@@ -112,7 +110,7 @@ PrepInit <- function(multi.types,
 
   if (verbose) {
     message("Gamma distribution was set to shape = ", gamma.alpha,
-            " inverse scale = ", gamma.beta)
+            " rate (inverse scale) = ", gamma.beta)
   }
 
   alphaa <- rep(gamma.alpha,dp.levels)
