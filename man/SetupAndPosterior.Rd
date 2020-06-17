@@ -16,7 +16,8 @@ SetupAndPosterior(
   post.cpiter = 3,
   post.verbosity = 0,
   gamma.alpha = 1,
-  gamma.beta = 1
+  gamma.beta = 1,
+  one.parent.hack = FALSE
 )
 }
 \arguments{
@@ -68,6 +69,9 @@ function the gamma distributions for all Dirichlet processes are the same.}
 \item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
 from which the Dirichlet process concentration parameters are drawn; in this
 function the gamma distributions for all Dirichlet processes are the same.}
+
+\item{one.parent.hack}{IF TRUE, the vector of parents for the Dirichlet
+processes looks like c(0, 1, 1, 1, 1, ...), not c(0, 1, 2, 2, 2, ....).}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
