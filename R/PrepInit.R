@@ -92,9 +92,18 @@ PrepInit <- function(multi.types,
     ppindex <- c(0, rep(1, num.tumor.types))
 
     # Each tumor type gets its own number.
-    ppindex <- c(ppindex, 1 + as.numeric(as.factor(tumor.types))) # To do, update this with the more transparent code
-    # cat(process.index, "\n")
-    # process.index is now something like
+    tumor.index <- 1
+
+    for(TumorType in unique(tumor.types)){
+      tumor.index <- tumor.index+1
+      num.sample.each <- sum(tumor.types==TumorType)
+      ppindex <- c(ppindex, rep(tumor.index,num.sample.each))
+      message(paste0(num.sample.each," samples in ",TumorType))
+    }
+
+
+    # cat(ppindex, "\n")
+    # ppindex is now something like
     # c(0, 1, 1, 2, 2, 2, 3, 3)
     # 0 is grandparent
     # 1 is a parent of one type (there are 2 types)
@@ -102,8 +111,8 @@ PrepInit <- function(multi.types,
     # 3 indicates tumors of second type
   }
 
-  # cpindex (concentration parameter) as 1 + process.index
-  cpindex <- 1 + process.index
+  # cpindex (concentration parameter)
+  cpindex <- 1 + ppindex
 
   ## Calculate the number of levels in the DP node tree.
   dp.levels <- length(unique(ppindex))

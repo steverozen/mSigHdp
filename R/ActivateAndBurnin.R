@@ -47,6 +47,7 @@ ActivateAndBurnin <-
                                   gamma.beta    = gamma.beta,
                                   one.parent.hack = one.parent.hack)
 
+
     set.seed(seedNumber)
     output <- hdpx::hdp_burnin(hdp         = hdp.state,
                                burnin      = burnin,
