@@ -68,7 +68,9 @@ PrepInit <- function(multi.types,
   if (multi.types == FALSE) { # All tumors belong to one tumor type
     num.tumor.types <- 1
     ppindex <- c(0,1,rep(2,number.samples)) # Parent Dirichlet process index
-    if (one.parent.hack) ppindex <- c(0, rep(1, number.samples))
+    if (one.parent.hack){
+      num.tumor.types <- 0 ## to match with hdp_setdata
+    } ppindex <- c(0, rep(1, number.samples))
   } else {
     if (multi.types == TRUE) {
       sample.names <- colnames(input.catalog)
