@@ -33,7 +33,8 @@ ActivateAndBurnin <-
            cpiter         = 3,
            burnin.verbosity = 0,
            gamma.alpha    = 1,
-           gamma.beta     = 1
+           gamma.beta     = 1,
+           one.parent.hack     = FALSE
 
   ) { # 10 arguments
 
@@ -43,7 +44,8 @@ ActivateAndBurnin <-
                                   multi.types   = multi.types,
                                   verbose       = verbose,
                                   gamma.alpha   = gamma.alpha,
-                                  gamma.beta    = gamma.beta)
+                                  gamma.beta    = gamma.beta,
+                                  one.parent.hack = one.parent.hack)
 
     set.seed(seedNumber)
     output <- hdpx::hdp_burnin(hdp         = hdp.state,

@@ -49,7 +49,8 @@ BurninIteration <-
                                     multi.types   = multi.types,
                                     verbose       = verbose,
                                     gamma.alpha   = gamma.alpha,
-                                    gamma.beta    = gamma.beta)
+                                    gamma.beta    = gamma.beta,
+                                    one.parent.hack     = FALSE)
 
 
     }else{
