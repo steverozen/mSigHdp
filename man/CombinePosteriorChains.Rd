@@ -8,6 +8,7 @@ CombinePosteriorChains(
   clean.chlist,
   input.catalog,
   multi.types,
+  one.parent.hack,
   verbose = TRUE,
   cos.merge = 0.9,
   min.sample = 1

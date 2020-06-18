@@ -49,6 +49,7 @@ CombinePosteriorChains <-
   function(clean.chlist,
            input.catalog,
            multi.types,
+           one.parent.hack,
            verbose             = TRUE,
            cos.merge           = 0.9,
            min.sample          = 1
@@ -65,25 +66,11 @@ CombinePosteriorChains <-
     # convSpectra <- t(convSpectra)
     number.channels <- nrow(input.catalog)
     number.samples  <- ncol(input.catalog)
-    if (multi.types == FALSE) { # All tumors belong to one tumor type
-      num.tumor.types <- 1
-     } else {
-      if (multi.types == TRUE) {
-        sample.names <- colnames(input.catalog)
-        if (!all(grepl("::", sample.names)))
-          stop("Every sample name needs to be of",
-               " the form <sample_type>::<sample_id>")
-        tumor.types <- sapply(
-          sample.names,
-          function(x) {strsplit(x, split = "::", fixed = T)[[1]][1]})
-        num.tumor.types <- length(unique(tumor.types))
-      } else if (is.character(multi.types)) {
-        num.tumor.types <- length(unique(multi.types))
-        tumor.types <- multi.types
-      } else {
-        stop("multi.types should be TRUE, FALSE, or a character vector of tumor types")
-      }
-    }
+
+    #this function to generate num.tumor.type
+    ppindex <- Generateppindex(multi.types = multi.types,
+                               one.parent.hack = one.parent.hack,
+                               input.catalog = input.catalog) ##clean up code
 
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
     if (verbose) message("calling hdp_extract_components ", Sys.time())
@@ -119,7 +106,7 @@ CombinePosteriorChains <-
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.
     # Transpose so it conforms to SynSigEval format
-    exposureProbs <- t(exposureProbs[-(1:(num.tumor.types + 1)), ])
+    exposureProbs <- t(exposureProbs[-(1:(ppindex$num.tumor.types + 1)), ])
     # Now rows are signatures, columns are samples
     # Calculate exposure counts from exposure probabilities and total mutation
     # counts

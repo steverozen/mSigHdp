@@ -1,4 +1,4 @@
-#' Generate index for a HDP structure
+#' Generate index for a HDP structure and num.tumor.types for other functions
 #'
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
