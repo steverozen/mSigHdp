@@ -2,7 +2,7 @@
 % Please edit documentation in R/Generateppindex.R
 \name{Generateppindex}
 \alias{Generateppindex}
-\title{Generate index for a HDP structure}
+\title{Generate index for a HDP structure and num.tumor.types for other functions}
 \usage{
 Generateppindex(multi.types, one.parent.hack, input.catalog)
 }
@@ -29,5 +29,5 @@ processes looks like c(0, 1, 1, 1, 1, ...), not c(0, 1, 2, 2, 2, ....).}
 in \code{\link[ICAMS]{ICAMS}} format.}
 }
 \description{
-Generate index for a HDP structure
+Generate index for a HDP structure and num.tumor.types for other functions
 }

@@ -19,6 +19,9 @@
 #'   \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
 #'   These are the signatures used to construct the ground truth spectra.
 #'
+#' @param diagnostic.plot If \code{TRUE} plot diagnostic plot.
+#'    This is optional because there are cases having error
+#'
 #' @export
 #'
 #'
@@ -27,7 +30,8 @@ AnalyzeAndPlotretval <- function(retval,
                                  ground.truth.sig = NULL,
                                  ground.truth.exp = NULL,
                                  verbose          = TRUE,
-                                 overwrite        = TRUE) {
+                                 overwrite        = TRUE,
+                                 diagnostic.plot  = TRUE) {
 
   if (dir.exists(out.dir)) {
     if (!overwrite) stop(out.dir, " already exits")
@@ -40,9 +44,12 @@ AnalyzeAndPlotretval <- function(retval,
   save(retval, file = file.path(out.dir, "hdp.retval.Rdata"))
 
   # Plot the diagnostics of sampling chains.
-  ChainsDiagnosticPlot(retval  = retval,
-                       out.dir = out.dir,
-                       verbose = verbose)
+  if(diagnostic.plot){
+    ChainsDiagnosticPlot(retval  = retval,
+                         out.dir = out.dir,
+                         verbose = verbose)
+  }
+
 
   if (verbose) message("Writing signatures")
   extractedSignatures <- ICAMS::as.catalog(retval$signature,

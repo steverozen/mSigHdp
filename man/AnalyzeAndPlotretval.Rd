@@ -10,7 +10,8 @@ AnalyzeAndPlotretval(
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
   verbose = TRUE,
-  overwrite = TRUE
+  overwrite = TRUE,
+  diagnostic.plot = TRUE
 )
 }
 \arguments{
@@ -33,6 +34,9 @@ If \code{NULL} skip checks that need this information.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
 raise an error.}
+
+\item{diagnostic.plot}{If \code{TRUE} plot diagnostic plot.
+This is optional because there are cases having error}
 }
 \description{
 Evaluate and plot retval from CombinePosteriorChains
