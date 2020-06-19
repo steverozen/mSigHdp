@@ -45,7 +45,7 @@ RunHdpParallel <- function(input.catalog,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
                            gamma.beta          = 1,
-                           one.child.hack      = FALSE
+                           one.child.hack
 ){
 
   # Step 1: Activate hierarchical Dirichlet processes and
