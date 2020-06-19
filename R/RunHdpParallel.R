@@ -45,40 +45,43 @@ RunHdpParallel <- function(input.catalog,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
                            gamma.beta          = 1,
-                           one.child.hack
+                           one.parent.hack
 ){
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
   # chlist is a list of hdpSampleChain-class objects.
 
-  chlist <- MultipleSetupAndPosterior(input.catalog,
-                                      seedNumber          = seedNumber,
-                                      K.guess             = K.guess,
-                                      multi.types         = multi.types,
-                                      verbose             = verbose,
-                                      post.burnin         = post.burnin,
-                                      post.n              = post.n,
-                                      post.space          = post.space,
-                                      post.cpiter         = post.cpiter,
-                                      post.verbosity      = post.verbosity,
-                                      CPU.cores           = CPU.cores,
-                                      num.child.process   = num.child.process,
-                                      gamma.alpha         = gamma.alpha,
-                                      gamma.beta          = gamma.beta,
-                                      one.child.hack      = one.child.hack)
+  chlist <-
+    MultipleSetupAndPosterior(input.catalog,
+                              seedNumber          = seedNumber,
+                              K.guess             = K.guess,
+                              multi.types         = multi.types,
+                              verbose             = verbose,
+                              post.burnin         = post.burnin,
+                              post.n              = post.n,
+                              post.space          = post.space,
+                              post.cpiter         = post.cpiter,
+                              post.verbosity      = post.verbosity,
+                              CPU.cores           = CPU.cores,
+                              num.child.process   = num.child.process,
+                              gamma.alpha         = gamma.alpha,
+                              gamma.beta          = gamma.beta,
+                              one.parent.hack     = one.parent.hack)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
   # retval has signatures, exposures, and multi.chains, a
   # hdpSampleMulti-class object.
 
-  retval <- CombinePosteriorChains(chlist,
-                                   input.catalog = input.catalog,
-                                   multi.types   = multi.types,
-                                   verbose       = verbose,
-                                   cos.merge     = cos.merge,
-                                   min.sample    = min.sample)
+  retval <-
+    CombinePosteriorChains(chlist,
+                           input.catalog = input.catalog,
+                           multi.types   = multi.types,
+                           verbose       = verbose,
+                           cos.merge     = cos.merge,
+                           min.sample    = min.sample,
+                           one.parent.hack = one.parent.hack)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.

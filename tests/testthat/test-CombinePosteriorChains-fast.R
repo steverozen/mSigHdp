@@ -8,26 +8,28 @@ test_that("CombinePosteriorChains", {
   load("RunhdpInternal.testdata/test.CombinePosteriorChains.Rdata",
        envir = reg)
 
-  clean.chlist <- MultipleSetupAndPosterior( input.catalog = input.catalog[1:10 , 1:15],
-                                        seedNumber          = 44,
-                                        K.guess             = 5,
-                                        multi.types         = FALSE,
-                                        verbose             = TRUE,
-                                        post.burnin         = 50,
-                                        post.n              = 50,
-                                        post.space          = 50,
-                                        post.cpiter         = 3,
-                                        post.verbosity      = 0,
-                                        CPU.cores           = 2,
-                                        num.child.process   = 2)
+  clean.chlist <-
+    MultipleSetupAndPosterior( input.catalog = input.catalog[1:10 , 1:15],
+                               seedNumber          = 44,
+                               K.guess             = 5,
+                               multi.types         = FALSE,
+                               verbose             = TRUE,
+                               post.burnin         = 50,
+                               post.n              = 50,
+                               post.space          = 50,
+                               post.cpiter         = 3,
+                               post.verbosity      = 0,
+                               CPU.cores           = 2,
+                               num.child.process   = 2,
+                               one.parent.hack     = FALSE)
 
 
-  retvalx <- CombinePosteriorChains(clean.chlist = clean.chlist,
-                                    input.catalog = input.catalog[1:10 , 1:15],
-                                    multi.types = FALSE,
-                                    verbose = TRUE)
-
-
+  retvalx <-
+    CombinePosteriorChains(clean.chlist = clean.chlist,
+                           input.catalog = input.catalog[1:10 , 1:15],
+                           multi.types = FALSE,
+                           verbose = TRUE,
+                           one.parent.hack = FALSE)
 
   #save(retvalx, file = "RunhdpInternal.testdata/test.CombinePosteriorChains.Rdata")
 
