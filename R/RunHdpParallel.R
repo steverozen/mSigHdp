@@ -44,7 +44,8 @@ RunHdpParallel <- function(input.catalog,
                            overwrite           = TRUE,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
-                           gamma.beta          = 1
+                           gamma.beta          = 1,
+                           one.child.hack      = FALSE
 ){
 
   # Step 1: Activate hierarchical Dirichlet processes and
@@ -64,7 +65,8 @@ RunHdpParallel <- function(input.catalog,
                                       CPU.cores           = CPU.cores,
                                       num.child.process   = num.child.process,
                                       gamma.alpha         = gamma.alpha,
-                                      gamma.beta          = gamma.beta)
+                                      gamma.beta          = gamma.beta,
+                                      one.child.hack      = one.child.hack)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
