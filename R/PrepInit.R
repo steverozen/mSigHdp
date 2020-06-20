@@ -47,9 +47,8 @@ PrepInit <- function(multi.types,
   }
 
   ppindex <- Generateppindex(multi.types = multi.types,
-                              one.parent.hack = one.parent.hack,
-                              input.catalog = input.catalog) ##clean up code
-
+                             one.parent.hack = one.parent.hack,
+                             input.catalog = input.catalog)
 
   # cpindex (concentration parameter)
   cpindex <- 1 + ppindex$ppindex

@@ -1,5 +1,5 @@
 
-test_that("ActivateAndBurnin", {
+test_that("ActivateAndBurnin-one-multitype", {
 
   input.catalog <-
     ICAMS::ReadCatalog(
@@ -12,7 +12,7 @@ test_that("ActivateAndBurnin", {
   retvalx <- ActivateAndBurnin(input.catalog = input.catalog[1:10 , 1:15],
                              seedNumber          = (44 + 3e6),
                              K.guess             = 5,
-                             multi.types         = FALSE,
+                             multi.types         = TRUE,
                              verbose             = TRUE,
                              burnin              = 100,
                              cpiter              = 3,

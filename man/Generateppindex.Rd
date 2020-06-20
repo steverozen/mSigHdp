@@ -4,7 +4,7 @@
 \alias{Generateppindex}
 \title{Generate index for a HDP structure and num.tumor.types for other functions}
 \usage{
-Generateppindex(multi.types, one.parent.hack, input.catalog)
+Generateppindex(multi.types, input.catalog)
 }
 \arguments{
 \item{multi.types}{A logical scalar or
@@ -21,9 +21,6 @@ as the number of columns in \code{input.catalog}, and each value is the
 name of the tumor type of the corresponding column in \code{input.catalog}.
 
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
-
-\item{one.parent.hack}{IF TRUE, the vector of parents for the Dirichlet
-processes looks like c(0, 1, 1, 1, 1, ...), not c(0, 1, 2, 2, 2, ....).}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
