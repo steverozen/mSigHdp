@@ -14,8 +14,7 @@ ActivateAndBurnin(
   cpiter = 3,
   burnin.verbosity = 0,
   gamma.alpha = 1,
-  gamma.beta = 1,
-  one.parent.hack = FALSE
+  gamma.beta = 1
 )
 }
 \arguments{

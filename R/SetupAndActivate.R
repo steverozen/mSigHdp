@@ -15,8 +15,7 @@ SetupAndActivate <- function(input.catalog,
                              multi.types         = FALSE,
                              verbose             = TRUE,
                              gamma.alpha         = 1,
-                             gamma.beta          = 1,
-                             one.parent.hack     = FALSE)
+                             gamma.beta          = 1)
 { # 7 arguments
 
     prep_val <- PrepInit(multi.types = multi.types,
@@ -24,8 +23,7 @@ SetupAndActivate <- function(input.catalog,
                          verbose       = verbose,
                          K.guess       = K.guess,
                          gamma.alpha   = gamma.alpha,
-                         gamma.beta    = gamma.beta,
-                         one.parent.hack = one.parent.hack)
+                         gamma.beta    = gamma.beta)
 
     if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,

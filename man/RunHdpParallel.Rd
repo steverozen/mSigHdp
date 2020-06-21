@@ -24,8 +24,7 @@ RunHdpParallel(
   overwrite = TRUE,
   out.dir = NULL,
   gamma.alpha = 1,
-  gamma.beta = 1,
-  one.parent.hack
+  gamma.beta = 1
 )
 }
 \arguments{

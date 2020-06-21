@@ -12,19 +12,16 @@ test_that("ActivateAndBurnin", {
   retvalx <- ActivateAndBurnin(input.catalog = input.catalog[1:10 , 1:15],
                              seedNumber          = (44 + 3e6),
                              K.guess             = 5,
-                             multi.types         = FALSE,
+                             multi.types         = TRUE,
                              verbose             = TRUE,
                              burnin              = 100,
                              cpiter              = 3,
                              burnin.verbosity    = 0,
                              gamma.alpha         = 1,
-                             gamma.beta          = 1,
-                             one.parent.hack     = TRUE
-  )
+                             gamma.beta          = 1)
 
   #save(retvalx, file = "RunhdpInternal.testdata/test.ActivateAndBurnin.Rdata")
 
-  expect_equal(retvalx$hdplist, reg$retvalx$hdplist)
-  expect_equal(retvalx$likelihood, reg$retvalx$likelihood)
+  expect_equal(retvalx, reg$retvalx)
 
 })

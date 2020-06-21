@@ -4,9 +4,9 @@ test_that("RunHdpParallel-fast96", {
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/ground.truth.syn.catalog.csv")
 
-  regression <- new.env()
+  reg <- new.env()
   load("RunhdpInternal.testdata/RunHdpParallel-fast96-2-cores.Rdata",
-       envir = regression)
+       envir = reg)
 
   retvalx <- RunHdpParallel(
     input.catalog = input.catalog[1:10,1:15],
@@ -19,12 +19,10 @@ test_that("RunHdpParallel-fast96", {
     post.burnin   = 50, # Super low for fast testing
     post.space    = 5,  # Low for fast testing
     post.cpiter   = 1,  # Low for fast testing
-    overwrite     = TRUE,
-    one.parent.hack = FALSE
+    overwrite     = TRUE
   )
 
   # save(retvalx, file = "RunhdpInternal.testdata/RunHdpParallel-fast96-2-cores.Rdata")
-  expect_equal(retvalx$signature, regression$retvalx$signature)
-  expect_equal(retvalx$exposure, regression$retvalx$exposure)
-  expect_equal(retvalx$multi.chains, regression$retvalx$multi.chains)
+  expect_equal(retvalx, reg$retvalx)
+
 })

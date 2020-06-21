@@ -26,8 +26,7 @@ PrepInit <- function(multi.types,
                      verbose,
                      K.guess,
                      gamma.alpha=1,
-                     gamma.beta=1,
-                     one.parent.hack = FALSE){
+                     gamma.beta=1){
 
   if (mode(input.catalog) == "character") {
     if (verbose) message("Reading input catalog file ", input.catalog)
@@ -47,7 +46,6 @@ PrepInit <- function(multi.types,
   }
 
   ppindex <- Generateppindex(multi.types = multi.types,
-                             one.parent.hack = one.parent.hack,
                              input.catalog = input.catalog)
 
   # cpindex (concentration parameter)

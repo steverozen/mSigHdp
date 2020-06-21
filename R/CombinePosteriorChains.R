@@ -49,7 +49,6 @@ CombinePosteriorChains <-
   function(clean.chlist,
            input.catalog,
            multi.types,
-           one.parent.hack,
            verbose             = TRUE,
            cos.merge           = 0.9,
            min.sample          = 1
@@ -69,7 +68,6 @@ CombinePosteriorChains <-
 
     #this function to generate num.tumor.type
     ppindex <- Generateppindex(multi.types = multi.types,
-                               one.parent.hack = one.parent.hack,
                                input.catalog = input.catalog) ##clean up code
 
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)

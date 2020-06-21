@@ -18,8 +18,7 @@ MultipleSetupAndPosterior(
   CPU.cores = 1,
   num.child.process = 4,
   gamma.alpha = 1,
-  gamma.beta = 1,
-  one.parent.hack = FALSE
+  gamma.beta = 1
 )
 }
 \arguments{

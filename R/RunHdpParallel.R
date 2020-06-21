@@ -44,9 +44,7 @@ RunHdpParallel <- function(input.catalog,
                            overwrite           = TRUE,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
-                           gamma.beta          = 1,
-                           one.parent.hack
-){
+                           gamma.beta          = 1){
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
@@ -66,8 +64,7 @@ RunHdpParallel <- function(input.catalog,
                               CPU.cores           = CPU.cores,
                               num.child.process   = num.child.process,
                               gamma.alpha         = gamma.alpha,
-                              gamma.beta          = gamma.beta,
-                              one.parent.hack     = one.parent.hack)
+                              gamma.beta          = gamma.beta)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
@@ -80,8 +77,7 @@ RunHdpParallel <- function(input.catalog,
                            multi.types   = multi.types,
                            verbose       = verbose,
                            cos.merge     = cos.merge,
-                           min.sample    = min.sample,
-                           one.parent.hack = one.parent.hack)
+                           min.sample    = min.sample)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.

@@ -1,4 +1,4 @@
-test_that("chlist", {
+test_that("CleanChlist", {
 
   reg <- new.env()
   load("RunhdpInternal.testdata/test.CleanChlist.Rdata",
@@ -11,13 +11,15 @@ test_that("chlist", {
 
     CPU.cores           = 2
     num.child.process   = 2
+    seedNumber          = 44
+    verbose             = T
 
     run.setup.and.posterior <- function(seedNumber) {
 
       if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
       sample.chain <-SetupAndPosterior(
         input.catalog,
-        seedNumber     = 44,
+        seedNumber     = seedNumber,
         K.guess        = 5,
         multi.types    = FALSE,
         verbose        = TRUE,
@@ -43,7 +45,7 @@ test_that("chlist", {
 
   retvalx <- CleanChlist(c.env$chlist)
 
-  # save(retvalx, file = "RunhdpInternal.testdata/test.CleanChlist.Rdata")
+  #save(retvalx, file = "RunhdpInternal.testdata/test.CleanChlist.Rdata")
 
   expect_equal(retvalx,reg$retvalx)
 

@@ -2,10 +2,10 @@
 
 export(ActivateAndBurnin)
 export(AnalyzeAndPlotretval)
-export(BurninIteration)
 export(ChainsDiagnosticPlot)
 export(CleanChlist)
 export(CombinePosteriorChains)
+export(ExtendBurnin)
 export(Generateppindex)
 export(MultipleSetupAndPosterior)
 export(ParallelPosteriorafterBurnin)

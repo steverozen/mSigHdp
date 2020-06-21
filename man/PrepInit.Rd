@@ -12,8 +12,7 @@ PrepInit(
   verbose,
   K.guess,
   gamma.alpha = 1,
-  gamma.beta = 1,
-  one.parent.hack = FALSE
+  gamma.beta = 1
 )
 }
 \arguments{

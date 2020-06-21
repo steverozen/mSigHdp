@@ -28,8 +28,7 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       CPU.cores           = 1,
                                       num.child.process   = 4,
                                       gamma.alpha         = 1,
-                                      gamma.beta          = 1,
-                                      one.parent.hack     = FALSE){
+                                      gamma.beta          = 1){
 
   run.setup.and.posterior <- function(seedNumber) {
 
@@ -46,8 +45,7 @@ MultipleSetupAndPosterior <- function(input.catalog,
       post.cpiter    = post.cpiter,
       post.verbosity = post.verbosity,
       gamma.alpha    = gamma.alpha,
-      gamma.beta     = gamma.beta,
-      one.parent.hack = one.parent.hack)
+      gamma.beta     = gamma.beta)
     return(sample.chain)
   }
 

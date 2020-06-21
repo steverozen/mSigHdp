@@ -16,7 +16,6 @@ test_that("PrepInit-fast", {
 
   #save(retvalx, file = "RunhdpInternal.testdata/test.PrepInit.Rdata")
 
-  expect_equal(retvalx$signature, reg$retvalx$signature)
-  expect_equal(retvalx$exposure, reg$retvalx$exposure)
+  expect_equal(retvalx, reg$retvalx)
 
 })

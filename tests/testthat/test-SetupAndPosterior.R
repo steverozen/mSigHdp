@@ -17,7 +17,7 @@ test_that("SetupAndPosterior-fast", {
     post.burnin   = 50
   )
 
-  # save(retvalx, file = "RunhdpInternal.testdata/test.SetupAndPosterior.Rdata")
+  #save(retvalx, file = "RunhdpInternal.testdata/test.SetupAndPosterior.Rdata")
 
   expect_equal(retvalx, reg$retvalx)
 })

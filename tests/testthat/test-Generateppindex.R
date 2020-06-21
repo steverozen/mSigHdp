@@ -1,4 +1,4 @@
-test_that("ActivateAndBurnin-fast", {
+test_that("Generateppindex", {
 
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/1.type.ground.truth.syn.catalog.csv")

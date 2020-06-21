@@ -36,8 +36,7 @@ SetupAndPosterior <-
            post.cpiter         = 3,
            post.verbosity      = 0,
            gamma.alpha         = 1,
-           gamma.beta          = 1,
-           one.parent.hack     = FALSE)
+           gamma.beta          = 1)
 { # 12 arguments
 
     hdp.state <- SetupAndActivate(input.catalog = input.catalog,
@@ -46,8 +45,7 @@ SetupAndPosterior <-
                                   multi.types   = multi.types,
                                   verbose       = verbose,
                                   gamma.alpha   = gamma.alpha,
-                                  gamma.beta    = gamma.beta,
-                                  one.parent.hack = one.parent.hack)
+                                  gamma.beta    = gamma.beta)
 
     if (verbose) message("calling hdp_posterior, seed = ",
                          seedNumber, " ", Sys.time())
