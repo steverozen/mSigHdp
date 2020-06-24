@@ -6,7 +6,7 @@
 #'
 #' @return A list of matrices containing the average pattern of clusters within each posterior chain
 #'         and a list of matrices containing the sum of each cluster in each posterior chain
-#'
+#' @export
 
 GenerateAverageCluster <- function(clean.chlist){
 
