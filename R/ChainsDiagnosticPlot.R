@@ -17,7 +17,9 @@
 #'
 #' @inheritParams AnalyzeAndPlotretval
 #'
+#' @importFrom grDevices dev.off pdf
 #'
+#' @importFrom graphics par
 #'
 #' @export
 
