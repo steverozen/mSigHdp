@@ -62,23 +62,15 @@ AnalyzeAndPlotretval <- function(retval,
                           file.path(out.dir, "extracted.signature.pdf"))
 
   if (verbose) message("Writing exposures")
+  ICAMS::WriteExposure(retval$exposure,
+                       file.path(out.dir,"inferred.exposures.csv"))
 
+  ICAMS::PlotExposureToPdf(ICAMS::SortExposure(retval$exposure),
+                           file.path(out.dir,"inferred.exposure.count.pdf"))
 
-  SynSigGen::WriteExposure(retval$exposure,
-                           file.path(out.dir,"inferred.exposures.csv"))
-
-  pdf(file = file.path(out.dir,"inferred.exposure.count.pdf"),
-      paper = "a4")
-  PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
-                               num.per.line = 40)
-  dev.off()
-
-  pdf(file = file.path(out.dir,"inferred.exposure.proportion.pdf"),
-      paper = "a4")
-  PlotExposureByRange(mSigHdp::SortExp(retval$exposure),
-                               num.per.line = 40,
-                               plot.proportion = TRUE)
-  dev.off()
+  ICAMS::PlotExposureToPdf(ICAMS::SortExposure(retval$exposure),
+                           file.path(out.dir,"inferred.exposure.proportion.pdf"),
+                           plot.proportion = TRUE)
 
 ###here is optional.
 
@@ -94,25 +86,16 @@ AnalyzeAndPlotretval <- function(retval,
         message("Reading ground truth exposures from ",
                 ground.truth.exp)
       }
-      ground.truth.exp <- SynSigGen::ReadExposure(ground.truth.exp)
+      ground.truth.exp <- ICAMS::ReadExposure(ground.truth.exp)
     }
     #stopifnot(is.matrix(ground.truth.exp))
 
-    pdf(file = file.path(out.dir,"ground.truth.exposure.count.pdf"),
-        paper = "a4")
-    PlotExposureByRange(mSigHdp::SortExp(ground.truth.exp),
-                        num.per.line = 40)
-    dev.off()
+    ICAMS::PlotExposureToPdf(ICAMS::SortExposure(ground.truth.exp),
+                             file.path(out.dir,"ground.truth.exposure.count.pdf"))
 
-    pdf(file = file.path(out.dir,"ground.truth.proportion.pdf"),
-        paper = "a4")
-    PlotExposureByRange(mSigHdp::SortExp(ground.truth.exp),
-                        num.per.line = 40,
-                        plot.proportion = TRUE)
-    dev.off()
-
-
-
+    ICAMS::PlotExposureToPdf(ICAMS::SortExposure(ground.truth.exp),
+                             file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
+                             plot.proportion = TRUE)
   }
 
   # Compare with ground truth
@@ -122,7 +105,7 @@ AnalyzeAndPlotretval <- function(retval,
     ##read ground.truth.exp
     if (mode(ground.truth.sig) == "character") {
       if (verbose) {
-        message("Reading ground truth exposures from ",
+        message("Reading ground truth signatures from ",
                 ground.truth.sig)
       }
       ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig)
