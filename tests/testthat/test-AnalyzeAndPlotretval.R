@@ -9,5 +9,6 @@ test_that("AnalyzeAndPlotretval", {
 
   AnalyzeAndPlotretval(retval = reg$retvalx,
                        out.dir = "./test_AnalyzeAndPlotretval_out_dir")
+  unlink("Rplots.pdf")
 })
 
