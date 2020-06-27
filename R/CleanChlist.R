@@ -23,7 +23,7 @@ CleanChlist <- function(chlist, verbose = FALSE) {
   ii <- 1
   for (i in 1:length(chlist)) {
     cclass <- class(chlist[[i]])
-    if (verbose) message("chlist element", i, "has class ", cclass)
+    if (verbose) message("chlist element ", i, " has class ", cclass)
     if ("try-error" %in% cclass) {
       warning("class of element", i, "is try-error\n")
     } else {

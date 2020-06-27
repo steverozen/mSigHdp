@@ -8,6 +8,11 @@
 #' @param num.child.process Number of posterior sampling chains; can set to
 #'   1 for testing.
 #'
+#' @param checkpoint.chlist If \code{TRUE}, checkpoint the (unclean)
+#'    chlist to "initial.chlist.Rdata" in the current working directory.
+#'    and checkpoint the clean clist ot "clean.chlist.Rdata" in the
+#'    current working directory.
+#'
 #' @return Invisibly,
 #'    the clean \code{chlist} (output of \code{CleanChlist}).
 #'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
@@ -28,7 +33,8 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       CPU.cores           = 1,
                                       num.child.process   = 4,
                                       gamma.alpha         = 1,
-                                      gamma.beta          = 1){
+                                      gamma.beta          = 1,
+                                      checkpoint.chlist   = TRUE) {
 
   run.setup.and.posterior <- function(seedNumber) {
 
@@ -55,7 +61,15 @@ MultipleSetupAndPosterior <- function(input.catalog,
     FUN = run.setup.and.posterior,
     mc.cores = CPU.cores)
 
-  clean.chlist <- CleanChlist(chlist)
+  if (checkpoint.chlist) {
+    save(chlist, file = "initial.chlist.Rdata")
+  }
+
+  clean.chlist <- CleanChlist(chlist, verbose)
+
+  if (checkpoint.chlist) {
+    save(clean.chlist, file = "clean.chlist.Rdata")
+  }
 
   return(invisible(clean.chlist))
 }

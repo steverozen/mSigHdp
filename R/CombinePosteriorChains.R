@@ -96,8 +96,7 @@ CombinePosteriorChains <-
     ## Calculate the exposure probability of each signature (component) for each
     ## tumor sample (posterior sample corresponding to a Dirichlet process node).
     ## This is the probability distribution of signatures (components) for all
-    ## tumor samples (DP nodes); exposureProbs is the normalized
-    ## signature exposure all tumor samples # TODO what is this?
+    ## tumor samples (DP nodes).
 
     if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
     exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean

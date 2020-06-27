@@ -18,7 +18,8 @@ MultipleSetupAndPosterior(
   CPU.cores = 1,
   num.child.process = 4,
   gamma.alpha = 1,
-  gamma.beta = 1
+  gamma.beta = 1,
+  checkpoint.chlist = TRUE
 )
 }
 \arguments{
@@ -76,6 +77,11 @@ function the gamma distributions for all Dirichlet processes are the same.}
 \item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
 from which the Dirichlet process concentration parameters are drawn; in this
 function the gamma distributions for all Dirichlet processes are the same.}
+
+\item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
+chlist to "initial.chlist.Rdata" in the current working directory.
+and checkpoint the clean clist ot "clean.chlist.Rdata" in the
+current working directory.}
 }
 \value{
 Invisibly,

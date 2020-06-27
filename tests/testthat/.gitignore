@@ -5,3 +5,4 @@ test-RunAnd..etc5_out_dir
 RunAndEvalHdp5-fast96-2-cores
 20206212.burnin.lik.pdf
 20206212.burnin.output.Rdata
+initial.chlist.Rdata

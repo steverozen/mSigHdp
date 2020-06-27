@@ -22,7 +22,6 @@
 #'     that returns the \code{hdpState} from which it was generated.}
 #' }
 #'
-#'
 #' @export
 
 RunHdpParallel <- function(input.catalog,
@@ -44,7 +43,8 @@ RunHdpParallel <- function(input.catalog,
                            overwrite           = TRUE,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
-                           gamma.beta          = 1){
+                           gamma.beta          = 1,
+                           checkpoint.chlist   = TRUE){
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
@@ -64,14 +64,15 @@ RunHdpParallel <- function(input.catalog,
                               CPU.cores           = CPU.cores,
                               num.child.process   = num.child.process,
                               gamma.alpha         = gamma.alpha,
-                              gamma.beta          = gamma.beta)
+                              gamma.beta          = gamma.beta,
+                              checkpoint.chlist   = checkpoint.chlist)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
-  # retval has signatures, exposures, and multi.chains, a
+  # multi.chains.etc has signatures, exposures, and multi.chains, a
   # hdpSampleMulti-class object.
 
-  retval <-
+  multi.chains.etc <-
     CombinePosteriorChains(chlist,
                            input.catalog = input.catalog,
                            multi.types   = multi.types,
@@ -83,12 +84,12 @@ RunHdpParallel <- function(input.catalog,
   # and compare with ground truth signature and exposures.
 
   if(!is.null(out.dir)) {
-    AnalyzeAndPlotretval(retval,
+    AnalyzeAndPlotretval(multi.chains.etc,
                          out.dir,
                          ground.truth.sig,
                          ground.truth.exp,
                          verbose,
                          overwrite)
   }
-  return(invisible(retval))
+  return(invisible(multi.chains.etc))
 }
