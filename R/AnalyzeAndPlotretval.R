@@ -72,7 +72,7 @@ AnalyzeAndPlotretval <- function(retval,
                            file.path(out.dir,"inferred.exposure.proportion.pdf"),
                            plot.proportion = TRUE)
 
-###here is optional.
+  ###here is optional.
 
 
   # Do this early to catch any possible error before we do a lot
@@ -111,9 +111,7 @@ AnalyzeAndPlotretval <- function(retval,
       ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig)
     }
     stopifnot(is.matrix(ground.truth.sig))
-  }
 
-  if(!is.null(ground.truth.sig) && !is.null(ground.truth.exp)){
     sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
       ex.sigs  = retval$signature,
       gt.sigs  = ground.truth.sig,
