@@ -8,6 +8,7 @@ CombinePosteriorChains(
   clean.chlist,
   input.catalog,
   multi.types,
+  cluster.method = "kmedians",
   verbose = TRUE,
   cos.merge = 0.9,
   min.sample = 1
@@ -33,6 +34,8 @@ as the number of columns in \code{input.catalog}, and each value is the
 name of the tumor type of the corresponding column in \code{input.catalog}.
 
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
+
+\item{cluster.method}{A \code{kccaFamily} object input for \code{flexclust} package}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 

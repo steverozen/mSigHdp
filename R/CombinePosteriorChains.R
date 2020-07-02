@@ -29,6 +29,8 @@
 #' @param min.sample A "component" (i.e. signature) must have at least
 #'      this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.
 #'
+#' @param cluster.method A \code{kccaFamily} object input for \code{flexclust} package
+#'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
@@ -49,6 +51,7 @@ CombinePosteriorChains <-
   function(clean.chlist,
            input.catalog,
            multi.types,
+           cluster.method      = "kmedians",
            verbose             = TRUE,
            cos.merge           = 0.9,
            min.sample          = 1
@@ -76,8 +79,9 @@ CombinePosteriorChains <-
     extract.time <- system.time(
       multi.chains <-
         hdpx::hdp_extract_components(multi.chains,
-                                     cos.merge  = cos.merge,
-                                     min.sample = min.sample)
+                                     cluster.method = cluster.method,
+                                     cos.merge      = cos.merge,
+                                     min.sample     = min.sample)
     )
 
     if (verbose) {

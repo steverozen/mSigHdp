@@ -44,6 +44,7 @@ RunHdpParallel <- function(input.catalog,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
                            gamma.beta          = 1,
+                           cluster.method      = "kmedians",
                            checkpoint.chlist   = TRUE){
 
   # Step 1: Activate hierarchical Dirichlet processes and
@@ -74,11 +75,12 @@ RunHdpParallel <- function(input.catalog,
 
   multi.chains.etc <-
     CombinePosteriorChains(chlist,
-                           input.catalog = input.catalog,
-                           multi.types   = multi.types,
-                           verbose       = verbose,
-                           cos.merge     = cos.merge,
-                           min.sample    = min.sample)
+                           input.catalog  = input.catalog,
+                           cluster.method = cluster.method,
+                           multi.types    = multi.types,
+                           verbose        = verbose,
+                           cos.merge      = cos.merge,
+                           min.sample     = min.sample)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.
