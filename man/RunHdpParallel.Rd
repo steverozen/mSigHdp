@@ -19,13 +19,15 @@ RunHdpParallel(
   num.child.process = 4,
   cos.merge = 0.9,
   min.sample = 1,
+  categ.CI = 0.95,
+  exposure.CI = 0.95,
+  cluster.method = "kmedians",
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
   overwrite = TRUE,
   out.dir = NULL,
   gamma.alpha = 1,
   gamma.beta = 1,
-  cluster.method = "kmedians",
   checkpoint.chlist = TRUE
 )
 }
@@ -84,6 +86,14 @@ passed to \code{\link[hdpx]{hdp_extract_components}}.}
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
+\item{categ.CI}{A numeric object between 0 and 1. The level of confidence interval used
+in step 4 of hdp_merge_and_extract_components}
+
+\item{exposure.CI}{A numeric object between 0 and 1. The level of confidence interval used
+in step 5 of hdp_merge_and_extract_components}
+
+\item{cluster.method}{A \code{kccaFamily} object input for \code{flexclust} package}
+
 \item{ground.truth.sig}{Optional. Either a string with the
 path to file with ground truth signatures or and
 \code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
@@ -107,8 +117,6 @@ function the gamma distributions for all Dirichlet processes are the same.}
 \item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
 from which the Dirichlet process concentration parameters are drawn; in this
 function the gamma distributions for all Dirichlet processes are the same.}
-
-\item{cluster.method}{A \code{kccaFamily} object input for \code{flexclust} package}
 
 \item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
 chlist to "initial.chlist.Rdata" in the current working directory.

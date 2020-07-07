@@ -16,6 +16,7 @@ test_that("CombinePosteriorChains", {
   retvalx <-
     CombinePosteriorChains(clean.chlist = input$retvalx,
                            input.catalog = input.catalog[1:10 , 1:15],
+                           cluster.method = "kmedians",
                            multi.types = FALSE,
                            verbose = TRUE)
 

@@ -31,13 +31,6 @@
 #'
 #' @param cluster.method A \code{kccaFamily} object input for \code{flexclust} package
 #'
-#' @param categ.CI A numeric object between 0 and 1. The level of confidence interval used
-#'                 in step 4 of hdp_merge_and_extract_components
-#'
-#' @param exposure.CI A numeric object between 0 and 1. The level of confidence interval used
-#'                   in step 5 of hdp_merge_and_extract_components
-#'
-#'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
@@ -51,10 +44,6 @@
 #'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
-#' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
-#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}
-#' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
-#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}
 #'}
 #' @export
 #'
@@ -65,8 +54,6 @@ CombinePosteriorChains <-
            cluster.method      = "kmedians",
            verbose             = TRUE,
            cos.merge           = 0.9,
-           categ.CI            = 0.95,
-           exposure.CI         = 0.95,
            min.sample          = 1
   ) { # 6 arguments
     if (mode(input.catalog) == "character") {
@@ -89,15 +76,12 @@ CombinePosteriorChains <-
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
     if (verbose) message("calling hdp_extract_components ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
-
     extract.time <- system.time(
       multi.chains <-
-        hdpx::hdp_merge_and_extract_components(multi.chains,
-                                               cluster.method = cluster.method,
-                                               exposure.CI    = exposure.CI,
-                                               categ.CI       = categ.CI,
-                                               cos.merge      = cos.merge,
-                                               min.sample     = min.sample)
+        hdpx::hdp_extract_components(multi.chains,
+                                     cluster.method = cluster.method,
+                                     cos.merge      = cos.merge,
+                                     min.sample     = min.sample)
     )
 
     if (verbose) {
@@ -112,8 +96,6 @@ CombinePosteriorChains <-
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
     colnames(extractedSignatures) <-
       paste("hdp", colnames(extractedSignatures), sep = ".")
-
-    extractedSignatures_after_cos_sim_merge <- multi.chains
 
     ## Calculate the exposure probability of each signature (component) for each
     ## tumor sample (posterior sample corresponding to a Dirichlet process node).
@@ -135,8 +117,5 @@ CombinePosteriorChains <-
 
     invisible(list(signature       = extractedSignatures,
                    exposure        = exposureCounts,
-                   multi.chains    = multi.chains,
-                   sum_raw_clusters_after_cos_merge  = hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_cos_merge,
-                   sum_raw_clusters_after_nonzero_categ  = hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_nonzero_categ))
-
+                   multi.chains    = multi.chains))
   }

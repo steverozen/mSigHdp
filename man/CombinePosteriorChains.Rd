@@ -11,6 +11,8 @@ CombinePosteriorChains(
   cluster.method = "kmedians",
   verbose = TRUE,
   cos.merge = 0.9,
+  categ.CI = 0.95,
+  exposure.CI = 0.95,
   min.sample = 1
 )
 }
@@ -43,6 +45,12 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 from the posterior sampling chains into "components" i.e. signatures;
 passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
+\item{categ.CI}{A numeric object between 0 and 1. The level of confidence interval used
+in step 4 of hdp_merge_and_extract_components}
+
+\item{exposure.CI}{A numeric object between 0 and 1. The level of confidence interval used
+in step 5 of hdp_merge_and_extract_components}
+
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
 }
@@ -60,6 +68,10 @@ a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
 sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 (actually the methods seems to be just \code{hdp})
 that returns the \code{hdpState} from which it was generated.}
+\item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
+similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}
+\item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
+step in \code{\link[hdpx]{hdp_merge_and_extract_components}}
 }
 }
 \description{

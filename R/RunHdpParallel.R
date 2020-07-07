@@ -38,13 +38,15 @@ RunHdpParallel <- function(input.catalog,
                            num.child.process   = 4,
                            cos.merge           = 0.9,
                            min.sample          = 1,
+                           categ.CI            = 0.95,
+                           exposure.CI         = 0.95,
+                           cluster.method      = "kmedians",
                            ground.truth.sig    = NULL,
                            ground.truth.exp    = NULL,
                            overwrite           = TRUE,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
                            gamma.beta          = 1,
-                           cluster.method      = "kmedians",
                            checkpoint.chlist   = TRUE){
 
   # Step 1: Activate hierarchical Dirichlet processes and
@@ -80,7 +82,9 @@ RunHdpParallel <- function(input.catalog,
                            multi.types    = multi.types,
                            verbose        = verbose,
                            cos.merge      = cos.merge,
-                           min.sample     = min.sample)
+                           min.sample     = min.sample,
+                           categ.CI       = categ.CI,
+                           exposure.CI    = exposure.CI)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.
