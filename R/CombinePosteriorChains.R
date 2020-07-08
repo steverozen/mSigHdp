@@ -52,10 +52,10 @@
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
 #' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
-#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}
+#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
 #' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
-#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}
-#'}
+#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
+#'       }
 #' @export
 #'
 CombinePosteriorChains <-
