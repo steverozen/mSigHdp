@@ -80,7 +80,7 @@ function the gamma distributions for all Dirichlet processes are the same.}
 
 \item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
 chlist to "initial.chlist.Rdata" in the current working directory.
-and checkpoint the clean clist ot "clean.chlist.Rdata" in the
+and checkpoint the clean chlist to "clean.chlist.Rdata" in the
 current working directory.}
 }
 \value{

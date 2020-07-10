@@ -1,5 +1,5 @@
 # [0.0.0.9023] - 2020-06-27
-* Added some checkpointing facilities in MultipleSetupAndPosterior and RunHdpParallel
+* Added some checkpointing facilities in `MultipleSetupAndPosterior` and `RunHdpParallel`.
 
 # [0.0.0.9015]- 2020-06-06
 * Stable version with package source file available to download for installation. See [README.md](https://github.com/steverozen/mSigHdp/blob/master/README.md) for more details.
