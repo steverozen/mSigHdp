@@ -1,6 +1,7 @@
 #' Extract components and exposures from multiple posterior sample chains
 #'
-#' @param clean.chlist It collects the output of multiple independent hdp_posterior calls.
+#' @param clean.chlist A list of \code{\code[hdpx]{hdpSampleChain-class}} objects.
+#'  Each element is the result of one posterior sample chain.
 #'
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
@@ -29,19 +30,29 @@
 #' @param min.sample A "component" (i.e. signature) must have at least
 #'      this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.
 #'
-#' @param cluster.method A \code{kccaFamily} object input for \code{flexclust} package
+#' @param cluster.method A \code{\link[flexclust]kccaFamily}} object.
+#'     Deprecated. Future code will use \code{"kmedians}.
 #'
-#' @param categ.CI A numeric object between 0 and 1. The level of confidence interval used
-#'                 in step 4 of hdp_merge_and_extract_components
+#' @param categ.CI A number the range \eqn[0,1]. The level of the confidence
+#'   interval used in step 4 of \code{\link{hdp_merge_and_extract_components}}.
+#'   This governs when "averaged raw cluster" get assigned to component 0,
+#'   i.e. if the the confidence interval overlaps 0. Lower values
+#'   make it less likely that an averaged raw cluster will be assigned to
+#'   component 0. The CI in question is for the number of mutations in
+#'   a given mutation class (e.g. ACA > AAA, internally called a
+#'   "category"). If, for every mutation class, this CI overlaps 0,
+#'   then the averaged raw cluster goes to component 0.
 #'
-#' @param exposure.CI A numeric object between 0 and 1. The level of confidence interval used
-#'                   in step 5 of hdp_merge_and_extract_components
-#'
+#' @param exposure.CI A number in the range \eqn[0,1]. The level of
+#'   the confidence interval used in step 5 of hdp_merge_and_extract_components.
+#'   The CI in question here for the total number of
+#'   mutations assigned to an averaged raw cluster.
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
 #'             samples (e.g. tumors).}
+#'
 #' \item{exposure}{The inferred exposures as a matrix of mutation counts;
 #'            rows are signatures, columns are samples (e.g. tumors).}
 #'
@@ -51,10 +62,12 @@
 #'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
+#'
 #' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
-#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
+#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#'
 #' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
-#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
+#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 #'       }
 #' @export
 #'
@@ -68,21 +81,19 @@ CombinePosteriorChains <-
            categ.CI            = 0.95,
            exposure.CI         = 0.95,
            min.sample          = 1
-  ) { # 6 arguments
+  ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
       input.catalog <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
     } else {
       input.catalog <- input.catalog
     }
-    # hdp gets confused if the class of its input is not matrix.
+
     convSpectra <- t(input.catalog)
-    # class(convSpectra) <- "matrix"
-    # convSpectra <- t(convSpectra)
     number.channels <- nrow(input.catalog)
     number.samples  <- ncol(input.catalog)
 
-    #this function to generate num.tumor.type
+    # Generate num.tumor.type # I think we get this info from clean.chlist[[1]]@hdp@numdp or something like that
     ppindex <- Generateppindex(multi.types = multi.types,
                                input.catalog = input.catalog) ##clean up code
 
@@ -136,7 +147,10 @@ CombinePosteriorChains <-
     invisible(list(signature       = extractedSignatures,
                    exposure        = exposureCounts,
                    multi.chains    = multi.chains,
-                   sum_raw_clusters_after_cos_merge  = hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_cos_merge,
-                   sum_raw_clusters_after_nonzero_categ  = hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_nonzero_categ))
+                   sum_raw_clusters_after_cos_merge  =
+                     hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_cos_merge,
+                   sum_raw_clusters_after_nonzero_categ  =
+                     hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_nonzero_categ
+                   ))
 
   }
