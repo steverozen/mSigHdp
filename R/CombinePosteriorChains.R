@@ -55,6 +55,8 @@
 #'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
 #' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
 #'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
+#' \item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection}
+#' \item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection}
 #'       }
 #' @export
 #'
@@ -137,6 +139,8 @@ CombinePosteriorChains <-
                    exposure        = exposureCounts,
                    multi.chains    = multi.chains,
                    sum_raw_clusters_after_cos_merge  = hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_cos_merge,
-                   sum_raw_clusters_after_nonzero_categ  = hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_nonzero_categ))
+                   sum_raw_clusters_after_nonzero_categ  = hdpx::comp_categ_distn(multi.chains)$aggregated_raw_clusters_after_nonzero_categ,
+                   clust_hdp0_ccc4  = hdpx::comp_categ_distn(multi.chains)$clust_hdp0_ccc4,
+                   clust_hdp0_ccc5  = hdpx::comp_categ_distn(multi.chains)$clust_hdp0_ccc5))
 
   }
