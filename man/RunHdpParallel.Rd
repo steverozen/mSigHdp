@@ -28,6 +28,8 @@ RunHdpParallel(
   out.dir = NULL,
   gamma.alpha = 1,
   gamma.beta = 1,
+  gamma0.alpha = gamma.alpha,
+  gamma0.beta = gamma.beta,
   checkpoint.chlist = TRUE
 )
 }
@@ -120,13 +122,29 @@ raise an error.}
 if \code{overwrite} is \code{FALSE} then
 abort if \code{out.dir} already exits.}
 
-\item{gamma.alpha}{Shape parameter of gamma distribution from which
-the Dirichlet process concentration parameters are drawn; in this
-function the gamma distributions for all Dirichlet processes are the same.}
+\item{gamma.alpha}{Shape parameter of
+the gamma distribution prior for the Dirichlet process concentration
+parameters; in this
+function the gamma distributions for all Dirichlet processes,
+except possibly the top level process, are the same.}
 
-\item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
-from which the Dirichlet process concentration parameters are drawn; in this
-function the gamma distributions for all Dirichlet processes are the same.}
+\item{gamma.beta}{Inverse scale parameter (rate parameter) of
+the gamma distribution prior for the Dirichlet process concentration
+parameters; in this
+function the gamma distributions for all Dirichlet processes, except
+possibly the top level process, are the same.}
+
+\item{gamma0.alpha}{See figure B.1 from Nicola Robert's thesis.
+The shape parameter (\eqn{\alpha_0}) of the gamma
+distribution priors for
+the Dirichlet process concentration parameters  (\eqn{\gamma_0})
+for \eqn{G_0}.}
+
+\item{gamma0.beta}{See figure B.1 from Nicola Robert's thesis.
+Inverse scale parameter (rate parameter, \eqn{\beta_0}) of the gamma
+distribution priors for
+the Dirichlet process concentration parameters (\eqn{\gamma_0})
+for \eqn{G_0}.}
 
 \item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
 chlist to "initial.chlist.Rdata" in the current working directory.
@@ -149,15 +167,21 @@ sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 (actually the methods seems to be just \code{hdp})
 that returns the \code{hdpState} from which it was generated.}
 
-\item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
+\item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated
+spectra of raw clusters after cosine
 similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 
-\item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
+\item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated
+spectra of raw clusters after non-zero category selecting
 step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 
-\item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection step in              \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+\item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of
+raw clusters moving to hdp.0 after non-zero category selection step
+in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 
-\item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+\item{clust_hdp0_ccc5}{A matrix containing aggregated spectra
+of raw clusters moving to hdp.0 after non-zero observation
+selection step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 
 }
 }

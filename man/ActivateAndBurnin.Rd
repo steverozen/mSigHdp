@@ -55,13 +55,17 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 \item{burnin.verbosity}{Pass to \code{\link[hdpx]{hdp_burnin}}
 \code{verbosity}.}
 
-\item{gamma.alpha}{Shape parameter of gamma distribution from which
-the Dirichlet process concentration parameters are drawn; in this
-function the gamma distributions for all Dirichlet processes are the same.}
+\item{gamma.alpha}{Shape parameter of
+the gamma distribution prior for the Dirichlet process concentration
+parameters; in this
+function the gamma distributions for all Dirichlet processes,
+except possibly the top level process, are the same.}
 
-\item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
-from which the Dirichlet process concentration parameters are drawn; in this
-function the gamma distributions for all Dirichlet processes are the same.}
+\item{gamma.beta}{Inverse scale parameter (rate parameter) of
+the gamma distribution prior for the Dirichlet process concentration
+parameters; in this
+function the gamma distributions for all Dirichlet processes, except
+possibly the top level process, are the same.}
 }
 \value{
 A list with 2 elements: \describe{

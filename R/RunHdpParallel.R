@@ -21,15 +21,21 @@
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
 #'
-#' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
+#' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated
+#'       spectra of raw clusters after cosine
 #'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 #'
-#' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
+#' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated
+#'       spectra of raw clusters after non-zero category selecting
 #'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 #'
-#' \item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection step in              \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#' \item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of
+#'       raw clusters moving to hdp.0 after non-zero category selection step
+#'       in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 #'
-#' \item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#' \item{clust_hdp0_ccc5}{A matrix containing aggregated spectra
+#'       of raw clusters moving to hdp.0 after non-zero observation
+#'       selection step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 #'
 #' }
 #'
@@ -58,6 +64,8 @@ RunHdpParallel <- function(input.catalog,
                            out.dir             = NULL,
                            gamma.alpha         = 1,
                            gamma.beta          = 1,
+                           gamma0.alpha        = gamma.alpha,
+                           gamma0.beta         = gamma.beta,
                            checkpoint.chlist   = TRUE){
 
   # Step 1: Activate hierarchical Dirichlet processes and
@@ -79,6 +87,8 @@ RunHdpParallel <- function(input.catalog,
                               num.child.process   = num.child.process,
                               gamma.alpha         = gamma.alpha,
                               gamma.beta          = gamma.beta,
+                              gamma0.alpha        = gamma0.alpha,
+                              gamma0.beta         = gamma0.beta,
                               checkpoint.chlist   = checkpoint.chlist)
 
   # Step 2: Combine the posterior chains and extract

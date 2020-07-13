@@ -16,7 +16,9 @@ SetupAndPosterior(
   post.cpiter = 3,
   post.verbosity = 0,
   gamma.alpha = 1,
-  gamma.beta = 1
+  gamma.beta = 1,
+  gamma0.alpha = gamma.alpha,
+  gamma0.beta = gamma.beta
 )
 }
 \arguments{
@@ -61,13 +63,29 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 \item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior}}
 \code{verbosity}.}
 
-\item{gamma.alpha}{Shape parameter of gamma distribution from which
-the Dirichlet process concentration parameters are drawn; in this
-function the gamma distributions for all Dirichlet processes are the same.}
+\item{gamma.alpha}{Shape parameter of
+the gamma distribution prior for the Dirichlet process concentration
+parameters; in this
+function the gamma distributions for all Dirichlet processes,
+except possibly the top level process, are the same.}
 
-\item{gamma.beta}{Inverse scale parameter (rate parameter) of gamma distribution
-from which the Dirichlet process concentration parameters are drawn; in this
-function the gamma distributions for all Dirichlet processes are the same.}
+\item{gamma.beta}{Inverse scale parameter (rate parameter) of
+the gamma distribution prior for the Dirichlet process concentration
+parameters; in this
+function the gamma distributions for all Dirichlet processes, except
+possibly the top level process, are the same.}
+
+\item{gamma0.alpha}{See figure B.1 from Nicola Robert's thesis.
+The shape parameter (\eqn{\alpha_0}) of the gamma
+distribution priors for
+the Dirichlet process concentration parameters  (\eqn{\gamma_0})
+for \eqn{G_0}.}
+
+\item{gamma0.beta}{See figure B.1 from Nicola Robert's thesis.
+Inverse scale parameter (rate parameter, \eqn{\beta_0}) of the gamma
+distribution priors for
+the Dirichlet process concentration parameters (\eqn{\gamma_0})
+for \eqn{G_0}.}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object

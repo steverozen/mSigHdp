@@ -1,3 +1,7 @@
+# [0.0.0.9029] - 2020-07-13
+* Added ability to specify parameters for gamma distribution prior on 
+  Dirichlet concentration parameters for the top level Dirichlet process node.
+
 # [0.0.0.9023] - 2020-06-27
 * Added some checkpointing facilities in `MultipleSetupAndPosterior` and `RunHdpParallel`.
 
