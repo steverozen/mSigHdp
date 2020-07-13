@@ -20,6 +20,17 @@
 #'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
+#'
+#' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
+#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#'
+#' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
+#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#'
+#' \item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection step in              \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#'
+#' \item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#'
 #' }
 #'
 #' @export

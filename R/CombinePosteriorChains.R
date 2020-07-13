@@ -49,7 +49,6 @@
 #'   mutations assigned to an averaged raw cluster.
 #'
 #' @return Invisibly, a list with the following elements:\describe{
-#'
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
 #'             samples (e.g. tumors).}
@@ -74,7 +73,8 @@
 #'
 #' \item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 #'
-#'       }
+#' }
+#'
 #'
 #' @export
 #'

@@ -67,7 +67,6 @@ this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
-
 \item{signature}{The extracted signature profiles as a matrix;
 rows are mutation types, columns are
 samples (e.g. tumors).}
@@ -90,7 +89,8 @@ step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 
 \item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection step in              \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 
-\item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}\preformatted{  \}
+\item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+
 }
 }
 \description{
