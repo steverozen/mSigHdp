@@ -1,10 +1,14 @@
 AdenoCA
 arg
 burnin
+checkpointing
+chlist
 CombinePosteriorChains
 github
 hdp
 HDP
+hdplist
+hdpSampleMulti
 hdpx
 https
 init

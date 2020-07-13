@@ -17,7 +17,8 @@ CombinePosteriorChains(
 )
 }
 \arguments{
-\item{clean.chlist}{It collects the output of multiple independent hdp_posterior calls.}
+\item{clean.chlist}{A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+Each element is the result of one posterior sample chain.}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
@@ -37,7 +38,8 @@ name of the tumor type of the corresponding column in \code{input.catalog}.
 
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
-\item{cluster.method}{A \code{kccaFamily} object input for \code{flexclust} package}
+\item{cluster.method}{A \code{\link[flexclust]{kccaFamily}} object.
+Deprecated. Future code will use \code{"kmedians"}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
@@ -45,20 +47,31 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 from the posterior sampling chains into "components" i.e. signatures;
 passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
-\item{categ.CI}{A numeric object between 0 and 1. The level of confidence interval used
-in step 4 of hdp_merge_and_extract_components}
+\item{categ.CI}{A number the range \eqn{[0,1]}. The level of the confidence
+interval used in step 4 of \code{\link{hdp_merge_and_extract_components}}.
+This governs when "averaged raw cluster" get assigned to component 0,
+i.e. if the the confidence interval overlaps 0. Lower values
+make it less likely that an averaged raw cluster will be assigned to
+component 0. The CI in question is for the number of mutations in
+a given mutation class (e.g. ACA > AAA, internally called a
+"category"). If, for every mutation class, this CI overlaps 0,
+then the averaged raw cluster goes to component 0.}
 
-\item{exposure.CI}{A numeric object between 0 and 1. The level of confidence interval used
-in step 5 of hdp_merge_and_extract_components}
+\item{exposure.CI}{A number in the range \eqn{[0,1]}. The level of
+the confidence interval used in step 5 of hdp_merge_and_extract_components.
+The CI in question here for the total number of
+mutations assigned to an averaged raw cluster.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
-this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
+this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
+
 \item{signature}{The extracted signature profiles as a matrix;
 rows are mutation types, columns are
 samples (e.g. tumors).}
+
 \item{exposure}{The inferred exposures as a matrix of mutation counts;
 rows are signatures, columns are samples (e.g. tumors).}
 
@@ -68,12 +81,16 @@ a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
 sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 (actually the methods seems to be just \code{hdp})
 that returns the \code{hdpState} from which it was generated.}
+
 \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
-similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
+similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+
 \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
-step in \code{\link[hdpx]{hdp_merge_and_extract_components}}}
-\item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection}
-\item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection}
+step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+
+\item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection step in              \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+
+\item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}\preformatted{  \}
 }
 }
 \description{

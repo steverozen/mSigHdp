@@ -84,15 +84,25 @@ from the posterior sampling chains into "components" i.e. signatures;
 passed to \code{\link[hdpx]{hdp_extract_components}}.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
-this many samples; passed to \code{\link[hdpx]{hdp_extract_components}}.}
+this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 
-\item{categ.CI}{A numeric object between 0 and 1. The level of confidence interval used
-in step 4 of hdp_merge_and_extract_components}
+\item{categ.CI}{A number the range \eqn{[0,1]}. The level of the confidence
+interval used in step 4 of \code{\link{hdp_merge_and_extract_components}}.
+This governs when "averaged raw cluster" get assigned to component 0,
+i.e. if the the confidence interval overlaps 0. Lower values
+make it less likely that an averaged raw cluster will be assigned to
+component 0. The CI in question is for the number of mutations in
+a given mutation class (e.g. ACA > AAA, internally called a
+"category"). If, for every mutation class, this CI overlaps 0,
+then the averaged raw cluster goes to component 0.}
 
-\item{exposure.CI}{A numeric object between 0 and 1. The level of confidence interval used
-in step 5 of hdp_merge_and_extract_components}
+\item{exposure.CI}{A number in the range \eqn{[0,1]}. The level of
+the confidence interval used in step 5 of hdp_merge_and_extract_components.
+The CI in question here for the total number of
+mutations assigned to an averaged raw cluster.}
 
-\item{cluster.method}{A \code{kccaFamily} object input for \code{flexclust} package}
+\item{cluster.method}{A \code{\link[flexclust]{kccaFamily}} object.
+Deprecated. Future code will use \code{"kmedians"}.}
 
 \item{ground.truth.sig}{Optional. Either a string with the
 path to file with ground truth signatures or and
@@ -120,7 +130,7 @@ function the gamma distributions for all Dirichlet processes are the same.}
 
 \item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
 chlist to "initial.chlist.Rdata" in the current working directory.
-and checkpoint the clean clist ot "clean.chlist.Rdata" in the
+and checkpoint the clean chlist to "clean.chlist.Rdata" in the
 current working directory.}
 }
 \value{
