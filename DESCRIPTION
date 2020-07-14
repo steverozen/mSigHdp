@@ -21,7 +21,6 @@ Depends: R (>= 3.5)
 RoxygenNote: 7.1.1
 Remotes: github::steverozen/hdpx,
     github::steverozen/ICAMS,
-    github::steverozen/SynSigGen,
     github::WuyangFF95/SynSigEval
 Suggests: 
     testthat,
