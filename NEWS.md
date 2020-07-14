@@ -1,3 +1,6 @@
+# [0.0.0.9030] - 2020-07-14
+* No longer necessary to checkpoint clean.chlist.Rdata
+
 # [0.0.0.9029] - 2020-07-13
 * Added ability to specify parameters for gamma distribution prior on 
   Dirichlet concentration parameters for the top level Dirichlet process node.

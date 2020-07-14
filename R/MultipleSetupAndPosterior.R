@@ -71,9 +71,11 @@ MultipleSetupAndPosterior <- function(input.catalog,
 
   clean.chlist <- CleanChlist(chlist, verbose)
 
-  if (checkpoint.chlist) {
-    save(clean.chlist, file = "clean.chlist.Rdata")
-  }
+  # This was for debugging when there were numerous
+  # memory corruption errors in the C code.
+  # if (checkpoint.chlist) {
+  #   save(clean.chlist, file = "clean.chlist.Rdata")
+  # }
 
   return(invisible(clean.chlist))
 }

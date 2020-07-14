@@ -5,3 +5,4 @@
 ^data-raw$
 ^README\.Rmd$
 ^\.travis\.yml$
+^mSigHdp_.*\.pdf$
