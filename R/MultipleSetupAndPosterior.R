@@ -36,26 +36,28 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       gamma.beta          = 1,
                                       gamma0.alpha        = gamma.alpha,
                                       gamma0.beta         = gamma.beta,
-                                      checkpoint.chlist   = TRUE) {
+                                      checkpoint.chlist   = TRUE,
+                                      checkpoint.1.chain  = TRUE) {
 
   run.setup.and.posterior <- function(seedNumber) {
 
     if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
     sample.chain <-SetupAndPosterior(
       input.catalog,
-      seedNumber     = seedNumber,
-      K.guess        = K.guess,
-      multi.types    = multi.types,
-      verbose        = verbose,
-      post.burnin    = post.burnin,
-      post.n         = post.n,
-      post.space     = post.space,
-      post.cpiter    = post.cpiter,
-      post.verbosity = post.verbosity,
-      gamma.alpha    = gamma.alpha,
-      gamma.beta     = gamma.beta,
-      gamma0.alpha   = gamma0.alpha,
-      gamma0.beta    = gamma0.beta)
+      seedNumber         = seedNumber,
+      K.guess            = K.guess,
+      multi.types        = multi.types,
+      verbose            = verbose,
+      post.burnin        = post.burnin,
+      post.n             = post.n,
+      post.space         = post.space,
+      post.cpiter        = post.cpiter,
+      post.verbosity     = post.verbosity,
+      gamma.alpha        = gamma.alpha,
+      gamma.beta         = gamma.beta,
+      gamma0.alpha       = gamma0.alpha,
+      gamma0.beta        = gamma0.beta,
+      checkpoint.1.chain = checkpoint.1.chain)
     return(sample.chain)
   }
 

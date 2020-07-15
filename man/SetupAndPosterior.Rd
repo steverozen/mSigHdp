@@ -18,7 +18,8 @@ SetupAndPosterior(
   gamma.alpha = 1,
   gamma.beta = 1,
   gamma0.alpha = gamma.alpha,
-  gamma0.beta = gamma.beta
+  gamma0.beta = gamma.beta,
+  checkpoint.1.chain = TRUE
 )
 }
 \arguments{
@@ -86,6 +87,10 @@ Inverse scale parameter (rate parameter, \eqn{\beta_0}) of the gamma
 distribution priors for
 the Dirichlet process concentration parameters (\eqn{\gamma_0})
 for \eqn{G_0}.}
+
+\item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
+chain to current working directory, in a file called
+sample.chain.\emph{seed_number}.Rdata.}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object

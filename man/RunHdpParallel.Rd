@@ -30,7 +30,8 @@ RunHdpParallel(
   gamma.beta = 1,
   gamma0.alpha = gamma.alpha,
   gamma0.beta = gamma.beta,
-  checkpoint.chlist = TRUE
+  checkpoint.chlist = TRUE,
+  checkpoint.1.chain = TRUE
 )
 }
 \arguments{
@@ -150,6 +151,10 @@ for \eqn{G_0}.}
 chlist to "initial.chlist.Rdata" in the current working directory.
 and checkpoint the clean chlist to "clean.chlist.Rdata" in the
 current working directory.}
+
+\item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
+chain to current working directory, in a file called
+sample.chain.\emph{seed_number}.Rdata.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

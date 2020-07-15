@@ -66,7 +66,8 @@ RunHdpParallel <- function(input.catalog,
                            gamma.beta          = 1,
                            gamma0.alpha        = gamma.alpha,
                            gamma0.beta         = gamma.beta,
-                           checkpoint.chlist   = TRUE){
+                           checkpoint.chlist   = TRUE,
+                           checkpoint.1.chain  = TRUE){
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
@@ -89,7 +90,8 @@ RunHdpParallel <- function(input.catalog,
                               gamma.beta          = gamma.beta,
                               gamma0.alpha        = gamma0.alpha,
                               gamma0.beta         = gamma0.beta,
-                              checkpoint.chlist   = checkpoint.chlist)
+                              checkpoint.chlist   = checkpoint.chlist,
+                              checkpoint.1.chain  = checkpoint.1.chain)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;

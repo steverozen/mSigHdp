@@ -19,6 +19,10 @@
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
+#' @param checkpoint.1.chain If \code{TRUE} checkpoint the sample
+#'      chain to current working directory, in a file called
+#'      sample.chain.*seed_number*.Rdata.
+#'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 #'  as returned from \code{\link[hdpx]{hdp_posterior}}.
 #'
@@ -38,7 +42,8 @@ SetupAndPosterior <-
            gamma.alpha         = 1,
            gamma.beta          = 1,
            gamma0.alpha        = gamma.alpha,
-           gamma0.beta         = gamma.beta)
+           gamma0.beta         = gamma.beta,
+           checkpoint.1.chain  = TRUE)
 { # 12 arguments
 
     hdp.state <- SetupAndActivate(input.catalog = input.catalog,
@@ -63,6 +68,10 @@ SetupAndPosterior <-
         cpiter    = post.cpiter,
         seed      = seedNumber)
     )
+
+    if (checkpoint.1.chain) {
+      save(sample.chain, file = paste0("sample.chain.", seedNumber, ".Rdata"))
+    }
 
     if (verbose) {
       message("compute sample.chain time: ")
