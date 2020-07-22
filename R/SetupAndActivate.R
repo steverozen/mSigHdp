@@ -31,8 +31,8 @@ SetupAndActivate <- function(input.catalog,
 
     if (verbose) {
       message("SetupAndActivate gamma0.alpha = ",
-              gamma.0.alpha, " gamma0.beta =",
-              gamma.0.beta)
+              gamma0.alpha, " gamma0.beta =",
+              gamma0.beta)
     }
     if (verbose) message("calling hdp_init ", Sys.time())
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
