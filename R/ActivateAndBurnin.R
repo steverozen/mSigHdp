@@ -33,7 +33,9 @@ ActivateAndBurnin <-
            cpiter         = 3,
            burnin.verbosity = 0,
            gamma.alpha    = 1,
-           gamma.beta     = 1
+           gamma.beta     = 1,
+           gamma0.alpha   = 1,
+           gamma0.beta    = 1
   ) { # 10 arguments
 
     hdp.state <- SetupAndActivate(input.catalog = input.catalog,
@@ -42,7 +44,9 @@ ActivateAndBurnin <-
                                   multi.types   = multi.types,
                                   verbose       = verbose,
                                   gamma.alpha   = gamma.alpha,
-                                  gamma.beta    = gamma.beta)
+                                  gamma.beta    = gamma.beta,
+                                  gamma0.alpha  = gamma0.alpha,
+                                  gamma0.beta   = gamma0.beta)
 
 
     set.seed(seedNumber)
