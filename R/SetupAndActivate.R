@@ -18,7 +18,7 @@ SetupAndActivate <- function(input.catalog,
                              gamma.beta          = 1,
                              gamma0.alpha        = gamma.alpha,
                              gamma0.beta         = gamma.beta)
-{ # 7 arguments
+{
 
     prep_val <- PrepInit(multi.types = multi.types,
                          input.catalog = input.catalog,
@@ -31,7 +31,7 @@ SetupAndActivate <- function(input.catalog,
 
     if (verbose) {
       message("SetupAndActivate gamma0.alpha = ",
-              gamma0.alpha, " gamma0.beta =",
+              gamma0.alpha, " gamma0.beta = ",
               gamma0.beta)
     }
     if (verbose) message("calling hdp_init ", Sys.time())
@@ -52,8 +52,6 @@ SetupAndActivate <- function(input.catalog,
                         prep_val$convSpectra)
 
     if (verbose) message("calling dp_activate ", Sys.time())
-    # dp_activate requires that stir.closure exists in .GlobalEnv;
-    # see above in this function.
 
     hdp.state <- hdpx::dp_activate(hdp     = hdpObject,
                                    dpindex = 1:num.process,
