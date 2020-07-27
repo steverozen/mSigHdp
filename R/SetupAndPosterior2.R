@@ -28,7 +28,7 @@
 #'
 #' @export
 
-SetupAndPosterior <-
+SetupAndPosterior2 <-
   function(input.catalog,
            seedNumber          = 1,
            K.guess,
@@ -43,9 +43,12 @@ SetupAndPosterior <-
            gamma.beta          = 1,
            gamma0.alpha        = gamma.alpha,
            gamma0.beta         = gamma.beta,
-           checkpoint.1.chain  = TRUE)
+           checkpoint.1.chain  = TRUE,
+           burnin.multiplier   = 1,
+           burnin.checkpoint   = NULL,
+           prior.signatures    = NULL,
+           prior.pseudocounts  = NULL)
 {
-
     hdp.state <- SetupAndActivate(input.catalog = input.catalog,
                                   seedNumber    = seedNumber,
                                   K.guess       = K.guess,
@@ -59,17 +62,16 @@ SetupAndPosterior <-
     if (verbose) message("calling hdp_posterior, seed = ",
                          seedNumber, " ", Sys.time())
 
+    burnin.output <- ActivateAndBurnin2( # Change to burnin
+      hdp       = hdp.state,
+      verbosity = post.verbosity,
+      burnin    = post.burnin,
+      n         = post.n,
+      space     = post.space,
+      cpiter    = post.cpiter,
+      seed      = seedNumber)
 
-    posterior.time <- system.time(
-      sample.chain <- hdpx::hdp_posterior(
-        hdp       = hdp.state,
-        verbosity = post.verbosity,
-        burnin    = post.burnin,
-        n         = post.n,
-        space     = post.space,
-        cpiter    = post.cpiter,
-        seed      = seedNumber)
-    )
+    sample.chain <- hdp_posterior_sample(burnin.output, XXXXXXXXXXX) # hdpx::hdp_posterior no longer needed?
 
     if (checkpoint.1.chain) {
       save(sample.chain, file = paste0("sample.chain.", seedNumber, ".Rdata"))
