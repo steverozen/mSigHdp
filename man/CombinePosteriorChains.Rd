@@ -8,7 +8,6 @@ CombinePosteriorChains(
   clean.chlist,
   input.catalog,
   multi.types,
-  cluster.method = "kmedians",
   verbose = TRUE,
   cos.merge = 0.9,
   categ.CI = 0.95,
@@ -38,9 +37,6 @@ name of the tumor type of the corresponding column in \code{input.catalog}.
 
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
-\item{cluster.method}{A \code{\link[flexclust]{kccaFamily}} object.
-Deprecated. Future code will use \code{"kmedians"}.}
-
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
 \item{cos.merge}{The cosine similarity threshold for merging raw clusters
@@ -64,6 +60,9 @@ mutations assigned to an averaged raw cluster.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+
+\item{cluster.method}{A \code{\link[flexclust]{kccaFamily}} object.
+Deprecated. Future code will use \code{"kmedians"}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

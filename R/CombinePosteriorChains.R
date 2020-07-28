@@ -82,7 +82,6 @@ CombinePosteriorChains <-
   function(clean.chlist,
            input.catalog,
            multi.types,
-           cluster.method      = "kmedians",
            verbose             = TRUE,
            cos.merge           = 0.9,
            categ.CI            = 0.95,
@@ -107,7 +106,6 @@ CombinePosteriorChains <-
     extract.time <- system.time(
       multi.chains <-
         hdpx::hdp_merge_and_extract_components(multi.chains,
-                                               cluster.method = cluster.method,
                                                exposure.CI    = exposure.CI,
                                                categ.CI       = categ.CI,
                                                cos.merge      = cos.merge,
@@ -123,9 +121,9 @@ CombinePosteriorChains <-
     if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
     extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
 
-    if(any(grepl("N",colnames(extractedSignatures)))||any(grepl("P",colnames(extractedSignatures)))){
-      extractedSignatures <- extractedSignatures[,-1]
-    } ##conditioning prior extraction doesn't have hdp.0
+   # if(any(grepl("N",colnames(extractedSignatures)))||any(grepl("P",colnames(extractedSignatures)))){
+  #    extractedSignatures <- extractedSignatures[,-1]
+  #  } ##conditioning prior extraction doesn't have hdp.0
 
     rownames(extractedSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...

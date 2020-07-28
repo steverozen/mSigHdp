@@ -21,7 +21,6 @@ RunHdpParallel(
   min.sample = 1,
   categ.CI = 0.95,
   exposure.CI = 0.95,
-  cluster.method = "kmedians",
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
   overwrite = TRUE,
@@ -107,9 +106,6 @@ then the averaged raw cluster goes to component 0.}
 the confidence interval used in step 5 of hdp_merge_and_extract_components.
 The CI in question here for the total number of
 mutations assigned to an averaged raw cluster.}
-
-\item{cluster.method}{A \code{\link[flexclust]{kccaFamily}} object.
-Deprecated. Future code will use \code{"kmedians"}.}
 
 \item{ground.truth.sig}{Optional. Either a string with the
 path to file with ground truth signatures or and
