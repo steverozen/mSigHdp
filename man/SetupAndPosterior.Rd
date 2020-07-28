@@ -19,7 +19,9 @@ SetupAndPosterior(
   gamma.beta = 1,
   gamma0.alpha = gamma.alpha,
   gamma0.beta = gamma.beta,
-  checkpoint.1.chain = TRUE
+  checkpoint.1.chain = TRUE,
+  prior.sigs = NULL,
+  prior.pseudoc = NULL
 )
 }
 \arguments{
@@ -91,6 +93,12 @@ for \eqn{G_0}.}
 \item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
 chain to current working directory, in a file called
 sample.chain.\emph{seed_number}.Rdata.}
+
+\item{prior.sigs}{A matrix containing prior signatures.}
+
+\item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
+it may be advisable to put lower weights on prior signatures that you do not expect
+to be present in your dataset, or even exclude some priors entirely.}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object

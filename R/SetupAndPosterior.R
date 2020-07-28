@@ -2,7 +2,7 @@
 #'
 #' @inheritParams PrepInit
 #'
-#' @inheritParams SetupAndActivate
+#' @inheritParams PriorSetupAndActivate
 #'
 #' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{burnin}.
@@ -43,8 +43,30 @@ SetupAndPosterior <-
            gamma.beta          = 1,
            gamma0.alpha        = gamma.alpha,
            gamma0.beta         = gamma.beta,
-           checkpoint.1.chain  = TRUE)
+           checkpoint.1.chain  = TRUE,
+           prior.sigs          = NULL,
+           prior.pseudoc       = NULL)
 { # 12 arguments
+
+    if(!is.null(prior.sigs)){
+      if(verbose) message('Prior signatures are found')
+      if(is.null(prior.pseudoc)){
+        stop('Prior signatures pseudo counts are not set')
+      }else{
+        hdp.state <- PriorSetupAndActivate(input.catalog = input.catalog,
+                                           seedNumber    = seedNumber,
+                                           K.guess       = K.guess,
+                                           multi.types   = multi.types,
+                                           verbose       = verbose,
+                                           gamma.alpha   = gamma.alpha,
+                                           gamma.beta    = gamma.beta,
+                                           gamma0.alpha  = gamma0.alpha,
+                                           gamma0.beta   = gamma0.beta,
+                                           prior.sigs    = prior.sigs,
+                                           prior.pseudoc = prior.pseudoc)
+      }
+
+    }
 
     hdp.state <- SetupAndActivate(input.catalog = input.catalog,
                                   seedNumber    = seedNumber,
