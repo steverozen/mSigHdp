@@ -23,21 +23,24 @@
 #'
 #' @export
 #'
-ActivateAndBurnin <-
+ActivateAndBurnin2 <-
   function(input.catalog,
-           seedNumber     = 1,
+           seedNumber        = 1,
            K.guess,
-           multi.types    = FALSE,
-           verbose        = TRUE,
-           burnin         = 4000,
-           cpiter         = 3,
-           burnin.verbosity = 0,
-           gamma.alpha    = 1,
-           gamma.beta     = 1,
-           gamma0.alpha   = 1,
-           gamma0.beta    = 1
+           multi.types       = FALSE,
+           verbose           = TRUE,
+           burnin            = 4000,
+           cpiter            = 3,
+           burnin.verbosity  = 0,
+           gamma.alpha       = 1,
+           gamma.beta        = 1,
+           gamma0.alpha      = 1,
+           gamma0.beta       = 1,
+           burnin.multiplier = 1,
+           burnin.checkpoint = FALSE
   ) { # 10 arguments
 
+    ### DELETE
     hdp.state <- SetupAndActivate(input.catalog = input.catalog,
                                   seedNumber    = seedNumber,
                                   K.guess       = K.guess,
@@ -49,11 +52,18 @@ ActivateAndBurnin <-
                                   gamma0.beta   = gamma0.beta)
 
 
-    set.seed(seedNumber)
-    output <- hdpx::hdp_burnin(hdp         = hdp.state,
-                               burnin      = burnin,
-                               cpiter      = cpiter,
-                               verbosity   = burnin.verbosity)
+    set.seed(seedNumber) ###?
+
+    for (ii in 1:burnin.multiplier) {
+      burnin.checkpoint <- hdpx::hdp_burnin(hdp         = hdp.state,
+                                 burnin      = burnin,
+                                 cpiter      = cpiter,
+                                 verbosity   = burnin.verbosity)
+      if (burnin.checkpoint) {
+         save(burnin.checkpoint,
+              file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
+      }
+    }
 
     return(invisible(output))
   }

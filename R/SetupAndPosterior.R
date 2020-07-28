@@ -2,21 +2,25 @@
 #'
 #' @inheritParams PrepInit
 #'
+#' @inheritParams SetupAndActivate
+#'
 #' @inheritParams PriorSetupAndActivate
 #'
-#' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @inheritParams ChainBurnin
+#'
+#' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 #'      \code{burnin}.
 #'
-#' @param post.n Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.n Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 #'      \code{n}.
 #'
-#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 #'      \code{space}.
 #'
-#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 #'      \code{cpiter}.
 #'
-#' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 #'      \code{verbosity}.
 #'
 #' @param checkpoint.1.chain If \code{TRUE} checkpoint the sample
@@ -44,9 +48,11 @@ SetupAndPosterior <-
            gamma0.alpha        = gamma.alpha,
            gamma0.beta         = gamma.beta,
            checkpoint.1.chain  = TRUE,
+           burnin.multiplier   = 1,
+           burnin.checkpoint   = FALSE,
            prior.sigs          = NULL,
            prior.pseudoc       = NULL)
-{ # 12 arguments
+  {
 
     if(!is.null(prior.sigs)){
       if(verbose) message('Prior signatures are found')
@@ -80,16 +86,28 @@ SetupAndPosterior <-
 
     if (verbose) message("calling hdp_posterior, seed = ",
                          seedNumber, " ", Sys.time())
+
+
+    burnin.output <- ChainBurnin(
+      hdp.state         = hdp.state,
+      burnin.verbosity  = post.verbosity,
+      burnin            = post.burnin,
+      cpiter            = post.cpiter,
+      seedNumber        = seedNumber,
+      burnin.multiplier = burnin.multiplier,
+      burnin.checkpoint = burnin.checkpoint)
+
     posterior.time <- system.time(
-      sample.chain <- hdpx::hdp_posterior(
-        hdp       = hdp.state,
-        verbosity = post.verbosity,
-        burnin    = post.burnin,
-        n         = post.n,
-        space     = post.space,
-        cpiter    = post.cpiter,
-        seed      = seedNumber)
+
+      sample.chain <- hdpx::hdp_posterior_sample(post.input     = burnin.output,
+                                                 post.n         = post.n,
+                                                 post.space     = post.space,
+                                                 post.cpiter    = post.cpiter,
+                                                 seed           = seedNumber,
+                                                 post.verbosity = 0)
     )
+
+
 
     if (checkpoint.1.chain) {
       save(sample.chain, file = paste0("sample.chain.", seedNumber, ".Rdata"))
@@ -105,3 +123,5 @@ SetupAndPosterior <-
     return(invisible(sample.chain))
 
   }
+
+

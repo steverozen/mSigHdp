@@ -69,7 +69,9 @@ RunHdpParallel <- function(input.catalog,
                            checkpoint.chlist   = TRUE,
                            checkpoint.1.chain  = TRUE,
                            prior.sigs          = NULL,
-                           prior.pseudoc       = NULL){
+                           prior.pseudoc       = NULL,
+                           burnin.multiplier   = 1,
+                           burnin.checkpoint   = FALSE){
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
@@ -95,7 +97,9 @@ RunHdpParallel <- function(input.catalog,
                               checkpoint.chlist   = checkpoint.chlist,
                               checkpoint.1.chain  = checkpoint.1.chain,
                               prior.sigs          = prior.sigs,
-                              prior.pseudoc       = prior.pseudoc)
+                              prior.pseudoc       = prior.pseudoc,
+                              burnin.multiplier   = burnin.multiplier,
+                              burnin.checkpoint   = burnin.checkpoint)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;

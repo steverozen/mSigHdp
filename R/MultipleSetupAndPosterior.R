@@ -39,7 +39,9 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       checkpoint.chlist   = TRUE,
                                       checkpoint.1.chain  = TRUE,
                                       prior.sigs          = NULL,
-                                      prior.pseudoc       = NULL) {
+                                      prior.pseudoc       = NULL,
+                                      burnin.multiplier   = 1,
+                                      burnin.checkpoint   = FALSE) {
 
   run.setup.and.posterior <- function(seedNumber) {
 
@@ -61,7 +63,9 @@ MultipleSetupAndPosterior <- function(input.catalog,
       gamma0.beta        = gamma0.beta,
       checkpoint.1.chain = checkpoint.1.chain,
       prior.sigs         = prior.sigs,
-      prior.pseudoc      = prior.pseudoc)
+      prior.pseudoc      = prior.pseudoc,
+      burnin.multiplier  = burnin.multiplier,
+      burnin.checkpoint  = burnin.checkpoint)
     return(sample.chain)
   }
 
