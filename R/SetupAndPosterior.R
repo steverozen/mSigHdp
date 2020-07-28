@@ -100,12 +100,14 @@ SetupAndPosterior <-
       burnin.checkpoint = burnin.checkpoint)
 
     posterior.time <- system.time(
+
       sample.chain <- hdpx::hdp_posterior_sample(post.input     = burnin.output,
                                                  post.n         = post.n,
                                                  post.space     = post.space,
                                                  post.cpiter    = post.cpiter,
                                                  seed           = seedNumber,
                                                  post.verbosity = post.verbosity)
+
     )
 
 
