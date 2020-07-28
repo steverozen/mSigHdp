@@ -100,10 +100,6 @@ CombinePosteriorChains <-
     number.channels <- nrow(input.catalog)
     number.samples  <- ncol(input.catalog)
 
-    # Generate num.tumor.type # I think we get this info from clean.chlist[[1]]@hdp@numdp or something like that
-    ppindex <- Generateppindex(multi.types = multi.types,
-                               input.catalog = input.catalog) ##clean up code
-
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
     if (verbose) message("calling hdp_extract_components ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
@@ -126,12 +122,15 @@ CombinePosteriorChains <-
     }
     if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
     extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
+
+    if(any(grepl("N",colnames(extractedSignatures)))||any(grepl("P",colnames(extractedSignatures)))){
+      extractedSignatures <- extractedSignatures[,-1]
+    } ##conditioning prior extraction doesn't have hdp.0
+
     rownames(extractedSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
     colnames(extractedSignatures) <-
       paste("hdp", colnames(extractedSignatures), sep = ".")
-
-    extractedSignatures_after_cos_sim_merge <- multi.chains
 
     ## Calculate the exposure probability of each signature (component) for each
     ## tumor sample (posterior sample corresponding to a Dirichlet process node).
@@ -140,16 +139,23 @@ CombinePosteriorChains <-
 
     if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
     exposureProbs <- hdpx::comp_dp_distn(multi.chains)$mean
+
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.
     # Transpose so it conforms to SynSigEval format
-    exposureProbs <- t(exposureProbs[-(1:(ppindex$num.tumor.types + 1)), ])
+    exposureProbs <- t(exposureProbs[-c(1:(nrow(exposureProbs)-ncol(input.catalog))), ])
+
     # Now rows are signatures, columns are samples
     # Calculate exposure counts from exposure probabilities and total mutation
     # counts
     exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
+
     colnames(exposureCounts) <- colnames(input.catalog)
-    rownames(exposureCounts) <- colnames(extractedSignatures)
+
+    if(!(any(grepl("N",colnames(extractedSignatures)))||any(grepl("P",colnames(extractedSignatures))))){
+      rownames(exposureCounts) <- colnames(extractedSignatures)
+    }
+
 
     invisible(list(signature       = extractedSignatures,
                    exposure        = exposureCounts,

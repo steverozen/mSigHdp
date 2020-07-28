@@ -50,7 +50,7 @@ PriorSetupAndActivate <- function(prior.sigs,
                                   K.guess,
                                   gamma0.alpha      = gamma.alpha,
                                   gamma0.beta       = gamma.beta,
-                                  multi.types       = T,
+                                  multi.types       = F,
                                   input.catalog,
                                   verbose           = TRUE,
                                   seedNumber        = 1){

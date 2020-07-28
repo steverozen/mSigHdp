@@ -20,6 +20,8 @@ SetupAndPosterior(
   gamma0.alpha = gamma.alpha,
   gamma0.beta = gamma.beta,
   checkpoint.1.chain = TRUE,
+  burnin.multiplier = 1,
+  burnin.checkpoint = FALSE,
   prior.sigs = NULL,
   prior.pseudoc = NULL
 )
@@ -51,19 +53,19 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior}}
+\item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{burnin}.}
 
-\item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior}}
+\item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{n}.}
 
-\item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior}}
+\item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{space}.}
 
-\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior}}
+\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{cpiter}.}
 
-\item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior}}
+\item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{verbosity}.}
 
 \item{gamma.alpha}{Shape parameter of
@@ -93,6 +95,11 @@ for \eqn{G_0}.}
 \item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
 chain to current working directory, in a file called
 sample.chain.\emph{seed_number}.Rdata.}
+
+\item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
+After each round, a burn-in chain will be save for checkpoint.}
+
+\item{burnin.checkpoint}{Default is False. If True, a checkpoint for burnin will be created.}
 
 \item{prior.sigs}{A matrix containing prior signatures.}
 

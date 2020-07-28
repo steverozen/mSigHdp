@@ -28,6 +28,8 @@ GeneratePriorppindex <- function(multi.types, input.catalog, nps){
   if (FALSE == multi.types) {
     num.tumor.types <- 0 # For input to hdpx::hdp_setdata
     ppindex <- c(1, rep(1+nps+1, number.samples))
+    cpindex <- c(3, rep(4,number.samples))
+
   } else {
 
     if (multi.types == TRUE) {
