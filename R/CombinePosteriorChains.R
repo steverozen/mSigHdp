@@ -30,9 +30,6 @@
 #' @param min.sample A "component" (i.e. signature) must have at least
 #'      this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}}.
 #'
-#' @param cluster.method A \code{\link[flexclust]{kccaFamily}} object.
-#'     Deprecated. Future code will use \code{"kmedians"}.
-#'
 #' @param categ.CI A number the range \eqn{[0,1]}. The level of the confidence
 #'   interval used in step 4 of \code{\link{hdp_merge_and_extract_components}}.
 #'   This governs when "averaged raw cluster" get assigned to component 0,

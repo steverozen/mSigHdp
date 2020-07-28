@@ -60,9 +60,6 @@ mutations assigned to an averaged raw cluster.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
-
-\item{cluster.method}{A \code{\link[flexclust]{kccaFamily}} object.
-Deprecated. Future code will use \code{"kmedians"}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
