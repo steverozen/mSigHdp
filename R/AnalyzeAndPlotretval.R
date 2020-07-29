@@ -62,15 +62,15 @@ AnalyzeAndPlotretval <- function(retval,
                           file.path(out.dir, "extracted.signature.pdf"))
 
   if (verbose) message("Writing exposures")
-  ICAMS::WriteExposure(retval$exposure,
-                       file.path(out.dir,"inferred.exposures.csv"))
+  ICAMSxtra::WriteExposure(retval$exposure,
+                           file.path(out.dir,"inferred.exposures.csv"))
 
-  ICAMS::PlotExposureToPdf(ICAMS::SortExposure(retval$exposure),
-                           file.path(out.dir,"inferred.exposure.count.pdf"))
+  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposure),
+                               file.path(out.dir,"inferred.exposure.count.pdf"))
 
-  ICAMS::PlotExposureToPdf(ICAMS::SortExposure(retval$exposure),
-                           file.path(out.dir,"inferred.exposure.proportion.pdf"),
-                           plot.proportion = TRUE)
+  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposure),
+                               file.path(out.dir,"inferred.exposure.proportion.pdf"),
+                               plot.proportion = TRUE)
 
   ###here is optional.
 
@@ -86,16 +86,16 @@ AnalyzeAndPlotretval <- function(retval,
         message("Reading ground truth exposures from ",
                 ground.truth.exp)
       }
-      ground.truth.exp <- ICAMS::ReadExposure(ground.truth.exp)
+      ground.truth.exp <- ICAMSxtra::ReadExposure(ground.truth.exp)
     }
     #stopifnot(is.matrix(ground.truth.exp))
 
-    ICAMS::PlotExposureToPdf(ICAMS::SortExposure(ground.truth.exp),
-                             file.path(out.dir,"ground.truth.exposure.count.pdf"))
+    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                 file.path(out.dir,"ground.truth.exposure.count.pdf"))
 
-    ICAMS::PlotExposureToPdf(ICAMS::SortExposure(ground.truth.exp),
-                             file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
-                             plot.proportion = TRUE)
+    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                 file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
+                                 plot.proportion = TRUE)
   }
 
   # Compare with ground truth

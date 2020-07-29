@@ -15,13 +15,15 @@ Language: en-US
 BuildManual: no
 biocViews:
 Imports: hdpx (>= 0.1.5.0014),
-    ICAMS (>= 2.1.2.9014),
+    ICAMS,
+    ICAMSxtra,
     SynSigGen
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 3.5)
 RoxygenNote: 7.1.1
 Remotes: github::steverozen/hdpx,
     github::steverozen/ICAMS@master,
+    github::steverozen/ICAMSxtra,
     github::WuyangFF95/SynSigEval
 Suggests: 
     testthat,
