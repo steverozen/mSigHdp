@@ -10,6 +10,9 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
+#' @param ground.truth.catalog Ground truth catalog matrix or
+#'                            path to file with ground truth catalog
+#'
 #' @param ground.truth.exp Optional. Ground truth exposure matrix or
 #'   path to file with ground truth exposures.
 #'   If \code{NULL} skip checks that need this information.
@@ -26,6 +29,7 @@
 #'
 #'
 AnalyzeAndPlotretval <- function(retval,
+                                 ground.truth.catalog,
                                  out.dir          = NULL,
                                  ground.truth.sig = NULL,
                                  ground.truth.exp = NULL,
@@ -45,7 +49,18 @@ AnalyzeAndPlotretval <- function(retval,
 
   # Plot the diagnostics of sampling chains.
   if(diagnostic.plot){
+
+
+    if (mode(ground.truth.catalog) == "character") {
+      if (verbose) message("Reading input catalog file ", ground.truth.catalog)
+      ground.truth.catalog <- ICAMS::ReadCatalog(ground.truth.catalog, strict = FALSE)
+    } else {
+      ground.truth.catalog <- ground.truth.catalog
+    }
+
+
     ChainsDiagnosticPlot(retval  = retval,
+                         ground.truth.catalog = ground.truth.catalog,
                          out.dir = out.dir,
                          verbose = verbose)
   }

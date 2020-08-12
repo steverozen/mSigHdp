@@ -14,6 +14,7 @@
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
 #' }
+#' @param ground.truth.catalog ground truth catalog
 #'
 #' @inheritParams AnalyzeAndPlotretval
 #'
@@ -26,6 +27,7 @@
 
 
 ChainsDiagnosticPlot <- function(retval,
+                                 ground.truth.catalog,
                                  out.dir,
                                  verbose){
   multi <- retval[["multi.chains"]] # class hdpSampleMulti
@@ -57,6 +59,12 @@ ChainsDiagnosticPlot <- function(retval,
   hdpx::plot_comp_size(multi, bty="L")
   grDevices::dev.off()
 
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.pdf"))
+  graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
+  hdpx::plot_chain_hdpsig_exp(multi,chains)
+  grDevices::dev.off()
+
+
   grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
   graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
   # This plots the component (signature) profiles with
@@ -64,15 +72,18 @@ ChainsDiagnosticPlot <- function(retval,
   hdpx::plot_comp_distn(multi)
   grDevices::dev.off()
 
-  # TODO, need argument dpindices and col_comp;
-  # Need to return the hdp object (perhaps) from RunhdpInternal
-  # to get the required values.
-  if (FALSE) { # Not finished
-    num.dpindices <- length(chains[[1]]@hdp@ppindex)
-    hdpx::plot_dp_comp_exposure(
-      multi, dpindices = 3:num.dpindices,
-      col_comp = myCol[1:ncol(retval$signature)],
-      dpnames = colnames(retval$exposure))
-  }
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.exp.each.sample.pdf"))
+  myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
+  graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
+
+  # Not finished
+  hdpx::plot_dp_comp_exposure(
+    multi,
+    input.catalog = ground.truth.catalog,
+    col_comp = myCol[1:ncol(retval$signature)],
+    dpnames = colnames(retval$exposure))
+  grDevices::dev.off()
+
+
 }
 

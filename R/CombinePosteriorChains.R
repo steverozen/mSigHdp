@@ -45,6 +45,8 @@
 #'   The CI in question here for the total number of
 #'   mutations assigned to an averaged raw cluster.
 #'
+#' @param diagnostic.folder If provided, diagnostic plots for hdp.0 components are provided
+#'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
@@ -83,7 +85,8 @@ CombinePosteriorChains <-
            cos.merge           = 0.9,
            categ.CI            = 0.95,
            exposure.CI         = 0.95,
-           min.sample          = 1
+           min.sample          = 1,
+           diagnostic.folder   = NULL
   ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
@@ -106,7 +109,8 @@ CombinePosteriorChains <-
                                                exposure.CI    = exposure.CI,
                                                categ.CI       = categ.CI,
                                                cos.merge      = cos.merge,
-                                               min.sample     = min.sample)
+                                               min.sample     = min.sample,
+                                               diagnostic.folder = diagnostic.folder)
     )
 
     if (verbose) {

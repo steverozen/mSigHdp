@@ -12,7 +12,8 @@ CombinePosteriorChains(
   cos.merge = 0.9,
   categ.CI = 0.95,
   exposure.CI = 0.95,
-  min.sample = 1
+  min.sample = 1,
+  diagnostic.folder = NULL
 )
 }
 \arguments{
@@ -60,6 +61,8 @@ mutations assigned to an averaged raw cluster.}
 
 \item{min.sample}{A "component" (i.e. signature) must have at least
 this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+
+\item{diagnostic.folder}{If provided, diagnostic plots for hdp.0 components are provided}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

@@ -6,6 +6,7 @@
 \usage{
 AnalyzeAndPlotretval(
   retval,
+  ground.truth.catalog,
   out.dir = NULL,
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
@@ -16,6 +17,9 @@ AnalyzeAndPlotretval(
 }
 \arguments{
 \item{retval}{the output from function CombinePosteriorChains}
+
+\item{ground.truth.catalog}{Ground truth catalog matrix or
+path to file with ground truth catalog}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then
