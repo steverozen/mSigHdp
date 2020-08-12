@@ -59,7 +59,7 @@ ChainsDiagnosticPlot <- function(retval,
   hdpx::plot_comp_size(multi, bty="L")
   grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.pdf"))
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.chain.pdf"))
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
   hdpx::plot_chain_hdpsig_exp(multi,chains)
   grDevices::dev.off()
@@ -72,7 +72,7 @@ ChainsDiagnosticPlot <- function(retval,
   hdpx::plot_comp_distn(multi)
   grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.exp.each.sample.pdf"))
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"))
   myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
 
