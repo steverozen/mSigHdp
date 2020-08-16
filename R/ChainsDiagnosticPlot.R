@@ -80,10 +80,19 @@ ChainsDiagnosticPlot <- function(retval,
   hdpx::plot_dp_comp_exposure(
     multi,
     input.catalog = ground.truth.catalog,
+    ex.signature     = retval$signature,
     col_comp = myCol[1:ncol(retval$signature)],
     dpnames = colnames(retval$exposure))
   grDevices::dev.off()
 
+  grDevices::pdf(file = file.path(out.dir,"tsne.sig.vs.tumortype.pdf"))
+  graphics::par(mfrow=c(1,1), mar=c(4, 4, 2, 1))
+  hdpx::plot_tsne_sigs_tumortype(exposure = retval$exposure)
+  grDevices::dev.off()
 
+  grDevices::pdf(file = file.path(out.dir,"pca.sig.vs.tumortype.pdf"))
+  graphics::par(mfrow=c(1,1), mar=c(4, 4, 2, 1))
+  hdpx::plot_pca_sigs_tumortype(exposure = retval$exposure)
+  grDevices::dev.off()
 }
 

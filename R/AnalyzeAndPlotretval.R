@@ -42,26 +42,27 @@ AnalyzeAndPlotretval <- function(retval,
     if (verbose) message("Using existing out.dir ", out.dir)
   } else {
     dir.create(out.dir, recursive = T)
-    if (verbose) message("Created new out.dir", out.dir)
+    if (verbose) message("Created new out.dir ", out.dir)
   }
 
   save(retval, file = file.path(out.dir, "hdp.retval.Rdata"))
 
+  if (mode(ground.truth.catalog) == "character") {
+    if (verbose) message("Reading input catalog file ", ground.truth.catalog)
+    ground.truth.catalog <- ICAMS::ReadCatalog(ground.truth.catalog, strict = FALSE)
+  } else {
+    ground.truth.catalog <- ground.truth.catalog
+  }
+
+
   # Plot the diagnostics of sampling chains.
   if(diagnostic.plot){
 
-
-    if (mode(ground.truth.catalog) == "character") {
-      if (verbose) message("Reading input catalog file ", ground.truth.catalog)
-      ground.truth.catalog <- ICAMS::ReadCatalog(ground.truth.catalog, strict = FALSE)
-    } else {
-      ground.truth.catalog <- ground.truth.catalog
-    }
-
+    dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
 
     ChainsDiagnosticPlot(retval  = retval,
                          ground.truth.catalog = ground.truth.catalog,
-                         out.dir = out.dir,
+                         out.dir = paste0(out.dir,"/Diagnostic_Plots"),
                          verbose = verbose)
   }
 
