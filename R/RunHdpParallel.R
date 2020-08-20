@@ -119,12 +119,14 @@ RunHdpParallel <- function(input.catalog,
   # and compare with ground truth signature and exposures.
 
   if(!is.null(out.dir)) {
-    AnalyzeAndPlotretval(multi.chains.etc,
-                         out.dir,
-                         ground.truth.sig,
-                         ground.truth.exp,
-                         verbose,
-                         overwrite)
+
+    AnalyzeAndPlotretval(retval                = multi.chains.etc,
+                         ground.truth.catalog  = input.catalog,
+                         out.dir               = out.dir,
+                         ground.truth.sig      = ground.truth.sig,
+                         ground.truth.exp      = ground.truth.exp,
+                         verbose               = verbose,
+                         overwrite             = overwrite)
   }
   return(invisible(multi.chains.etc))
 }

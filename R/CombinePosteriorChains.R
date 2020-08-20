@@ -155,7 +155,6 @@ CombinePosteriorChains <-
       rownames(exposureCounts) <- colnames(extractedSignatures)
     }
 
-
     invisible(list(signature       = extractedSignatures,
                    exposure        = exposureCounts,
                    multi.chains    = multi.chains,
