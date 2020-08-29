@@ -4,7 +4,7 @@
 \alias{ChainsDiagnosticPlot}
 \title{Diagnostic plot for a hdpSampleMulti object}
 \usage{
-ChainsDiagnosticPlot(retval, ground.truth.catalog, out.dir, verbose)
+ChainsDiagnosticPlot(retval, input.catalog, out.dir, verbose)
 }
 \arguments{
 \item{retval}{output from CombinePosteriorChains.A list with the following elements:\describe{
@@ -22,7 +22,7 @@ sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
 that returns the \code{hdpState} from which it was generated.}
 }}
 
-\item{ground.truth.catalog}{ground truth catalog}
+\item{input.catalog}{ground truth catalog}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then

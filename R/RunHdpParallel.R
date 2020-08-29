@@ -121,7 +121,7 @@ RunHdpParallel <- function(input.catalog,
   if(!is.null(out.dir)) {
 
     AnalyzeAndPlotretval(retval                = multi.chains.etc,
-                         ground.truth.catalog  = input.catalog,
+                         input.catalog         = input.catalog,
                          out.dir               = out.dir,
                          ground.truth.sig      = ground.truth.sig,
                          ground.truth.exp      = ground.truth.exp,

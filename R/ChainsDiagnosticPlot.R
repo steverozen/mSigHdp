@@ -14,7 +14,7 @@
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
 #' }
-#' @param ground.truth.catalog ground truth catalog
+#' @param input.catalog ground truth catalog
 #'
 #' @inheritParams AnalyzeAndPlotretval
 #'
@@ -27,7 +27,7 @@
 
 
 ChainsDiagnosticPlot <- function(retval,
-                                 ground.truth.catalog,
+                                 input.catalog,
                                  out.dir,
                                  verbose){
   multi <- retval[["multi.chains"]] # class hdpSampleMulti
@@ -79,10 +79,10 @@ ChainsDiagnosticPlot <- function(retval,
   # Not finished
   hdpx::plot_dp_comp_exposure(
     multi,
-    input.catalog = ground.truth.catalog,
+    input.catalog    = input.catalog,
     ex.signature     = retval$signature,
-    col_comp = myCol[1:ncol(retval$signature)],
-    dpnames = colnames(retval$exposure))
+    col_comp         = myCol[1:ncol(retval$signature)],
+    dpnames          = colnames(retval$exposure))
   grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"tsne.sig.vs.tumortype.pdf"))

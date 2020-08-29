@@ -10,8 +10,8 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
-#' @param ground.truth.catalog Ground truth catalog matrix or
-#'                            path to file with ground truth catalog
+#' @param input.catalog input catalog matrix or
+#'                            path to file with input catalog
 #'
 #' @param ground.truth.exp Optional. Ground truth exposure matrix or
 #'   path to file with ground truth exposures.
@@ -29,7 +29,7 @@
 #'
 #'
 AnalyzeAndPlotretval <- function(retval,
-                                 ground.truth.catalog,
+                                 input.catalog,
                                  out.dir          = NULL,
                                  ground.truth.sig = NULL,
                                  ground.truth.exp = NULL,
@@ -61,7 +61,7 @@ AnalyzeAndPlotretval <- function(retval,
     dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
 
     ChainsDiagnosticPlot(retval  = retval,
-                         ground.truth.catalog = ground.truth.catalog,
+                         input.catalog = input.catalog,
                          out.dir = paste0(out.dir,"/Diagnostic_Plots"),
                          verbose = verbose)
   }
