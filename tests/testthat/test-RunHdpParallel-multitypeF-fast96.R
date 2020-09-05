@@ -22,7 +22,7 @@ test_that("RunHdpParallel-fast96", {
     overwrite     = TRUE
   )
 
-  # save(retvalx, file = "RunhdpInternal.testdata/RunHdpParallel-fast96-2-cores.Rdata")
+  #save(retvalx, file = "RunhdpInternal.testdata/RunHdpParallel-fast96-2-cores.Rdata")
   expect_equal(retvalx, reg$retvalx)
 
 })

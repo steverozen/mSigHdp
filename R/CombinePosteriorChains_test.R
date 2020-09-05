@@ -1,4 +1,5 @@
 #' Extract components and exposures from multiple posterior sample chains
+#' A test function combine new extraction code
 #'
 #' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 #'  Each element is the result of one posterior sample chain.
@@ -23,29 +24,11 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
-#' @param cos.merge The cosine similarity threshold for merging raw clusters
-#'      from the posterior sampling chains into "components" i.e. signatures;
-#'      passed to \code{\link[hdpx]{hdp_extract_components}}.
+#' @param prop.samp proportion of samples for a signature to be selected
 #'
-#' @param min.sample A "component" (i.e. signature) must have at least
-#'      this many samples; passed to \code{\link[hdpx]{hdp_merge_and_extract_components}}.
+#' @param cos.merge cosine similarity cutoff
 #'
-#' @param categ.CI A number the range \eqn{[0,1]}. The level of the confidence
-#'   interval used in step 4 of \code{\link{hdp_merge_and_extract_components}}.
-#'   This governs when "averaged raw cluster" get assigned to component 0,
-#'   i.e. if the the confidence interval overlaps 0. Lower values
-#'   make it less likely that an averaged raw cluster will be assigned to
-#'   component 0. The CI in question is for the number of mutations in
-#'   a given mutation class (e.g. ACA > AAA, internally called a
-#'   "category"). If, for every mutation class, this CI overlaps 0,
-#'   then the averaged raw cluster goes to component 0.
-#'
-#' @param exposure.CI A number in the range \eqn{[0,1]}. The level of
-#'   the confidence interval used in step 5 of hdp_merge_and_extract_components.
-#'   The CI in question here for the total number of
-#'   mutations assigned to an averaged raw cluster.
-#'
-#' @param diagnostic.folder If provided, diagnostic plots for hdp.0 components are provided
+#' @param min.sample passed to another function
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
@@ -62,32 +45,22 @@
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
 #'
-#' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated spectra of raw clusters after cosine
-#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#'}
 #'
-#' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated spectra of raw clusters after non-zero category selecting
-#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
 #'
-#' \item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero category selection step in              \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
-#'
-#' \item{clust_hdp0_ccc5}{A matrix containing aggregated spectra of raw clusters moving to hdp.0 after non-zero observation selection step in           \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
-#'
-#' }
 #'
 #'
 #' @export
 #'
-CombinePosteriorChains <-
+NewCombinePosteriorChains <-
   function(clean.chlist,
            input.catalog,
            multi.types,
            verbose             = TRUE,
            cos.merge           = 0.9,
-           categ.CI            = 0.95,
-           exposure.CI         = 0.95,
-           min.sample          = 1,
-           diagnostic.folder   = NULL
-  ) {
+           prop.samp           = 0.5,
+           min.sample          = 1
+           ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
       input.catalog <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
@@ -105,12 +78,10 @@ CombinePosteriorChains <-
 
     extract.time <- system.time(
       multi.chains <-
-        hdpx::hdp_merge_and_extract_components(multi.chains,
-                                               exposure.CI    = exposure.CI,
-                                               categ.CI       = categ.CI,
+        hdpx::extract_sigs_from_clusters(multi.chains,
+                                               prop.samp       = prop.samp,
                                                cos.merge      = cos.merge,
-                                               min.sample     = min.sample,
-                                               diagnostic.folder = diagnostic.folder)
+                                               min.sample     = min.sample)
     )
 
     if (verbose) {
@@ -120,14 +91,15 @@ CombinePosteriorChains <-
       }
     }
     if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
-    extractedSignatures <- t(hdpx::comp_categ_distn(multi.chains)$mean)
-
+    extractedSignatures <- hdpx::comp_categ_distn(multi.chains)$comp_categ_distn
+    noise.individual.clusters <- hdpx::comp_categ_distn(multi.chains)$noise.individual.clusters
+    nonselected.matched.samples <- hdpx::comp_categ_distn(multi.chains)$nonselected.matched.samples
 
 
     rownames(extractedSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
     colnames(extractedSignatures) <-
-      paste("hdp", colnames(extractedSignatures), sep = ".")
+      paste("hdp", c(0:(ncol(extractedSignatures)-1)), sep = ".")
 
     ## Calculate the exposure probability of each signature (component) for each
     ## tumor sample (posterior sample corresponding to a Dirichlet process node).
@@ -140,29 +112,26 @@ CombinePosteriorChains <-
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.
     # Transpose so it conforms to SynSigEval format
-    exposureProbs <- t(exposureProbs[-c(1:(nrow(exposureProbs)-ncol(input.catalog))), ])
+    #exposureProbs <- t(exposureProbs[-c(1:(nrow(exposureProbs)-ncol(input.catalog))), ])
 
     # Now rows are signatures, columns are samples
     # Calculate exposure counts from exposure probabilities and total mutation
     # counts
-    exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
+    exposureCounts <- diag(rowSums(convSpectra)) %*% exposureProbs
 
-    colnames(exposureCounts) <- colnames(input.catalog)
+    rownames(exposureCounts) <- colnames(input.catalog)
+    colnames(exposureCounts) <- colnames(extractedSignatures)
 
-    if(!(any(grepl("N",colnames(extractedSignatures)))||any(grepl("P",colnames(extractedSignatures))))){
-      rownames(exposureCounts) <- colnames(extractedSignatures)
-    }
+    #if(!(any(grepl("N",colnames(extractedSignatures)))||any(grepl("P",colnames(extractedSignatures))))){
+     # rownames(t(exposureCounts)) <- colnames(extractedSignatures)
+    #}
 
     invisible(list(signature       = extractedSignatures,
-                   exposure        = exposureCounts,
+                   exposure        = t(exposureCounts),
                    multi.chains    = multi.chains,
-
-                   sum_raw_clusters_after_cos_merge  =
-                     hdpx::comp_categ_distn(multi.chains)$raw_clusts_after_cos_merge,
-                   sum_raw_clusters_after_nonzero_categ  =
-                     hdpx::comp_categ_distn(multi.chains)$raw_clusts_after_cos_merge,
-                   clust_hdp0_ccc4  = hdpx::comp_categ_distn(multi.chains)$clust_hdp0_ccc4,
-                   clust_hdp0_ccc5  = hdpx::comp_categ_distn(multi.chains)$clust_hdp0_ccc5))
+                   noise.individual.clusters = noise.individual.clusters,
+                   noise.clusters.posterior.samples = nonselected.matched.samples
+    ))
 
 
   }

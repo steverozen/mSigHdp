@@ -47,11 +47,11 @@ AnalyzeAndPlotretval <- function(retval,
 
   save(retval, file = file.path(out.dir, "hdp.retval.Rdata"))
 
-  if (mode(ground.truth.catalog) == "character") {
-    if (verbose) message("Reading input catalog file ", ground.truth.catalog)
-    ground.truth.catalog <- ICAMS::ReadCatalog(ground.truth.catalog, strict = FALSE)
+  if (mode(input.catalog) == "character") {
+    if (verbose) message("Reading input catalog file ", input.catalog)
+    input.catalog <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
   } else {
-    ground.truth.catalog <- ground.truth.catalog
+    input.catalog <- input.catalog
   }
 
 
@@ -64,6 +64,13 @@ AnalyzeAndPlotretval <- function(retval,
                          input.catalog = input.catalog,
                          out.dir = paste0(out.dir,"/Diagnostic_Plots"),
                          verbose = verbose)
+  }
+
+  if("noise.individual.clusters" %in% names(retval)){
+    colnames(retval$noise.individual.clusters) <- paste0("extracted in ",retval$noise.clusters.posterior.samples," posterior samples")
+
+    noise.individual.clusters.catalog <- ICAMS::as.catalog(retval$noise.individual.clusters,infer.rownames = T)
+    ICAMS::PlotCatalogToPdf(noise.individual.clusters.catalog,paste0(out.dir,"noise.individual.clusters.pdf"))
   }
 
 

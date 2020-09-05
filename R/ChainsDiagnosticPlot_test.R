@@ -60,10 +60,11 @@ ChainsDiagnosticPlot <- function(retval,
   #hdpx::plot_comp_size(multi, bty="L")
   #grDevices::dev.off()
 
-   grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.chain.pdf"))
-  graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
-  hdpx::plot_chain_hdpsig_exp(multi,chains)
-  grDevices::dev.off()
+  ##Currently disabled because this may not be useful any more
+  #grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.chain.pdf"))
+  #graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
+  #hdpx::plot_chain_hdpsig_exp(multi,chains)
+  #grDevices::dev.off()
 
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
