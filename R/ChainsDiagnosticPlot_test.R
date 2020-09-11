@@ -26,10 +26,10 @@
 
 
 
-ChainsDiagnosticPlot <- function(retval,
-                                 input.catalog,
-                                 out.dir,
-                                 verbose){
+ChainsDiagnosticPlotMo <- function(retval,
+                                   input.catalog,
+                                   out.dir,
+                                   verbose){
   multi <- retval[["multi.chains"]] # class hdpSampleMulti
   chains <- hdpx::chains(multi)      # list of hdpSampleChain
 
@@ -53,37 +53,27 @@ ChainsDiagnosticPlot <- function(retval,
   lapply(chains, hdpx::plot_data_assigned, bty = "L")
   grDevices::dev.off()
 
-  ###we don't need this plot any more. It is covered by plot_chain_hdpsig_exp
-  #grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
-  #graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
-  # Components were already extracted, so this call will work
-  #hdpx::plot_comp_size(multi, bty="L")
-  #grDevices::dev.off()
-
-  ##Currently disabled because this may not be useful any more
-  #grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.chain.pdf"))
-  #graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
-  #hdpx::plot_chain_hdpsig_exp(multi,chains)
-  #grDevices::dev.off()
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
+  graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
+  hdpx::mo_plot_comp_size(retval = retval, bty="L")
+  grDevices::dev.off()
 
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
   graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
   # This plots the component (signature) profiles with
   # 95% credibility intervals
-  hdpx::plot_comp_distn(multi)
+  hdpx::mo_plot_comp_distn_with_credint(retval = retval)
   grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"))
   myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
 
-  hdpx::plot_dp_comp_exposure(
-    multi,
-    input.catalog    = input.catalog,
-    ex.signature     = retval$signature,
-    col_comp         = myCol[1:ncol(retval$signature)],
-    dpnames          = colnames(retval$exposure))
+  hdpx::mo_plot_sig_exposure_for_dp(retval           = retval,
+                                    hdpsample        = multi,
+                                    input.catalog    = input.catalog)
+
   grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"tsne.sig.vs.tumortype.pdf"))

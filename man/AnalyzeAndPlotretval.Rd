@@ -2,7 +2,8 @@
 % Please edit documentation in R/AnalyzeAndPlotretval.R
 \name{AnalyzeAndPlotretval}
 \alias{AnalyzeAndPlotretval}
-\title{Evaluate and plot retval from CombinePosteriorChains}
+\title{Evaluate and plot retval from CombinePosteriorChains
+This function now calls for NR's pipeline or Mo's pipeline}
 \usage{
 AnalyzeAndPlotretval(
   retval,
@@ -44,4 +45,5 @@ This is optional because there are cases having error}
 }
 \description{
 Evaluate and plot retval from CombinePosteriorChains
+This function now calls for NR's pipeline or Mo's pipeline
 }

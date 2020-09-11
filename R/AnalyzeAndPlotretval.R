@@ -1,4 +1,5 @@
 #' Evaluate and plot retval from CombinePosteriorChains
+#' This function now calls for NR's pipeline or Mo's pipeline
 
 #' @param retval the output from function CombinePosteriorChains
 #'
@@ -54,26 +55,6 @@ AnalyzeAndPlotretval <- function(retval,
     input.catalog <- input.catalog
   }
 
-
-  # Plot the diagnostics of sampling chains.
-  if(diagnostic.plot){
-
-    dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
-
-    ChainsDiagnosticPlot(retval  = retval,
-                         input.catalog = input.catalog,
-                         out.dir = paste0(out.dir,"/Diagnostic_Plots"),
-                         verbose = verbose)
-  }
-
-  if("noise.individual.clusters" %in% names(retval)){
-    colnames(retval$noise.individual.clusters) <- paste0("extracted in ",retval$noise.clusters.posterior.samples," posterior samples")
-
-    noise.individual.clusters.catalog <- ICAMS::as.catalog(retval$noise.individual.clusters,infer.rownames = T)
-    ICAMS::PlotCatalogToPdf(noise.individual.clusters.catalog,paste0(out.dir,"noise.individual.clusters.pdf"))
-  }
-
-
   if (verbose) message("Writing signatures")
   extractedSignatures <- ICAMS::as.catalog(retval$signature,
                                            region       = "unknown",
@@ -95,12 +76,53 @@ AnalyzeAndPlotretval <- function(retval,
                                file.path(out.dir,"inferred.exposure.proportion.pdf"),
                                plot.proportion = TRUE)
 
-  ###here is optional.
+  if(!("extracted.retval" %in% names(retval))){
+
+    # Plot the diagnostics of sampling chains.
+    if(diagnostic.plot){
+
+      dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
+
+      ChainsDiagnosticPlot(retval  = retval,
+                           input.catalog = input.catalog,
+                           out.dir = paste0(out.dir,"/Diagnostic_Plots"),
+                           verbose = verbose)
+    }
 
 
-  # Do this early to catch any possible error before we do a lot
-  # of computation
-  # Exposure related plotting
+
+  }else{
+    # Plot the diagnostics of sampling chains.
+    if(diagnostic.plot){
+
+      dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
+
+      ChainsDiagnosticPlotMo(retval  = retval,
+                           input.catalog = input.catalog,
+                           out.dir = paste0(out.dir,"/Diagnostic_Plots"),
+                           verbose = verbose)
+    }
+
+
+    moderate.spectrum <- retval$extracted.retval$moderate.spectrum
+    noise.spectrum <- retval$extracted.retval$noise.spectrum
+
+    extracted.stats <- retval$extracted.retval$high.confident.stats
+    moderate.stats <- retval$extracted.retval$moderate.stats
+    noise.stats <- retval$extracted.retval$noise.stats
+
+    utils::write.csv(t(extracted.stats),file = file.path(out.dir, "high.confidence.sig.stats.csv"))
+    utils::write.csv(t(moderate.stats),file = file.path(out.dir, "moderate.sig.stats.csv"))
+    utils::write.csv(t(noise.stats),file = file.path(out.dir, "noise.stats.csv"))
+
+    row.names(moderate.spectrum) <- row.names(extractedSignatures)
+    row.names(noise.spectrum) <- row.names(extractedSignatures)
+    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(moderate.spectrum),
+                            file.path(out.dir, "clusters.with.moderate.confidence.pdf"))
+    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.spectrum),
+                            file.path(out.dir, "clusters.with.low.confidence.pdf"))
+
+  }
 
   if(!is.null(ground.truth.exp)){
     ##read ground.truth.exp
@@ -120,10 +142,12 @@ AnalyzeAndPlotretval <- function(retval,
                                  file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
                                  plot.proportion = TRUE)
   }
+  ###here is optional.
 
-  # Compare with ground truth
-  # Only proceed if both ground.truth.sig and ground.truth.exp are provided
 
+  # Do this early to catch any possible error before we do a lot
+  # of computation
+  # Exposure related plotting
   if(!is.null(ground.truth.sig)){
     ##read ground.truth.exp
     if (mode(ground.truth.sig) == "character") {
@@ -151,9 +175,6 @@ AnalyzeAndPlotretval <- function(retval,
     ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$ex.sigs,
                                               catalog.type = "counts.signature"),
                             file.path(out.dir, "extracted.sigs.w0.pdf"))
-
-
-
     utils::capture.output(
       cat("Call\n"),
       match.call(),
