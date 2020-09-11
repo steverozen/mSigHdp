@@ -55,7 +55,7 @@ ChainsDiagnosticPlotMo <- function(retval,
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
-  hdpx::mo_plot_comp_size(retval = retval, bty="L")
+  hdpx::mo_plot_comp_size(retval = retval$diagnostic.retval, bty="L")
   grDevices::dev.off()
 
 
@@ -63,14 +63,14 @@ ChainsDiagnosticPlotMo <- function(retval,
   graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
   # This plots the component (signature) profiles with
   # 95% credibility intervals
-  hdpx::mo_plot_comp_distn_with_credint(retval = retval)
+  hdpx::mo_plot_comp_distn_with_credint(retval = retval$diagnostic.retval)
   grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"))
   myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
 
-  hdpx::mo_plot_sig_exposure_for_dp(retval           = retval,
+  hdpx::mo_plot_sig_exposure_for_dp(retval           = retval$diagnostic.retval,
                                     hdpsample        = multi,
                                     input.catalog    = input.catalog)
 

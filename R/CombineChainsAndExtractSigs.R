@@ -69,7 +69,7 @@ CombineChainsAndExtractSigs <-
     number.samples  <- ncol(input.catalog)
 
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-    if (verbose) message("calling hdp_extract_components ", Sys.time())
+    if (verbose) message("calling extract_sigs_from_clusters ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
 
     extract.time <- system.time(
@@ -81,12 +81,12 @@ CombineChainsAndExtractSigs <-
 
 
     if (verbose) {
-      message("hdp_extract_components time: ")
+      message("extract_sigs_from_clusters time: ")
       for (xn in names(extract.time)) {
         message(" ", xn, " ", extract.time[[xn]])
       }
     }
-    if (verbose) message("calling hdpx::comp_categ_distn ", Sys.time())
+    if (verbose) message("extracting signatures ", Sys.time())
     extractedSignatures <- multi.chains.retval$high.confident.spectrum
     extractedSignatures <- apply(extractedSignatures,2,function(x)x/sum(x))
 
@@ -104,7 +104,7 @@ CombineChainsAndExtractSigs <-
     ## This is the probability distribution of signatures (components) for all
     ## tumor samples (DP nodes).
 
-    if (verbose) message("Calling hdpx::comp_dp_distn ", Sys.time())
+    if (verbose) message("extracting signatures exposures ", Sys.time())
     exposureProbs <- do.call(cbind,lapply(sigmatchretval,function(x)x[["cdc_mean"]]))
     exposureProbs <- t(apply(exposureProbs,1,function(x){x/sum(x)}))
     # Remove columns corresponding to parent or grandparent nodes
