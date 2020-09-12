@@ -55,7 +55,7 @@ ChainsDiagnosticPlotMo <- function(retval,
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
-  hdpx::mo_plot_comp_size(retval = retval$diagnostic.retval, bty="L")
+  hdpx::mo_plot_comp_size(retval = retval$diagnostic.retval)
   grDevices::dev.off()
 
 

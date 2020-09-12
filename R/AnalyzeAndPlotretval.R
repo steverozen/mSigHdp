@@ -83,7 +83,7 @@ AnalyzeAndPlotretval <- function(retval,
 
       dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
 
-      ChainsDiagnosticPlot(retval  = retval,
+      mSigHdp::ChainsDiagnosticPlot(retval  = retval,
                            input.catalog = input.catalog,
                            out.dir = paste0(out.dir,"/Diagnostic_Plots"),
                            verbose = verbose)
@@ -97,7 +97,7 @@ AnalyzeAndPlotretval <- function(retval,
 
       dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
 
-      ChainsDiagnosticPlotMo(retval  = retval,
+      mSigHdp::ChainsDiagnosticPlotMo(retval  = retval,
                            input.catalog = input.catalog,
                            out.dir = paste0(out.dir,"/Diagnostic_Plots"),
                            verbose = verbose)
