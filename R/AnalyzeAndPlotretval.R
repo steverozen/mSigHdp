@@ -115,12 +115,22 @@ AnalyzeAndPlotretval <- function(retval,
     utils::write.csv(t(moderate.stats),file = file.path(out.dir, "moderate.sig.stats.csv"))
     utils::write.csv(t(noise.stats),file = file.path(out.dir, "noise.stats.csv"))
 
-    row.names(moderate.spectrum) <- row.names(extractedSignatures)
-    row.names(noise.spectrum) <- row.names(extractedSignatures)
-    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(moderate.spectrum),
-                            file.path(out.dir, "clusters.with.moderate.confidence.pdf"))
-    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.spectrum),
-                            file.path(out.dir, "clusters.with.low.confidence.pdf"))
+    if(!is.null(ncol(moderate.spectrum))){
+      colnames(moderate.spectrum) <- paste0("potential hdp.",1:ncol(moderate.spectrum))
+      row.names(moderate.spectrum) <- row.names(extractedSignatures)
+      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(moderate.spectrum),
+                              file.path(out.dir, "clusters.with.moderate.confidence.pdf"))
+    }
+    if(!is.null(ncol(noise.spectrum))){
+
+      noise.spectrum <- data.frame(noise.spectrum)
+      colnames(noise.spectrum) <- paste0("noise hdp.",1:ncol(noise.spectrum))
+      row.names(noise.spectrum) <- row.names(extractedSignatures)
+
+      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.spectrum),
+                              file.path(out.dir, "clusters.with.low.confidence.pdf"))
+
+    }
 
   }
 
