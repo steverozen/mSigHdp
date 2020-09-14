@@ -84,9 +84,9 @@ AnalyzeAndPlotretval <- function(retval,
       dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
 
       mSigHdp::ChainsDiagnosticPlot(retval  = retval,
-                           input.catalog = input.catalog,
-                           out.dir = paste0(out.dir,"/Diagnostic_Plots"),
-                           verbose = verbose)
+                                    input.catalog = input.catalog,
+                                    out.dir = paste0(out.dir,"/Diagnostic_Plots"),
+                                    verbose = verbose)
     }
 
 
@@ -98,9 +98,9 @@ AnalyzeAndPlotretval <- function(retval,
       dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
 
       mSigHdp::ChainsDiagnosticPlotMo(retval  = retval,
-                           input.catalog = input.catalog,
-                           out.dir = paste0(out.dir,"/Diagnostic_Plots"),
-                           verbose = verbose)
+                                      input.catalog = input.catalog,
+                                      out.dir = paste0(out.dir,"/Diagnostic_Plots"),
+                                      verbose = verbose)
     }
 
 
@@ -112,45 +112,78 @@ AnalyzeAndPlotretval <- function(retval,
     noise.stats <- retval$extracted.retval$noise.stats
 
     utils::write.csv(t(extracted.stats),file = file.path(out.dir, "high.confidence.sig.stats.csv"))
-    utils::write.csv(t(moderate.stats),file = file.path(out.dir, "moderate.sig.stats.csv"))
-    utils::write.csv(t(noise.stats),file = file.path(out.dir, "noise.stats.csv"))
+
 
     if(!is.null(ncol(moderate.spectrum))){
+      moderate.spectrum <- moderate.spectrum[,order(moderate.stats,decreasing=T)]
+      moderate.stats <- moderate.stats[order(moderate.stats,decreasing=T)]
+
       colnames(moderate.spectrum) <- paste0("potential hdp.",1:ncol(moderate.spectrum))
       row.names(moderate.spectrum) <- row.names(extractedSignatures)
-      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(moderate.spectrum),
-                              file.path(out.dir, "clusters.with.moderate.confidence.pdf"))
-    }
-    if(!is.null(ncol(noise.spectrum))){
 
-      noise.spectrum <- data.frame(noise.spectrum)
-      colnames(noise.spectrum) <- paste0("noise hdp.",1:ncol(noise.spectrum))
-      row.names(noise.spectrum) <- row.names(extractedSignatures)
 
-      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.spectrum),
-                              file.path(out.dir, "clusters.with.low.confidence.pdf"))
 
-    }
+      if(!is.null(ground.truth.sig)){
+        ##read ground.truth.exp
+        if (mode(ground.truth.sig) == "character") {
+          if (verbose) {
+            message("Reading ground truth signatures from ",
+                    ground.truth.sig)
+          }
+          ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig)
+        }
+        stopifnot(is.matrix(ground.truth.sig))
 
-  }
+        sigAnalysis.moderate <- SynSigEval::MatchSigsAndRelabel(
+          ex.sigs  = moderate.spectrum,
+          gt.sigs  = ground.truth.sig,
+          exposure = ground.truth.exp)
 
-  if(!is.null(ground.truth.exp)){
-    ##read ground.truth.exp
-    if (mode(ground.truth.exp) == "character") {
-      if (verbose) {
-        message("Reading ground truth exposures from ",
-                ground.truth.exp)
+        moderate.catalog <- ICAMS::as.catalog(sigAnalysis.moderate$ex.sigs)
+        moderate.catalog <- ICAMS::TransformCatalog(moderate.catalog,target.catalog.type = "counts.signature")
+
+
+        ICAMS::PlotCatalogToPdf(moderate.catalog,
+                                file.path(out.dir, "moderate.sigs.w0.pdf"))
+
+        utils::write.csv(t(moderate.stats),file = file.path(out.dir, "moderate.sig.stats.csv"))
       }
-      ground.truth.exp <- ICAMSxtra::ReadExposure(ground.truth.exp)
+      if(!is.null(ncol(noise.spectrum))){
+
+        noise.spectrum <- noise.spectrum[,order(noise.stats,decreasing=T)]
+        noise.stats <- noise.stats[order(noise.stats,decreasing=T)]
+
+        noise.spectrum <- data.frame(noise.spectrum)
+        colnames(noise.spectrum) <- paste0("noise hdp.",1:ncol(noise.spectrum))
+        row.names(noise.spectrum) <- row.names(extractedSignatures)
+
+        ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.spectrum),
+                                file.path(out.dir, "clusters.with.low.confidence.pdf"))
+        utils::write.csv(t(noise.stats),file = file.path(out.dir, "noise.stats.csv"))
+
+
+      }
+
     }
-    #stopifnot(is.matrix(ground.truth.exp))
 
-    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
-                                 file.path(out.dir,"ground.truth.exposure.count.pdf"))
+    if(!is.null(ground.truth.exp)){
+      ##read ground.truth.exp
+      if (mode(ground.truth.exp) == "character") {
+        if (verbose) {
+          message("Reading ground truth exposures from ",
+                  ground.truth.exp)
+        }
+        ground.truth.exp <- ICAMSxtra::ReadExposure(ground.truth.exp)
+      }
+      #stopifnot(is.matrix(ground.truth.exp))
 
-    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
-                                 file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
-                                 plot.proportion = TRUE)
+      ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                   file.path(out.dir,"ground.truth.exposure.count.pdf"))
+
+      ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                   file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
+                                   plot.proportion = TRUE)
+    }
   }
   ###here is optional.
 
