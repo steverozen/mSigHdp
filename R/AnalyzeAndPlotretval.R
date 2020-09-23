@@ -115,8 +115,8 @@ AnalyzeAndPlotretval <- function(retval,
 
 
     if(!is.null(ncol(moderate.spectrum))){
-      moderate.spectrum <- moderate.spectrum[,order(moderate.stats,decreasing=T)]
-      moderate.stats <- moderate.stats[order(moderate.stats,decreasing=T)]
+      moderate.spectrum <- moderate.spectrum[,order(moderate.stats[,2],decreasing=T)]
+      moderate.stats <- moderate.stats[order(moderate.stats[,2],decreasing=T),]
 
       colnames(moderate.spectrum) <- paste0("potential hdp.",1:ncol(moderate.spectrum))
       row.names(moderate.spectrum) <- row.names(extractedSignatures)
@@ -150,8 +150,8 @@ AnalyzeAndPlotretval <- function(retval,
       }
       if(!is.null(ncol(noise.spectrum))){
 
-        noise.spectrum <- noise.spectrum[,order(noise.stats,decreasing=T)]
-        noise.stats <- noise.stats[order(noise.stats,decreasing=T)]
+        noise.spectrum <- noise.spectrum[,order(noise.stats[,2],decreasing=T)]
+        noise.stats <- noise.stats[order(noise.stats,decreasing=T),]
 
         noise.spectrum <- data.frame(noise.spectrum)
         colnames(noise.spectrum) <- paste0("noise hdp.",1:ncol(noise.spectrum))
