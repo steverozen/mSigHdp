@@ -17,7 +17,7 @@ biocViews:
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 3.5)
 RoxygenNote: 7.1.1
-Remotes: github::steverozen/hdpx@*release
+Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
 Imports: hdpx (>= 0.1.7),
     ICAMS (>= 2.2.3)
