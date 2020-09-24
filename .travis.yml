@@ -7,10 +7,5 @@ r:
   - release
   - devel
 
-r_github_packages:
-  - steverozen/hdpx
-  - steverozen/SynSigGen
-  - WuyangFF95/SynSigEval
-
 before_install:
   - sudo apt-get update
