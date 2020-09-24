@@ -134,7 +134,7 @@ AnalyzeAndPlotretval <- function(retval,
         }
         stopifnot(is.matrix(ground.truth.sig))
 
-        sigAnalysis.moderate <- SynSigEval::MatchSigsAndRelabel(
+        sigAnalysis.moderate <- ICAMSxtra::MatchSigsAndRelabel(
           ex.sigs  = moderate.spectrum,
           gt.sigs  = ground.truth.sig,
           exposure = ground.truth.exp)
@@ -202,7 +202,7 @@ AnalyzeAndPlotretval <- function(retval,
     }
     stopifnot(is.matrix(ground.truth.sig))
 
-    sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
+    sigAnalysis0 <- ICAMSxtra::MatchSigsAndRelabel(
       ex.sigs  = retval$signature,
       gt.sigs  = ground.truth.sig,
       exposure = ground.truth.exp)
