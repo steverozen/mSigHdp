@@ -10,7 +10,9 @@ CombineChainsAndExtractSigs(
   input.catalog,
   multi.types,
   verbose = TRUE,
-  cos.merge = 0.9
+  cos.merge = 0.9,
+  confident.prop = 0.9,
+  noise.prop = 0.1
 )
 }
 \arguments{
@@ -39,7 +41,11 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{cos.merge}{The cosine similarity threshold for merging raw clusters
 from the posterior sampling chains into "components" i.e. signatures;
-passed to \code{\link[hdpx]{hdp_extract_components}}.}
+passed to \code{\link[hdpx]{extract_sigs_from_clusters}}.}
+
+\item{confident.prop}{passed to \code{\link[hdpx]{extract_sigs_from_clusters}}}
+
+\item{noise.prop}{passed to \code{\link[hdpx]{extract_sigs_from_clusters}}}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

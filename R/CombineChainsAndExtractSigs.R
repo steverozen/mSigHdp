@@ -26,9 +26,10 @@
 #'
 #' @param cos.merge The cosine similarity threshold for merging raw clusters
 #'      from the posterior sampling chains into "components" i.e. signatures;
-#'      passed to \code{\link[hdpx]{hdp_extract_components}}.
+#'      passed to \code{\link[hdpx]{extract_sigs_from_clusters}}.
 #'
-#'
+#' @param confident.prop passed to \code{\link[hdpx]{extract_sigs_from_clusters}}
+#' @param noise.prop passed to \code{\link[hdpx]{extract_sigs_from_clusters}}
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
@@ -55,7 +56,9 @@ CombineChainsAndExtractSigs <-
            input.catalog,
            multi.types,
            verbose             = TRUE,
-           cos.merge           = 0.9
+           cos.merge           = 0.9,
+           confident.prop      = 0.9,
+           noise.prop          = 0.1
   ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
@@ -75,7 +78,7 @@ CombineChainsAndExtractSigs <-
     extract.time <- system.time(
       multi.chains.retval <-
         hdpx::extract_sigs_from_clusters(multi.chains,
-                                         cos.merge      = cos.merge
+                                         cos.merge      = cos.merge,confident.prop = confident.prop
         )
     )
 
@@ -95,7 +98,17 @@ CombineChainsAndExtractSigs <-
     colnames(extractedSignatures) <-
       paste("hdp", c(1:ncol(extractedSignatures)), sep = ".")
 
-    sigmatchretval <- apply(extractedSignatures,2,function(x){
+    potentialSignatures <- multi.chains.retval$moderate.spectrum
+    potentialSignatures <- apply(potentialSignatures,2,function(x)x/sum(x))
+
+    rownames(potentialSignatures) <- rownames(input.catalog)
+    # Set signature names to "hdp.0","hdp.1","hdp.2", ...
+    colnames(potentialSignatures) <-
+      paste("potential hdp", c(1:ncol(potentialSignatures)), sep = ".")
+
+    #combinedSignatures <- cbind(extractedSignatures,potentialSignatures)
+    combinedSignatures <- extractedSignatures
+    sigmatchretval <- apply(combinedSignatures,2,function(x){
       hdpx::extract_ccc_cdc_from_hdp(x,ccc_0 = multi.chains.retval$ccc_0,
                                      cdc_0 = multi.chains.retval$cdc_0,cos.merge = 0.9)})
 
@@ -115,6 +128,12 @@ CombineChainsAndExtractSigs <-
     # Now rows are signatures, columns are samples
     # Calculate exposure counts from exposure probabilities and total mutation
     # counts
+
+    #if sample doesn't have mutation count, prob is NA
+    if(sum(is.na(exposureProbs))>0){
+      exposureProbs[which(is.na(exposureProbs))]<-0
+    }
+   # exposureProbs <- exposureProbs[1:ncol(extractedSignatures),]
     exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
 
     colnames(exposureCounts) <- colnames(input.catalog)
