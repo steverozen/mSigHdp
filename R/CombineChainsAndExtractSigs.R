@@ -28,8 +28,9 @@
 #'      from the posterior sampling chains into "components" i.e. signatures;
 #'      passed to \code{\link[hdpx]{extract_sigs_from_clusters}}.
 #'
-#' @param confident.prop passed to \code{\link[hdpx]{extract_sigs_from_clusters}}
-#' @param noise.prop passed to \code{\link[hdpx]{extract_sigs_from_clusters}}
+#' @param confident.prop clusters with at least \code{confident.prop} of posterior samples are high confident signatures
+#' @param noise.prop clusters with less than \code{noise.prop} of posterior samples are noise signatures
+#' @param hc.cutoff passed to \code{\link[hdpx]{extract_sigs_from_clusters}}. The cutoff of height of hierarchical clustering                          dendrogram(default is 0.12)
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
@@ -58,7 +59,8 @@ CombineChainsAndExtractSigs <-
            verbose             = TRUE,
            cos.merge           = 0.9,
            confident.prop      = 0.9,
-           noise.prop          = 0.1
+           noise.prop          = 0.1,
+           hc.cutoff           = 0.12
   ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
@@ -78,7 +80,8 @@ CombineChainsAndExtractSigs <-
     extract.time <- system.time(
       multi.chains.retval <-
         hdpx::extract_sigs_from_clusters(multi.chains,
-                                         cos.merge      = cos.merge,confident.prop = confident.prop
+                                         cos.merge      = cos.merge,
+                                         hc.cutoff = hc.cutoff
         )
     )
 
@@ -90,27 +93,46 @@ CombineChainsAndExtractSigs <-
       }
     }
     if (verbose) message("extracting signatures ", Sys.time())
-    extractedSignatures <- multi.chains.retval$high.confident.spectrum
+    spectrum.df <- multi.chains.retval$clustered.spectrum
+    spectrum.stats <- multi.chains.retval$stats.post.samples
+    nsamp <-  multi.chains.retval$nsamp
+
+    high.confident.spectrum <- spectrum.df[,which(spectrum.stats[,2]>=(confident.prop*nsamp))]
+    high.confident.stats <- spectrum.stats[which(spectrum.stats[,2]>=(confident.prop*nsamp)),]
+
+    moderate.spectrum <- spectrum.df[,intersect(which(spectrum.stats[,2]>=(noise.prop*nsamp)),which(spectrum.stats[,2]<(confident.prop*nsamp)))]
+    moderate.stats <- spectrum.stats[intersect(which(spectrum.stats[,2]>=(noise.prop*nsamp)),which(spectrum.stats[,2]<(confident.prop*nsamp))),]
+
+    noise.spectrum <- spectrum.df[,which(spectrum.stats[,2]<(noise.prop*nsamp))]
+    noise.stats <- spectrum.stats[which(spectrum.stats[,2]<(noise.prop*nsamp)),]
+
+    extractedSignatures <- high.confident.spectrum
     extractedSignatures <- apply(extractedSignatures,2,function(x)x/sum(x))
 
     rownames(extractedSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
     colnames(extractedSignatures) <-
       paste("hdp", c(1:ncol(extractedSignatures)), sep = ".")
-
-    potentialSignatures <- multi.chains.retval$moderate.spectrum
-    potentialSignatures <- apply(potentialSignatures,2,function(x)x/sum(x))
-
-    rownames(potentialSignatures) <- rownames(input.catalog)
-    # Set signature names to "hdp.0","hdp.1","hdp.2", ...
-    colnames(potentialSignatures) <-
-      paste("potential hdp", c(1:ncol(potentialSignatures)), sep = ".")
-
-    #combinedSignatures <- cbind(extractedSignatures,potentialSignatures)
     combinedSignatures <- extractedSignatures
+
+    potentialSignatures <- moderate.spectrum
+    if(!is.null(potentialSignatures) && ncol(potentialSignatures)>0){
+      potentialSignatures <- apply(potentialSignatures,2,function(x)x/sum(x))
+
+      rownames(potentialSignatures) <- rownames(input.catalog)
+      # Set signature names to "hdp.0","hdp.1","hdp.2", ...
+      colnames(potentialSignatures) <-
+        paste("potential hdp", c(1:ncol(potentialSignatures)), sep = ".")
+      combinedSignatures <- cbind(extractedSignatures,potentialSignatures)
+
+    }
+
+
     sigmatchretval <- apply(combinedSignatures,2,function(x){
-      hdpx::extract_ccc_cdc_from_hdp(x,ccc_0 = multi.chains.retval$ccc_0,
-                                     cdc_0 = multi.chains.retval$cdc_0,cos.merge = 0.9)})
+      hdpx::extract_ccc_cdc_from_hdp(x,
+                                     ccc_0 = multi.chains.retval$ccc_0,
+                                     cdc_0 = multi.chains.retval$cdc_0,
+                                     cos.merge = cos.merge)})
 
     ## Calculate the exposure probability of each signature (component) for each
     ## tumor sample (posterior sample corresponding to a Dirichlet process node).
@@ -138,9 +160,9 @@ CombineChainsAndExtractSigs <-
 
     colnames(exposureCounts) <- colnames(input.catalog)
 
-    row.names(exposureCounts) <- colnames(extractedSignatures)
+    row.names(exposureCounts) <- colnames(combinedSignatures)
 
-    return(invisible(list(signature       = extractedSignatures,
+    return(invisible(list(signature       = combinedSignatures,
                           exposure        = exposureCounts,
                           multi.chains    = multi.chains.retval$multi.chains,
                           extracted.retval = multi.chains.retval,

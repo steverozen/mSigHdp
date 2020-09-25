@@ -85,14 +85,14 @@ ChainsDiagnosticPlot <- function(retval,
     dpnames          = colnames(retval$exposure))
   grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"tsne.sig.vs.tumortype.pdf"))
-  graphics::par(mfrow=c(1,1), mar=c(4, 4, 2, 1))
-  hdpx::plot_tsne_sigs_tumortype(exposure = retval$exposure)
-  grDevices::dev.off()
+  #grDevices::pdf(file = file.path(out.dir,"tsne.sig.vs.tumortype.pdf"))
+  #graphics::par(mfrow=c(1,1), mar=c(4, 4, 2, 1))
+  #hdpx::plot_tsne_sigs_tumortype(exposure = retval$exposure)
+  #grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"pca.sig.vs.tumortype.pdf"))
-  graphics::par(mfrow=c(1,1), mar=c(4, 4, 2, 1))
-  hdpx::plot_pca_sigs_tumortype(exposure = retval$exposure)
-  grDevices::dev.off()
+  #grDevices::pdf(file = file.path(out.dir,"pca.sig.vs.tumortype.pdf"))
+  #graphics::par(mfrow=c(1,1), mar=c(4, 4, 2, 1))
+  #hdpx::plot_pca_sigs_tumortype(exposure = retval$exposure)
+  #grDevices::dev.off()
 }
 

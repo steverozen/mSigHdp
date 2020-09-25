@@ -12,7 +12,8 @@ CombineChainsAndExtractSigs(
   verbose = TRUE,
   cos.merge = 0.9,
   confident.prop = 0.9,
-  noise.prop = 0.1
+  noise.prop = 0.1,
+  hc.cutoff = 0.12
 )
 }
 \arguments{
@@ -43,9 +44,11 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 from the posterior sampling chains into "components" i.e. signatures;
 passed to \code{\link[hdpx]{extract_sigs_from_clusters}}.}
 
-\item{confident.prop}{passed to \code{\link[hdpx]{extract_sigs_from_clusters}}}
+\item{confident.prop}{clusters with at least \code{confident.prop} of posterior samples are high confident signatures}
 
-\item{noise.prop}{passed to \code{\link[hdpx]{extract_sigs_from_clusters}}}
+\item{noise.prop}{clusters with less than \code{noise.prop} of posterior samples are noise signatures}
+
+\item{hc.cutoff}{passed to \code{\link[hdpx]{extract_sigs_from_clusters}}. The cutoff of height of hierarchical clustering                          dendrogram(default is 0.12)}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

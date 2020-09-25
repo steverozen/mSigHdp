@@ -88,9 +88,9 @@ point in making this larger than \code{num.child.process}.}
 from the posterior sampling chains into "components" i.e. signatures;
 passed to \code{\link[hdpx]{extract_sigs_from_clusters}}.}
 
-\item{confident.prop}{passed to \code{\link[hdpx]{extract_sigs_from_clusters}}}
+\item{confident.prop}{clusters with at least \code{confident.prop} of posterior samples are high confident signatures}
 
-\item{noise.prop}{passed to \code{\link[hdpx]{extract_sigs_from_clusters}}}
+\item{noise.prop}{clusters with less than \code{noise.prop} of posterior samples are noise signatures}
 
 \item{ground.truth.sig}{Optional. Either a string with the
 path to file with ground truth signatures or and
