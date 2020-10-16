@@ -30,7 +30,7 @@ ChainsDiagnosticPlotMo <- function(retval,
                                    input.catalog,
                                    out.dir,
                                    verbose){
-  multi <- retval[["multi.chains"]] # class hdpSampleMulti
+  multi <- retval$extracted.retval[["multi.chains"]] # class hdpSampleMulti
   chains <- hdpx::chains(multi)      # list of hdpSampleChain
 
   if (verbose) message("Writing HDP diagnostics")
@@ -53,24 +53,24 @@ ChainsDiagnosticPlotMo <- function(retval,
   lapply(chains, hdpx::plot_data_assigned, bty = "L")
   grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
-  graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
-  hdpx::mo_plot_comp_size(retval = retval$diagnostic.retval)
-  grDevices::dev.off()
+ # grDevices::pdf(file = file.path(out.dir,"diagnostics.comp.size.pdf"))
+ # graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
+ # hdpx::mo_plot_comp_size(retval = retval$diagnostic.retval)
+ # grDevices::dev.off()
 
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
-  graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
+ # grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
+ # graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
   # This plots the component (signature) profiles with
   # 95% credibility intervals
-  hdpx::mo_plot_comp_distn_with_credint(retval = retval$diagnostic.retval)
-  grDevices::dev.off()
+ # hdpx::mo_plot_comp_distn_with_credint(retval = retval$diagnostic.retval)
+ # grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"))
   myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
 
-  hdpx::mo_plot_sig_exposure_for_dp(retval           = retval$diagnostic.retval,
+  hdpx::mo_plot_sig_exposure_for_dp(retval           = retval,
                                     hdpsample        = multi,
                                     input.catalog    = input.catalog)
 

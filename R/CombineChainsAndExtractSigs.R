@@ -96,18 +96,28 @@ CombineChainsAndExtractSigs <-
     spectrum.df <- multi.chains.retval$clustered.spectrum
     spectrum.stats <- multi.chains.retval$stats.post.samples
     nsamp <-  multi.chains.retval$nsamp
+    spectrum.cdc <- multi.chains.retval$spectrum.cdc
+
+    spectrum.df <- spectrum.df[,order(spectrum.stats[,2],decreasing=T)]
+    spectrum.cdc <- spectrum.cdc[,order(spectrum.stats[,2],decreasing=T)]
+    spectrum.stats <- spectrum.stats[order(spectrum.stats[,2],decreasing=T),]
 
     high.confident.spectrum <- spectrum.df[,which(spectrum.stats[,2]>=(confident.prop*nsamp))]
     high.confident.stats <- spectrum.stats[which(spectrum.stats[,2]>=(confident.prop*nsamp)),]
+    high.confident.cdc <- spectrum.cdc[,which(spectrum.stats[,2]>=(confident.prop*nsamp))]
 
     moderate.spectrum <- spectrum.df[,intersect(which(spectrum.stats[,2]>=(noise.prop*nsamp)),which(spectrum.stats[,2]<(confident.prop*nsamp)))]
     moderate.stats <- spectrum.stats[intersect(which(spectrum.stats[,2]>=(noise.prop*nsamp)),which(spectrum.stats[,2]<(confident.prop*nsamp))),]
+    moderate.cdc <- spectrum.cdc[,intersect(which(spectrum.stats[,2]>=(noise.prop*nsamp)),which(spectrum.stats[,2]<(confident.prop*nsamp)))]
 
     noise.spectrum <- spectrum.df[,which(spectrum.stats[,2]<(noise.prop*nsamp))]
     noise.stats <- spectrum.stats[which(spectrum.stats[,2]<(noise.prop*nsamp)),]
+    noise.cdc <- spectrum.cdc[,which(spectrum.stats[,2]<(noise.prop*nsamp))]
+
+    noise.spectrum <- cbind(noise.spectrum,multi.chains.retval$each.chain.noise.spectrum)
+    noise.cdc <- cbind(noise.cdc,multi.chains.retval$each.chain.noise.cdc)
 
     extractedSignatures <- high.confident.spectrum
-    extractedSignatures <- apply(extractedSignatures,2,function(x)x/sum(x))
 
     rownames(extractedSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
@@ -127,12 +137,15 @@ CombineChainsAndExtractSigs <-
 
     }
 
+    combinedSignatures <- apply(combinedSignatures,2,function(x)x/sum(x))
+    combined.stats <- rbind(high.confident.stats,moderate.stats)
+    combined.cdc  <- cbind(high.confident.cdc,moderate.cdc)
 
-    sigmatchretval <- apply(combinedSignatures,2,function(x){
-      hdpx::extract_ccc_cdc_from_hdp(x,
-                                     ccc_0 = multi.chains.retval$ccc_0,
-                                     cdc_0 = multi.chains.retval$cdc_0,
-                                     cos.merge = cos.merge)})
+    #sigmatchretval <- apply(combinedSignatures,2,function(x){
+    #  hdpx::extract_ccc_cdc_from_hdp(x,
+    ##                                 ccc_0 = multi.chains.retval$ccc_0,
+    #                                 cdc_0 = multi.chains.retval$cdc_0,
+    #                                 cos.merge = 0.95)})
 
     ## Calculate the exposure probability of each signature (component) for each
     ## tumor sample (posterior sample corresponding to a Dirichlet process node).
@@ -140,8 +153,8 @@ CombineChainsAndExtractSigs <-
     ## tumor samples (DP nodes).
 
     if (verbose) message("extracting signatures exposures ", Sys.time())
-    exposureProbs <- do.call(cbind,lapply(sigmatchretval,function(x)x[["cdc_mean"]]))
-    exposureProbs <- t(apply(exposureProbs,1,function(x){x/sum(x)}))
+    #exposureProbs <- do.call(cbind,lapply(sigmatchretval,function(x)x[["cdc_mean"]]))
+    exposureProbs <- t(apply(combined.cdc,1,function(x){x/sum(x)}))
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.
     # Transpose so it conforms to SynSigEval format
@@ -162,10 +175,20 @@ CombineChainsAndExtractSigs <-
 
     row.names(exposureCounts) <- colnames(combinedSignatures)
 
+    colnames(exposureProbs) <- colnames(input.catalog)
+
+    row.names(exposureProbs) <- colnames(combinedSignatures)
+
+
+
     return(invisible(list(signature       = combinedSignatures,
-                          exposure        = exposureCounts,
-                          multi.chains    = multi.chains.retval$multi.chains,
-                          extracted.retval = multi.chains.retval,
-                          diagnostic.retval = sigmatchretval)))
+                          post.stats      = combined.stats,
+                          exposureCounts  = exposureCounts,
+                          exposure        = exposureProbs,
+                          noise.spectrum  = noise.spectrum,
+                          noise.stats     = noise.stats,
+                          noise.cdc       = noise.cdc,
+                          all.cdc         = spectrum.cdc,
+                          extracted.retval = multi.chains.retval)))
 
   }
