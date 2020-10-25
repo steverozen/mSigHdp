@@ -46,7 +46,7 @@
 #'     (actually the methods seems to be just \code{hdp})
 #'     that returns the \code{hdpState} from which it was generated.}
 #'
-#' #'
+#'
 #' }
 
 #'
