@@ -1,9 +1,8 @@
 # Mo, can we change hdpx::extract_sigs_from_clusters to hdpx::extract_components_from_raw_clusters
 # Mo, the return value documentation for CombineChainsAndExtractSigs needs updating
 # I suggest documenting the return values for IntrepretComponents and referring to that in
-# documentaton for CombineChainsAndExtractSigs
-# I think the plotting functions belong in mSigHdp because they really are
-# tied to using hdpx for mutational signatures.
+# documentation for CombineChainsAndExtractSigs
+
 
 InterpretComponents <- function(multi.chains.retval) {
   if (verbose) message("extracting signatures ", Sys.time())
