@@ -3,11 +3,24 @@
 # I suggest documenting the return values for IntrepretComponents and referring to that in
 # documentation for CombineChainsAndExtractSigs
 
-
-InterpretComponents <- function(multi.chains.retval) {
+# Move to hdpx
+interpret_components <- function(multi.chains.retval) {
   if (verbose) message("extracting signatures ", Sys.time())
+
   spectrum.df <- multi.chains.retval$clustered.spectrum
+  # A data frame in which each column represents a component: ie a cluster of
+  # mutations created from the union of some raw clusters that we think
+  # represent the same abstract cluster. In the application to mutational
+  # signature extraction, each row is a mutation type; in the application to
+  # probabilistic topic modeling, each row is a word. Each cell contains the
+  # number of mutations of a given mutation type in a given cluster.
+
   spectrum.stats <- multi.chains.retval$stats.post.samples
+  # A data frame with with 2 columns. The first column contains the index of a
+  # column in spectrum.df, the second column contains the number of posterior
+  # samples in which the raw clusters contributing the component appeared.
+
+
   nsamp <-  multi.chains.retval$nsamp
   spectrum.cdc <- multi.chains.retval$spectrum.cdc
 
@@ -94,7 +107,7 @@ InterpretComponents <- function(multi.chains.retval) {
 
   return(invisible(list(signature       = combinedSignatures,
                         post.stats      = combined.stats,
-                        exposureCounts  = exposureCounts,
+                        exposureCounts  = exposureCounts,  # component.counts
                         exposure        = exposureProbs,
                         noise.spectrum  = noise.spectrum,
                         noise.stats     = noise.stats,
@@ -200,8 +213,12 @@ CombineChainsAndExtractSigs <-
     }
 
     if (verbose) message("extracting signatures ", Sys.time())
+
     spectrum.df <- multi.chains.retval$clustered.spectrum
+
+
     spectrum.stats <- multi.chains.retval$stats.post.samples
+
     nsamp <-  multi.chains.retval$nsamp
     spectrum.cdc <- multi.chains.retval$spectrum.cdc
 
@@ -285,8 +302,6 @@ CombineChainsAndExtractSigs <-
     colnames(exposureProbs) <- colnames(input.catalog)
 
     row.names(exposureProbs) <- colnames(combinedSignatures)
-
-
 
     return(invisible(list(signature       = combinedSignatures,
                           post.stats      = combined.stats,
