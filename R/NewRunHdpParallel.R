@@ -8,34 +8,35 @@
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
-#'             rows are mutation types, columns are
-#'             samples (e.g. tumors).}
+#'                 rows are mutation types, columns are signatures including
+#'                 high confident signatures -'hdp' signatures and moderate
+#'                 confident signatures - 'potential hdp' signatures.}
 #'
-#' \item{exposure}{The inferred exposures as a matrix of mutation counts;
-#'            rows are signatures, columns are samples (e.g. tumors).}
+#' \item{signature.post.samp.number}{A dataframe with two columns. The first
+#'                                   column corresponds to each signature in \code{signature}
+#'                                   and the second columns contains the number of posterior
+#'                                   samples that found the raw clusters contributing to the signature.}
 #'
-#' \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
-#'     This object has the method \code{\link[hdpx]{chains}} which returns
-#'     a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
-#'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
-#'     (actually the methods seems to be just \code{hdp})
-#'     that returns the \code{hdpState} from which it was generated.}
+#' \item{signature.cdc}{A \code{\link[hdpx]{categ_dp_counts}} like dataframe.
+#'                      Each column corresponds to the sum of all \code{\link[hdpx]{categ_dp_counts}}
+#'                      matrices of the raw clusters contributing to each signature in code{signature}}
 #'
-#' \item{sum_raw_clusters_after_cos_merge}{A matrix containing aggregated
-#'       spectra of raw clusters after cosine
-#'       similarity merge step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
+#'                      rows are signatures, columns are samples (e.g. tumors).}
 #'
-#' \item{sum_raw_clusters_after_nonzero_categ}{A matrix containing aggregated
-#'       spectra of raw clusters after non-zero category selecting
-#'       step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#' \item{noise.signature}{The extracted signature profiles as a matrix; rows are mutation types,
+#'                        columns are signatures with less than \code{noise.prop} of posterior samples }
 #'
-#' \item{clust_hdp0_ccc4}{A matrix containing aggregated spectra of
-#'       raw clusters moving to hdp.0 after non-zero category selection step
-#'       in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#' \item{noise.post.samp.number}{A data frame with two columns. The first column corresponds
+#'                               to each signature in \code{noise.signature} and the second
+#'                               column contains the number of posterior samples that found
+#'                               the raw clusters contributing to the signature.}
 #'
-#' \item{clust_hdp0_ccc5}{A matrix containing aggregated spectra
-#'       of raw clusters moving to hdp.0 after non-zero observation
-#'       selection step in \code{\link[hdpx]{hdp_merge_and_extract_components}}.}
+#' \item{noise.cdc}{A \code{\link[hdpx]{categ_dp_counts}} like data frame. Each column corresponds
+#'                  to the sum of all \code{\link[hdpx]{categ_dp_counts}} matrices of the raw clusters
+#'                  contributing to each signature in code{noise.signature}}
+#'
+#' \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
 #'
 #' }
 #'
@@ -55,7 +56,8 @@ NewRunHdpParallel <- function(input.catalog,
                            num.child.process   = 4,
                            cos.merge           = 0.9,
                            confident.prop      = 0.9,
-                           noise.prop          = 0.1,
+                           noise.prop          = 0.5,
+                           hc.cutoff           = 0.10,
                            ground.truth.sig    = NULL,
                            ground.truth.exp    = NULL,
                            overwrite           = TRUE,
@@ -110,8 +112,9 @@ NewRunHdpParallel <- function(input.catalog,
                            multi.types    = multi.types,
                            verbose        = verbose,
                            cos.merge      = cos.merge,
-                           confident.prop      = confident.prop,
-                           noise.prop          = noise.prop)
+                           confident.prop = confident.prop,
+                           noise.prop     = noise.prop,
+                           hc.cutoff      = hc.cutoff)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.
