@@ -25,7 +25,8 @@ RoxygenNote: 7.1.1
 Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
 Imports: hdpx (>= 0.1.7),
-    ICAMS (>= 2.2.3)
+    ICAMS (>= 2.2.3),
+    reshape2
 Suggests: ICAMSxtra (>= 0.0.2),
     testthat,
     utils
