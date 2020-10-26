@@ -87,7 +87,7 @@ point in making this larger than \code{num.child.process}.}
 
 \item{cos.merge}{The cosine similarity threshold for merging raw clusters
 from the posterior sampling chains into "components" i.e. signatures;
-passed to \code{\link[hdpx]{extract_sigs_from_clusters}}.}
+passed to \code{\link[hdpx]{extract_components_from_clusters}}.}
 
 \item{confident.prop}{Passed to \code{\link[hdpx]{interpret_components}}.
 clusters with at least \code{confident.prop} of posterior
@@ -109,8 +109,7 @@ These are the signatures used to construct the ground truth spectra.}
 path to file with ground truth exposures.
 If \code{NULL} skip checks that need this information.}
 
-\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
-raise an error.}
+\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then
@@ -172,8 +171,8 @@ column corresponds to each signature in \code{signature}
 and the second columns contains the number of posterior
 samples that found the raw clusters contributing to the signature.}
 
-\item{signature.cdc}{A \code{\link[hdpx]{categ_dp_counts}} like dataframe.
-Each column corresponds to the sum of all \code{\link[hdpx]{categ_dp_counts}}
+\item{signature.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like dataframe.
+Each column corresponds to the sum of all \code{\link[hdpx]{comp_dp_counts}}
 matrices of the raw clusters contributing to each signature in code{signature}}
 
 \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
@@ -187,8 +186,8 @@ to each signature in \code{noise.signature} and the second
 column contains the number of posterior samples that found
 the raw clusters contributing to the signature.}
 
-\item{noise.cdc}{A \code{\link[hdpx]{categ_dp_counts}} like data frame. Each column corresponds
-to the sum of all \code{\link[hdpx]{categ_dp_counts}} matrices of the raw clusters
+\item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds
+to the sum of all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters
 contributing to each signature in code{noise.signature}}
 
 \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}

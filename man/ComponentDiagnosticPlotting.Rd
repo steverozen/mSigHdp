@@ -2,13 +2,13 @@
 % Please edit documentation in R/ComponentDiagnosticPlotting.R
 \name{ComponentDiagnosticPlotting}
 \alias{ComponentDiagnosticPlotting}
-\title{Diagnostic plot for a hdpSampleMulti object}
+\title{Diagnostic plot for a hdpSampleMulti object. This function is
+compatible with the return object from Liu's extract_components_from_clusters}
 \usage{
 ComponentDiagnosticPlotting(retval, input.catalog, out.dir, verbose)
 }
 \arguments{
-\item{retval}{output from \code{CombinePosteriorChains.
-}}
+\item{retval}{output from \code{\link{CombineChainsAndExtractSigs}}}
 
 \item{input.catalog}{ground truth catalog}
 
@@ -19,5 +19,6 @@ abort if \code{out.dir} already exits.}
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 }
 \description{
-Diagnostic plot for a hdpSampleMulti object
+Diagnostic plot for a hdpSampleMulti object. This function is
+compatible with the return object from Liu's extract_components_from_clusters
 }

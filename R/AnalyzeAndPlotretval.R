@@ -1,13 +1,12 @@
-#' Evaluate and plot retval from CombinePosteriorChains
-#' This function now calls for NR's pipeline or Mo's pipeline
+#' Evaluate and plot retval from \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
+#' This function now works for both NR's pipeline and Mo's pipeline
 
-#' @param retval the output from function CombinePosteriorChains
+#' @param retval the output from function  \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
 #'
 #' @param out.dir Directory that will be created for the output;
 #'   if \code{overwrite} is \code{FALSE} then
 #'   abort if \code{out.dir} already exits.
-#' @param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
-#'  raise an error.
+#' @param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
@@ -68,15 +67,15 @@ AnalyzeAndPlotretval <- function(retval,
                           file.path(out.dir, "extracted.signature.pdf"))
 
   if (verbose) message("Writing exposures")
-  exposureCounts <- exposureProbs %*% diag(colSums(input.catalog))
+  exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
 
-  ICAMSxtra::WriteExposure(retval$exposureCounts,
+  ICAMSxtra::WriteExposure(exposureCounts,
                            file.path(out.dir,"inferred.exposures.csv"))
 
-  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposureCounts),
+  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(exposureCounts),
                                file.path(out.dir,"inferred.exposure.count.pdf"))
 
-  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposure),
+  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposureProbs),
                                file.path(out.dir,"inferred.exposure.proportion.pdf"),
                                plot.proportion = TRUE)
 
@@ -181,14 +180,17 @@ AnalyzeAndPlotretval <- function(retval,
 
     if("extracted.retval" %in% names(retval)){
       dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
+      ##this calls the diagnostic plotting function
+      ##compatible with ML's component extraction
 
-      mSigHdp::ComponentsDiagnosticPlotting(retval  = retval,
+      mSigHdp::ComponentDiagnosticPlotting(retval  = retval,
                                       input.catalog = input.catalog,
                                       out.dir = paste0(out.dir,"/Diagnostic_Plots"),
                                       verbose = verbose)
     }else{
       dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
-
+      ##this calls the diagnostic plotting function
+      ##compatible with NR's component extraction
       mSigHdp::ChainsDiagnosticPlot(retval  = retval,
                                     input.catalog = input.catalog,
                                     out.dir = paste0(out.dir,"/Diagnostic_Plots"),

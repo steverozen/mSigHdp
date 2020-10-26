@@ -1,6 +1,7 @@
-#' Diagnostic plot for a hdpSampleMulti object
-#' @param retval output from \code{CombinePosteriorChains.
-#' }
+#' Diagnostic plot for a hdpSampleMulti object. This function is
+#' compatible with the return object from Liu's extract_components_from_clusters
+#' @param retval output from \code{\link{CombineChainsAndExtractSigs}}
+#'
 #' @param input.catalog ground truth catalog
 #'
 #' @inheritParams AnalyzeAndPlotretval
@@ -44,9 +45,9 @@ ComponentDiagnosticPlotting <- function(retval,
   myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
 
-  hdpx::mo_plot_sig_exposure_for_dp(retval           = retval,
-                                    hdpsample        = multi,
-                                    input.catalog    = input.catalog)
+  mSigHdp::PlotSamplesHighSigExp(retval           = retval,
+                                  hdpsample        = multi,
+                                  input.catalog    = input.catalog)
 
   grDevices::dev.off()
 
@@ -57,14 +58,14 @@ ComponentDiagnosticPlotting <- function(retval,
   #contribute to the components during extract_component_from_clusters).
 
   ccc_0 <- lapply(chains, function(ch){
-    lapply(hdpx:::clust_categ_counts(ch), function(x){
+    lapply(hdpx::clust_categ_counts(ch), function(x){
       ans <- cbind(x)
       return(ans[, -ncol(ans)])
     })
   })
 
   cdc_0 <- lapply(chains, function(ch){
-    lapply(hdpx:::clust_dp_counts(ch), function(x){
+    lapply(hdpx::clust_dp_counts(ch), function(x){
       ans <- cbind(x)
       return(ans[, -ncol(ans)])
     })

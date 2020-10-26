@@ -116,8 +116,7 @@ These are the signatures used to construct the ground truth spectra.}
 path to file with ground truth exposures.
 If \code{NULL} skip checks that need this information.}
 
-\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
-raise an error.}
+\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then

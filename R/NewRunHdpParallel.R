@@ -17,8 +17,8 @@
 #'                                   and the second columns contains the number of posterior
 #'                                   samples that found the raw clusters contributing to the signature.}
 #'
-#' \item{signature.cdc}{A \code{\link[hdpx]{categ_dp_counts}} like dataframe.
-#'                      Each column corresponds to the sum of all \code{\link[hdpx]{categ_dp_counts}}
+#' \item{signature.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like dataframe.
+#'                      Each column corresponds to the sum of all \code{\link[hdpx]{comp_dp_counts}}
 #'                      matrices of the raw clusters contributing to each signature in code{signature}}
 #'
 #' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
@@ -32,8 +32,8 @@
 #'                               column contains the number of posterior samples that found
 #'                               the raw clusters contributing to the signature.}
 #'
-#' \item{noise.cdc}{A \code{\link[hdpx]{categ_dp_counts}} like data frame. Each column corresponds
-#'                  to the sum of all \code{\link[hdpx]{categ_dp_counts}} matrices of the raw clusters
+#' \item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds
+#'                  to the sum of all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters
 #'                  contributing to each signature in code{noise.signature}}
 #'
 #' \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
