@@ -12,6 +12,6 @@ e.g. ACT > AGT).
 test.spectra
 }
 \description{
-Synthetic SBS696 spectra for testing.
+Synthetic SBS96 spectra for testing.
 }
 \keyword{datasets}

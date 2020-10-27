@@ -3,19 +3,19 @@
 
 library(mSigHdp)
 
-out.dir <- "./output.from.RunHdpxParallel.example4"
+out.dir <- "./output.from.RunHdpxParallel.example2"
 dir.create(out.dir)
 setwd(out.dir)
-# This way the checpoint files will go into out.dir
+# This way the checkpoint files will go into out.dir
 
 retval <- RunHdpxParallel (
 
-  input.catalog      = mSigHdp::test.spectra, # Can also be a file name, but the file has to be in ICAMS format.
+  input.catalog      = mSigHdp::test.spectra[,1:3], # Can also be a file name, but the file has to be in ICAMS format.
 
-  ground.truth.sig   = NULL, # UPDATE this "~/mSigHdp/tests/ground.truth.syn.sigs.csv", #for evaluation purpose,can be NULL
+  ground.truth.sig   = NULL, # If comparing to signatures in synthetic data, can use this "mSigHdp::test.ground.truth.sig" for testing.
 
   ground.truth.exp   = NULL, # If comparing to previously estimated exposures or exposures in synthetic data.
-                             # Can use mSigHdp/tests/test.SP.Syn.Bladder-TCC.ground.truth.exposure.csv for testing.
+                             # Can use mSigHdp::test.ground.truth.exposure for testing.
 
   out.dir            = ".",
 
@@ -27,13 +27,14 @@ retval <- RunHdpxParallel (
 
   K.guess            = 10, # Set to twice your guess of how many signatures will be extracted; does not need to be precise.
 
-  post.burnin        = 1000, # For real data recommend 10,000
+  post.burnin        = 1000, # Number of burn-in iterations
 
   burnin.checkpoint  = T, # Periodically checkpoint the burnin chain
 
-  burnin.multiplier  = 2, # after every post.burnin iterations, a burnin.checkpoint will be saved. This settings means 1000x2 = 2000 burn-in iterations. This setting depends on the data size.
+  burnin.multiplier  = 2, # after every post.burnin iterations, a burnin.checkpoint will be saved. This settings means 1000x2 = 2000 burn-in iterations.
+                          # This setting depends on the data size. We recommended a total of 10,000 burn-in iterations for real data
 
-  post.n             = 20, #number of posterior samples collected for each chain in Gibb's sampling
+  post.n             = 20, #number of posterior samples collected for each chain in Gibbs sampling
 
   post.space         = 10, #interval between collection of two posterior samples
 

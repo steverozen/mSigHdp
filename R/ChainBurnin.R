@@ -48,7 +48,7 @@ ChainBurnin <-
                                       verbosity   = burnin.verbosity)
     if (burnin.checkpoint) {
       save(burnin.checkpoint,
-           file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
+           file = paste0(out.dir,"/checkpoint.Rdatas/","burnin.checkpoint.", seedNumber, ".Rdata"))
     }
 
 
@@ -63,7 +63,7 @@ ChainBurnin <-
 
         if (burnin.checkpoint) {
           save(burnin.output,
-               file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
+               file = paste0(out.dir,"/checkpoint.Rdatas/","burnin.checkpoint.", seedNumber, ".Rdata"))
         }
       }
     }

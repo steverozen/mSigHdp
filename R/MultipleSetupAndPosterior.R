@@ -43,6 +43,10 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       burnin.multiplier   = 1,
                                       burnin.checkpoint   = FALSE) {
 
+  if (burnin.checkpoint == T){
+    dir.create(paste0(out.dir,"/checkpoint.Rdatas"), recursive = T)
+  }
+
   run.setup.and.posterior <- function(seedNumber) {
 
     if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
@@ -76,7 +80,7 @@ MultipleSetupAndPosterior <- function(input.catalog,
     mc.cores = CPU.cores)
 
   if (checkpoint.chlist) {
-    save(chlist, file = "initial.chlist.Rdata")
+    save(chlist, file = paste0(out.dir,"/checkpoint.Rdatas/","initial.chlist.Rdata"))
   }
 
   clean.chlist <- CleanChlist(chlist, verbose)
