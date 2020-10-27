@@ -9,6 +9,8 @@
 #'
 #' @inheritParams CombinePosteriorChains
 #'
+#' @param checkpoint.out.dir Path to store checkpoint files. Passed to \code{\link{MultipleSetupAndPosterior}}
+#'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are
@@ -64,6 +66,7 @@ RunHdpParallel <- function(input.catalog,
                            ground.truth.exp    = NULL,
                            overwrite           = TRUE,
                            out.dir             = NULL,
+                           checkpoint.out.dir  = "./",
                            gamma.alpha         = 1,
                            gamma.beta          = 1,
                            gamma0.alpha        = gamma.alpha,
@@ -103,7 +106,8 @@ RunHdpParallel <- function(input.catalog,
                               prior.sigs          = prior.sigs,
                               prior.pseudoc       = prior.pseudoc,
                               burnin.multiplier   = burnin.multiplier,
-                              burnin.checkpoint   = burnin.checkpoint)
+                              burnin.checkpoint   = burnin.checkpoint,
+                              out.dir             = checkpoint.out.dir)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;

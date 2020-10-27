@@ -23,7 +23,8 @@ SetupAndPosterior(
   burnin.multiplier = 1,
   burnin.checkpoint = FALSE,
   prior.sigs = NULL,
-  prior.pseudoc = NULL
+  prior.pseudoc = NULL,
+  out.dir
 )
 }
 \arguments{
@@ -106,6 +107,8 @@ After each round, a burn-in chain will be save for checkpoint.}
 \item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
+
+\item{out.dir}{Directory that will be created for the output;}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object

@@ -41,10 +41,14 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       prior.sigs          = NULL,
                                       prior.pseudoc       = NULL,
                                       burnin.multiplier   = 1,
-                                      burnin.checkpoint   = FALSE) {
+                                      burnin.checkpoint   = FALSE,
+                                      out.dir) {
 
   if (burnin.checkpoint == T){
-    dir.create(paste0(out.dir,"/checkpoint.Rdatas"), recursive = T)
+    new.out.dir <- paste0(out.dir,"/checkpoint.Rdatas/")
+    if (!dir.exists(new.out.dir)) {
+      dir.create(new.out.dir, recursive = T)
+    }
   }
 
   run.setup.and.posterior <- function(seedNumber) {
@@ -69,7 +73,8 @@ MultipleSetupAndPosterior <- function(input.catalog,
       prior.sigs         = prior.sigs,
       prior.pseudoc      = prior.pseudoc,
       burnin.multiplier  = burnin.multiplier,
-      burnin.checkpoint  = burnin.checkpoint)
+      burnin.checkpoint  = burnin.checkpoint,
+      out.dir            = out.dir)
     return(sample.chain)
   }
 

@@ -60,20 +60,25 @@ Invisibly, a list with the following elements:\describe{
 \item{signature}{The extracted signature profiles as a matrix;
 rows are mutation types, columns are signatures including high confident signatures -'hdp' signatures
 and moderate confident signatures - 'potential hdp' signatures.}
+
 \item{signature.post.samp.number}{A dataframe with two columns. The first column corresponds to each signature
 in \code{signature} and the second columns contains the number of posterior
 samples that found the raw clusters contributing to the signature.}
+
 \item{signature.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like dataframe. Each column corresponds to the sum of
 all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters contributing to each
 signature in code{signature}}
+
 \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
 rows are signatures, columns are samples (e.g. tumors).}
 
 \item{noise.signature}{The extracted signature profiles as a matrix; rows are mutation types,
-columns are signatures with less than \code{noise.prop} of posterior samples }
+columns are signatures with less than \code{noise.prop} of posterior samples.}
+
 \item{noise.post.samp.number}{A data frame with two columns. The first column corresponds to each signature
 in \code{noise.signature} and the second columns contains the number of posterior
 samples that found the raw clusters contributing to the signature.}
+
 \item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds to the sum of
 all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters contributing to each
 signature in code{noise.signature}}

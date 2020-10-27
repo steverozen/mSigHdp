@@ -51,7 +51,8 @@ SetupAndPosterior <-
            burnin.multiplier   = 1,
            burnin.checkpoint   = FALSE,
            prior.sigs          = NULL,
-           prior.pseudoc       = NULL)
+           prior.pseudoc       = NULL,
+           out.dir)
   {
 
     if(!is.null(prior.sigs)){
@@ -97,7 +98,8 @@ SetupAndPosterior <-
       cpiter            = post.cpiter,
       seedNumber        = seedNumber,
       burnin.multiplier = burnin.multiplier,
-      burnin.checkpoint = burnin.checkpoint)
+      burnin.checkpoint = burnin.checkpoint,
+      out.dir           = our.dir)
 
     posterior.time <- system.time(
 
@@ -113,7 +115,11 @@ SetupAndPosterior <-
 
 
     if (checkpoint.1.chain) {
-      save(sample.chain, file = paste0(out.dir,"/checkpoint.Rdatas/","sample.chain.", seedNumber, ".Rdata"))
+      new.out.dir <- paste0(out.dir,"/checkpoint.Rdatas/")
+      if (!dir.exists(new.out.dir)) {
+        dir.create(new.out.dir, recursive = T)
+      }
+      save(sample.chain, file = paste0(new.out.dir,"sample.chain.", seedNumber, ".Rdata"))
     }
 
     if (verbose) {

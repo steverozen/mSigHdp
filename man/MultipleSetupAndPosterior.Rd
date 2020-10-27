@@ -26,7 +26,8 @@ MultipleSetupAndPosterior(
   prior.sigs = NULL,
   prior.pseudoc = NULL,
   burnin.multiplier = 1,
-  burnin.checkpoint = FALSE
+  burnin.checkpoint = FALSE,
+  out.dir
 )
 }
 \arguments{
@@ -120,6 +121,8 @@ to be present in your dataset, or even exclude some priors entirely.}
 After each round, a burn-in chain will be save for checkpoint.}
 
 \item{burnin.checkpoint}{Default is False. If True, a checkpoint for burnin will be created.}
+
+\item{out.dir}{Directory that will be created for the output;}
 }
 \value{
 Invisibly,
