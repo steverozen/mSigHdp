@@ -11,10 +11,13 @@
 #' a character vector.
 #' If \code{FALSE}, The HDP analysis
 #'   will regard all input spectra as one tumor type.
+#'   HDP structure as one parent node for all tumors
 #'
 #' If \code{TRUE}, the HDP analysis
 #'   will infer tumor types based on the string before "::" in their names.
-#' e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
+#'   e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
+#'   HDP structure as a grandparent node for whole data and
+#'   one parent node for each tumor type
 #'
 #' If \code{multi.types} is a character vector, then it should be of the same length
 #' as the number of columns in \code{input.catalog}, and each value is the

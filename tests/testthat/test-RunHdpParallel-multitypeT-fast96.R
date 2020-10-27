@@ -8,7 +8,7 @@ test_that("RunHdpParallel-multi-type-T-fast96", {
   load("RunhdpInternal.testdata/RunHdpParallel-fast96-2-cores-multi-type-T.Rdata",
        envir = reg)
 
-  retvalx1 <- RunHdpParallel(
+  retvalx1 <- OldRunHdpParallel(
     input.catalog = input.catalog[1:10,1:15],
     CPU.cores         = 2,
     seedNumber        = 44,
@@ -25,7 +25,7 @@ test_that("RunHdpParallel-multi-type-T-fast96", {
     burnin.checkpoint = T
   )
 
-  retvalx2 <- RunHdpParallel(
+  retvalx2 <- OldRunHdpParallel(
     input.catalog = input.catalog[1:10,1:15],
     CPU.cores         = 2,
     seedNumber        = 44,

@@ -45,7 +45,7 @@
 #'
 #' @export
 
-RunHdpParallel <- function(input.catalog,
+OldRunHdpParallel <- function(input.catalog,
                            seedNumber          = 1,
                            K.guess,
                            multi.types         = FALSE,

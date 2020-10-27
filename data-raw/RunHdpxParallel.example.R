@@ -1,9 +1,8 @@
 # Toy example for using RunHdpxParallel
-#
-
 library(mSigHdp)
 library(ICAMS)
 sessionInfo()
+
 out.dir <- "./output.from.RunHdpxParallel.example2"
 dir.create(out.dir)
 setwd(out.dir)
@@ -13,35 +12,31 @@ retval <- RunHdpxParallel (
 
   input.catalog      = mSigHdp::test.spectra, # Can also be a file name, but the file has to be in ICAMS format.
 
-  ground.truth.sig   = NULL, # If comparing to signatures in synthetic data, can use this "mSigHdp::test.ground.truth.sig" for testing.
+  ground.truth.sig   = NULL, # If comparing to signatures in synthetic data, can use mSigHdp::test.ground.truth.sig for testing.
 
   ground.truth.exp   = NULL, # If comparing to previously estimated exposures or exposures in synthetic data.
                              # Can use mSigHdp::test.ground.truth.exposure for testing.
 
   out.dir            = ".",
 
-  num.child.process  = 2, #number of independent MCMC chain initiated. 20 and more is recommended. 2 is for a quick test
+  num.child.process  = 2, # We recommend >=20 for real data
 
-  CPU.cores          = 2, #equal as num.child.process
-
-  seedNumber         = 123, # Random number seed
-
-  K.guess            = 10, # Set to twice your guess of how many signatures will be extracted; does not need to be precise.
-
-  post.burnin        = 1000, # Number of burn-in iterations
+  CPU.cores          = 2,
+  seedNumber         = 123,
+  K.guess            = 10,
 
   burnin.checkpoint  = T, # Periodically checkpoint the burnin chain
 
-  burnin.multiplier  = 2, # after every post.burnin iterations, a burnin.checkpoint will be saved. This settings means 1000x2 = 2000 burn-in iterations.
-                          # This setting depends on the data size. We recommended a total of 10,000 burn-in iterations for real data
+  post.burnin        = 1000,
 
-  post.n             = 20, #number of posterior samples collected for each chain in Gibbs sampling
+  burnin.multiplier  = 2, # We recommend >= 10,000 burn-in iterations in total for real data.
+                          # This toy example uses 1000 x 2 = 2000 iterations in total.
 
-  post.space         = 10, #interval between collection of two posterior samples
+  post.n             = 20, # 200 is recommended for real data
 
-  multi.types        = TRUE, #if TRUE, hdp sets the structure of grandparent node for whole dataset and parent node for each tumor type.
+  post.space         = 10, # 100 is recommended for real data
 
-  ##The following parameters
+  multi.types        = TRUE,
   overwrite          = TRUE,
   gamma.alpha = 1,
   gamma.beta  = 20,
@@ -50,4 +45,4 @@ retval <- RunHdpxParallel (
   noise.prop = 0.5)
 
 # To run this at the command line
-# R --vanilla < RunHdpxParallel.example.R  > hdp.test.run.out 2> hdp.test.run.err &
+# R --vanilla < RunHdpxParallel.example.R  > out.txt 2> err.txt &
