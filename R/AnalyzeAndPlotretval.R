@@ -1,13 +1,12 @@
-#' Evaluate and plot retval from CombinePosteriorChains
-#' This function now calls for NR's pipeline or Mo's pipeline
+#' Evaluate and plot retval from \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
+#' This function now works for both NR's pipeline and Mo's pipeline
 
-#' @param retval the output from function CombinePosteriorChains
+#' @param retval the output from function  \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
 #'
 #' @param out.dir Directory that will be created for the output;
 #'   if \code{overwrite} is \code{FALSE} then
 #'   abort if \code{out.dir} already exits.
-#' @param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise
-#'  raise an error.
+#' @param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
@@ -55,6 +54,8 @@ AnalyzeAndPlotretval <- function(retval,
     input.catalog <- input.catalog
   }
 
+  input.catalog <- input.catalog[,colSums(input.catalog)>0]
+
   if (verbose) message("Writing signatures")
   extractedSignatures <- ICAMS::as.catalog(retval$signature,
                                            region       = "unknown",
@@ -66,125 +67,64 @@ AnalyzeAndPlotretval <- function(retval,
                           file.path(out.dir, "extracted.signature.pdf"))
 
   if (verbose) message("Writing exposures")
-  ICAMSxtra::WriteExposure(retval$exposure,
+  exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
+
+  ICAMSxtra::WriteExposure(exposureCounts,
                            file.path(out.dir,"inferred.exposures.csv"))
 
-  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposure),
+  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(exposureCounts),
                                file.path(out.dir,"inferred.exposure.count.pdf"))
 
-  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposure),
+  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposureProbs),
                                file.path(out.dir,"inferred.exposure.proportion.pdf"),
                                plot.proportion = TRUE)
 
-  if(!("extracted.retval" %in% names(retval))){
-
-    # Plot the diagnostics of sampling chains.
-    if(diagnostic.plot){
-
-      dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
-
-      mSigHdp::ChainsDiagnosticPlot(retval  = retval,
-                                    input.catalog = input.catalog,
-                                    out.dir = paste0(out.dir,"/Diagnostic_Plots"),
-                                    verbose = verbose)
-    }
+  if("extracted.retval" %in% names(retval)){
 
 
+    signature.post.samp.number <- retval$signature.post.samp.number
 
-  }else{
-    # Plot the diagnostics of sampling chains.
-    if(diagnostic.plot){
+    signature.post.samp.number[,1] <- colnames(retval$signature)
+    utils::write.csv(data.frame(signature.post.samp.number)
+                     ,file = file.path(out.dir, "signature.post.samp.number.csv"),row.names = F,quote=F)
 
-      dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
+    noise.signature <- retval$noise.signature
+    if(!is.null(ncol(noise.signature))){
 
-      mSigHdp::ChainsDiagnosticPlotMo(retval  = retval,
-                                      input.catalog = input.catalog,
-                                      out.dir = paste0(out.dir,"/Diagnostic_Plots"),
-                                      verbose = verbose)
-    }
+      noise.signature <- apply(noise.signature,2,function(x)x/sum(x))
+      noise.post.samp.number <- retval$noise.post.samp.number
+      noise.signature <- data.frame(noise.signature)
+      colnames(noise.signature) <- paste0("noise hdp.",1:ncol(noise.signature))
+      noise.post.samp.number[,1] <- colnames(noise.signature)
+      row.names(noise.signature) <- NULL
 
+      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.signature,infer.rownames = T),
+                              file.path(out.dir, "noise.signatures.pdf"))
 
-    moderate.spectrum <- retval$extracted.retval$moderate.spectrum
-    noise.spectrum <- retval$extracted.retval$noise.spectrum
-
-    extracted.stats <- retval$extracted.retval$high.confident.stats
-    moderate.stats <- retval$extracted.retval$moderate.stats
-    noise.stats <- retval$extracted.retval$noise.stats
-
-    utils::write.csv(t(extracted.stats),file = file.path(out.dir, "high.confidence.sig.stats.csv"))
-
-
-    if(!is.null(ncol(moderate.spectrum))){
-      moderate.spectrum <- moderate.spectrum[,order(moderate.stats,decreasing=T)]
-      moderate.stats <- moderate.stats[order(moderate.stats,decreasing=T)]
-
-      colnames(moderate.spectrum) <- paste0("potential hdp.",1:ncol(moderate.spectrum))
-      row.names(moderate.spectrum) <- row.names(extractedSignatures)
-
-
-
-      if(!is.null(ground.truth.sig)){
-        ##read ground.truth.exp
-        if (mode(ground.truth.sig) == "character") {
-          if (verbose) {
-            message("Reading ground truth signatures from ",
-                    ground.truth.sig)
-          }
-          ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig)
-        }
-        stopifnot(is.matrix(ground.truth.sig))
-
-        sigAnalysis.moderate <- SynSigEval::MatchSigsAndRelabel(
-          ex.sigs  = moderate.spectrum,
-          gt.sigs  = ground.truth.sig,
-          exposure = ground.truth.exp)
-
-        moderate.catalog <- ICAMS::as.catalog(sigAnalysis.moderate$ex.sigs)
-        moderate.catalog <- ICAMS::TransformCatalog(moderate.catalog,target.catalog.type = "counts.signature")
-
-
-        ICAMS::PlotCatalogToPdf(moderate.catalog,
-                                file.path(out.dir, "moderate.sigs.w0.pdf"))
-
-        utils::write.csv(t(moderate.stats),file = file.path(out.dir, "moderate.sig.stats.csv"))
-      }
-      if(!is.null(ncol(noise.spectrum))){
-
-        noise.spectrum <- noise.spectrum[,order(noise.stats,decreasing=T)]
-        noise.stats <- noise.stats[order(noise.stats,decreasing=T)]
-
-        noise.spectrum <- data.frame(noise.spectrum)
-        colnames(noise.spectrum) <- paste0("noise hdp.",1:ncol(noise.spectrum))
-        row.names(noise.spectrum) <- row.names(extractedSignatures)
-
-        ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.spectrum),
-                                file.path(out.dir, "clusters.with.low.confidence.pdf"))
-        utils::write.csv(t(noise.stats),file = file.path(out.dir, "noise.stats.csv"))
-
-
-      }
+      utils::write.csv(data.frame(noise.post.samp.number),file = file.path(out.dir, "noise.signature.post.samp.number.csv"),row.names = F,quote=F)
 
     }
 
-    if(!is.null(ground.truth.exp)){
-      ##read ground.truth.exp
-      if (mode(ground.truth.exp) == "character") {
-        if (verbose) {
-          message("Reading ground truth exposures from ",
-                  ground.truth.exp)
-        }
-        ground.truth.exp <- ICAMSxtra::ReadExposure(ground.truth.exp)
-      }
-      #stopifnot(is.matrix(ground.truth.exp))
-
-      ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
-                                   file.path(out.dir,"ground.truth.exposure.count.pdf"))
-
-      ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
-                                   file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
-                                   plot.proportion = TRUE)
-    }
   }
+
+  if(!is.null(ground.truth.exp)){
+    ##read ground.truth.exp
+    if (mode(ground.truth.exp) == "character") {
+      if (verbose) {
+        message("Reading ground truth exposures from ",
+                ground.truth.exp)
+      }
+      ground.truth.exp <- ICAMSxtra::ReadExposure(ground.truth.exp)
+    }
+
+    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                 file.path(out.dir,"ground.truth.exposure.count.pdf"))
+
+    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                 file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
+                                 plot.proportion = TRUE)
+  }
+
   ###here is optional.
 
 
@@ -202,7 +142,7 @@ AnalyzeAndPlotretval <- function(retval,
     }
     stopifnot(is.matrix(ground.truth.sig))
 
-    sigAnalysis0 <- SynSigEval::MatchSigsAndRelabel(
+    sigAnalysis0 <- ICAMSxtra::MatchSigsAndRelabel(
       ex.sigs  = retval$signature,
       gt.sigs  = ground.truth.sig,
       exposure = ground.truth.exp)
@@ -235,6 +175,31 @@ AnalyzeAndPlotretval <- function(retval,
       sigAnalysis0$ground.truth.with.no.best.match,
       file = file.path(out.dir,"other.results.txt"))
   }
+
+  if(diagnostic.plot){
+
+    if("extracted.retval" %in% names(retval)){
+      dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
+      ##this calls the diagnostic plotting function
+      ##compatible with ML's component extraction
+
+      mSigHdp::ComponentDiagnosticPlotting(retval  = retval,
+                                      input.catalog = input.catalog,
+                                      out.dir = paste0(out.dir,"/Diagnostic_Plots"),
+                                      verbose = verbose)
+    }else{
+      dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
+      ##this calls the diagnostic plotting function
+      ##compatible with NR's component extraction
+      mSigHdp::ChainsDiagnosticPlot(retval  = retval,
+                                    input.catalog = input.catalog,
+                                    out.dir = paste0(out.dir,"/Diagnostic_Plots"),
+                                    verbose = verbose)
+    }
+
+
+  }
+
 
 
 }

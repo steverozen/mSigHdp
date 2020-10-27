@@ -52,6 +52,7 @@ PrepInit <- function(multi.types,
   } else {
     input.catalog <- input.catalog
   }
+  input.catalog <- input.catalog[,colSums(input.catalog)>0] ##0 catalogs will cause problems in later steps
 
   convSpectra <- t(input.catalog)
 

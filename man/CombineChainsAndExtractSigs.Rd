@@ -10,7 +10,10 @@ CombineChainsAndExtractSigs(
   input.catalog,
   multi.types,
   verbose = TRUE,
-  cos.merge = 0.9
+  cos.merge = 0.9,
+  confident.prop = 0.9,
+  noise.prop = 0.1,
+  hc.cutoff = 0.12
 )
 }
 \arguments{
@@ -39,25 +42,43 @@ e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{cos.merge}{The cosine similarity threshold for merging raw clusters
 from the posterior sampling chains into "components" i.e. signatures;
-passed to \code{\link[hdpx]{hdp_extract_components}}.}
+passed to \code{\link[hdpx]{extract_components_from_clusters}}.}
+
+\item{confident.prop}{Passed to \code{\link[hdpx]{interpret_components}}.
+clusters with at least \code{confident.prop} of posterior
+samples are high confident signatures}
+
+\item{noise.prop}{Passed to \code{\link[hdpx]{interpret_components}}.
+Clusters with less than \code{noise.prop} of posterior samples
+are noise signatures}
+
+\item{hc.cutoff}{passed to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
+height of hierarchical clustering dendrogram}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
 \item{signature}{The extracted signature profiles as a matrix;
-rows are mutation types, columns are
-samples (e.g. tumors).}
-
-\item{exposure}{The inferred exposures as a matrix of mutation counts;
+rows are mutation types, columns are signatures including high confident signatures -'hdp' signatures
+and moderate confident signatures - 'potential hdp' signatures.}
+\item{signature.post.samp.number}{A dataframe with two columns. The first column corresponds to each signature
+in \code{signature} and the second columns contains the number of posterior
+samples that found the raw clusters contributing to the signature.}
+\item{signature.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like dataframe. Each column corresponds to the sum of
+all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters contributing to each
+signature in code{signature}}
+\item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
 rows are signatures, columns are samples (e.g. tumors).}
 
-\item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
-This object has the method \code{\link[hdpx]{chains}} which returns
-a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
-sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
-(actually the methods seems to be just \code{hdp})
-that returns the \code{hdpState} from which it was generated.}
+\item{noise.signature}{The extracted signature profiles as a matrix; rows are mutation types,
+columns are signatures with less than \code{noise.prop} of posterior samples }
+\item{noise.post.samp.number}{A data frame with two columns. The first column corresponds to each signature
+in \code{noise.signature} and the second columns contains the number of posterior
+samples that found the raw clusters contributing to the signature.}
+\item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds to the sum of
+all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters contributing to each
+signature in code{noise.signature}}
 
-#'
+\item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
 }
 }
 \description{

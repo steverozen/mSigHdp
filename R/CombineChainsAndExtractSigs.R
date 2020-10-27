@@ -26,27 +26,40 @@
 #'
 #' @param cos.merge The cosine similarity threshold for merging raw clusters
 #'      from the posterior sampling chains into "components" i.e. signatures;
-#'      passed to \code{\link[hdpx]{hdp_extract_components}}.
+#'      passed to \code{\link[hdpx]{extract_components_from_clusters}}.
 #'
-#'
+#' @param confident.prop Passed to \code{\link[hdpx]{interpret_components}}.
+#'                       clusters with at least \code{confident.prop} of posterior
+#'                       samples are high confident signatures
+#' @param noise.prop Passed to \code{\link[hdpx]{interpret_components}}.
+#'                   Clusters with less than \code{noise.prop} of posterior samples
+#'                  are noise signatures
+#' @param hc.cutoff passed to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
+#'                  height of hierarchical clustering dendrogram
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
-#'             rows are mutation types, columns are
-#'             samples (e.g. tumors).}
-#'
-#' \item{exposure}{The inferred exposures as a matrix of mutation counts;
+#'             rows are mutation types, columns are signatures including high confident signatures -'hdp' signatures
+#'            and moderate confident signatures - 'potential hdp' signatures.}
+#' \item{signature.post.samp.number}{A dataframe with two columns. The first column corresponds to each signature
+#'                                   in \code{signature} and the second columns contains the number of posterior
+#'                                   samples that found the raw clusters contributing to the signature.}
+#' \item{signature.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like dataframe. Each column corresponds to the sum of
+#'                      all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters contributing to each
+#'                      signature in code{signature}}
+#' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
 #'            rows are signatures, columns are samples (e.g. tumors).}
 #'
-#' \item{multi.chains}{A \code{\link[hdpx]{hdpSampleMulti-class}} object.
-#'     This object has the method \code{\link[hdpx]{chains}} which returns
-#'     a list of \code{\link[hdpx]{hdpSampleChain-class}} objects. Each of these
-#'     sample chains objects has a method \code{\link[hdpx]{final_hdpState}}
-#'     (actually the methods seems to be just \code{hdp})
-#'     that returns the \code{hdpState} from which it was generated.}
+#' \item{noise.signature}{The extracted signature profiles as a matrix; rows are mutation types,
+#'                        columns are signatures with less than \code{noise.prop} of posterior samples }
+#' \item{noise.post.samp.number}{A data frame with two columns. The first column corresponds to each signature
+#'                                   in \code{noise.signature} and the second columns contains the number of posterior
+#'                                   samples that found the raw clusters contributing to the signature.}
+#' \item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds to the sum of
+#'                      all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters contributing to each
+#'                      signature in code{noise.signature}}
 #'
-#' #'
+#' \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
 #' }
-
 #'
 #' @export
 #'
@@ -55,7 +68,10 @@ CombineChainsAndExtractSigs <-
            input.catalog,
            multi.types,
            verbose             = TRUE,
-           cos.merge           = 0.9
+           cos.merge           = 0.9,
+           confident.prop      = 0.9,
+           noise.prop          = 0.1,
+           hc.cutoff           = 0.12
   ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
@@ -63,22 +79,22 @@ CombineChainsAndExtractSigs <-
     } else {
       input.catalog <- input.catalog
     }
-
+    input.catalog <- input.catalog[,colSums(input.catalog)>0]
     convSpectra <- t(input.catalog)
     number.channels <- nrow(input.catalog)
     number.samples  <- ncol(input.catalog)
 
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-    if (verbose) message("calling extract_sigs_from_clusters ", Sys.time())
+    if (verbose) message("calling extract_components_from_clusters ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
 
     extract.time <- system.time(
       multi.chains.retval <-
-        hdpx::extract_sigs_from_clusters(multi.chains,
-                                         cos.merge      = cos.merge
+        hdpx::extract_components_from_clusters(multi.chains,
+                                               cos.merge      = cos.merge,
+                                               hc.cutoff = hc.cutoff
         )
     )
-
 
     if (verbose) {
       message("extract_sigs_from_clusters time: ")
@@ -86,45 +102,59 @@ CombineChainsAndExtractSigs <-
         message(" ", xn, " ", extract.time[[xn]])
       }
     }
-    if (verbose) message("extracting signatures ", Sys.time())
-    extractedSignatures <- multi.chains.retval$high.confident.spectrum
-    extractedSignatures <- apply(extractedSignatures,2,function(x)x/sum(x))
 
-    rownames(extractedSignatures) <- rownames(input.catalog)
+    intepret.comp.retval <-  hdpx::interpret_components(multi.chains.retval = multi.chains.retval,
+                                                       confident.prop      = confident.prop,
+                                                       noise.prop          = noise.prop,
+                                                       verbose            = verbose)
+
+
+    confidentSignatures <- intepret.comp.retval$high_confident_components
+
+    rownames(confidentSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
-    colnames(extractedSignatures) <-
-      paste("hdp", c(1:ncol(extractedSignatures)), sep = ".")
+    colnames(confidentSignatures) <-
+      paste("hdp", c(1:ncol(confidentSignatures)), sep = ".")
 
-    sigmatchretval <- apply(extractedSignatures,2,function(x){
-      hdpx::extract_ccc_cdc_from_hdp(x,ccc_0 = multi.chains.retval$ccc_0,
-                                     cdc_0 = multi.chains.retval$cdc_0,cos.merge = 0.9)})
+    combinedSignatures <- confidentSignatures
 
-    ## Calculate the exposure probability of each signature (component) for each
-    ## tumor sample (posterior sample corresponding to a Dirichlet process node).
-    ## This is the probability distribution of signatures (components) for all
-    ## tumor samples (DP nodes).
+    potentialSignatures <- data.frame(intepret.comp.retval$moderate_components)
+
+    if(!is.null(potentialSignatures) && ncol(potentialSignatures)>0){
+      potentialSignatures <- apply(potentialSignatures,2,function(x)x/sum(x))
+
+      rownames(potentialSignatures) <- rownames(input.catalog)
+      # Set signature names to "potential hdp.0","potential hdp.1","potential hdp.2", ...
+      colnames(potentialSignatures) <-
+        paste("potential hdp", c(1:ncol(potentialSignatures)), sep = ".")
+      combinedSignatures <- cbind(combinedSignatures,potentialSignatures)
+
+    }
+
+    combinedSignatures <- apply(combinedSignatures,2,function(x)x/sum(x))
+    combined.stats <- rbind(intepret.comp.retval$high_confident_components_post_number,
+                            intepret.comp.retval$moderate_components_post_number)
+    combined.cdc  <- cbind(intepret.comp.retval$high_confident_components_cdc,
+                           intepret.comp.retval$moderate_components_cdc)
 
     if (verbose) message("extracting signatures exposures ", Sys.time())
-    exposureProbs <- do.call(cbind,lapply(sigmatchretval,function(x)x[["cdc_mean"]]))
-    exposureProbs <- t(apply(exposureProbs,1,function(x){x/sum(x)}))
+    exposureProbs <- t(apply(combined.cdc,1,function(x){x/sum(x)}))
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.
     # Transpose so it conforms to SynSigEval format
     exposureProbs <- t(exposureProbs[-c(1:(nrow(exposureProbs)-ncol(input.catalog))), ])
 
-    # Now rows are signatures, columns are samples
-    # Calculate exposure counts from exposure probabilities and total mutation
-    # counts
-    exposureCounts <- exposureProbs %*% diag(rowSums(convSpectra))
+    colnames(exposureProbs) <- colnames(input.catalog)
 
-    colnames(exposureCounts) <- colnames(input.catalog)
+    row.names(exposureProbs) <- colnames(combinedSignatures)
 
-    row.names(exposureCounts) <- colnames(extractedSignatures)
-
-    return(invisible(list(signature       = extractedSignatures,
-                          exposure        = exposureCounts,
-                          multi.chains    = multi.chains.retval$multi.chains,
-                          extracted.retval = multi.chains.retval,
-                          diagnostic.retval = sigmatchretval)))
+    return(invisible(list(signature                   = combinedSignatures,
+                          signature.post.samp.number  = combined.stats,
+                          signature.cdc               = combined.cdc,
+                          exposureProbs               = exposureProbs,
+                          noise.signature             = intepret.comp.retval$noise.spectrum,
+                          noise.post.samp.number      = intepret.comp.retval$noise.stats,
+                          noise.cdc                   = intepret.comp.retval$noise.cdc,
+                          extracted.retval            = multi.chains.retval)))
 
   }
