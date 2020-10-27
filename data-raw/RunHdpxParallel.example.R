@@ -3,17 +3,23 @@
 
 library(mSigHdp)
 
+out.dir <- "./output.from.RunHdpxParallel.example4"
+dir.create(out.dir)
+setwd(out.dir)
+# This way the checpoint files will go into out.dir
+
 seed <- 1234
 
 retval <- RunHdpxParallel (
 
-  input.catalog = "~/mSigHdp/tests/test.SP.Syn.Bladder-TCC.catalog.csv", #Path to your data. Please transform your data to the same format. And sample names as ‘TumorType::sample” (e.g. “Bladder-TCC::SP1234”)
+  input.catalog      = mSigHdp::test.spectra, # Can also be a file name, but the file has to be in ICAMS format.
 
-  ground.truth.sig  = "~/mSigHdp/tests/ground.truth.syn.sigs.csv", #for evaluation purpose,can be NULL
+  ground.truth.sig   = NULL, # UPDATE this "~/mSigHdp/tests/ground.truth.syn.sigs.csv", #for evaluation purpose,can be NULL
 
-  ground.truth.exp = "~/mSigHdp/tests/test.SP.Syn.Bladder-TCC.ground.truth.exposure.csv",#for evaluation purpose,can be NULL
+  ground.truth.exp   = NULL, # If comparing to previously estimated exposures or exposures in synthetic data.
+                             # Can use mSigHdp/tests/test.SP.Syn.Bladder-TCC.ground.truth.exposure.csv for testing.
 
-  out.dir            = out.dir, #the directory to store results
+  out.dir            = ".",
 
   num.child.process  = 2, #number of independent MCMC chain initiated. 20 and more is recommended. 2 is for a quick test
 
@@ -44,4 +50,4 @@ retval <- RunHdpxParallel (
   noise.prop = 0.5)
 
 # To run this at the command line
-# R --vanilla < hdp.test.run.R  > hdp.test.run.out 2> hdp.test.run.err &
+# R --vanilla < RunHdpxParallel.example.R  > hdp.test.run.out 2> hdp.test.run.err &
