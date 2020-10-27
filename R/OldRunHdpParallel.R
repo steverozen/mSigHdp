@@ -1,4 +1,7 @@
-#' Extract mutational signatures and optionally compare them to existing signatures and exposures.
+#' Deprecated, extract mutational signatures and optionally compare them to existing signatures and exposures.
+#'
+#' Deprecated, This functions uses the original method of combining raw clusters into "components".
+#' Use \code{\link{RunHdpxParallel}} instead.
 #'
 #' @inheritParams MultipleSetupAndPosterior
 #'
@@ -41,7 +44,7 @@
 #'
 #' @export
 
-RunHdpParallel <- function(input.catalog,
+OldRunHdpParallel <- function(input.catalog,
                            seedNumber          = 1,
                            K.guess,
                            multi.types         = FALSE,
@@ -71,6 +74,8 @@ RunHdpParallel <- function(input.catalog,
                            prior.pseudoc       = NULL,
                            burnin.multiplier   = 1,
                            burnin.checkpoint   = FALSE){
+
+  warning("This function is deprecated; use RunHdp xParallel instead.")
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;

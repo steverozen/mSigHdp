@@ -42,7 +42,7 @@
 #'
 #' @export
 
-NewRunHdpParallel <- function(input.catalog,
+RunHdpxParallel <- function(input.catalog,
                            seedNumber          = 1,
                            K.guess,
                            multi.types         = FALSE,
@@ -131,3 +131,7 @@ NewRunHdpParallel <- function(input.catalog,
   }
   return(invisible(multi.chains.etc))
 }
+
+#' @export
+#'
+NewRunHdpParallel<- RunHdpxParallel
