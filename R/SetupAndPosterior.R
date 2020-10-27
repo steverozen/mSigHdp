@@ -113,6 +113,7 @@ SetupAndPosterior <-
 
 
     if (checkpoint.1.chain) {
+
       save(sample.chain, file = paste0("sample.chain.", seedNumber, ".Rdata"))
     }
 

@@ -6,6 +6,7 @@
 #'
 #' @inheritParams CombineChainsAndExtractSigs
 #'
+#'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'                 rows are mutation types, columns are signatures including

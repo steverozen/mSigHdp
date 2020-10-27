@@ -41,7 +41,9 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       prior.sigs          = NULL,
                                       prior.pseudoc       = NULL,
                                       burnin.multiplier   = 1,
-                                      burnin.checkpoint   = FALSE) {
+                                      burnin.checkpoint   = FALSE
+                                      ) {
+
 
   run.setup.and.posterior <- function(seedNumber) {
 
@@ -76,7 +78,7 @@ MultipleSetupAndPosterior <- function(input.catalog,
     mc.cores = CPU.cores)
 
   if (checkpoint.chlist) {
-    save(chlist, file = "initial.chlist.Rdata")
+    save(chlist, file = paste0("initial.chlist.Rdata"))
   }
 
   clean.chlist <- CleanChlist(chlist, verbose)

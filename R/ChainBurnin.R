@@ -17,6 +17,8 @@
 #' @param burnin.verbosity Pass to \code{\link[hdpx]{hdp_burnin}}
 #'      \code{verbosity}.
 #'
+#' @param out.dir Directory that will be created for the output;
+#'
 #' @param burnin.multiplier A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
 #'        After each round, a burn-in chain will be save for checkpoint.
 #'
@@ -62,6 +64,10 @@ ChainBurnin <-
         burnin.output$likelihood <- c(old.likelihood,burnin.output$likelihood)
 
         if (burnin.checkpoint) {
+          new.out.dir <- paste0(out.dir,"/checkpoint.Rdatas/")
+          if (!dir.exists(new.out.dir)) {
+            dir.create(new.out.dir, recursive = T)
+          }
           save(burnin.output,
                file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
         }

@@ -19,7 +19,8 @@ test_that("MultipleSetupAndPosterior-fast", {
                             post.cpiter         = 3,
                             post.verbosity      = 0,
                             CPU.cores           = 2,
-                            num.child.process   = 2)
+                            num.child.process   = 2
+                            )
 
 
 
