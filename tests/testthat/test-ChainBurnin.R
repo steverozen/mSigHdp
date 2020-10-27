@@ -12,8 +12,7 @@ test_that("ChainBurnin", {
                          cpiter              = 3,
                          burnin.verbosity    = 0,
                          burnin.multiplier   = 2,
-                         burnin.checkpoint   = T,
-                         out.dir = "./")
+                         burnin.checkpoint   = T)
 
   retvalx2 <- ChainBurnin(hdp.state          = hdp.state,
                          seedNumber          = (44 + 3e6),
@@ -21,8 +20,7 @@ test_that("ChainBurnin", {
                          cpiter              = 3,
                          burnin.verbosity    = 0,
                          burnin.multiplier   = 1,
-                         burnin.checkpoint   = T,
-                         out.dir = "./")
+                         burnin.checkpoint   = T)
 
   save(retvalx1, file = "RunhdpInternal.testdata/test.ChainBurnin.Rdata")
   #save(retvalx, file = "RunhdpInternal.testdata/test.ChainBurnin.Rdata")

@@ -39,7 +39,6 @@ ChainBurnin <-
            cpiter            = 3,
            burnin.verbosity  = 0,
            burnin.multiplier = 1,
-           out.dir,
            burnin.checkpoint = FALSE
   ) { # 10 arguments
 
@@ -51,7 +50,7 @@ ChainBurnin <-
                                       verbosity   = burnin.verbosity)
     if (burnin.checkpoint) {
       save(burnin.checkpoint,
-           file = paste0(out.dir,"/checkpoint.Rdatas/","burnin.checkpoint.", seedNumber, ".Rdata"))
+           file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
     }
 
 
@@ -70,7 +69,7 @@ ChainBurnin <-
             dir.create(new.out.dir, recursive = T)
           }
           save(burnin.output,
-               file = paste0(out.dir,"/checkpoint.Rdatas/","burnin.checkpoint.", seedNumber, ".Rdata"))
+               file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
         }
       }
     }

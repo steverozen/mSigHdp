@@ -11,7 +11,6 @@ ChainBurnin(
   cpiter = 3,
   burnin.verbosity = 0,
   burnin.multiplier = 1,
-  out.dir,
   burnin.checkpoint = FALSE
 )
 }
@@ -34,9 +33,9 @@ and before the call of \code{\link[hdpx]{hdp_burnin}}.}
 \item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
 After each round, a burn-in chain will be save for checkpoint.}
 
-\item{out.dir}{Directory that will be created for the output;}
-
 \item{burnin.checkpoint}{Default is False. If True, a checkpoint for burnin will be created.}
+
+\item{out.dir}{Directory that will be created for the output;}
 }
 \value{
 A list with 2 elements: \describe{

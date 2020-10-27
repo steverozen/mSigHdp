@@ -2,7 +2,8 @@
 #
 
 library(mSigHdp)
-
+library(ICAMS)
+sessionInfo()
 out.dir <- "./output.from.RunHdpxParallel.example2"
 dir.create(out.dir)
 setwd(out.dir)
@@ -10,7 +11,7 @@ setwd(out.dir)
 
 retval <- RunHdpxParallel (
 
-  input.catalog      = mSigHdp::test.spectra[,1:3], # Can also be a file name, but the file has to be in ICAMS format.
+  input.catalog      = mSigHdp::test.spectra, # Can also be a file name, but the file has to be in ICAMS format.
 
   ground.truth.sig   = NULL, # If comparing to signatures in synthetic data, can use this "mSigHdp::test.ground.truth.sig" for testing.
 

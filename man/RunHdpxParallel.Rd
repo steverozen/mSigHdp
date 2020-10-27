@@ -25,7 +25,6 @@ RunHdpxParallel(
   ground.truth.exp = NULL,
   overwrite = TRUE,
   out.dir = NULL,
-  checkpoint.out.dir = "./",
   gamma.alpha = 1,
   gamma.beta = 1,
   gamma0.alpha = gamma.alpha,
@@ -112,9 +111,9 @@ If \code{NULL} skip checks that need this information.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
 
-\item{out.dir}{Directory that will be created for the output;}
-
-\item{checkpoint.out.dir}{Path to store checkpoint files. Passed to \code{\link{MultipleSetupAndPosterior}}.}
+\item{out.dir}{Directory that will be created for the output;
+if \code{overwrite} is \code{FALSE} then
+abort if \code{out.dir} already exits.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration

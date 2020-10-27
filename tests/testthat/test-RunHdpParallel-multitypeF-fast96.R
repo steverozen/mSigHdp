@@ -19,8 +19,7 @@ test_that("RunHdpParallel-fast96", {
     post.burnin   = 50, # Super low for fast testing
     post.space    = 5,  # Low for fast testing
     post.cpiter   = 1,  # Low for fast testing
-    overwrite     = TRUE,
-    checkpoint.out.dir= "./"
+    overwrite     = TRUE
   )
 
   #save(retvalx, file = "RunhdpInternal.testdata/RunHdpParallel-fast96-2-cores.Rdata")
