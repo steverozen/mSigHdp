@@ -152,23 +152,19 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
 
     on.exit(par(this.par))
 
-
-
     old.par <- par(mfrow = c(6, 1), mar = c(2, 2, 2, 2), oma = c(2, 2, 2, 2))
     on.exit(par(old.par))
 
     ICAMS::PlotCatalog(ICAMS::as.catalog(signature[,i,drop=FALSE],infer.rownames = T,catalog.type = "counts.signature"))
 
-    this.catalog <- input.catalog[,dp_order_sig[1:5], drop=FALSE]
-    this.prop <- exposures[i,dp_order_sig[1:5]]
+    max.sample <- min(5, ncol(input.catalog))
+
+    this.catalog <- input.catalog[,dp_order_sig[1:max.sample], drop=FALSE]
+    this.prop <- exposures[i,dp_order_sig[1:max.sample]]
     this.prop <- round(this.prop,3)
     colnames(this.catalog) <- paste0(colnames(this.catalog),"(",this.prop,")")
-    for (j in 1:5) {
-
-      ICAMS::PlotCatalog(this.catalog[,j, drop=FALSE])
+    for (j in 1:ncol(this.catalog)) {
+      ICAMS::PlotCatalog(this.catalog[ , j, drop = FALSE])
     }
-
-
   }
-
 }

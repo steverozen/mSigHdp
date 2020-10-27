@@ -8,8 +8,6 @@ dir.create(out.dir)
 setwd(out.dir)
 # This way the checpoint files will go into out.dir
 
-seed <- 1234
-
 retval <- RunHdpxParallel (
 
   input.catalog      = mSigHdp::test.spectra, # Can also be a file name, but the file has to be in ICAMS format.
@@ -25,7 +23,7 @@ retval <- RunHdpxParallel (
 
   CPU.cores          = 2, #equal as num.child.process
 
-  seedNumber         = seed, #seed of random generator
+  seedNumber         = 123, # Random number seed
 
   K.guess            = 10, # Set to twice your guess of how many signatures will be extracted; does not need to be precise.
 
