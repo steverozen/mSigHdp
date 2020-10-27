@@ -8,7 +8,7 @@ test_that("RunHdpParallel-fast96", {
   load("RunhdpInternal.testdata/NewRunHdpParallel-fast96-2-cores.Rdata",
        envir = reg)
 
-  retvalx <- NewRunHdpParallel(
+  retvalx <- RunHdpxParallel(
     input.catalog = input.catalog[1:10,1:15],
     CPU.cores     = 2,
     seedNumber    = 44,

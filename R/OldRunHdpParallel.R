@@ -44,7 +44,7 @@
 #'
 #' @export
 
-OldRunHdpParallel <- function(input.catalog,
+RunHdpParallel <- function(input.catalog,
                            seedNumber          = 1,
                            K.guess,
                            multi.types         = FALSE,
@@ -75,7 +75,7 @@ OldRunHdpParallel <- function(input.catalog,
                            burnin.multiplier   = 1,
                            burnin.checkpoint   = FALSE){
 
-  warning("This function is deprecated; use RunHdp xParallel instead.")
+  # warning("This function is deprecated; use RunHdp xParallel instead.")
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;

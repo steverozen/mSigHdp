@@ -132,6 +132,3 @@ RunHdpxParallel <- function(input.catalog,
   return(invisible(multi.chains.etc))
 }
 
-#' @export
-#'
-NewRunHdpParallel<- RunHdpxParallel
