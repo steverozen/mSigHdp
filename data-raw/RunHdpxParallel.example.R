@@ -1,7 +1,10 @@
 # Toy example for using RunHdpxParallel
 
 # To run this at the command line
+
 # R --vanilla < RunHdpxParallel.example.R  > out.txt 2> err.txt &
+
+# See also https://github.com/steverozen/mSigHdp/raw/master/data-raw/Hierarchical.dirichlet.process.for.mutational.signatures.docx
 
 
 library(mSigHdp)
@@ -50,4 +53,4 @@ retval <- RunHdpxParallel (
   confident.prop = 0.9,
   noise.prop = 0.5)
 
-save(retval, "RunHdpxParallel.reval.Rdata")
+save(retval, file = "RunHdpxParallel.retval.Rdata")
