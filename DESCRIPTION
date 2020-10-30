@@ -12,7 +12,9 @@ Authors@R:
            role = c("aut"),
            email = "mo.liu@u.duke.nus.edu",
            comment = c(ORCID = "0000-0001-5990-6585")))
-Description: Adapts HDP to mutational signature extraction. Calls hdpx for mutational signature analysis.
+Description: Adapts HDP to mutational signature extraction. Calls hdpx for mutational signature analysis.mSigHdp 
+             incorporates burnin and Gibbs sampling processes, followed up by extracting signatures from raw clusters 
+             collected by Gibbs sampling, and improved diagnostic plotting with visualization on signature and exposures.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
