@@ -11,7 +11,7 @@
 #'
 #' If \code{TRUE}, the HDP analysis
 #'   will infer tumor types based on the string before "::" in their names.
-#'   e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
+#'   e.g. tumor type for "Ovary-AdenoCA::S.500" would be "Ovary-AdenoCA"
 #'   HDP structure as a grandparent node for whole data and
 #'   one parent node for each tumor type
 #'
@@ -19,7 +19,10 @@
 #' as the number of columns in \code{input.catalog}, and each value is the
 #' name of the tumor type of the corresponding column in \code{input.catalog}.
 #'
-#' e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.
+#' If not \code{FALSE}, HDP will give a parent node for each tumor type and a grandparent node
+#' for the whole dataset.
+#'
+#' e.g. \code{c("Ovary-AdenoCA", "Kidney-RCC")}.
 #'
 #' @export
 

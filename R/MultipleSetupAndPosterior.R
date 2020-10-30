@@ -2,11 +2,10 @@
 #'
 #' @inheritParams SetupAndPosterior
 #'
-#' @param CPU.cores Number of CPUs to use; there is no
-#'    point in making this larger than \code{num.child.process}.
+#' @param CPU.cores Number of CPUs to use; this should be no more than \code{num.child.process}.
 #'
 #' @param num.child.process Number of posterior sampling chains; can set to
-#'   1 for testing.
+#'   1 for testing. We recommend 20 for real data analysis
 #'
 #' @param checkpoint.chlist If \code{TRUE}, checkpoint the (unclean)
 #'    chlist to "initial.chlist.Rdata" in the current working directory.
@@ -25,23 +24,23 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       K.guess,
                                       multi.types         = FALSE,
                                       verbose             = TRUE,
-                                      post.burnin         = 4000,
-                                      post.n              = 50,
-                                      post.space          = 50,
+                                      burnin              = 5000,
+                                      burnin.multiplier   = 2,
+                                      burnin.checkpoint   = TRUE,
+                                      post.n              = 200,
+                                      post.space          = 100,
                                       post.cpiter         = 3,
                                       post.verbosity      = 0,
-                                      CPU.cores           = 1,
-                                      num.child.process   = 4,
+                                      CPU.cores           = 20,
+                                      num.child.process   = 20,
                                       gamma.alpha         = 1,
-                                      gamma.beta          = 1,
+                                      gamma.beta          = 20,
                                       gamma0.alpha        = gamma.alpha,
                                       gamma0.beta         = gamma.beta,
                                       checkpoint.chlist   = TRUE,
                                       checkpoint.1.chain  = TRUE,
                                       prior.sigs          = NULL,
-                                      prior.pseudoc       = NULL,
-                                      burnin.multiplier   = 1,
-                                      burnin.checkpoint   = FALSE
+                                      prior.pseudoc       = NULL
                                       ) {
 
 
@@ -54,7 +53,7 @@ MultipleSetupAndPosterior <- function(input.catalog,
       K.guess            = K.guess,
       multi.types        = multi.types,
       verbose            = verbose,
-      post.burnin        = post.burnin,
+      burnin             = burnin,
       post.n             = post.n,
       post.space         = post.space,
       post.cpiter        = post.cpiter,

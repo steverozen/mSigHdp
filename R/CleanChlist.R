@@ -5,6 +5,7 @@
 #' the \code{chlist} element is NULL.
 #'
 #' @param chlist A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+#'               Return from \code{\link{MultipleSetupAndPosterior}}.
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
