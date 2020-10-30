@@ -10,23 +10,23 @@ MultipleSetupAndPosterior(
   K.guess,
   multi.types = FALSE,
   verbose = TRUE,
-  post.burnin = 4000,
-  post.n = 50,
-  post.space = 50,
+  burnin = 5000,
+  burnin.multiplier = 2,
+  burnin.checkpoint = TRUE,
+  post.n = 200,
+  post.space = 100,
   post.cpiter = 3,
   post.verbosity = 0,
-  CPU.cores = 1,
-  num.child.process = 4,
+  CPU.cores = 20,
+  num.child.process = 20,
   gamma.alpha = 1,
-  gamma.beta = 1,
+  gamma.beta = 20,
   gamma0.alpha = gamma.alpha,
   gamma0.beta = gamma.beta,
   checkpoint.chlist = TRUE,
   checkpoint.1.chain = TRUE,
   prior.sigs = NULL,
-  prior.pseudoc = NULL,
-  burnin.multiplier = 1,
-  burnin.checkpoint = FALSE
+  prior.pseudoc = NULL
 )
 }
 \arguments{
@@ -36,7 +36,8 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 \item{seedNumber}{A random seeds passed to \code{\link[hdpx]{dp_activate}}.}
 
 \item{K.guess}{Suggested initial value of the number of
-signatures, passed to \code{\link[hdpx]{dp_activate}} as
+clusters. Usually, the number of clusters is two times of the number
+of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
 \code{initcc}.}
 
 \item{multi.types}{A logical scalar or
@@ -47,7 +48,7 @@ HDP structure as one parent node for all tumors
 
 If \code{TRUE}, the HDP analysis
 will infer tumor types based on the string before "::" in their names.
-e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
+e.g. tumor type for "Ovary-AdenoCA::S.500" would be "Ovary-AdenoCA"
 HDP structure as a grandparent node for whole data and
 one parent node for each tumor type
 
@@ -55,30 +56,43 @@ If \code{multi.types} is a character vector, then it should be of the same lengt
 as the number of columns in \code{input.catalog}, and each value is the
 name of the tumor type of the corresponding column in \code{input.catalog}.
 
-e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
+If not \code{FALSE}, HDP will give a parent node for each tumor type and a grandparent node
+for the whole dataset.
+
+e.g. \code{c("Ovary-AdenoCA", "Kidney-RCC")}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{post.burnin}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{burnin}.}
+\item{burnin}{Pass to \code{\link[hdpx]{hdp_burnin}}
+\code{burnin}. The number of burn-in iterations}
+
+\item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
+After each round, a burn-in chain will be save for checkpoint.
+A total number of 10,000 iterations is recommended for most analysis. However, number of iterations
+can be adjusted based on the size of dataset. According to our experience, 20,000 iterations are
+needed when analyzing all PCAWG7 genomes (2,780 samples).
+The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
+
+\item{burnin.checkpoint}{Default is False. If True, a checkpoint for burnin will be created.}
 
 \item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{n}.}
+\code{n}.The number of posterior samples to collect.}
 
 \item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{space}.}
+\code{space}. The number of iterations between collected samples.}
 
-\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{cpiter}.}
+\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
+\code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
+parameter sampling to perform after each iteration}
 
 \item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{verbosity}.}
+\code{verbosity}. Verbosity of debugging statements.
+No need to change unless for development purpose}
 
-\item{CPU.cores}{Number of CPUs to use; there is no
-point in making this larger than \code{num.child.process}.}
+\item{CPU.cores}{Number of CPUs to use; this should be no more than \code{num.child.process}.}
 
 \item{num.child.process}{Number of posterior sampling chains; can set to
-1 for testing.}
+1 for testing. We recommend 20 for real data analysis}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration
@@ -90,7 +104,10 @@ except possibly the top level process, are the same.}
 the gamma distribution prior for the Dirichlet process concentration
 parameters; in this
 function the gamma distributions for all Dirichlet processes, except
-possibly the top level process, are the same.}
+possibly the top level process, are the same.
+
+We recommend gamma.alpha = 1 and gamma.beta = 20 for single-base-substitution signatures extraction;
+gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution/INDEL signature extraction}
 
 \item{gamma0.alpha}{See figure B.1 from Nicola Robert's thesis.
 The shape parameter (\eqn{\alpha_0}) of the gamma
@@ -118,11 +135,6 @@ sample.chain.\emph{seed_number}.Rdata.}
 \item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
-
-\item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
-After each round, a burn-in chain will be save for checkpoint.}
-
-\item{burnin.checkpoint}{Default is False. If True, a checkpoint for burnin will be created.}
 }
 \value{
 Invisibly,

@@ -31,13 +31,13 @@
 #'      from the posterior sampling chains into "components" i.e. signatures;
 #'      passed to \code{\link[hdpx]{extract_components_from_clusters}}.
 #'
-#' @param confident.prop Passed to \code{\link[hdpx]{interpret_components}}.
+#' @param confident.prop Pass to \code{\link[hdpx]{interpret_components}}.
 #'                       clusters with at least \code{confident.prop} of posterior
 #'                       samples are high confident signatures
-#' @param noise.prop Passed to \code{\link[hdpx]{interpret_components}}.
+#' @param noise.prop Pass to \code{\link[hdpx]{interpret_components}}.
 #'                   Clusters with less than \code{noise.prop} of posterior samples
 #'                  are noise signatures
-#' @param hc.cutoff passed to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
+#' @param hc.cutoff Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 #'                  height of hierarchical clustering dendrogram
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
@@ -79,7 +79,7 @@ CombineChainsAndExtractSigs <-
            cos.merge           = 0.9,
            confident.prop      = 0.9,
            noise.prop          = 0.1,
-           hc.cutoff           = 0.12
+           hc.cutoff           = 0.10
   ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)

@@ -26,7 +26,7 @@ HDP structure as one parent node for all tumors
 
 If \code{TRUE}, the HDP analysis
 will infer tumor types based on the string before "::" in their names.
-e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
+e.g. tumor type for "Ovary-AdenoCA::S.500" would be "Ovary-AdenoCA"
 HDP structure as a grandparent node for whole data and
 one parent node for each tumor type
 
@@ -34,7 +34,10 @@ If \code{multi.types} is a character vector, then it should be of the same lengt
 as the number of columns in \code{input.catalog}, and each value is the
 name of the tumor type of the corresponding column in \code{input.catalog}.
 
-e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
+If not \code{FALSE}, HDP will give a parent node for each tumor type and a grandparent node
+for the whole dataset.
+
+e.g. \code{c("Ovary-AdenoCA", "Kidney-RCC")}.}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
@@ -42,7 +45,8 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
 \item{K.guess}{Suggested initial value of the number of
-signatures, passed to \code{\link[hdpx]{dp_activate}} as
+clusters. Usually, the number of clusters is two times of the number
+of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
 \code{initcc}.}
 
 \item{gamma.alpha}{Shape parameter of
@@ -55,7 +59,10 @@ except possibly the top level process, are the same.}
 the gamma distribution prior for the Dirichlet process concentration
 parameters; in this
 function the gamma distributions for all Dirichlet processes, except
-possibly the top level process, are the same.}
+possibly the top level process, are the same.
+
+We recommend gamma.alpha = 1 and gamma.beta = 20 for single-base-substitution signatures extraction;
+gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution/INDEL signature extraction}
 
 \item{gamma0.alpha}{See figure B.1 from Nicola Robert's thesis.
 The shape parameter (\eqn{\alpha_0}) of the gamma

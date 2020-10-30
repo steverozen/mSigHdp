@@ -8,9 +8,10 @@ compatible with the return object from Liu's extract_components_from_clusters}
 ComponentDiagnosticPlotting(retval, input.catalog, out.dir, verbose)
 }
 \arguments{
-\item{retval}{output from \code{\link{CombineChainsAndExtractSigs}}}
+\item{retval}{Return from \code{\link{CombineChainsAndExtractSigs}}}
 
-\item{input.catalog}{ground truth catalog}
+\item{input.catalog}{Input spectra catalog as a matrix or
+in \code{\link[ICAMS]{ICAMS}} format.}
 
 \item{out.dir}{Directory that will be created for the output;
 if \code{overwrite} is \code{FALSE} then

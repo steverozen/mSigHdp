@@ -1,8 +1,9 @@
 #' Diagnostic plot for a hdpSampleMulti object. This function is
 #' compatible with the return object from Liu's extract_components_from_clusters
-#' @param retval output from \code{\link{CombineChainsAndExtractSigs}}
+#' @param retval Return from \code{\link{CombineChainsAndExtractSigs}}
 #'
-#' @param input.catalog ground truth catalog
+#' @param input.catalog Input spectra catalog as a matrix or
+#' in \code{\link[ICAMS]{ICAMS}} format.
 #'
 #' @inheritParams AnalyzeAndPlotretval
 #'

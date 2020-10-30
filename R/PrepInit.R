@@ -6,8 +6,9 @@
 #'
 #'
 #' @param K.guess Suggested initial value of the number of
-#' signatures, passed to \code{\link[hdpx]{dp_activate}} as
-#' \code{initcc}.
+#'                clusters. Usually, the number of clusters is two times of the number
+#'                of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
+#'                \code{initcc}.
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
@@ -22,6 +23,9 @@
 #'   parameters; in this
 #'   function the gamma distributions for all Dirichlet processes, except
 #'   possibly the top level process, are the same.
+#'
+#'   We recommend gamma.alpha = 1 and gamma.beta = 20 for single-base-substitution signatures extraction;
+#'   gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution/INDEL signature extraction
 #'
 #' @param gamma0.alpha See figure B.1 from Nicola Robert's thesis.
 #'   The shape parameter (\eqn{\alpha_0}) of the gamma

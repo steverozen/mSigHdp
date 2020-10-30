@@ -8,20 +8,19 @@
 #'
 #' @inheritParams ChainBurnin
 #'
-#' @param post.burnin Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{burnin}.
-#'
 #' @param post.n Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{n}.
+#'      \code{n}.The number of posterior samples to collect.
 #'
 #' @param post.space Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{space}.
+#'      \code{space}. The number of iterations between collected samples.
 #'
-#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{cpiter}.
+#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
+#'        \code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
+#'        parameter sampling to perform after each iteration
 #'
 #' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{verbosity}.
+#'      \code{verbosity}. Verbosity of debugging statements.
+#'       No need to change unless for development purpose
 #'
 #' @param checkpoint.1.chain If \code{TRUE} checkpoint the sample
 #'      chain to current working directory, in a file called
@@ -38,18 +37,18 @@ SetupAndPosterior <-
            K.guess,
            multi.types         = FALSE,
            verbose             = TRUE,
-           post.burnin         = 4000,
+           burnin              = 5000,
            post.n              = 50,
            post.space          = 50,
-           post.cpiter         = 3,
+           cpiter         = 3,
            post.verbosity      = 0,
            gamma.alpha         = 1,
-           gamma.beta          = 1,
+           gamma.beta          = 20,
            gamma0.alpha        = gamma.alpha,
            gamma0.beta         = gamma.beta,
            checkpoint.1.chain  = TRUE,
-           burnin.multiplier   = 1,
-           burnin.checkpoint   = FALSE,
+           burnin.multiplier   = 2,
+           burnin.checkpoint   = TRUE,
            prior.sigs          = NULL,
            prior.pseudoc       = NULL)
   {
@@ -93,7 +92,7 @@ SetupAndPosterior <-
     burnin.output <- ChainBurnin(
       hdp.state         = hdp.state,
       burnin.verbosity  = post.verbosity,
-      burnin            = post.burnin,
+      burnin            = burnin,
       cpiter            = post.cpiter,
       seedNumber        = seedNumber,
       burnin.multiplier = burnin.multiplier,
