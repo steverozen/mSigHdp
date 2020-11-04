@@ -40,7 +40,7 @@ SetupAndPosterior <-
            burnin              = 5000,
            post.n              = 50,
            post.space          = 50,
-           cpiter         = 3,
+           post.cpiter         = 3,
            post.verbosity      = 0,
            gamma.alpha         = 1,
            gamma.beta          = 20,
