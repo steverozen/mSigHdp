@@ -13,7 +13,7 @@ SetupAndPosterior(
   burnin = 5000,
   post.n = 50,
   post.space = 50,
-  cpiter = 3,
+  post.cpiter = 3,
   post.verbosity = 0,
   gamma.alpha = 1,
   gamma.beta = 20,
@@ -69,9 +69,9 @@ e.g. \code{c("Ovary-AdenoCA", "Kidney-RCC")}.}
 \item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{space}. The number of iterations between collected samples.}
 
-\item{cpiter}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{cpiter}. The number of iterations of concentration parameter sampling
-to perform after each iteration.}
+\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
+\code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
+parameter sampling to perform after each iteration}
 
 \item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{verbosity}. Verbosity of debugging statements.
@@ -122,10 +122,6 @@ The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin
 \item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
-
-\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-\code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
-parameter sampling to perform after each iteration}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object

@@ -13,7 +13,7 @@ test_that("MultipleSetupAndPosterior-fast", {
                             K.guess             = 5,
                             multi.types         = FALSE,
                             verbose             = TRUE,
-                            post.burnin         = 50,
+                            burnin              = 50,
                             post.n              = 5,
                             post.space          = 50,
                             post.cpiter         = 3,

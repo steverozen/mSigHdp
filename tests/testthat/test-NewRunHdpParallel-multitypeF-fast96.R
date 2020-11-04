@@ -16,7 +16,7 @@ test_that("RunHdpParallel-fast96", {
     multi.types   = FALSE,
     verbose       = TRUE,
     num.child.process =  2,
-    post.burnin   = 50, # Super low for fast testing
+    burnin   = 50, # Super low for fast testing
     post.space    = 5,  # Low for fast testing
     post.cpiter   = 1,  # Low for fast testing
     overwrite     = TRUE
