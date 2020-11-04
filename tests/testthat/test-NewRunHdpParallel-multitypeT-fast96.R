@@ -16,7 +16,7 @@ test_that("RunHdpParallel-multi-type-T-fast96", {
     multi.types       = TRUE,
     verbose           = TRUE,
     num.child.process = 2,
-    post.burnin       = 100, # Super low for fast testing
+    burnin       = 100, # Super low for fast testing
     post.n            = 2,
     post.space        = 5,  # Low for fast testing
     post.cpiter       = 1,  # Low for fast testing
@@ -33,7 +33,7 @@ test_that("RunHdpParallel-multi-type-T-fast96", {
     multi.types       = TRUE,
     verbose           = TRUE,
     num.child.process = 2,
-    post.burnin       = 200, # Super low for fast testing
+    burnin       = 200, # Super low for fast testing
     post.n            = 2,
     post.space        = 5,  # Low for fast testing
     post.cpiter       = 1,  # Low for fast testing

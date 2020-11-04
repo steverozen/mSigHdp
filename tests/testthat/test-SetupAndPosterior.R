@@ -14,7 +14,7 @@ test_that("SetupAndPosterior-fast", {
     K.guess       = 5,
     multi.types   = FALSE,
     verbose       = TRUE,
-    post.burnin   = 50
+    burnin   = 50
   )
 
   #save(retvalx, file = "RunhdpInternal.testdata/test.SetupAndPosterior.Rdata")

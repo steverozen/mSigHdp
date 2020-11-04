@@ -10,7 +10,7 @@ OldRunHdpParallel(
   K.guess,
   multi.types = FALSE,
   verbose = TRUE,
-  post.burnin = 5000,
+  burnin = 5000,
   post.n = 200,
   post.space = 100,
   post.cpiter = 3,
@@ -70,6 +70,9 @@ for the whole dataset.
 e.g. \code{c("Ovary-AdenoCA", "Kidney-RCC")}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
+
+\item{burnin}{Pass to \code{\link[hdpx]{hdp_burnin}}
+\code{burnin}. The number of burn-in iterations}
 
 \item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{n}.The number of posterior samples to collect.}
