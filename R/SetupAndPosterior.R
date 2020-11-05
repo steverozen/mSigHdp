@@ -26,6 +26,9 @@
 #'      chain to current working directory, in a file called
 #'      sample.chain.*seed_number*.Rdata.
 #'
+#' @param posterior.checkpoint If \code{TRUE} checkpoint the posterior sampling after every 10
+#'                             posterior samples collected
+#'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 #'  as returned from \code{\link[hdpx]{hdp_posterior}}.
 #'
@@ -50,7 +53,8 @@ SetupAndPosterior <-
            burnin.multiplier   = 2,
            burnin.checkpoint   = TRUE,
            prior.sigs          = NULL,
-           prior.pseudoc       = NULL)
+           prior.pseudoc       = NULL,
+           posterior.checkpoint= F)
   {
 
     if(!is.null(prior.sigs)){
@@ -105,7 +109,8 @@ SetupAndPosterior <-
                                                  post.space     = post.space,
                                                  post.cpiter    = post.cpiter,
                                                  seed           = seedNumber,
-                                                 post.verbosity = post.verbosity)
+                                                 post.verbosity = post.verbosity,
+                                                 checkpoint     = posterior.checkpoint)
 
     )
 

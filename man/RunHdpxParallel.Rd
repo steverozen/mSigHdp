@@ -34,7 +34,8 @@ RunHdpxParallel(
   checkpoint.chlist = TRUE,
   checkpoint.1.chain = TRUE,
   prior.sigs = NULL,
-  prior.pseudoc = NULL
+  prior.pseudoc = NULL,
+  posterior.checkpoint = FALSE
 )
 }
 \arguments{
@@ -173,6 +174,9 @@ sample.chain.\emph{seed_number}.Rdata.}
 \item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
+
+\item{posterior.checkpoint}{If \code{TRUE} checkpoint the posterior sampling after every 10
+posterior samples collected}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

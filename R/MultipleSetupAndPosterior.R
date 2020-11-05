@@ -40,7 +40,8 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       checkpoint.chlist   = TRUE,
                                       checkpoint.1.chain  = TRUE,
                                       prior.sigs          = NULL,
-                                      prior.pseudoc       = NULL
+                                      prior.pseudoc       = NULL,
+                                      posterior.checkpoint= FALSE
                                       ) {
 
 
@@ -49,24 +50,25 @@ MultipleSetupAndPosterior <- function(input.catalog,
     if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
     sample.chain <-SetupAndPosterior(
       input.catalog,
-      seedNumber         = seedNumber,
-      K.guess            = K.guess,
-      multi.types        = multi.types,
-      verbose            = verbose,
-      burnin             = burnin,
-      post.n             = post.n,
-      post.space         = post.space,
-      post.cpiter        = post.cpiter,
-      post.verbosity     = post.verbosity,
-      gamma.alpha        = gamma.alpha,
-      gamma.beta         = gamma.beta,
-      gamma0.alpha       = gamma0.alpha,
-      gamma0.beta        = gamma0.beta,
-      checkpoint.1.chain = checkpoint.1.chain,
-      prior.sigs         = prior.sigs,
-      prior.pseudoc      = prior.pseudoc,
-      burnin.multiplier  = burnin.multiplier,
-      burnin.checkpoint  = burnin.checkpoint)
+      seedNumber          = seedNumber,
+      K.guess             = K.guess,
+      multi.types         = multi.types,
+      verbose             = verbose,
+      burnin              = burnin,
+      post.n              = post.n,
+      post.space          = post.space,
+      post.cpiter         = post.cpiter,
+      post.verbosity      = post.verbosity,
+      gamma.alpha         = gamma.alpha,
+      gamma.beta          = gamma.beta,
+      gamma0.alpha        = gamma0.alpha,
+      gamma0.beta         = gamma0.beta,
+      checkpoint.1.chain  = checkpoint.1.chain,
+      prior.sigs          = prior.sigs,
+      prior.pseudoc       = prior.pseudoc,
+      burnin.multiplier   = burnin.multiplier,
+      burnin.checkpoint   = burnin.checkpoint,
+      posterior.checkpoint= posterior.checkpoint)
     return(sample.chain)
   }
 

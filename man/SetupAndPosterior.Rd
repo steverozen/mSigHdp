@@ -23,7 +23,8 @@ SetupAndPosterior(
   burnin.multiplier = 2,
   burnin.checkpoint = TRUE,
   prior.sigs = NULL,
-  prior.pseudoc = NULL
+  prior.pseudoc = NULL,
+  posterior.checkpoint = F
 )
 }
 \arguments{
@@ -122,6 +123,9 @@ The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin
 \item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
+
+\item{posterior.checkpoint}{If \code{TRUE} checkpoint the posterior sampling after every 10
+posterior samples collected}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
