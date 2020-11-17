@@ -166,5 +166,6 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
     colnames(this.catalog) <- paste0(colnames(this.catalog),"(",this.prop,")")
     for (j in 1:ncol(this.catalog)) {
           ICAMS::PlotCatalog(ICAMS::as.catalog(this.catalog[ , j, drop = FALSE]))
+      }
   }
 }
