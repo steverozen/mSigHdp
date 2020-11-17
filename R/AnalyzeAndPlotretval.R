@@ -68,6 +68,7 @@ AnalyzeAndPlotretval <- function(retval,
 
   if (verbose) message("Writing exposures")
   exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
+  colnames(exposureCounts) <- colnames(input.catalog)
 
   ICAMSxtra::WriteExposure(exposureCounts,
                            file.path(out.dir,"inferred.exposures.csv"))
@@ -89,7 +90,7 @@ AnalyzeAndPlotretval <- function(retval,
                      ,file = file.path(out.dir, "signature.post.samp.number.csv"),row.names = F,quote=F)
 
     noise.signature <- retval$noise.signature
-    if(!is.null(ncol(noise.signature))){
+    if(!is.null(ncol(noise.signature))&&(ncol(data.frame(noise.signature))>0)){
 
       noise.signature <- apply(noise.signature,2,function(x)x/sum(x))
       noise.post.samp.number <- retval$noise.post.samp.number
@@ -98,7 +99,7 @@ AnalyzeAndPlotretval <- function(retval,
       noise.post.samp.number[,1] <- colnames(noise.signature)
       row.names(noise.signature) <- NULL
 
-      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.signature,infer.rownames = T),
+      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.signature,infer.rownames = T,catalog.type = "counts.signature"),
                               file.path(out.dir, "noise.signatures.pdf"))
 
       utils::write.csv(data.frame(noise.post.samp.number),file = file.path(out.dir, "noise.signature.post.samp.number.csv"),row.names = F,quote=F)

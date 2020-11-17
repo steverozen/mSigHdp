@@ -117,7 +117,7 @@ CombineChainsAndExtractSigs <-
                                                        verbose            = verbose)
 
 
-    confidentSignatures <- intepret.comp.retval$high_confident_components
+    confidentSignatures <- data.frame(intepret.comp.retval$high_confident_components)
 
     rownames(confidentSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
@@ -146,7 +146,11 @@ CombineChainsAndExtractSigs <-
                            intepret.comp.retval$moderate_components_cdc)
 
     if (verbose) message("extracting signatures exposures ", Sys.time())
+
     exposureProbs <- t(apply(combined.cdc,1,function(x){x/sum(x)}))
+    if(nrow(exposureProbs)==1){
+      exposureProbs <- t(exposureProbs)
+    }
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.
     # Transpose so it conforms to SynSigEval format
@@ -160,9 +164,9 @@ CombineChainsAndExtractSigs <-
                           signature.post.samp.number  = combined.stats,
                           signature.cdc               = combined.cdc,
                           exposureProbs               = exposureProbs,
-                          noise.signature             = intepret.comp.retval$noise.spectrum,
-                          noise.post.samp.number      = intepret.comp.retval$noise.stats,
-                          noise.cdc                   = intepret.comp.retval$noise.cdc,
+                          noise.signature             = intepret.comp.retval$noise_components,
+                          noise.post.samp.number      = intepret.comp.retval$noise_components_post_number,
+                          noise.cdc                   = intepret.comp.retval$noise_components_cdc,
                           extracted.retval            = multi.chains.retval)))
 
   }
