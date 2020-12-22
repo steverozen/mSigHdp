@@ -11,8 +11,7 @@ the \code{chlist} element is NULL.}
 CleanChlist(chlist, verbose = FALSE)
 }
 \arguments{
-\item{chlist}{A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
-Return from \code{\link{MultipleSetupAndPosterior}}.}
+\item{chlist}{A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 }
