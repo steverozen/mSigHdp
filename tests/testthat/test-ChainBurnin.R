@@ -1,7 +1,7 @@
 
 test_that("ChainBurnin", {
 
-  load("1000044.activated.hdp.state.Rdata")
+  load("misc.test.data/1000044.activated.hdp.state.Rdata")
   reg <- new.env()
   load("RunhdpInternal.testdata/test.ChainBurnin.Rdata",
        envir = reg)
