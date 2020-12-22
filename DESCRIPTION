@@ -22,7 +22,8 @@ Language: en-US
 BuildManual: no
 biocViews:
 Roxygen: list(markdown = TRUE)
-Depends: R (>= 4.0)
+Depends: R (>= 4.0),
+  hdpx (>= 0.3.200)
 RoxygenNote: 7.1.1
 Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
