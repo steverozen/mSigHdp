@@ -1,3 +1,6 @@
+# [ 1.1.4.9001]
+* Improved error handling and reporting from mclapply child processes.
+
 # [1.0.2.003]
 * MatchSigsAndRelabel was moved to ICAMSxtra
 
