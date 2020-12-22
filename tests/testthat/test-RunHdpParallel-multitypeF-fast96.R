@@ -1,4 +1,4 @@
-
+testthat::skip_if(Sys.getenv("USE_OLD_HDP") == "")
 test_that("RunHdpParallel-fast96", {
 
   input.catalog <-
