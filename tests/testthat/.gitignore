@@ -6,4 +6,9 @@ RunAndEvalHdp5-fast96-2-cores
 20206212.burnin.lik.pdf
 20206212.burnin.output.Rdata
 initial.chlist.Rdata
-^.*\.Rdata$
+sample.chain.44.Rdata
+burnin.checkpoint.3000044.Rdata
+burnin.checkpoint.2000044.Rdata
+burnin.checkpoint.1000044.Rdata
+sample.chain.1000044.Rdata
+sample.chain.2000044.Rdata
