@@ -24,9 +24,8 @@
 #'
 #' @param burnin.verbosity Pass to \code{\link[hdpx]{hdp_burnin}}
 #'      \code{verbosity}.Verbosity of debugging statements.
-#'
-#'
-#' @param burnin.checkpoint Default is False. If True, a checkpoint for burnin will be created.
+#'#'
+#' @param burnin.checkpoint If \code{TRUE}, a checkpoint for burnin will be created.
 #'
 #' @return A list with 2 elements: \describe{
 #' \item{\code{hdplist}}{A list representation of

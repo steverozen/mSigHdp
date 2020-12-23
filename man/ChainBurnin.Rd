@@ -29,7 +29,8 @@ and before the call of \code{\link[hdpx]{hdp_burnin}}.}
 to perform after each iteration.}
 
 \item{burnin.verbosity}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{verbosity}.Verbosity of debugging statements.}
+\code{verbosity}.Verbosity of debugging statements.
+#'}
 
 \item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
 After each round, a burn-in chain will be save for checkpoint.
@@ -38,7 +39,7 @@ can be adjusted based on the size of dataset. According to our experience, 20,00
 needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
 
-\item{burnin.checkpoint}{Default is False. If True, a checkpoint for burnin will be created.}
+\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burnin will be created.}
 }
 \value{
 A list with 2 elements: \describe{
