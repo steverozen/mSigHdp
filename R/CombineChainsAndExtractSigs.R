@@ -83,7 +83,7 @@ CombineChainsAndExtractSigs <-
   ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
-      input.catalog <- ICAMS::ReadCatalog(input.catalog, strict = FALSE)
+      input.catalog <- ICAMS::ReadCatalog(input.catalog)
     } else {
       input.catalog <- input.catalog
     }
