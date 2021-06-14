@@ -1,6 +1,6 @@
 Package: mSigHdp
 Title: Mutational signature extraction using hdp (Hierarchical Dirichlet Process)
-Version: 1.1.5.001
+Version: 1.1.6.001
 Authors@R: 
     c(person(given = "Steven",
            family = "Rozen",
@@ -10,7 +10,7 @@ Authors@R:
     person(given = "Mo",
            family = "Liu",
            role = c("aut"),
-           email = "mo.liu@u.duke.nus.edu",
+           email = "liumolm@gmail.com",
            comment = c(ORCID = "0000-0001-5990-6585")))
 Description: Adapts HDP to mutational signature extraction. Calls hdpx for mutational signature analysis.mSigHdp 
              incorporates burnin and Gibbs sampling processes, followed up by extracting signatures from raw clusters 

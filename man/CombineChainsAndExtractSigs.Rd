@@ -13,7 +13,8 @@ CombineChainsAndExtractSigs(
   cos.merge = 0.9,
   confident.prop = 0.9,
   noise.prop = 0.1,
-  hc.cutoff = 0.1
+  hc.cutoff = 0.1,
+  hc.method = "ward.D2"
 )
 }
 \arguments{
@@ -57,6 +58,9 @@ are noise signatures}
 
 \item{hc.cutoff}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 height of hierarchical clustering dendrogram}
+
+\item{hc.method}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The agglomeration method
+for hierarchical clustering. Default is "ward.D2".}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
