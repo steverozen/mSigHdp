@@ -22,8 +22,6 @@ RunHdpxParallel(
   confident.prop = 0.9,
   noise.prop = 0.5,
   hc.cutoff = 0.1,
-  hc.method = "average",
-  hc = "agglomerative",
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
   overwrite = TRUE,
@@ -111,12 +109,6 @@ are noise signatures}
 
 \item{hc.cutoff}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 height of hierarchical clustering dendrogram}
-
-\item{hc.method}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The agglomeration method}
-
-\item{hc}{'agglomerative' or 'divisive'.
-Pass to \code{\link[hdpx]{extract_components_from_clusters}} For testing purpose now.
-for hierarchical clustering. Default is "ward.D2".}
 
 \item{ground.truth.sig}{Optional. Either a string with the
 path to file with ground truth signatures or and

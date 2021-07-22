@@ -39,11 +39,7 @@
 #'                  are noise signatures
 #' @param hc.cutoff Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 #'                  height of hierarchical clustering dendrogram
-#' @param hc.method Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The agglomeration method
 #'
-#' @param hc 'agglomerative' or 'divisive'.
-#'            Pass to \code{\link[hdpx]{extract_components_from_clusters}} For testing purpose now.
-#'                  for hierarchical clustering. Default is "ward.D2".
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
 #'             rows are mutation types, columns are signatures including high confident signatures -'hdp' signatures
@@ -84,9 +80,7 @@ CombineChainsAndExtractSigs <-
            cos.merge           = 0.9,
            confident.prop      = 0.9,
            noise.prop          = 0.1,
-           hc.cutoff           = 0.10,
-           hc.method           = "ward.D2",
-           hc                  = "agglomerative"
+           hc.cutoff           = 0.10
   ) {
     if (mode(input.catalog) == "character") {
       if (verbose) message("Reading input catalog file ", input.catalog)
@@ -107,9 +101,7 @@ CombineChainsAndExtractSigs <-
       multi.chains.retval <-
         hdpx::extract_components_from_clusters(multi.chains,
                                                cos.merge = cos.merge,
-                                               hc.cutoff = hc.cutoff,
-                                               hc.method = hc.method,
-                                               hc        = hc
+                                               hc.cutoff = hc.cutoff
         )
     )
 

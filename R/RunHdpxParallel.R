@@ -60,8 +60,6 @@ RunHdpxParallel <- function(input.catalog,
                            confident.prop      = 0.9,
                            noise.prop          = 0.5,
                            hc.cutoff           = 0.10,
-                           hc.method           = "average",
-                           hc                  = "agglomerative",
                            ground.truth.sig    = NULL,
                            ground.truth.exp    = NULL,
                            overwrite           = TRUE,
@@ -117,9 +115,7 @@ RunHdpxParallel <- function(input.catalog,
                            verbose        = verbose,
                            confident.prop = confident.prop,
                            noise.prop     = noise.prop,
-                           hc.cutoff      = hc.cutoff,
-                           hc.method      = hc.method,
-                           hc             = hc)
+                           hc.cutoff      = hc.cutoff)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.
