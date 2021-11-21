@@ -35,12 +35,12 @@ ComponentDiagnosticPlotting <- function(retval,
   lapply(chains, hdpx::plot_numcluster, bty = "L")
   grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
+ # grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
   # This is the number of mutations assigned as a function of
   # the number of raw clusters
-  par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
-  lapply(chains, hdpx::plot_data_assigned, bty = "L")
-  grDevices::dev.off()
+ # par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
+ # lapply(chains, hdpx::plot_data_assigned, bty = "L")
+ # grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"))
   myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
@@ -52,8 +52,8 @@ ComponentDiagnosticPlotting <- function(retval,
 
   grDevices::dev.off()
 
-  #because extract_component_from_clusters extract informations across chains
-  #so the chain information was not recorded as NR's hdp_extract_components
+  #because extract_component_from_clusters uses information across chains
+  #and the chain information was not recorded as NR's hdp_extract_components
   #therefore, we use extract_ccc_cdc_from_hdp to seek for the information of
   #raw clusters that highly similar as components (most likely these clusters
   #contribute to the components during extract_component_from_clusters).

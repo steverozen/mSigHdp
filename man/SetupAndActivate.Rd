@@ -23,9 +23,10 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 \item{seedNumber}{A random seeds passed to \code{\link[hdpx]{dp_activate}}.}
 
 \item{K.guess}{Suggested initial value of the number of
-clusters. Usually, the number of clusters is two times of the number
-of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
-\code{initcc}.}
+raw clusters. Usually, the number of raw clusters is two times
+of the number of extracted signatures. If we expect to extract 10 signatures
+from a dataset, the K.guess is set to 20. More details in Liu et al., 2021.
+Passed to \code{\link[hdpx]{dp_activate}} as \code{initcc}.}
 
 \item{multi.types}{A logical scalar or
 a character vector.

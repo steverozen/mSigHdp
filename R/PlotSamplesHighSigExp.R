@@ -156,7 +156,7 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
     old.par <- par(mfrow = c(6, 1), mar = c(2, 2, 2, 2), oma = c(2, 2, 2, 2))
     on.exit(par(old.par))
 
-    ICAMS::PlotCatalog(ICAMS::as.catalog(signature[,i,drop=FALSE],infer.rownames = T,catalog.type = "counts.signature"))
+    ICAMS::PlotCatalog(ICAMS::as.catalog(signature[,i,drop=FALSE],infer.rownames = T,catalog.type = "counts.signature"),grid = F)
 
     max.sample <- min(5, ncol(input.catalog))
 
