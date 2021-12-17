@@ -23,7 +23,7 @@
 #' @export
 PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
                                   col_comp = NULL,
-                                  incl_numdata_plot=TRUE,
+                                  incl_numdata_plot=F,
                                   ylab_numdata="Number of data items",
                                   ylab_exp="Component exposure",
                                   leg.title="Component", cex.names=0.6,
@@ -85,31 +85,35 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
 
   num_leg_col <- floor(sqrt(length(inc)))
 
-  if (incl_numdata_plot){
-    par(mfrow=c(2, 1), mar=mar, oma=oma, cex.axis=cex.axis, las=2)
+  ##These are not informative. Removed before submit the manuscript
+  if(F){
+    if (incl_numdata_plot){
+      par(mfrow=c(2, 1), mar=mar, oma=oma, cex.axis=cex.axis, las=2)
 
-    graphics::barplot(numdata[dp_order], main="Mutations of each tumor", col="gray", space=0, border=NA,
-                      names.arg="", ylab=ylab_numdata,
-                      legend.text=names(inc),
-                      args.legend=list(fill=col_comp[inc], bty="n", title=leg.title,
-                                       ncol=num_leg_col))
+      graphics::barplot(numdata[dp_order], main="Mutations of each tumor", col="gray", space=0, border=NA,
+                        names.arg="", ylab=ylab_numdata,
+                        legend.text=names(inc),
+                        args.legend=list(fill=col_comp[inc], bty="n", title=leg.title,
+                                         ncol=num_leg_col))
 
-    graphics::barplot(as.matrix(exposures[inc, dp_order, drop=FALSE]), space=0, col=col_comp[inc], border=NA,
-                      ylim=c(0, 1), names.arg=dpnames[dp_order], ylab=ylab_exp,
-                      cex.names=cex.names)
-  } else {
+      graphics::barplot(as.matrix(exposures[inc, dp_order, drop=FALSE]), space=0, col=col_comp[inc], border=NA,
+                        ylim=c(0, 1), names.arg=dpnames[dp_order], ylab=ylab_exp,
+                        cex.names=cex.names)
+    } else {
 
-    par(cex.axis=cex.axis, las=2)
-    # don't understand why legend.text needs rev() here and not in above case,
-    # but seems to work?
-    graphics::barplot(as.matrix(exposures[inc, dp_order, drop=FALSE]), space=0, col=col_comp[inc],
-                      border=NA, ylim=c(0, 1),
-                      xlim=c(0, length(dpindices) + num_leg_col + 1),
-                      names.arg=dpnames[dp_order],
-                      ylab=ylab_exp, cex.names=cex.names,
-                      legend.text=rev(names(inc)),
-                      args.legend=list(fill=col_comp[inc], bty="n", title=leg.title,
-                                       ncol=num_leg_col))
+      par(cex.axis=cex.axis, las=2)
+      # don't understand why legend.text needs rev() here and not in above case,
+      # but seems to work?
+      graphics::barplot(as.matrix(exposures[inc, dp_order, drop=FALSE]), space=0, col=col_comp[inc],
+                        border=NA, ylim=c(0, 1),
+                        xlim=c(0, length(dpindices) + num_leg_col + 1),
+                        names.arg=dpnames[dp_order],
+                        ylab=ylab_exp, cex.names=cex.names,
+                        legend.text=rev(names(inc)),
+                        args.legend=list(fill=col_comp[inc], bty="n", title=leg.title,
+                                         ncol=num_leg_col))
+    }
+
   }
 
   data.exposures <- t(numdata*t(exposures))
@@ -147,7 +151,7 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
 
     sig <- row.names(data.exposures)[i]
 
-    plot(exposures[i,]~data.exposures[i,],xlab="Exposure",ylab="Prop.Exposure",main=sig,pch=16)
+    plot(exposures[i,]~data.exposures[i,],xlab="Exposure",ylab="Proportion of exposure",main=sig,pch=16)
 
     #sig.df <- df[df$Signature==sig,]
 

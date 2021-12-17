@@ -86,7 +86,7 @@ ComponentDiagnosticPlotting <- function(retval,
 
 
 
-  grDevices::pdf(file.path(out.dir,"component.distribution.in.posterior.samples.pdf"))
+  grDevices::pdf(file.path(out.dir,"diagnostics.component.distribution.in.posterior.samples.pdf"))
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
   hdpx::plot_component_posterior_samples(components = retval$signature,
                                          retval = sigmatchretval)
