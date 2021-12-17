@@ -23,7 +23,7 @@ BuildManual: no
 biocViews:
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
 Imports: hdpx (>= 0.3.4),

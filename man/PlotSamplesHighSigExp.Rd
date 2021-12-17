@@ -12,7 +12,7 @@ PlotSamplesHighSigExp(
   hdpsample,
   input.catalog,
   col_comp = NULL,
-  incl_numdata_plot = TRUE,
+  incl_numdata_plot = F,
   ylab_numdata = "Number of data items",
   ylab_exp = "Component exposure",
   leg.title = "Component",
