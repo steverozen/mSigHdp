@@ -18,7 +18,7 @@ PlotSamplesHighSigExp(
   leg.title = "Component",
   cex.names = 0.6,
   cex.axis = 0.7,
-  mar = c(1, 4, 2, 0.5),
+  mar = c(4, 4, 2, 0.5),
   oma = c(1.5, 1.5, 1, 1)
 )
 }

@@ -27,7 +27,7 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
                                   ylab_numdata="Number of data items",
                                   ylab_exp="Component exposure",
                                   leg.title="Component", cex.names=0.6,
-                                  cex.axis=0.7, mar=c(1, 4, 2, 0.5),
+                                  cex.axis=0.7, mar=c(4, 4, 2, 0.5),
                                   oma=c(1.5, 1.5, 1, 1)){
 
   # input checks
@@ -143,7 +143,7 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
   ##for each signature, plotting the top 5 tumors
   for(i in 1:nrow(data.exposures)){
     dp_order_sig <- order(exposures[i,], decreasing=TRUE)
-    this.par <- par(mfrow=c(2, 1), mar=mar, oma=oma, cex.axis=cex.axis, las=1)
+    this.par <- par(mfrow = c(1, 1),mar=mar, oma=oma, cex.axis=cex.axis, las=1)
 
     this.col <- rep("grey",length(col_comp))
     this.col[i] <- col_comp[i]
@@ -157,10 +157,11 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
 
     on.exit(par(this.par))
 
-    old.par <- par(mfrow = c(6, 1), mar = c(2, 2, 2, 2), oma = c(2, 2, 2, 2))
+    old.par <- par(mfrow = c(6, 1),mar = c(3,3, 2, 1), oma = c(1,1, 2, 1),tck=0)
     on.exit(par(old.par))
 
-    ICAMS::PlotCatalog(ICAMS::as.catalog(signature[,i,drop=FALSE],infer.rownames = T,catalog.type = "counts.signature"))
+    ICAMS::PlotCatalog(ICAMS::as.catalog(signature[,i,drop=FALSE],infer.rownames = T,catalog.type = "counts.signature"),
+                       ,grid = F,xlabels = F,cex = 0.8)
 
     max.sample <- min(5, ncol(input.catalog))
 
@@ -169,7 +170,12 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
     this.prop <- round(this.prop,3)
     colnames(this.catalog) <- paste0(colnames(this.catalog),"(",this.prop,")")
     for (j in 1:ncol(this.catalog)) {
-      ICAMS::PlotCatalog(ICAMS::as.catalog(this.catalog[ , j, drop = FALSE]))
+      if(j == ncol(this.catalog)){
+        ICAMS::PlotCatalog(ICAMS::as.catalog(this.catalog[ , j, drop = FALSE]),grid = F,upper=F,cex = 0.8)
+      }else{
+        ICAMS::PlotCatalog(ICAMS::as.catalog(this.catalog[ , j, drop = FALSE]),grid = F,upper=F,xlabels = F,cex = 0.8)
+      }
+
     }
   }
 }
