@@ -35,12 +35,13 @@ ComponentDiagnosticPlotting <- function(retval,
   lapply(chains, hdpx::plot_numcluster, bty = "L")
   grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
+  #Old diagnostic plot. we removed it because it is not informative
+  #grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
   # This is the number of mutations assigned as a function of
   # the number of raw clusters
-  par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
-  lapply(chains, hdpx::plot_data_assigned, bty = "L")
-  grDevices::dev.off()
+  #par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
+  #lapply(chains, hdpx::plot_data_assigned, bty = "L")
+  #grDevices::dev.off()
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"),paper = "a4")
   myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)

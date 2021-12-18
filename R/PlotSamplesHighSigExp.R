@@ -86,7 +86,7 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
   num_leg_col <- floor(sqrt(length(inc)))
 
   ##These are not informative. Removed before submit the manuscript
-  if(F){
+  if(FALSE){
     if (incl_numdata_plot){
       par(mfrow=c(2, 1), mar=mar, oma=oma, cex.axis=cex.axis, las=2)
 
@@ -123,7 +123,8 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
   data.exposures <- data.exposures[,which(colSums(input.catalog)>numdata.cutoff),drop=F]##exclude extremely low samples
   exposures <- exposures[,which(colSums(input.catalog)>numdata.cutoff),drop=F]
   input.catalog <- input.catalog[,which(colSums(input.catalog)>numdata.cutoff),drop=F]
-  x <- barplot(rowSums(data.exposures), las=2,cex.names = 0.8) # Do not plot any axes
+  ##because hdp assignment does not have sparsity control, we decided not show much about its assignment in diagnostic plots
+  #x <- barplot(rowSums(data.exposures), las=2,cex.names = 0.8) # Do not plot any axes
 
 
   Signature <- Sample <- Exposure <- Tumor <- NULL
