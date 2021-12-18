@@ -86,7 +86,7 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
   num_leg_col <- floor(sqrt(length(inc)))
 
   ##These are not informative. Removed before submit the manuscript
-  if(FALSE){
+  if(F){
     if (incl_numdata_plot){
       par(mfrow=c(2, 1), mar=mar, oma=oma, cex.axis=cex.axis, las=2)
 
