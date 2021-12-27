@@ -89,20 +89,20 @@ AnalyzeAndPlotretval <- function(retval,
     utils::write.csv(data.frame(signature.post.samp.number)
                      ,file = file.path(out.dir, "signature.post.samp.number.csv"),row.names = F,quote=F)
 
-    noise.signature <- retval$noise.signature
-    if(!is.null(ncol(noise.signature))&&(ncol(data.frame(noise.signature))>0)){
+    low.confidence.signature <- retval$low.confidence.signature
+    if(!is.null(ncol(low.confidence.signature))&&(ncol(data.frame(low.confidence.signature))>0)){
 
-      noise.signature <- apply(noise.signature,2,function(x)x/sum(x))
+      low.confidence.signature <- apply(low.confidence.signature,2,function(x)x/sum(x))
       noise.post.samp.number <- retval$noise.post.samp.number
-      noise.signature <- data.frame(noise.signature)
-      colnames(noise.signature) <- paste0("noise hdp.",1:ncol(noise.signature))
-      noise.post.samp.number[,1] <- colnames(noise.signature)
-      row.names(noise.signature) <- NULL
+      low.confidence.signature <- data.frame(low.confidence.signature)
+      colnames(low.confidence.signature) <- paste0("low confidence hdp.",1:ncol(low.confidence.signature))
+      noise.post.samp.number[,1] <- colnames(low.confidence.signature)
+      row.names(low.confidence.signature) <- NULL
 
-      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(noise.signature,infer.rownames = T,catalog.type = "counts.signature"),
-                              file.path(out.dir, "noise.signatures.pdf"))
+      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(low.confidence.signature,infer.rownames = T,catalog.type = "counts.signature"),
+                              file.path(out.dir, "low.confidence.signatures.pdf"))
 
-      utils::write.csv(data.frame(noise.post.samp.number),file = file.path(out.dir, "noise.signature.post.samp.number.csv"),row.names = F,quote=F)
+      utils::write.csv(data.frame(noise.post.samp.number),file = file.path(out.dir, "low.confidence.signature.post.samp.number.csv"),row.names = F,quote=F)
 
     }
 

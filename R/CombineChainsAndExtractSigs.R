@@ -31,19 +31,19 @@
 #'      from the posterior sampling chains into "components" i.e. signatures;
 #'      passed to \code{\link[hdpx]{extract_components_from_clusters}}.
 #'
-#' @param confident.prop Pass to \code{\link[hdpx]{interpret_components}}.
+#' @param high.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
 #'                       clusters with at least \code{confident.prop} of posterior
-#'                       samples are high confident signatures
-#' @param noise.prop Pass to \code{\link[hdpx]{interpret_components}}.
-#'                   Clusters with less than \code{noise.prop} of posterior samples
-#'                  are noise signatures
+#'                       samples are signatures with high confidence
+#' @param moderate.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
+#'                   Clusters with less than \code{moderate.confidence.prop} of posterior samples
+#'                  are signatures with low confidence
 #' @param hc.cutoff Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 #'                  height of hierarchical clustering dendrogram
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
-#'             rows are mutation types, columns are signatures including high confident signatures -'hdp' signatures
-#'            and moderate confident signatures - 'potential hdp' signatures.}
+#'             rows are mutation types, columns are signatures including high confidence signatures -'hdp' signatures
+#'            and moderate confidence signatures - 'potential hdp' signatures if there is any.}
 #'
 #' \item{signature.post.samp.number}{A dataframe with two columns. The first column corresponds to each signature
 #'                                   in \code{signature} and the second columns contains the number of posterior
@@ -56,16 +56,16 @@
 #' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
 #'            rows are signatures, columns are samples (e.g. tumors).}
 #'
-#' \item{noise.signature}{The extracted signature profiles as a matrix; rows are mutation types,
-#'                        columns are signatures with less than \code{noise.prop} of posterior samples.}
+#' \item{low.confidence.signature}{The extracted signature profiles as a matrix; rows are mutation types,
+#'                        columns are signatures with less than \code{moderate.confidence.prop} of posterior samples.}
 #'
-#' \item{noise.post.samp.number}{A data frame with two columns. The first column corresponds to each signature
-#'                                   in \code{noise.signature} and the second columns contains the number of posterior
+#' \item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds to each signature
+#'                                   in \code{low.confidence.signature} and the second columns contains the number of posterior
 #'                                   samples that found the raw clusters contributing to the signature.}
 #'
-#' \item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds to the sum of
+#' \item{low.confidence.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds to the sum of
 #'                      all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters contributing to each
-#'                      signature in code{noise.signature}}
+#'                      signature in code{low.confidence.signature}}
 #'
 #' \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
 #' }
@@ -78,8 +78,8 @@ CombineChainsAndExtractSigs <-
            multi.types,
            verbose             = TRUE,
            cos.merge           = 0.9,
-           confident.prop      = 0.9,
-           noise.prop          = 0.1,
+           high.confidence.prop      = 0.9,
+           moderate.confidence.prop          = 0.1,
            hc.cutoff           = 0.10
   ) {
     if (mode(input.catalog) == "character") {
@@ -113,9 +113,9 @@ CombineChainsAndExtractSigs <-
     }
 
     intepret.comp.retval <-  hdpx::interpret_components(multi.chains.retval = multi.chains.retval,
-                                                       confident.prop      = confident.prop,
-                                                       noise.prop          = noise.prop,
-                                                       verbose            = verbose)
+                                                        high.confidence.pro      = high.confidence.prop,
+                                                        moderate.confidence.prop          = moderate.confidence.prop,
+                                                        verbose            = verbose)
 
 
     confidentSignatures <- data.frame(intepret.comp.retval$high_confident_components)
@@ -165,9 +165,9 @@ CombineChainsAndExtractSigs <-
                           signature.post.samp.number  = combined.stats,
                           signature.cdc               = combined.cdc,
                           exposureProbs               = exposureProbs,
-                          noise.signature             = intepret.comp.retval$noise_components,
-                          noise.post.samp.number      = intepret.comp.retval$noise_components_post_number,
-                          noise.cdc                   = intepret.comp.retval$noise_components_cdc,
+                          low.confidence.signature             = intepret.comp.retval$low_confidence_components,
+                          low.confidence.post.samp.number      = intepret.comp.retval$low_confidence_components_post_number,
+                          low.confidence.cdc                   = intepret.comp.retval$low_confidence_components_cdc,
                           extracted.retval            = multi.chains.retval)))
 
   }

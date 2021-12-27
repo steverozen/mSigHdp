@@ -25,15 +25,15 @@
 #' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
 #'                      rows are signatures, columns are samples (e.g. tumors).}
 #'
-#' \item{noise.signature}{The extracted signature profiles as a matrix; rows are mutation types,
-#'                        columns are signatures with less than \code{noise.prop} of posterior samples }
+#' \item{low.confidence.signature}{The extracted signature profiles as a matrix; rows are mutation types,
+#'                        columns are signatures with less than \code{moderate.confidence.prop} of posterior samples }
 #'
-#' \item{noise.post.samp.number}{A data frame with two columns. The first column corresponds
+#' \item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
 #'                               to each signature in \code{noise.signature} and the second
 #'                               column contains the number of posterior samples that found
 #'                               the raw clusters contributing to the signature.}
 #'
-#' \item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds
+#' \item{low.confidence.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds
 #'                  to the sum of all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters
 #'                  contributing to each signature in code{noise.signature}}
 #'
@@ -44,35 +44,35 @@
 #' @export
 
 RunHdpxParallel <- function(input.catalog,
-                           seedNumber          = 123,
-                           K.guess,
-                           multi.types         = FALSE,
-                           verbose             = TRUE,
-                           burnin              = 5000,
-                           burnin.multiplier   = 2,
-                           burnin.checkpoint   = FALSE,
-                           post.n              = 200,
-                           post.space          = 100,
-                           post.cpiter         = 3,
-                           post.verbosity      = 0,
-                           CPU.cores           = 20,
-                           num.child.process   = 20,
-                           confident.prop      = 0.9,
-                           noise.prop          = 0.5,
-                           hc.cutoff           = 0.10,
-                           ground.truth.sig    = NULL,
-                           ground.truth.exp    = NULL,
-                           overwrite           = TRUE,
-                           out.dir             = NULL,
-                           gamma.alpha         = 1,
-                           gamma.beta          = 20,
-                           gamma0.alpha        = gamma.alpha,
-                           gamma0.beta         = gamma.beta,
-                           checkpoint.chlist   = TRUE,
-                           checkpoint.1.chain  = TRUE,
-                           prior.sigs          = NULL,
-                           prior.pseudoc       = NULL,
-                           posterior.checkpoint= FALSE){
+                            seedNumber          = 123,
+                            K.guess,
+                            multi.types         = FALSE,
+                            verbose             = TRUE,
+                            burnin              = 5000,
+                            burnin.multiplier   = 2,
+                            burnin.checkpoint   = FALSE,
+                            post.n              = 200,
+                            post.space          = 100,
+                            post.cpiter         = 3,
+                            post.verbosity      = 0,
+                            CPU.cores           = 20,
+                            num.child.process   = 20,
+                            high.confidence.prop      = 0.9,
+                            moderate.confidence.prop = 0.5,
+                            hc.cutoff           = 0.10,
+                            ground.truth.sig    = NULL,
+                            ground.truth.exp    = NULL,
+                            overwrite           = TRUE,
+                            out.dir             = NULL,
+                            gamma.alpha         = 1,
+                            gamma.beta          = 20,
+                            gamma0.alpha        = gamma.alpha,
+                            gamma0.beta         = gamma.beta,
+                            checkpoint.chlist   = TRUE,
+                            checkpoint.1.chain  = TRUE,
+                            prior.sigs          = NULL,
+                            prior.pseudoc       = NULL,
+                            posterior.checkpoint= FALSE){
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
@@ -110,12 +110,12 @@ RunHdpxParallel <- function(input.catalog,
 
   multi.chains.etc <-
     CombineChainsAndExtractSigs(chlist,
-                           input.catalog  = input.catalog,
-                           multi.types    = multi.types,
-                           verbose        = verbose,
-                           confident.prop = confident.prop,
-                           noise.prop     = noise.prop,
-                           hc.cutoff      = hc.cutoff)
+                                input.catalog  = input.catalog,
+                                multi.types    = multi.types,
+                                verbose        = verbose,
+                                high.confidence.prop = high.confidence.prop,
+                                moderate.confidence.prop     = moderate.confidence.prop,
+                                hc.cutoff      = hc.cutoff)
 
   # Step 3: Plot diagnostic plots, signatures, exposures
   # and compare with ground truth signature and exposures.
