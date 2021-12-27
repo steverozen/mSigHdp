@@ -19,8 +19,8 @@ RunHdpxParallel(
   post.verbosity = 0,
   CPU.cores = 20,
   num.child.process = 20,
-  confident.prop = 0.9,
-  noise.prop = 0.5,
+  high.confidence.prop = 0.9,
+  moderate.confidence.prop = 0.5,
   hc.cutoff = 0.1,
   ground.truth.sig = NULL,
   ground.truth.exp = NULL,
@@ -99,13 +99,13 @@ No need to change unless for development purpose}
 \item{num.child.process}{Number of posterior sampling chains; can set to
 1 for testing. We recommend 20 for real data analysis}
 
-\item{confident.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
+\item{high.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
 clusters with at least \code{confident.prop} of posterior
-samples are high confident signatures}
+samples are signatures with high confidence}
 
-\item{noise.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
-Clusters with less than \code{noise.prop} of posterior samples
-are noise signatures}
+\item{moderate.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
+Clusters with less than \code{moderate.confidence.prop} of posterior samples
+are signatures with low confidence}
 
 \item{hc.cutoff}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 height of hierarchical clustering dendrogram}
@@ -189,15 +189,15 @@ matrices of the raw clusters contributing to each signature in code{signature}}
 \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
 rows are signatures, columns are samples (e.g. tumors).}
 
-\item{noise.signature}{The extracted signature profiles as a matrix; rows are mutation types,
-columns are signatures with less than \code{noise.prop} of posterior samples }
+\item{low.confidence.signature}{The extracted signature profiles as a matrix; rows are mutation types,
+columns are signatures with less than \code{moderate.confidence.prop} of posterior samples }
 
-\item{noise.post.samp.number}{A data frame with two columns. The first column corresponds
+\item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
 to each signature in \code{noise.signature} and the second
 column contains the number of posterior samples that found
 the raw clusters contributing to the signature.}
 
-\item{noise.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds
+\item{low.confidence.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds
 to the sum of all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters
 contributing to each signature in code{noise.signature}}
 
