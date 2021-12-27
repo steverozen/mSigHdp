@@ -9,6 +9,7 @@ Prepare for \code{\link[hdpx]{hdp_init}}}
 PrepInit(
   multi.types,
   input.catalog,
+  IS.ICAMS = TRUE,
   verbose = TRUE,
   K.guess,
   gamma.alpha = 1,
@@ -38,6 +39,9 @@ and one grandparent node.}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
+
+\item{IS.ICAMS}{If \code{TRUE} using ICAMS functions to plot, read and write signatures. Set to \code{FALSE}
+if your input cannot be taken by ICAMS.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 

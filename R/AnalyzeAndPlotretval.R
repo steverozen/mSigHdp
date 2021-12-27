@@ -25,6 +25,9 @@
 #' @param diagnostic.plot If \code{TRUE} plot diagnostic plot.
 #'    This is optional because there are cases having error
 #'
+#'#' @param IS.ICAMS If \code{TRUE} using ICAMS functions to plot, read and write signatures. Set to \code{FALSE}
+#'   if your input cannot be taken by ICAMS.
+#'
 #' @export
 #'
 #'
@@ -35,7 +38,8 @@ AnalyzeAndPlotretval <- function(retval,
                                  ground.truth.exp = NULL,
                                  verbose          = TRUE,
                                  overwrite        = TRUE,
-                                 diagnostic.plot  = TRUE) {
+                                 diagnostic.plot  = TRUE,
+                                 IS.ICAMS         = TRUE) {
 
   if (dir.exists(out.dir)) {
     if (!overwrite) stop(out.dir, " already exits")
@@ -57,14 +61,23 @@ AnalyzeAndPlotretval <- function(retval,
   input.catalog <- input.catalog[,colSums(input.catalog)>0]
 
   if (verbose) message("Writing signatures")
-  extractedSignatures <- ICAMS::as.catalog(retval$signature,
-                                           region       = "unknown",
-                                           catalog.type = "counts.signature")
-  ICAMS::WriteCatalog(extractedSignatures,
-                      file.path(out.dir,"extracted.signatures.csv"))
+  if(IS.ICAMS == T){
+    extractedSignatures <- ICAMS::as.catalog(retval$signature,
+                                             region       = "unknown",
+                                             catalog.type = "counts.signature")
+    ICAMS::WriteCatalog(extractedSignatures,
+                        file.path(out.dir,"extracted.signatures.csv"))
 
-  ICAMS::PlotCatalogToPdf(extractedSignatures,
-                          file.path(out.dir, "extracted.signature.pdf"))
+    ICAMS::PlotCatalogToPdf(extractedSignatures,
+                            file.path(out.dir, "extracted.signature.pdf"))
+
+  }else{
+    extractedSignatures <- retval$signature
+    utils::write.csv(extractedSignatures,file.path(out.dir,"extracted.signatures.csv"),
+                     row.names=F,quote=F)
+  }
+
+
 
   if (verbose) message("Writing exposures")
   exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
@@ -93,89 +106,99 @@ AnalyzeAndPlotretval <- function(retval,
     if(!is.null(ncol(low.confidence.signature))&&(ncol(data.frame(low.confidence.signature))>0)){
 
       low.confidence.signature <- apply(low.confidence.signature,2,function(x)x/sum(x))
-      noise.post.samp.number <- retval$noise.post.samp.number
+      low.confidence.signature.post.samp.number <- retval$low.confidence.post.samp.number
       low.confidence.signature <- data.frame(low.confidence.signature)
       colnames(low.confidence.signature) <- paste0("low confidence hdp.",1:ncol(low.confidence.signature))
-      noise.post.samp.number[,1] <- colnames(low.confidence.signature)
+      low.confidence.signature.post.samp.number[,1] <- colnames(low.confidence.signature)
       row.names(low.confidence.signature) <- NULL
+      if(IS.ICAMS == T){
 
-      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(low.confidence.signature,infer.rownames = T,catalog.type = "counts.signature"),
-                              file.path(out.dir, "low.confidence.signatures.pdf"))
-
-      utils::write.csv(data.frame(noise.post.samp.number),file = file.path(out.dir, "low.confidence.signature.post.samp.number.csv"),row.names = F,quote=F)
-
-    }
-
-  }
-
-  if(!is.null(ground.truth.exp)){
-    ##read ground.truth.exp
-    if (mode(ground.truth.exp) == "character") {
-      if (verbose) {
-        message("Reading ground truth exposures from ",
-                ground.truth.exp)
+        ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(low.confidence.signature,infer.rownames = T,catalog.type = "counts.signature"),
+                                file.path(out.dir, "low.confidence.signatures.pdf"))
+        ICAMS::WriteCatalog(ICAMS::as.catalog(low.confidence.signature,infer.rownames = T,catalog.type = "counts.signature"),
+                            file.path(out.dir,"low.confidence.signatures.csv"))
+      }else{
+        utils::write.csv(low.confidence.signature,file.path(out.dir,"low.confidence.signatures.csv"),
+                         row.names=F,quote=F)
       }
-      ground.truth.exp <- ICAMSxtra::ReadExposure(ground.truth.exp)
+
+
+      utils::write.csv(data.frame(low.confidence.signature.post.samp.number),file = file.path(out.dir, "low.confidence.signature.post.samp.number.csv"),row.names = F,quote=F)
+
     }
 
-    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
-                                 file.path(out.dir,"ground.truth.exposure.count.pdf"))
-
-    ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
-                                 file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
-                                 plot.proportion = TRUE)
   }
-
-  ###here is optional.
-
-
-  # Do this early to catch any possible error before we do a lot
-  # of computation
-  # Exposure related plotting
-  if(!is.null(ground.truth.sig)){
-    ##read ground.truth.exp
-    if (mode(ground.truth.sig) == "character") {
-      if (verbose) {
-        message("Reading ground truth signatures from ",
-                ground.truth.sig)
+  if(IS.ICAMS == T){
+    if(!is.null(ground.truth.exp)){
+      ##read ground.truth.exp
+      if (mode(ground.truth.exp) == "character") {
+        if (verbose) {
+          message("Reading ground truth exposures from ",
+                  ground.truth.exp)
+        }
+        ground.truth.exp <- ICAMSxtra::ReadExposure(ground.truth.exp)
       }
-      ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig)
+
+      ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                   file.path(out.dir,"ground.truth.exposure.count.pdf"))
+
+      ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(ground.truth.exp),
+                                   file.path(out.dir,"ground.truth.exposure.proportion.pdf"),
+                                   plot.proportion = TRUE)
     }
-    stopifnot(is.matrix(ground.truth.sig))
 
-    sigAnalysis0 <- ICAMSxtra::MatchSigsAndRelabel(
-      ex.sigs  = retval$signature,
-      gt.sigs  = ground.truth.sig,
-      exposure = ground.truth.exp)
+    ###here is optional.
 
-    # Writes bi-directional matching and cos.sim calculation
-    utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
-    utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
 
-    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$gt.sigs,
-                                              catalog.type = "counts.signature"), # Need to fix this
-                            file.path(out.dir, "ground.truth.sigs.w0.pdf"))
+    # Do this early to catch any possible error before we do a lot
+    # of computation
+    # Exposure related plotting
+    if(!is.null(ground.truth.sig)){
+      ##read ground.truth.exp
+      if (mode(ground.truth.sig) == "character") {
+        if (verbose) {
+          message("Reading ground truth signatures from ",
+                  ground.truth.sig)
+        }
+        ground.truth.sig <- ICAMS::ReadCatalog(ground.truth.sig)
+      }
+      stopifnot(is.matrix(ground.truth.sig))
 
-    ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$ex.sigs,
-                                              catalog.type = "counts.signature"),
-                            file.path(out.dir, "extracted.sigs.w0.pdf"))
-    utils::capture.output(
-      cat("Call\n"),
-      match.call(),
-      cat("\nAverage cosine similarity\n"),
-      sigAnalysis0$averCosSim,
-      cat("\nAverage cosine similarity to each ground-truth signature\n"),
-      sigAnalysis0$cosSim,
-      cat("\nNumber of ground-truth signatures\n"),
-      ncol(sigAnalysis0$gt.sigs),
-      cat("\nNumber of extracted signatures\n"),
-      ncol(sigAnalysis0$ex.sigs),
-      cat("\nsigAnalysis0$extracted.with.no.best.match\n"),
-      sigAnalysis0$extracted.with.no.best.match,
-      cat("\nsigAnalysis0$ground.truth.with.no.best.match\n"),
-      sigAnalysis0$ground.truth.with.no.best.match,
-      file = file.path(out.dir,"other.results.txt"))
+      sigAnalysis0 <- ICAMSxtra::MatchSigsAndRelabel(
+        ex.sigs  = retval$signature,
+        gt.sigs  = ground.truth.sig,
+        exposure = ground.truth.exp)
+
+      # Writes bi-directional matching and cos.sim calculation
+      utils::write.csv(sigAnalysis0$match1, file = file.path(out.dir, "match1.w0.csv"))
+      utils::write.csv(sigAnalysis0$match2, file = file.path(out.dir, "match2.w0.csv"))
+
+      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$gt.sigs,
+                                                catalog.type = "counts.signature"), # Need to fix this
+                              file.path(out.dir, "ground.truth.sigs.w0.pdf"))
+
+      ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(sigAnalysis0$ex.sigs,
+                                                catalog.type = "counts.signature"),
+                              file.path(out.dir, "extracted.sigs.w0.pdf"))
+      utils::capture.output(
+        cat("Call\n"),
+        match.call(),
+        cat("\nAverage cosine similarity\n"),
+        sigAnalysis0$averCosSim,
+        cat("\nAverage cosine similarity to each ground-truth signature\n"),
+        sigAnalysis0$cosSim,
+        cat("\nNumber of ground-truth signatures\n"),
+        ncol(sigAnalysis0$gt.sigs),
+        cat("\nNumber of extracted signatures\n"),
+        ncol(sigAnalysis0$ex.sigs),
+        cat("\nsigAnalysis0$extracted.with.no.best.match\n"),
+        sigAnalysis0$extracted.with.no.best.match,
+        cat("\nsigAnalysis0$ground.truth.with.no.best.match\n"),
+        sigAnalysis0$ground.truth.with.no.best.match,
+        file = file.path(out.dir,"other.results.txt"))
+    }
   }
+
 
   if(diagnostic.plot){
 
@@ -184,10 +207,11 @@ AnalyzeAndPlotretval <- function(retval,
       ##this calls the diagnostic plotting function
       ##compatible with ML's component extraction
 
-      mSigHdp::ComponentDiagnosticPlotting(retval  = retval,
-                                      input.catalog = input.catalog,
-                                      out.dir = paste0(out.dir,"/Diagnostic_Plots"),
-                                      verbose = verbose)
+      mSigHdp::ComponentDiagnosticPlotting(retval        = retval,
+                                           input.catalog = input.catalog,
+                                           IS.ICAMS      = IS.ICAMS,
+                                           out.dir       = paste0(out.dir,"/Diagnostic_Plots"),
+                                           verbose       = verbose)
     }else{
       dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
       ##this calls the diagnostic plotting function

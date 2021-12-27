@@ -5,7 +5,13 @@
 \title{Diagnostic plot for a hdpSampleMulti object. This function is
 compatible with the return object from Liu's extract_components_from_clusters}
 \usage{
-ComponentDiagnosticPlotting(retval, input.catalog, out.dir, verbose)
+ComponentDiagnosticPlotting(
+  retval,
+  input.catalog,
+  out.dir,
+  verbose,
+  IS.ICAMS = T
+)
 }
 \arguments{
 \item{retval}{Return from \code{\link{CombineChainsAndExtractSigs}}}

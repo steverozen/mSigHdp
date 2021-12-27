@@ -39,10 +39,14 @@
 #'   the Dirichlet process concentration parameters (\eqn{\gamma_0})
 #'   for \eqn{G_0}.
 #'
+#' @param IS.ICAMS If \code{TRUE} using ICAMS functions to plot, read and write signatures. Set to \code{FALSE}
+#'   if your input cannot be taken by ICAMS.
+#'
 #' @export
 
 PrepInit <- function(multi.types,
                      input.catalog,
+                     IS.ICAMS     = TRUE,
                      verbose      = TRUE,
                      K.guess,
                      gamma.alpha  = 1,
@@ -52,7 +56,11 @@ PrepInit <- function(multi.types,
 
   if (mode(input.catalog) == "character") {
     if (verbose) message("Reading input catalog file ", input.catalog)
-    input.catalog <- ICAMS::ReadCatalog(input.catalog)
+    if(IS.ICAMS==T){
+      input.catalog <- ICAMS::ReadCatalog(input.catalog)
+    }else{
+      input.catalog <- data.table::fread(input.catalog)
+    }
   } else {
     input.catalog <- input.catalog
   }

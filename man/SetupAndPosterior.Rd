@@ -6,6 +6,7 @@
 \usage{
 SetupAndPosterior(
   input.catalog,
+  IS.ICAMS = IS.ICAMS,
   seedNumber = 1,
   K.guess,
   multi.types = FALSE,
@@ -30,6 +31,9 @@ SetupAndPosterior(
 \arguments{
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
+
+\item{IS.ICAMS}{If \code{TRUE} using ICAMS functions to plot, read and write signatures. Set to \code{FALSE}
+if your input cannot be taken by ICAMS.}
 
 \item{seedNumber}{A random seeds passed to \code{\link[hdpx]{dp_activate}}.}
 

@@ -13,7 +13,8 @@ AnalyzeAndPlotretval(
   ground.truth.exp = NULL,
   verbose = TRUE,
   overwrite = TRUE,
-  diagnostic.plot = TRUE
+  diagnostic.plot = TRUE,
+  IS.ICAMS = TRUE
 )
 }
 \arguments{
@@ -40,7 +41,10 @@ If \code{NULL} skip checks that need this information.}
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
 
 \item{diagnostic.plot}{If \code{TRUE} plot diagnostic plot.
-This is optional because there are cases having error}
+This is optional because there are cases having error
+
+#' @param IS.ICAMS If \code{TRUE} using ICAMS functions to plot, read and write signatures. Set to \code{FALSE}
+if your input cannot be taken by ICAMS.}
 }
 \description{
 Evaluate and plot retval from \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}

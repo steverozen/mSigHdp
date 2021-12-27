@@ -44,6 +44,7 @@
 #' @export
 
 RunHdpxParallel <- function(input.catalog,
+                            IS.ICAMS            = T,
                             seedNumber          = 123,
                             K.guess,
                             multi.types         = FALSE,
@@ -80,6 +81,7 @@ RunHdpxParallel <- function(input.catalog,
 
   chlist <-
     MultipleSetupAndPosterior(input.catalog,
+                              IS.ICAMS            = IS.ICAMS,
                               seedNumber          = seedNumber,
                               K.guess             = K.guess,
                               multi.types         = multi.types,
@@ -124,6 +126,7 @@ RunHdpxParallel <- function(input.catalog,
 
     AnalyzeAndPlotretval(retval                = multi.chains.etc,
                          input.catalog         = input.catalog,
+                         IS.ICAMS              = IS.ICAMS,
                          out.dir               = out.dir,
                          ground.truth.sig      = ground.truth.sig,
                          ground.truth.exp      = ground.truth.exp,

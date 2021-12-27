@@ -18,7 +18,8 @@
 ComponentDiagnosticPlotting <- function(retval,
                                         input.catalog,
                                         out.dir,
-                                        verbose){
+                                        verbose,
+                                        IS.ICAMS=T){
   multi <- retval$extracted.retval[["multi.chains"]] # class hdpSampleMulti
   chains <- hdpx::chains(multi)      # list of hdpSampleChain
 
@@ -43,15 +44,18 @@ ComponentDiagnosticPlotting <- function(retval,
   #lapply(chains, hdpx::plot_data_assigned, bty = "L")
   #grDevices::dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"),paper = "a4")
-  myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
-  graphics::par(mfrow=c(1,1), mar=c(1, 1, 2, 1))
+  if(IS.ICAMS == T){
+    grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"),paper = "a4")
+    myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
+    graphics::par(mfrow=c(1,1), mar=c(1, 1, 2, 1))
 
-  mSigHdp::PlotSamplesHighSigExp(retval           = retval,
-                                 hdpsample        = multi,
-                                 input.catalog    = input.catalog)
+    mSigHdp::PlotSamplesHighSigExp(retval           = retval,
+                                   hdpsample        = multi,
+                                   input.catalog    = input.catalog)
 
-  grDevices::dev.off()
+    grDevices::dev.off()
+  }
+
 
   #because extract_component_from_clusters extract informations across chains
   #so the chain information was not recorded as NR's hdp_extract_components
