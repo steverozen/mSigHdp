@@ -1,5 +1,5 @@
 
-test_that("RunHdpParallel-fast96", {
+test_that("RunHdpxParallel-fast96", {
 
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/ground.truth.syn.catalog.csv")

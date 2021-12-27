@@ -100,7 +100,7 @@ No need to change unless for development purpose}
 1 for testing. We recommend 20 for real data analysis}
 
 \item{high.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
-clusters with at least \code{confident.prop} of posterior
+clusters with at least \code{high.confidence.prop} of posterior
 samples are signatures with high confidence}
 
 \item{moderate.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.

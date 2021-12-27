@@ -48,7 +48,7 @@ from the posterior sampling chains into "components" i.e. signatures;
 passed to \code{\link[hdpx]{extract_components_from_clusters}}.}
 
 \item{high.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
-clusters with at least \code{confident.prop} of posterior
+clusters with at least \code{high.confidence.prop} of posterior
 samples are signatures with high confidence}
 
 \item{moderate.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.

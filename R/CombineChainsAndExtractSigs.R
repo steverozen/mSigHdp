@@ -32,7 +32,7 @@
 #'      passed to \code{\link[hdpx]{extract_components_from_clusters}}.
 #'
 #' @param high.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
-#'                       clusters with at least \code{confident.prop} of posterior
+#'                       clusters with at least \code{high.confidence.prop} of posterior
 #'                       samples are signatures with high confidence
 #' @param moderate.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
 #'                   Clusters with less than \code{moderate.confidence.prop} of posterior samples
@@ -118,7 +118,7 @@ CombineChainsAndExtractSigs <-
                                                         verbose            = verbose)
 
 
-    confidentSignatures <- data.frame(intepret.comp.retval$high_confident_components)
+    confidentSignatures <- data.frame(intepret.comp.retval$high_confidence_components)
 
     rownames(confidentSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
@@ -127,7 +127,7 @@ CombineChainsAndExtractSigs <-
 
     combinedSignatures <- confidentSignatures
 
-    potentialSignatures <- data.frame(intepret.comp.retval$moderate_components)
+    potentialSignatures <- data.frame(intepret.comp.retval$moderate_confidence_components)
 
     if(!is.null(potentialSignatures) && ncol(potentialSignatures)>0){
       potentialSignatures <- apply(potentialSignatures,2,function(x)x/sum(x))
@@ -141,10 +141,10 @@ CombineChainsAndExtractSigs <-
     }
 
     combinedSignatures <- apply(combinedSignatures,2,function(x)x/sum(x))
-    combined.stats <- rbind(intepret.comp.retval$high_confident_components_post_number,
-                            intepret.comp.retval$moderate_components_post_number)
-    combined.cdc  <- cbind(intepret.comp.retval$high_confident_components_cdc,
-                           intepret.comp.retval$moderate_components_cdc)
+    combined.stats <- rbind(intepret.comp.retval$high_confidence_components_post_number,
+                            intepret.comp.retval$moderate_confidence_components_post_number)
+    combined.cdc  <- cbind(intepret.comp.retval$high_confidence_components_cdc,
+                           intepret.comp.retval$moderate_confidence_components_cdc)
 
     if (verbose) message("extracting signatures exposures ", Sys.time())
 
