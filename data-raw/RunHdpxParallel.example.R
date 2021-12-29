@@ -35,7 +35,7 @@ retval <- RunHdpxParallel (
   seedNumber         = 123,
   K.guess            = 10,
   burnin.checkpoint  = TRUE,
-  post.burnin        = 1000,
+  burnin             = 1000,
 
   burnin.multiplier  = 2,
   # We recommend >= 10,000 burn-in iterations in total for real data. This toy
@@ -49,8 +49,7 @@ retval <- RunHdpxParallel (
   overwrite          = TRUE,
   gamma.alpha = 1,
   gamma.beta  = 20,
-  cos.merge = 0.90,
-  confident.prop = 0.9,
-  noise.prop = 0.5)
+  high.confidence.prop = 0.9,
+  moderate.confidence.prop = 0.9)
 
 save(retval, file = "RunHdpxParallel.retval.Rdata")
