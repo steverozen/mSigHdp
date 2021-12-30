@@ -9,12 +9,9 @@ AnalyzeAndPlotretval(
   retval,
   input.catalog,
   out.dir = NULL,
-  ground.truth.sig = NULL,
-  ground.truth.exp = NULL,
   verbose = TRUE,
   overwrite = TRUE,
-  diagnostic.plot = TRUE,
-  IS.ICAMS = TRUE
+  diagnostic.plot = TRUE
 )
 }
 \arguments{
@@ -27,24 +24,12 @@ path to file with input catalog}
 if \code{overwrite} is \code{FALSE} then
 abort if \code{out.dir} already exits.}
 
-\item{ground.truth.sig}{Optional. Either a string with the
-path to file with ground truth signatures or and
-\code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
-These are the signatures used to construct the ground truth spectra.}
-
-\item{ground.truth.exp}{Optional. Ground truth exposure matrix or
-path to file with ground truth exposures.
-If \code{NULL} skip checks that need this information.}
-
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
 
 \item{diagnostic.plot}{If \code{TRUE} plot diagnostic plot.
-This is optional because there are cases having error
-
-#' @param IS.ICAMS If \code{TRUE} using ICAMS functions to plot, read and write signatures. Set to \code{FALSE}
-if your input cannot be taken by ICAMS.}
+This is optional because there are cases having error}
 }
 \description{
 Evaluate and plot retval from \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}

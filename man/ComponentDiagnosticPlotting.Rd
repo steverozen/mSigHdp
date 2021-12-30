@@ -2,8 +2,7 @@
 % Please edit documentation in R/ComponentDiagnosticPlotting.R
 \name{ComponentDiagnosticPlotting}
 \alias{ComponentDiagnosticPlotting}
-\title{Diagnostic plot for a hdpSampleMulti object. This function is
-compatible with the return object from Liu's extract_components_from_clusters}
+\title{Generate multiple plots for for a hdpSampleMulti object.}
 \usage{
 ComponentDiagnosticPlotting(
   retval,
@@ -24,8 +23,16 @@ if \code{overwrite} is \code{FALSE} then
 abort if \code{out.dir} already exits.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
+
+\item{IS.ICAMS}{If TRUE, then plot diagnostics.hdp.signature.exposure.each.sample.pdf.}
 }
 \description{
-Diagnostic plot for a hdpSampleMulti object. This function is
-compatible with the return object from Liu's extract_components_from_clusters
+Generate multiple plots for for a hdpSampleMulti object.
+}
+\details{
+Generates the plots diagnostics.hdp.signature.exposure.each.sample.pdf,
+diagnostics.component.distribution.in.posterior.samples.pdf,
+diagnostics.likelihood.pdf,
+diagnostics.numcluster.pdf,
+diagnostics.signatures.pdf
 }

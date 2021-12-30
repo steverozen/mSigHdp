@@ -44,7 +44,6 @@
 #' @export
 
 RunHdpxParallel <- function(input.catalog,
-                            IS.ICAMS            = T,
                             seedNumber          = 123,
                             K.guess,
                             multi.types         = FALSE,
@@ -61,8 +60,6 @@ RunHdpxParallel <- function(input.catalog,
                             high.confidence.prop      = 0.9,
                             moderate.confidence.prop = 0.5,
                             hc.cutoff           = 0.10,
-                            ground.truth.sig    = NULL,
-                            ground.truth.exp    = NULL,
                             overwrite           = TRUE,
                             out.dir             = NULL,
                             gamma.alpha         = 1,
@@ -73,7 +70,12 @@ RunHdpxParallel <- function(input.catalog,
                             checkpoint.1.chain  = TRUE,
                             prior.sigs          = NULL,
                             prior.pseudoc       = NULL,
-                            posterior.checkpoint= FALSE){
+                            posterior.checkpoint= FALSE) {
+
+  # Step 0: Get the input.catalog and keeping track of
+  # whether it is an ICAMS catalog (encoded as an
+  # additional class).
+  input.catalog <- GetPossibleICAMSCatalog(input.catalog)
 
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
@@ -81,7 +83,6 @@ RunHdpxParallel <- function(input.catalog,
 
   chlist <-
     MultipleSetupAndPosterior(input.catalog,
-                              IS.ICAMS            = IS.ICAMS,
                               seedNumber          = seedNumber,
                               K.guess             = K.guess,
                               multi.types         = multi.types,
@@ -107,10 +108,10 @@ RunHdpxParallel <- function(input.catalog,
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
-  # multi.chains.etc has signatures, exposures, and multi.chains, a
+  # retval has signatures, exposures, and multi.chains, a
   # hdpSampleMulti-class object.
 
-  multi.chains.etc <-
+  retval <-
     CombineChainsAndExtractSigs(chlist,
                                 input.catalog  = input.catalog,
                                 multi.types    = multi.types,
@@ -119,20 +120,16 @@ RunHdpxParallel <- function(input.catalog,
                                 moderate.confidence.prop     = moderate.confidence.prop,
                                 hc.cutoff      = hc.cutoff)
 
-  # Step 3: Plot diagnostic plots, signatures, exposures
-  # and compare with ground truth signature and exposures.
+  # Step 3: Save and plot signatures, exposures, diagnostics
 
   if(!is.null(out.dir)) {
-
-    AnalyzeAndPlotretval(retval                = multi.chains.etc,
+    save(retval, input.catalog, file = file.path(out.dir, "hdp.retval.Rdata"))
+    AnalyzeAndPlotretval(retval                = retval,
                          input.catalog         = input.catalog,
-                         IS.ICAMS              = IS.ICAMS,
                          out.dir               = out.dir,
-                         ground.truth.sig      = ground.truth.sig,
-                         ground.truth.exp      = ground.truth.exp,
                          verbose               = verbose,
                          overwrite             = overwrite)
   }
-  return(invisible(multi.chains.etc))
+  return(invisible(retval))
 }
 

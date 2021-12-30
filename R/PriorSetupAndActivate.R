@@ -52,21 +52,11 @@ PriorSetupAndActivate <- function(prior.sigs,
                                   gamma0.beta       = gamma.beta,
                                   multi.types       = F,
                                   input.catalog,
-                                  IS.ICAMS          = T,
                                   verbose           = TRUE,
                                   seedNumber        = 1){
 
-  if (mode(input.catalog) == "character") {
-    if (verbose) message("Reading input catalog file ", input.catalog)
-    if(IS.ICAMS==T){
-      input.catalog <- ICAMS::ReadCatalog(input.catalog)
-    }else{
-      input.catalog <- data.table::fread(input.catalog)
-    }
-  } else {
-    input.catalog <- input.catalog
-  }
-  input.catalog <- input.catalog[,colSums(input.catalog)>0]
+
+  input.catalog <- GetInputCatalogAsMatrix(input.catalog)
   nps <- ncol(prior.sigs)
   number.channels <- nrow(prior.sigs)
   convSpectra <- t(input.catalog)

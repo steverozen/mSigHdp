@@ -6,7 +6,6 @@
 \usage{
 RunHdpxParallel(
   input.catalog,
-  IS.ICAMS = T,
   seedNumber = 123,
   K.guess,
   multi.types = FALSE,
@@ -23,8 +22,6 @@ RunHdpxParallel(
   high.confidence.prop = 0.9,
   moderate.confidence.prop = 0.5,
   hc.cutoff = 0.1,
-  ground.truth.sig = NULL,
-  ground.truth.exp = NULL,
   overwrite = TRUE,
   out.dir = NULL,
   gamma.alpha = 1,
@@ -41,9 +38,6 @@ RunHdpxParallel(
 \arguments{
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
-
-\item{IS.ICAMS}{If \code{TRUE} using ICAMS functions to plot, read and write signatures. Set to \code{FALSE}
-if your input cannot be taken by ICAMS.}
 
 \item{seedNumber}{A random seeds passed to \code{\link[hdpx]{dp_activate}}.}
 
@@ -113,15 +107,6 @@ are signatures with low confidence}
 
 \item{hc.cutoff}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 height of hierarchical clustering dendrogram}
-
-\item{ground.truth.sig}{Optional. Either a string with the
-path to file with ground truth signatures or and
-\code{\link[ICAMS]{ICAMS}} catalog with the ground truth signatures.
-These are the signatures used to construct the ground truth spectra.}
-
-\item{ground.truth.exp}{Optional. Ground truth exposure matrix or
-path to file with ground truth exposures.
-If \code{NULL} skip checks that need this information.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
 

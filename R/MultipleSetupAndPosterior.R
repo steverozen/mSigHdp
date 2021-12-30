@@ -20,7 +20,6 @@
 
 
 MultipleSetupAndPosterior <- function(input.catalog,
-                                      IS.ICAMS            = T,
                                       seedNumber          = 1,
                                       K.guess,
                                       multi.types         = FALSE,
@@ -51,7 +50,6 @@ MultipleSetupAndPosterior <- function(input.catalog,
     if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
     sample.chain <-SetupAndPosterior(
       input.catalog,
-      IS.ICAMS            = IS.ICAMS,
       seedNumber          = seedNumber,
       K.guess             = K.guess,
       multi.types         = multi.types,

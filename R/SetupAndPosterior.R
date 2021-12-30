@@ -36,7 +36,6 @@
 
 SetupAndPosterior <-
   function(input.catalog,
-           IS.ICAMS            = IS.ICAMS,
            seedNumber          = 1,
            K.guess,
            multi.types         = FALSE,
@@ -64,7 +63,6 @@ SetupAndPosterior <-
         stop('Prior signatures pseudo counts are not set')
       }else{
         hdp.state <- PriorSetupAndActivate(input.catalog = input.catalog,
-                                           IS.ICAMS      = IS.ICAMS,
                                            seedNumber    = seedNumber,
                                            K.guess       = K.guess,
                                            multi.types   = FALSE, ##multi.types=T doesn't work for now
@@ -79,7 +77,6 @@ SetupAndPosterior <-
 
     }else{
       hdp.state <- SetupAndActivate(input.catalog = input.catalog,
-                                    IS.ICAMS      = IS.ICAMS,
                                     seedNumber    = seedNumber,
                                     K.guess       = K.guess,
                                     multi.types   = multi.types,

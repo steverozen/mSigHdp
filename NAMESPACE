@@ -2,7 +2,6 @@
 
 export(AnalyzeAndPlotretval)
 export(ChainBurnin)
-export(ChainsDiagnosticPlot)
 export(CleanChlist)
 export(CombineChainsAndExtractSigs)
 export(CombinePosteriorChains)

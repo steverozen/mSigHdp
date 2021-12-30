@@ -14,7 +14,6 @@ PriorSetupAndActivate(
   gamma0.beta = gamma.beta,
   multi.types = F,
   input.catalog,
-  IS.ICAMS = T,
   verbose = TRUE,
   seedNumber = 1
 )

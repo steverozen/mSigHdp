@@ -1,5 +1,5 @@
-#' Diagnostic plot for a hdpSampleMulti object. This function is
-#' compatible with the return object from Liu's extract_components_from_clusters
+#' Generate multiple plots for for a hdpSampleMulti object.
+#'
 #' @param retval Return from \code{\link{CombineChainsAndExtractSigs}}
 #'
 #' @param input.catalog Input spectra catalog as a matrix or
@@ -7,9 +7,19 @@
 #'
 #' @inheritParams AnalyzeAndPlotretval
 #'
+#' @param IS.ICAMS If TRUE, then plot diagnostics.hdp.signature.exposure.each.sample.pdf.
+#'
 #' @importFrom grDevices dev.off pdf
 #'
 #' @importFrom graphics par
+#'
+#' @details Generates the plots diagnostics.hdp.signature.exposure.each.sample.pdf,
+#'  diagnostics.component.distribution.in.posterior.samples.pdf,
+#'  diagnostics.likelihood.pdf,
+#'  diagnostics.numcluster.pdf,
+#'  diagnostics.signatures.pdf
+#'
+#'
 #'
 #' @export
 
@@ -36,16 +46,9 @@ ComponentDiagnosticPlotting <- function(retval,
   lapply(chains, hdpx::plot_numcluster, bty = "L")
   grDevices::dev.off()
 
-  #Old diagnostic plot. we removed it because it is not informative
-  #grDevices::pdf(file = file.path(out.dir,"diagnostics.data.assigned.pdf"))
-  # This is the number of mutations assigned as a function of
-  # the number of raw clusters
-  #par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
-  #lapply(chains, hdpx::plot_data_assigned, bty = "L")
-  #grDevices::dev.off()
-
-  if(IS.ICAMS == T){
-    grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"),paper = "a4")
+  if (IS.ICAMS) {
+    grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"),
+                   paper = "a4")
     myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
     graphics::par(mfrow=c(1,1), mar=c(1, 1, 2, 1))
 

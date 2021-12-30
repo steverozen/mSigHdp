@@ -10,7 +10,6 @@
 #' @export
 
 SetupAndActivate <- function(input.catalog,
-                             IS.ICAMS      = T,
                              seedNumber          = 1,
                              K.guess,
                              multi.types         = FALSE,
@@ -23,7 +22,6 @@ SetupAndActivate <- function(input.catalog,
 
     prep_val <- PrepInit(multi.types = multi.types,
                          input.catalog = input.catalog,
-                         IS.ICAMS      = IS.ICAMS,
                          verbose       = verbose,
                          K.guess       = K.guess,
                          gamma.alpha   = gamma.alpha,

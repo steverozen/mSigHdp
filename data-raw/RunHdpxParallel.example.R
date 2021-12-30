@@ -9,47 +9,42 @@
 
 library(mSigHdp)
 library(ICAMS)
-sessionInfo()
+library(PCAWG7)
 
 out.dir <- "./output.from.RunHdpxParallel.example"
 dir.create(out.dir)
-setwd(out.dir)
-# So the checkpoint files will go into out.dir
 
 retval <- RunHdpxParallel (
 
-  input.catalog      = mSigHdp::test.spectra,
+  input.catalog            = PCAWG7::spectra$PCAWG$SBS96[ , 1:25],
   # Can also be a file name, but the file has to be in ICAMS format.
 
-  ground.truth.sig   = NULL,
-  # If comparing to previously estimated signatures or signatures in synthetic
-  # data, can use mSigHdp::test.ground.truth.sig for testing.
+  out.dir                  = NULL, # out.dir, # Temporary, while profiling
+  num.child.process        = 1, # We recommend >=20 for real data
+  CPU.cores                = 1,
+  seedNumber               = 123,
+  K.guess                  = 10,
+  burnin.checkpoint        = FALSE,
+  burnin                   = 100, # Very very short
 
-  ground.truth.exp   = NULL,
-  # If comparing to previously estimated exposures or exposures in synthetic
-  # data, can use mSigHdp::test.ground.truth.exposure for testing.
-
-  out.dir            = ".",
-  num.child.process  = 2, # We recommend >=20 for real data
-  CPU.cores          = 2,
-  seedNumber         = 123,
-  K.guess            = 10,
-  burnin.checkpoint  = TRUE,
-  burnin             = 1000,
-
-  burnin.multiplier  = 2,
+  burnin.multiplier        = 2,
   # We recommend >= 10,000 burn-in iterations in total for real data. This toy
   # example uses 1000 x 2 = 2000 iterations in total.
 
-  post.n             = 20, # 200 is recommended for real data
+  post.n                   = 20, # 200 is recommended for real data
 
-  post.space         = 10, # 100 is recommended for real data
+  post.space               = 10, # 100 is recommended for real data
 
-  multi.types        = TRUE,
-  overwrite          = TRUE,
-  gamma.alpha = 1,
-  gamma.beta  = 20,
-  high.confidence.prop = 0.9,
-  moderate.confidence.prop = 0.9)
+  multi.types              = TRUE,
+  overwrite                = TRUE,
+  gamma.alpha              = 1,
+  gamma.beta               = 20,
+  high.confidence.prop     = 0.9,
+  moderate.confidence.prop = 0.9,
+  checkpoint.chlist        = FALSE,
+  checkpoint.1.chain       = FALSE,
+  posterior.checkpoint     = FALSE
+  )
 
-save(retval, file = "RunHdpxParallel.retval.Rdata")
+# Comment out for profiling
+# save(retval, file = file.path(out.dir, "RunHdpxParallel.retval.Rdata"))

@@ -42,7 +42,9 @@ CleanChlist <- function(chlist, verbose = FALSE) {
     }
   }
   if (length(clean.chlist) == 0)
-    stop("No usable results in from parallel child processes (from using mclapply)")
+    stop("No usable results in from parallel child processes",
+         " (from using mclapply)\n",
+         "See warnings() for details")
   return(clean.chlist)
 
 }
