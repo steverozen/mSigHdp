@@ -1,0 +1,5 @@
+On monster:
+
+CPUPROFILE=/home/e0012078/profiling/test.prof LD_PRELOAD=/usr/lib64/libprofiler.so R_HOME=/usr/lib64/R   /usr/lib64/R/bin/exec/R
+
+LD_PRELOAD=/usr/lib64/libprofiler.so R_HOME=/opt/R/R-4.1.2/lib64/R /opt/R/R-4.1.2/lib64/R
