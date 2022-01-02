@@ -5,7 +5,7 @@
 #'
 #' @param hdpsample  A \code{\link[hdpx]{hdpSampleChain-class}} or \code{\link[hdpx]{hdpSampleMulti-class}} object including output
 #'  from \code{\link[hdpx]{extract_components_from_clusters}}
-#' @param retval An object return from \code{\link{extract_ccc_cdc_from_hdp}}
+#' @param retval An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
 #' @param col_comp Colours of each component, from 0 to the max number. If NULL,                          default colors will be used

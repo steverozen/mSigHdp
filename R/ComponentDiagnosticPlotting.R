@@ -62,7 +62,7 @@ ComponentDiagnosticPlotting <- function(retval,
 
   #because extract_component_from_clusters extract informations across chains
   #so the chain information was not recorded as NR's hdp_extract_components
-  #therefore, we use extract_ccc_cdc_from_hdp to seek for the information of
+  #therefore, we use extract_ccc_from_hdp to seek for the information of
   #raw clusters that highly similar as components (most likely these clusters
   #contribute to the components during extract_component_from_clusters).
 
@@ -80,10 +80,9 @@ ComponentDiagnosticPlotting <- function(retval,
     })
   })
   sigmatchretval <- apply(retval$signature,2,function(x){
-    hdpx::extract_ccc_cdc_from_hdp(x,
-                                   ccc_0 = ccc_0,
-                                   cdc_0 = cdc_0,
-                                   cos.merge = 0.90)})
+    hdpx::extract_ccc_from_hdp(x,
+                               ccc_0 = ccc_0,
+                               cos.merge = 0.90)})
 
   grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
   graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))

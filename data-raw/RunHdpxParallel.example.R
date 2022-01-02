@@ -7,7 +7,7 @@
 # See also https://github.com/steverozen/mSigHdp/raw/master/data-raw/Hierarchical.dirichlet.process.for.mutational.signatures.docx
 
 
-library(mSigHdp)
+# library(mSigHdp)
 library(ICAMS)
 library(PCAWG7)
 
@@ -19,13 +19,13 @@ retval <- RunHdpxParallel (
   input.catalog            = PCAWG7::spectra$PCAWG$SBS96[ , 1:25],
   # Can also be a file name, but the file has to be in ICAMS format.
 
-  out.dir                  = NULL, # out.dir, # Temporary, while profiling
-  num.child.process        = 1, # We recommend >=20 for real data
-  CPU.cores                = 1,
+  out.dir                  = out.dir,
+  num.child.process        = 2, # We recommend >=20 for real data
+  CPU.cores                = 2,
   seedNumber               = 123,
   K.guess                  = 10,
   burnin.checkpoint        = FALSE,
-  burnin                   = 100, # Very very short
+  burnin                   = 500, # Very very short
 
   burnin.multiplier        = 2,
   # We recommend >= 10,000 burn-in iterations in total for real data. This toy

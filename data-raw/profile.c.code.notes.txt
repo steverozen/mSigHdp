@@ -1,5 +1,17 @@
+
+
+# CPUPROFILE=/home/e0012078/profiling/test.prof LD_PRELOAD=/usr/lib64/libprofiler.so R_HOME=/usr/lib64/R   /usr/lib64/R/bin/exec/R
+
 On monster:
+CPUPROFILE=./c.prof/prof LD_PRELOAD=/usr/lib64/libprofiler.so R_HOME=/opt/R/R-4.1.2/lib64/R /usr/lib64/R/bin/exec/R --vanilla < RunHdpxParallel.example.R
 
-CPUPROFILE=/home/e0012078/profiling/test.prof LD_PRELOAD=/usr/lib64/libprofiler.so R_HOME=/usr/lib64/R   /usr/lib64/R/bin/exec/R
+# Interpretating the profiling results using pprof program
+pprof --pdf /usr/lib64/R/bin/exec/R test.prof > output.pdf
 
-LD_PRELOAD=/usr/lib64/libprofiler.so R_HOME=/opt/R/R-4.1.2/lib64/R /opt/R/R-4.1.2/lib64/R
+pprof --web /usr/lib64/R/bin/exec/R test.prof
+
+pprof -gv /usr/lib64/R/bin/exec/R  test.prof
+
+pprof --callgrind /usr/lib64/R/bin/exec/R c.prof/prof > c.prof.k
+
+kcachegrind c.prof.k
