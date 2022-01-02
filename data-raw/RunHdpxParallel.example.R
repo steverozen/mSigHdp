@@ -47,4 +47,4 @@ retval <- RunHdpxParallel (
   )
 
 # Comment out for profiling
-# save(retval, file = file.path(out.dir, "RunHdpxParallel.retval.Rdata"))
+save(retval, file = file.path(out.dir, "RunHdpxParallel.retval.Rdata"))
