@@ -36,10 +36,6 @@
 #'                       found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
 #'                       samples are signatures with high confidence.
 #'
-# @param moderate.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
-#                   Clusters with less than \code{moderate.confidence.prop} of posterior samples
-#                  are signatures with low confidence
-#
 #' @param hc.cutoff Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
 #'                  height of hierarchical clustering dendrogram, used in combining
 #'                  raw clusters (mutation clusters) into agreggated clusters.
@@ -94,7 +90,6 @@ CombineChainsAndExtractSigs <-
            verbose              = TRUE,
            cos.merge            = 0.9,
            high.confidence.prop = 0.9,
-#           moderate.confidence.prop          = 0.1,
            hc.cutoff            = 0.10
   ) {
     if (mode(input.catalog) == "character") {
@@ -141,19 +136,6 @@ CombineChainsAndExtractSigs <-
       paste("hdp", c(1:ncol(confidentSignatures)), sep = ".")
 
     combinedSignatures <- confidentSignatures
-
-    potentialSignatures <- data.frame(intepret.comp.retval$moderate_confidence_components)
-
-    if(!is.null(potentialSignatures) && ncol(potentialSignatures)>0){
-      potentialSignatures <- apply(potentialSignatures,2,function(x)x/sum(x))
-
-      rownames(potentialSignatures) <- rownames(input.catalog)
-      # Set signature names to "potential hdp.0","potential hdp.1","potential hdp.2", ...
-      colnames(potentialSignatures) <-
-        paste("potential hdp", c(1:ncol(potentialSignatures)), sep = ".")
-      combinedSignatures <- cbind(combinedSignatures,potentialSignatures)
-
-    }
 
     combinedSignatures <- apply(combinedSignatures,2,function(x)x/sum(x))
     combined.stats <- rbind(intepret.comp.retval$high_confidence_components_post_number,
