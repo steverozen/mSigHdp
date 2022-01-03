@@ -1,5 +1,5 @@
 
-test_that("CombinePosteriorChains", {
+test_that("CombinePosteriorChainsAndExtractSigs", {
 
   input <- new.env()
   load("RunhdpInternal.testdata/test.CleanChlist.Rdata",
@@ -19,7 +19,7 @@ test_that("CombinePosteriorChains", {
                            multi.types = FALSE,
                            verbose = TRUE)
 
-  #save(retvalx, file = "RunhdpInternal.testdata/test.CombineChainsAndExtractSigs.Rdata")
+  save(retvalx, file = "RunhdpInternal.testdata/test.CombineChainsAndExtractSigs.Rdata")
 
   expect_equal(retvalx, reg$retvalx)
 

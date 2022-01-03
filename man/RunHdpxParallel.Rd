@@ -20,7 +20,6 @@ RunHdpxParallel(
   CPU.cores = 20,
   num.child.process = 20,
   high.confidence.prop = 0.9,
-  moderate.confidence.prop = 0.5,
   hc.cutoff = 0.1,
   overwrite = TRUE,
   out.dir = NULL,
@@ -98,15 +97,13 @@ No need to change unless for development purpose}
 1 for testing. We recommend 20 for real data analysis}
 
 \item{high.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
-clusters with at least \code{high.confidence.prop} of posterior
-samples are signatures with high confidence}
-
-\item{moderate.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
-Clusters with less than \code{moderate.confidence.prop} of posterior samples
-are signatures with low confidence}
+raw clusters (mutation cluster)
+found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
+samples are signatures with high confidence.}
 
 \item{hc.cutoff}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
-height of hierarchical clustering dendrogram}
+height of hierarchical clustering dendrogram, used in combining
+raw clusters (mutation clusters) into agreggated clusters.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
 

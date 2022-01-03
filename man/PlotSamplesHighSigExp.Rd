@@ -23,7 +23,7 @@ PlotSamplesHighSigExp(
 )
 }
 \arguments{
-\item{retval}{An object return from \code{\link{extract_ccc_cdc_from_hdp}}}
+\item{retval}{An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}}
 
 \item{hdpsample}{A \code{\link[hdpx]{hdpSampleChain-class}} or \code{\link[hdpx]{hdpSampleMulti-class}} object including output
 from \code{\link[hdpx]{extract_components_from_clusters}}}

@@ -1,3 +1,10 @@
+# [ 1.2.1 ]
+ * Removed "moderate" classification of confidence in aggregated clusters / signatures.
+ * Incremented version of hdpx required.
+
+# [ 1.2.0 ]
+ * Many changes
+
 # [ 1.1.4.9001]
 * Improved error handling and reporting from mclapply child processes.
 

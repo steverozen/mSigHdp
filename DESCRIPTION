@@ -1,6 +1,6 @@
 Package: mSigHdp
 Title: Mutational signature extraction using hdp (Hierarchical Dirichlet Process)
-Version: 1.2.0
+Version: 1.2.1
 Authors@R: 
     c(person(given = "Steven",
            family = "Rozen",
@@ -12,12 +12,13 @@ Authors@R:
            role = c("aut"),
            email = "liumolm@gmail.com",
            comment = c(ORCID = "0000-0001-5990-6585")))
-Description: Adapts HDP to mutational signature extraction. Calls hdpx for mutational signature analysis.mSigHdp 
-             incorporates burnin and Gibbs sampling processes, followed up by extracting signatures from raw clusters 
-             collected by Gibbs sampling, and improved diagnostic plotting with visualization on signature and exposures.
+Description: Mutational signature discovery using hierarchichal Dirichlet
+             process mixture modeling. mSigHdp stands for 'mutational
+             signature (discovery using) hierarchical dirichlet processes.
+             This packages uses https://github.com/steverozen/hdpx for the
+             hierarchical Dirichlet process implementation. 
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Language: en-US
 BuildManual: no
 biocViews:
@@ -26,7 +27,7 @@ Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
 Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
-Imports: hdpx (>= 0.3.6),
+Imports: hdpx (>= 0.3.7),
     ICAMS (>= 2.2.4),
     reshape2,
     data.table

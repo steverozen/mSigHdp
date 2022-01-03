@@ -58,7 +58,7 @@ RunHdpxParallel <- function(input.catalog,
                             CPU.cores           = 20,
                             num.child.process   = 20,
                             high.confidence.prop      = 0.9,
-                            moderate.confidence.prop = 0.5,
+                            # moderate.confidence.prop = 0.5,
                             hc.cutoff           = 0.10,
                             overwrite           = TRUE,
                             out.dir             = NULL,
@@ -117,7 +117,7 @@ RunHdpxParallel <- function(input.catalog,
                                 multi.types    = multi.types,
                                 verbose        = verbose,
                                 high.confidence.prop = high.confidence.prop,
-                                moderate.confidence.prop     = moderate.confidence.prop,
+                                # moderate.confidence.prop     = moderate.confidence.prop,
                                 hc.cutoff      = hc.cutoff)
 
   # Step 3: Save and plot signatures, exposures, diagnostics
