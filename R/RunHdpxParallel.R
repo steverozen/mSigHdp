@@ -117,7 +117,6 @@ RunHdpxParallel <- function(input.catalog,
                                 multi.types    = multi.types,
                                 verbose        = verbose,
                                 high.confidence.prop = high.confidence.prop,
-                                # moderate.confidence.prop     = moderate.confidence.prop,
                                 hc.cutoff      = hc.cutoff)
 
   # Step 3: Save and plot signatures, exposures, diagnostics

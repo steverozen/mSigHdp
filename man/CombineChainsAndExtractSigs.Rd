@@ -10,7 +10,6 @@ CombineChainsAndExtractSigs(
   input.catalog,
   multi.types,
   verbose = TRUE,
-  cos.merge = 0.9,
   high.confidence.prop = 0.9,
   hc.cutoff = 0.1
 )
@@ -41,10 +40,6 @@ name of the tumor type of the corresponding column in \code{input.catalog}.
 e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
-
-\item{cos.merge}{The cosine similarity threshold for merging raw clusters
-from the posterior sampling chains into "components" i.e. signatures;
-passed to \code{\link[hdpx]{extract_components_from_clusters}}.}
 
 \item{high.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
 raw clusters (mutation cluster)
@@ -94,7 +89,8 @@ all \code{\link[hdpx]{comp_dp_counts}} matrices of the
 raw clusters contributing to each
 signature in code{low.confidence.signature}}
 
-\item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
+\item{extracted.retval}{A list object returned from
+code{\link[hdpx]{extract_components_from_clusters}}.}
 }
 }
 \description{

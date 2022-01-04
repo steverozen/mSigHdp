@@ -27,10 +27,6 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
-#' @param cos.merge The cosine similarity threshold for merging raw clusters
-#'      from the posterior sampling chains into "components" i.e. signatures;
-#'      passed to \code{\link[hdpx]{extract_components_from_clusters}}.
-#'
 #' @param high.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
 #'                       raw clusters (mutation cluster)
 #'                       found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
@@ -78,7 +74,8 @@
 #'        raw clusters contributing to each
 #'        signature in code{low.confidence.signature}}
 #'
-#' \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
+#' \item{extracted.retval}{A list object returned from
+#'    code{\link[hdpx]{extract_components_from_clusters}}.}
 #' }
 #'
 #' @export
@@ -88,7 +85,6 @@ CombineChainsAndExtractSigs <-
            input.catalog,
            multi.types,
            verbose              = TRUE,
-           cos.merge            = 0.9,
            high.confidence.prop = 0.9,
            hc.cutoff            = 0.10
   ) {
@@ -110,9 +106,7 @@ CombineChainsAndExtractSigs <-
     extract.time <- system.time(
       multi.chains.retval <-
         hdpx::extract_components_from_clusters(multi.chains,
-                                               cos.merge = cos.merge,
-                                               hc.cutoff = hc.cutoff
-        )
+                                               hc.cutoff = hc.cutoff)
     )
 
     if (verbose) {
