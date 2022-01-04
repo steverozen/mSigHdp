@@ -16,10 +16,9 @@ test_that("CombinePosteriorChainsAndExtractSigs", {
   retvalx <-
     CombineChainsAndExtractSigs(clean.chlist = input$retvalx,
                            input.catalog = input.catalog[1:10 , 1:15],
-                           multi.types = FALSE,
                            verbose = TRUE)
 
-  save(retvalx, file = "RunhdpInternal.testdata/test.CombineChainsAndExtractSigs.Rdata")
+  #save(retvalx, file = "RunhdpInternal.testdata/test.CombineChainsAndExtractSigs.Rdata")
 
   expect_equal(retvalx, reg$retvalx)
 

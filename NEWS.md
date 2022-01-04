@@ -1,6 +1,7 @@
 # [ 1.2.1 ]
  * Removed "moderate" classification of confidence in aggregated clusters / signatures.
  * Incremented version of hdpx required.
+ * Removed 'multi.types' from CombineChainsAndExtractSigs
 
 # [ 1.2.0 ]
  * Many changes

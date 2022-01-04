@@ -7,24 +7,6 @@
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
 #'
-#' @param multi.types A logical scalar or
-#' a character vector.
-#' If \code{FALSE}, The HDP analysis
-#'   will regard all input spectra as one tumor type.
-#'   HDP structure as one parent node for all tumors
-#'
-#' If \code{TRUE}, the HDP analysis
-#'   will infer tumor types based on the string before "::" in their names.
-#'   e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
-#'   HDP structure as a grandparent node for whole data and
-#'   one parent node for each tumor type
-#'
-#' If \code{multi.types} is a character vector, then it should be of the same length
-#' as the number of columns in \code{input.catalog}, and each value is the
-#' name of the tumor type of the corresponding column in \code{input.catalog}.
-#'
-#' e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.
-#'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
 #' @param high.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
@@ -83,7 +65,6 @@
 CombineChainsAndExtractSigs <-
   function(clean.chlist,
            input.catalog,
-           multi.types,
            verbose              = TRUE,
            high.confidence.prop = 0.9,
            hc.cutoff            = 0.10
@@ -132,10 +113,9 @@ CombineChainsAndExtractSigs <-
     combinedSignatures <- confidentSignatures
 
     combinedSignatures <- apply(combinedSignatures,2,function(x)x/sum(x))
-    combined.stats <- rbind(intepret.comp.retval$high_confidence_components_post_number,
-                            intepret.comp.retval$moderate_confidence_components_post_number)
-    combined.cdc  <- cbind(intepret.comp.retval$high_confidence_components_cdc,
-                           intepret.comp.retval$moderate_confidence_components_cdc)
+    combined.stats <- intepret.comp.retval$high_confidence_components_post_number
+
+    combined.cdc  <- intepret.comp.retval$high_confidence_components_cdc
 
     if (verbose) message("extracting signatures exposures ", Sys.time())
 

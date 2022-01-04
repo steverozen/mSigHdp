@@ -9,18 +9,16 @@
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
-#'                 rows are mutation types, columns are signatures including
-#'                 high confident signatures -'hdp' signatures and moderate
-#'                 confident signatures - 'potential hdp' signatures.}
+#'                 rows are mutation types, columns are signatures with
+#'                 high confidence.}
 #'
-#' \item{signature.post.samp.number}{A dataframe with two columns. The first
+#' \item{signature.post.samp.number}{A data frame with two columns. The first
 #'                                   column corresponds to each signature in \code{signature}
 #'                                   and the second columns contains the number of posterior
 #'                                   samples that found the raw clusters contributing to the signature.}
 #'
-#' \item{signature.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like dataframe.
-#'                      Each column corresponds to the sum of all \code{\link[hdpx]{comp_dp_counts}}
-#'                      matrices of the raw clusters contributing to each signature in code{signature}}
+#' \item{signature.cdc}{A numeric data frame. Each column corresponds
+#'                  to the sum of all mutations contributing to each signature in \code{signature}}
 #'
 #' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
 #'                      rows are signatures, columns are samples (e.g. tumors).}
@@ -33,9 +31,8 @@
 #'                               column contains the number of posterior samples that found
 #'                               the raw clusters contributing to the signature.}
 #'
-#' \item{low.confidence.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame. Each column corresponds
-#'                  to the sum of all \code{\link[hdpx]{comp_dp_counts}} matrices of the raw clusters
-#'                  contributing to each signature in code{noise.signature}}
+#' \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
+#'                  to the sum of all mutations contributing to each signature in \code{noise.signature}}
 #'
 #' \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
 #'
@@ -58,7 +55,6 @@ RunHdpxParallel <- function(input.catalog,
                             CPU.cores           = 20,
                             num.child.process   = 20,
                             high.confidence.prop      = 0.9,
-                            # moderate.confidence.prop = 0.5,
                             hc.cutoff           = 0.10,
                             overwrite           = TRUE,
                             out.dir             = NULL,
@@ -114,7 +110,6 @@ RunHdpxParallel <- function(input.catalog,
   retval <-
     CombineChainsAndExtractSigs(chlist,
                                 input.catalog  = input.catalog,
-                                multi.types    = multi.types,
                                 verbose        = verbose,
                                 high.confidence.prop = high.confidence.prop,
                                 hc.cutoff      = hc.cutoff)

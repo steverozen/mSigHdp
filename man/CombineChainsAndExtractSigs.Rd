@@ -8,7 +8,6 @@ This function returns signatures with high confidence (found in more than 90\% #
 CombineChainsAndExtractSigs(
   clean.chlist,
   input.catalog,
-  multi.types,
   verbose = TRUE,
   high.confidence.prop = 0.9,
   hc.cutoff = 0.1
@@ -20,24 +19,6 @@ Each element is the result of one posterior sample chain.}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
-
-\item{multi.types}{A logical scalar or
-a character vector.
-If \code{FALSE}, The HDP analysis
-will regard all input spectra as one tumor type.
-HDP structure as one parent node for all tumors
-
-If \code{TRUE}, the HDP analysis
-will infer tumor types based on the string before "::" in their names.
-e.g. tumor type for "SA.Syn.Ovary-AdenoCA::S.500" would be "SA.Syn.Ovary-AdenoCA"
-HDP structure as a grandparent node for whole data and
-one parent node for each tumor type
-
-If \code{multi.types} is a character vector, then it should be of the same length
-as the number of columns in \code{input.catalog}, and each value is the
-name of the tumor type of the corresponding column in \code{input.catalog}.
-
-e.g. \code{c("SA.Syn.Ovary-AdenoCA", "SA.Syn.Kidney-RCC")}.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
