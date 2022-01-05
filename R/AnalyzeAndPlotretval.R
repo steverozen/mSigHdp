@@ -35,7 +35,10 @@ AnalyzeAndPlotretval <- function(retval,
   }
 
   # Fragile, to be replaced by an ICAMS function
-  IS.ICAMS <- any(grepl("Catalog", class(input.catalog)))
+  # add in more conditions here because it breaks when input.catalog is a subset of an ICAMS catalog
+  # e.g. input.catalog <- ICAMS.catalog[1:10,]
+  IS.ICAMS <- (any(grepl("Catalog", class(input.catalog)))&&
+                 nrow(input.catalog) %in% c(96,192,1536,78,144,136,83,166,1697))
 
   if (verbose) message("Writing signatures")
   if(IS.ICAMS){

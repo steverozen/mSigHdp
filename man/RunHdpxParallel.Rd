@@ -2,16 +2,18 @@
 % Please edit documentation in R/RunHdpxParallel.R
 \name{RunHdpxParallel}
 \alias{RunHdpxParallel}
-\title{Extract mutational signatures and optionally compare them to existing signatures and exposures.}
+\title{Extract mutational signatures and optionally generate diagnostic plots to help
+understand the results: e.g. the stability each extracted signature and
+the tumors that drive the extraction of each signature.}
 \usage{
 RunHdpxParallel(
   input.catalog,
   seedNumber = 123,
   K.guess,
-  multi.types = FALSE,
+  multi.types = TRUE,
   verbose = TRUE,
-  burnin = 5000,
-  burnin.multiplier = 2,
+  burnin = 1000,
+  burnin.multiplier = 10,
   burnin.checkpoint = FALSE,
   post.n = 200,
   post.space = 100,
@@ -70,12 +72,13 @@ and one grandparent node.}
 
 \item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
 After each round, a burn-in chain will be save for checkpoint.
-A total number of 10,000 iterations is recommended for most analysis. However, number of iterations
-can be adjusted based on the size of dataset. According to our experience, 20,000 iterations are
-needed when analyzing all PCAWG7 genomes (2,780 samples).
+A total number of 10,000 iterations is recommended for most analysis. Therefore we set the default of \code{burnin} to
+1000 and \code{burnin.multiplier} to 10. However, number of iterations can be adjusted based on the size of dataset.
+The dataset with more mutations require longer burn-ins. According to our experience,
+50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
 
-\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burnin will be created.}
+\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burn-in will be created.}
 
 \item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{n}.The number of posterior samples to collect.}
@@ -171,23 +174,26 @@ samples that found the raw clusters contributing to the signature.}
 to the sum of all mutations contributing to each signature in \code{signature}}
 
 \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
-rows are signatures, columns are samples (e.g. tumors).}
+rows are signatures, columns are samples (e.g. tumors). This is
+similar to \code{signature.cdc} but every column was normalized to sum of 1}
 
-\item{low.confidence.signature}{The extracted signature profiles as a matrix; rows are mutation types,
-columns are signatures with less than \code{moderate.confidence.prop} of posterior samples }
+\item{low.confidence.signature}{The profiles of signatures extracted with low confidence as a matrix; rows are mutation types,
+columns are signatures with less than \code{high.confidence.prop} of posterior samples }
 
 \item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
-to each signature in \code{noise.signature} and the second
+to each signature in \code{low.confidence.signature} and the second
 column contains the number of posterior samples that found
 the raw clusters contributing to the signature.}
 
 \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
-to the sum of all mutations contributing to each signature in \code{noise.signature}}
+to the sum of all mutations contributing to each signature in \code{low.confidence.signature}}
 
-\item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
+\item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
 
 }
 }
 \description{
-Extract mutational signatures and optionally compare them to existing signatures and exposures.
+Extract mutational signatures and optionally generate diagnostic plots to help
+understand the results: e.g. the stability each extracted signature and
+the tumors that drive the extraction of each signature.
 }

@@ -2,6 +2,8 @@
  * Removed "moderate" classification of confidence in aggregated clusters / signatures.
  * Incremented version of hdpx required.
  * Removed 'multi.types' from CombineChainsAndExtractSigs
+ * Add test for AnalyzeAndPlotretval
+ * Update some documentations
 
 # [ 1.2.0 ]
  * Many changes

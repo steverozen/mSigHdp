@@ -108,12 +108,13 @@ sample.chain.\emph{seed_number}.Rdata.}
 
 \item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
 After each round, a burn-in chain will be save for checkpoint.
-A total number of 10,000 iterations is recommended for most analysis. However, number of iterations
-can be adjusted based on the size of dataset. According to our experience, 20,000 iterations are
-needed when analyzing all PCAWG7 genomes (2,780 samples).
+A total number of 10,000 iterations is recommended for most analysis. Therefore we set the default of \code{burnin} to
+1000 and \code{burnin.multiplier} to 10. However, number of iterations can be adjusted based on the size of dataset.
+The dataset with more mutations require longer burn-ins. According to our experience,
+50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
 
-\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burnin will be created.}
+\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burn-in will be created.}
 
 \item{prior.sigs}{A matrix containing prior signatures.}
 

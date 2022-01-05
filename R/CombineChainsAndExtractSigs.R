@@ -19,45 +19,35 @@
 #'                  raw clusters (mutation clusters) into agreggated clusters.
 #'
 #' @return Invisibly, a list with the following elements:\describe{
+#'\item{signature}{The extracted signature profiles as a matrix;
+#'                 rows are mutation types, columns are signatures with
+#'                 high confidence.}
 #'
-#' \item{signature}{The extracted signature profiles as a matrix;
-#'             rows are mutation types, columns are signatures
-#'             including only high confidence signatures,
-#'             (see \code{high.confidence.pro}) with identifiers
-#'             prefixed by "hdp". }
+#' \item{signature.post.samp.number}{A data frame with two columns. The first
+#'                                   column corresponds to each signature in \code{signature}
+#'                                   and the second columns contains the number of posterior
+#'                                   samples that found the raw clusters contributing to the signature.}
 #'
-#' \item{signature.post.samp.number}{A data.frame with two
-#'      columns. The first column corresponds to each signature
-#'      in \code{signature} and the second columns contains the number of posterior
-#'      samples that found the raw clusters contributing to the signature.}
-#'
-#' \item{signature.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like
-#'      dataframe. Each column corresponds to the sum of
-#'     all \code{\link[hdpx]{comp_dp_counts}} matrices of
-#'     the raw clusters contributing to each
-#'     signature in code{signature}}
+#' \item{signature.cdc}{A numeric data frame. Each column corresponds
+#'                  to the sum of all mutations contributing to each signature in \code{signature}}
 #'
 #' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
-#'            rows are signatures, columns are samples (e.g. tumors).}
+#'                      rows are signatures, columns are samples (e.g. tumors). This is
+#'                      similar to \code{signature.cdc} but every column was normalized to sum of 1}
 #'
-#' \item{low.confidence.signature}{Extracted signature profiles
-#'       as a matrix; rows are mutation types,
-#'       columns are signatures with found in < \code{high.confidence.prop}
-#'       proportion of posterior samples.}
+#' \item{low.confidence.signature}{The profiles of signatures extracted with low confidence as a matrix; rows are mutation types,
+#'                        columns are signatures with less than \code{high.confidence.prop} of posterior samples }
 #'
-#' \item{low.confidence.post.samp.number}{A data frame with two
-#'        columns. The first column corresponds to each signature
-#'        in \code{low.confidence.signature} and the second columns contains the number of posterior
-#'        samples that found the raw clusters contributing to the signature.}
+#' \item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
+#'                               to each signature in \code{low.confidence.signature} and the second
+#'                               column contains the number of posterior samples that found
+#'                               the raw clusters contributing to the signature.}
 #'
-#' \item{low.confidence.cdc}{A \code{\link[hdpx]{comp_dp_counts}} like data frame.
-#'        Each column corresponds to the sum of
-#'        all \code{\link[hdpx]{comp_dp_counts}} matrices of the
-#'        raw clusters contributing to each
-#'        signature in code{low.confidence.signature}}
+#' \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
+#'                  to the sum of all mutations contributing to each signature in \code{low.confidence.signature}}
 #'
-#' \item{extracted.retval}{A list object returned from
-#'    code{\link[hdpx]{extract_components_from_clusters}}.}
+#' \item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
+#'
 #' }
 #'
 #' @export

@@ -1,4 +1,6 @@
-#' Extract mutational signatures and optionally compare them to existing signatures and exposures.
+#' Extract mutational signatures and optionally generate diagnostic plots to help
+#' understand the results: e.g. the stability each extracted signature and
+#' the tumors that drive the extraction of each signature.
 #'
 #' @inheritParams MultipleSetupAndPosterior
 #'
@@ -21,40 +23,41 @@
 #'                  to the sum of all mutations contributing to each signature in \code{signature}}
 #'
 #' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
-#'                      rows are signatures, columns are samples (e.g. tumors).}
+#'                      rows are signatures, columns are samples (e.g. tumors). This is
+#'                      similar to \code{signature.cdc} but every column was normalized to sum of 1}
 #'
-#' \item{low.confidence.signature}{The extracted signature profiles as a matrix; rows are mutation types,
-#'                        columns are signatures with less than \code{moderate.confidence.prop} of posterior samples }
+#' \item{low.confidence.signature}{The profiles of signatures extracted with low confidence as a matrix; rows are mutation types,
+#'                        columns are signatures with less than \code{high.confidence.prop} of posterior samples }
 #'
 #' \item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
-#'                               to each signature in \code{noise.signature} and the second
+#'                               to each signature in \code{low.confidence.signature} and the second
 #'                               column contains the number of posterior samples that found
 #'                               the raw clusters contributing to the signature.}
 #'
 #' \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
-#'                  to the sum of all mutations contributing to each signature in \code{noise.signature}}
+#'                  to the sum of all mutations contributing to each signature in \code{low.confidence.signature}}
 #'
-#' \item{extracted.retval}{A list object returned from code{\link[hdpx]{interpret_components}}.}
+#' \item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
 #'
 #' }
 #'
 #' @export
 
 RunHdpxParallel <- function(input.catalog,
-                            seedNumber          = 123,
+                            seedNumber           = 123,
                             K.guess,
-                            multi.types         = FALSE,
-                            verbose             = TRUE,
-                            burnin              = 5000,
-                            burnin.multiplier   = 2,
-                            burnin.checkpoint   = FALSE,
-                            post.n              = 200,
-                            post.space          = 100,
-                            post.cpiter         = 3,
-                            post.verbosity      = 0,
-                            CPU.cores           = 20,
-                            num.child.process   = 20,
-                            high.confidence.prop      = 0.9,
+                            multi.types          = TRUE,
+                            verbose              = TRUE,
+                            burnin               = 1000,
+                            burnin.multiplier    = 10,
+                            burnin.checkpoint    = FALSE,
+                            post.n               = 200,
+                            post.space           = 100,
+                            post.cpiter          = 3,
+                            post.verbosity       = 0,
+                            CPU.cores            = 20,
+                            num.child.process    = 20,
+                            high.confidence.prop = 0.9,
                             hc.cutoff           = 0.10,
                             overwrite           = TRUE,
                             out.dir             = NULL,
