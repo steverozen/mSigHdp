@@ -121,9 +121,7 @@ the Dirichlet process concentration parameters (\eqn{\gamma_0})
 for \eqn{G_0}.}
 
 \item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
-chlist to "initial.chlist.Rdata" in the current working directory.
-and checkpoint the clean chlist to "clean.chlist.Rdata" in the
-current working directory.}
+chlist to "initial.chlist.Rdata" in the current working directory.}
 
 \item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
 chain to current working directory, in a file called
