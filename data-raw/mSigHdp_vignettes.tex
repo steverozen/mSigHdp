@@ -116,7 +116,7 @@ This vignette is to introduce how to use mSigHdp (Liu et al., 2021)
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"steverozen/mSigHdp"}\NormalTok{)}
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"steverozen/mSigHdp"}\NormalTok{,}\AttributeTok{ref=}\StringTok{"master"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -124,7 +124,7 @@ This vignette is to introduce how to use mSigHdp (Liu et al., 2021)
 \section{Toy dataset}\label{toy-dataset}}
 
 To illustrate the basic features of the mSigHdp package, we consider a
-toy dataset of categorical count data with \textbf{10 samples} (rows)
+toy data set of categorical count data with \textbf{10 samples} (rows)
 and \textbf{96 categories} (columns). The \textbf{10 samples} are PCAWG
 platinum tumors
 
@@ -135,18 +135,19 @@ platinum tumors
 \end{Highlighting}
 \end{Shaded}
 
-Runhdpxparallel There are three checkpoint arguments: checkpoint.chlist
-to checkpoint the chlist to ``initial.chlist.Rdata'' in the current
-working directory. checkpoint.1.chain to checkpoint the sample chain to
-current working directory, posterior.checkpoint to checkpoint the
-posterior sampling after every 10 posterior samples collected.
+Run Runhdpxparallel to extract signatures from toy data set. There are
+three checkpoint arguments: checkpoint.chlist to checkpoint the chlist
+to ``initial.chlist.Rdata'' in the current working directory.
+checkpoint.1.chain to checkpoint the sample chain to current working
+directory, posterior.checkpoint to checkpoint the posterior sampling
+after every 10 posterior samples collected.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{retval }\OtherTok{\textless{}{-}}\NormalTok{ mSigHdp}\SpecialCharTok{::}\FunctionTok{RunHdpxParallel}\NormalTok{(}\AttributeTok{input.catalog =}\NormalTok{ toy\_data,}
                           \AttributeTok{out.dir                  =} \StringTok{"vignettes"}\NormalTok{,}
-                          \AttributeTok{num.child.process        =} \DecValTok{2}\NormalTok{, }
-                          \AttributeTok{CPU.cores                =} \DecValTok{2}\NormalTok{,}
+                          \AttributeTok{num.child.process        =} \DecValTok{4}\NormalTok{, }
+                          \AttributeTok{CPU.cores                =} \DecValTok{4}\NormalTok{,}
                           \AttributeTok{seedNumber               =} \DecValTok{123}\NormalTok{,}
                           \AttributeTok{K.guess                  =} \DecValTok{5}\NormalTok{,}
                           \AttributeTok{burnin.checkpoint        =} \ConstantTok{FALSE}\NormalTok{,}
@@ -162,7 +163,7 @@ posterior sampling after every 10 posterior samples collected.
                           \AttributeTok{overwrite                =} \ConstantTok{TRUE}\NormalTok{,}
                           \AttributeTok{gamma.alpha              =} \DecValTok{1}\NormalTok{,}
                           \AttributeTok{gamma.beta               =} \DecValTok{20}\NormalTok{, }
-                         \CommentTok{\# high.confidence.prop     = 0.9,}
+                          \AttributeTok{high.confidence.prop     =} \FloatTok{0.9}\NormalTok{,}
                           \AttributeTok{checkpoint.chlist        =}\NormalTok{ T,}
                           \AttributeTok{checkpoint.1.chain       =}\NormalTok{ T,}
                           \AttributeTok{posterior.checkpoint     =}\NormalTok{ T) }
@@ -170,7 +171,7 @@ posterior sampling after every 10 posterior samples collected.
 \end{Shaded}
 
 \begin{verbatim}
-## calling extract_components_from_clusters 2022-01-06 12:06:13
+## calling extract_components_from_clusters 2022-01-06 13:52:16
 \end{verbatim}
 
 \begin{verbatim}
@@ -182,15 +183,15 @@ posterior sampling after every 10 posterior samples collected.
 \end{verbatim}
 
 \begin{verbatim}
-##  user.self 0.161999999999999
+##  user.self 0.42
 \end{verbatim}
 
 \begin{verbatim}
-##  sys.self 0.0209999999999999
+##  sys.self 0.0449999999999999
 \end{verbatim}
 
 \begin{verbatim}
-##  elapsed 0.173999999999999
+##  elapsed 0.673999999999999
 \end{verbatim}
 
 \begin{verbatim}
@@ -202,11 +203,11 @@ posterior sampling after every 10 posterior samples collected.
 \end{verbatim}
 
 \begin{verbatim}
-## extracting components 2022-01-06 12:06:15
+## extracting components 2022-01-06 13:52:18
 \end{verbatim}
 
 \begin{verbatim}
-## extracting signatures exposures 2022-01-06 12:06:15
+## extracting signatures exposures 2022-01-06 13:52:18
 \end{verbatim}
 
 \begin{verbatim}

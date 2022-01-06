@@ -76,8 +76,11 @@ AnalyzeAndPlotretval <- function(retval,
     signature.post.samp.number <- retval$signature.post.samp.number
 
     signature.post.samp.number[,1] <- colnames(retval$signature)
-    utils::write.csv(data.frame(signature.post.samp.number)
-                     ,file = file.path(out.dir, "signature.post.samp.number.csv"),row.names = F,quote=F)
+
+    signature.post.samp.number <- data.frame(signature.post.samp.number)
+    colnames(signature.post.samp.number) <- c("Signature","NumberOfPostSamples")
+    utils::write.csv(signature.post.samp.number
+                     ,file = file.path(out.dir, "extracted.signatures.post.samp.number.csv"),row.names = F,quote=F)
 
     low.confidence.signature <- retval$low.confidence.signature
 
@@ -108,10 +111,11 @@ AnalyzeAndPlotretval <- function(retval,
                          row.names=F,quote=F)
       }
 
-
-      utils::write.csv(data.frame(low.confidence.signature.post.samp.number),
+      low.confidence.signature.post.samp.number <- data.frame(low.confidence.signature.post.samp.number)
+      colnames(low.confidence.signature.post.samp.number) <- c("Signature","NumberOfPostSamples")
+      utils::write.csv(low.confidence.signature.post.samp.number,
                        file = file.path(out.dir,
-                                        "low.confidence.signature.post.samp.number.csv"),
+                                        "low.confidence.signatures.post.samp.number.csv"),
                        row.names = F,quote=F)
 
     }

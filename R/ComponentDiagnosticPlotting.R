@@ -35,19 +35,19 @@ ComponentDiagnosticPlotting <- function(retval,
 
   if (verbose) message("Writing HDP diagnostics")
 
-  pdf(file = file.path(out.dir,"diagnostics.likelihood.pdf"))
+  pdf(file = file.path(out.dir,"diagnostics_likelihood.pdf"))
   par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
   lapply(chains, hdpx::plot_lik, bty = "L")
   dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.numcluster.pdf"))
+  grDevices::pdf(file = file.path(out.dir,"diagnostics_numcluster.pdf"))
   # This is the number of raw clusters sampled along each chain
   par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
   lapply(chains, hdpx::plot_numcluster, bty = "L")
   grDevices::dev.off()
 
   if (IS.ICAMS) {
-    grDevices::pdf(file = file.path(out.dir,"diagnostics.hdp.signature.exposure.each.sample.pdf"),
+    grDevices::pdf(file = file.path(out.dir,"diagnostics_hdp_signature_exposure_each_sample.pdf"),
                    paper = "a4")
     myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
     graphics::par(mfrow=c(1,1), mar=c(1, 1, 2, 1))
@@ -84,7 +84,7 @@ ComponentDiagnosticPlotting <- function(retval,
                                ccc_0 = ccc_0,
                                cos.merge = 0.90)})
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
+  grDevices::pdf(file = file.path(out.dir,"diagnostics_signatures.pdf"))
   graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
   # This plots the component (signature) profiles with
   # 95% credibility intervals
@@ -93,7 +93,7 @@ ComponentDiagnosticPlotting <- function(retval,
 
 
 
-  grDevices::pdf(file.path(out.dir,"diagnostics.component.distribution.in.posterior.samples.pdf"))
+  grDevices::pdf(file.path(out.dir,"diagnostics_component_distribution_in_posterior_samples.pdf"))
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
   hdpx::plot_component_posterior_samples(components = retval$signature,
                                          retval = sigmatchretval)
