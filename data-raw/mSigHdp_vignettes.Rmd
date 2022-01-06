@@ -1,0 +1,68 @@
+---
+title: "mSigHdp vignette"
+author: "ML and SGR"
+date: "06/01/2022"
+output:
+  pdf_document: default
+---
+`
+
+This vignette is to introduce how to use mSigHdp (Liu et al., 2021)
+
+```{r ,eval=F}
+devtools::install_github("steverozen/mSigHdp",ref="master")
+```
+
+
+# Toy dataset
+
+To illustrate the basic features of the mSigHdp package, we consider a toy dataset
+of categorical count data with **10 samples** (rows) and **96 categories** (columns). 
+The **10 samples** are PCAWG platinum tumors
+
+```{r toydata}
+library(mSigHdp)
+toy_data <- ICAMS::ReadCatalog("toy_data.csv")
+```
+
+Runhdpxparallel
+There are three checkpoint arguments: checkpoint.chlist to checkpoint the chlist to "initial.chlist.Rdata" in the current working directory. checkpoint.1.chain to checkpoint the sample chain to current working directory, posterior.checkpoint to checkpoint the posterior sampling after every 10 posterior samples collected.
+```{r RunHdpxParallel,include=T,echo=TRUE}
+
+retval <- mSigHdp::RunHdpxParallel(input.catalog = toy_data,
+                          out.dir                  = "vignettes",
+                          num.child.process        = 2, 
+                          CPU.cores                = 2,
+                          seedNumber               = 123,
+                          K.guess                  = 5,
+                          burnin.checkpoint        = FALSE,
+                          burnin                   = 100, 
+                          
+                          burnin.multiplier        = 2,
+                         
+                          post.n                   = 20, 
+                          
+                          post.space               = 10, 
+                          
+                          multi.types              = TRUE,
+                          overwrite                = TRUE,
+                          gamma.alpha              = 1,
+                          gamma.beta               = 20, 
+                          high.confidence.prop     = 0.9,
+                          checkpoint.chlist        = T,
+                          checkpoint.1.chain       = T,
+                          posterior.checkpoint     = T) 
+
+```
+Results
+
+There are several outputs in the out.dir (in this vignettes, we saved outputs to data-raw/vignettes)
+
+-extracted.signatures.csv
+
+
+```{r Diagnostic likelihood plot,echo=F}
+knitr::include_graphics("vignettes/Diagnostic_Plots/diagnostics.likelihood.pdf")
+
+```
+

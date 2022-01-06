@@ -88,7 +88,7 @@ CombineChainsAndExtractSigs <-
     }
 
     intepret.comp.retval <-  hdpx::interpret_components(multi.chains.retval = multi.chains.retval,
-                                                        high.confidence.pro      = high.confidence.prop,
+                                                        high.confidence.prop      = high.confidence.prop,
                                                         # moderate.confidence.prop          = moderate.confidence.prop,
                                                         verbose            = verbose)
 
