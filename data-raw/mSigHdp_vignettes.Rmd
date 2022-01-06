@@ -5,7 +5,12 @@ date: "06/01/2022"
 output:
   html_document: default
 ---
-`
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+knitr::opts_chunk$set(fig.width=6, fig.height=5)
+```
+
 
 This vignette is to introduce how to use mSigHdp (Liu et al., 2021)
 
@@ -17,7 +22,7 @@ devtools::install_github("steverozen/mSigHdp",ref="master")
 # Toy dataset
 
 To illustrate the basic features of the mSigHdp package, we consider a toy data set
-of categorical count data with **10 samples** (rows) and **96 categories** (columns). 
+of categorical count data with **10 samples** (columns) and **96 categories** (rows). 
 The **10 samples** are PCAWG platinum tumors
 
 ```{r toydata}
@@ -28,7 +33,8 @@ toy_data <- ICAMS::ReadCatalog("toy_data.csv")
 Run Runhdpxparallel to extract signatures from toy data set.
 We set the num.child.process and CPU.cores to 4 for a quick run. We recommend num.child.process and CPU.cores set to 20 for real data.
 There are three checkpoint arguments: checkpoint.chlist to checkpoint the chlist to "initial.chlist.Rdata" in the current working directory. checkpoint.1.chain to checkpoint the sample chain to current working directory, posterior.checkpoint to checkpoint the posterior sampling after every 10 posterior samples collected.
-```{r RunHdpxParallel,include=T,echo=TRUE}
+
+```{r RunHdpxParallel,include=T,echo=F,warning=F,message=F}
 
 retval <- mSigHdp::RunHdpxParallel(input.catalog = toy_data,
                           out.dir                  = "vignettes",
@@ -37,14 +43,10 @@ retval <- mSigHdp::RunHdpxParallel(input.catalog = toy_data,
                           seedNumber               = 123,
                           K.guess                  = 5,
                           burnin.checkpoint        = T,
-                          burnin                   = 100, 
-                          
+                          burnin                   = 100,
                           burnin.multiplier        = 2,
-                         
                           post.n                   = 20, 
-                          
                           post.space               = 10, 
-                          
                           multi.types              = TRUE,
                           overwrite                = TRUE,
                           gamma.alpha              = 1,
@@ -55,76 +57,71 @@ retval <- mSigHdp::RunHdpxParallel(input.catalog = toy_data,
                           posterior.checkpoint     = T) 
 
 ```
-
-We can also extend burn-ins from checkpoints.
-
-```{r}
-load("burnin.checkpoint.1000123.Rdata")
-retval <- mSigHdp::ExtendBurnin(hdplist = burnin.output$hdplist,
-                                seedNumber = 123,
-                                burnin = 100)
-```
-
-
-We can also continue Gibbs sampling from current checkpoints
-
-```{r}
-load("posterior.checkpoint.1000123.Rdata")
-retval <- hdpx::hdp_posterior_sample(post.input = ans,post.n = 10,post.space = 5,seed=100123)
-```
-
+In case of possible interruption during running long jobs, we also provided functions to continue burn-in and Gibbs sampling from checkpoints. 
+Please refer to the documentations of ExtendBurnin function in mSigHdp package and hdp_posterior_sample function in hdpx package.
 
 Results
 
 There are several outputs in the out.dir (in this vignettes, we saved outputs to data-raw/vignettes)
 
--extracted.signatures.csv and extracted.signatures.pdf
+-**extracted.signatures.csv** and **extracted.signatures.pdf**
 
 These two files are profiles and visualization of extracted signatures.
 
--extracted.signatures.post.samp.number.csv 
+-**extracted.signatures.post.samp.number.csv**
 
 A csv file with two columns. The first column contains the signature names correspond to extracted.signatures.csv, the second column contains the number of posterior samples extracted the corresponding signature.
 
--inferred.exposures.csv
+-**inferred.exposures.csv**
 
 Exposures inferred from HDP. Because there is no sparsity constraints of assignment in HDP. We recommend to use a signature assignment program to re-analyze the exposure, e.g. mSigAct, MutationalPatterns..
 
--inferred.exposure.count.pdf and inferred.exposure.proportion.pdf
+-**inferred.exposure.count.pdf and inferred.exposure.proportion.pdf**
 
 Barplots of the counts and exposures of extracted signatures in each tumor
 
--low.confidence.signatures.csv 
+-**low.confidence.signatures.csv** 
 
 The profiles of extracted signatures with low confidence (i.e. the proportion of posterior samples with these signatures is less than pre-defined high.confidence.prop in RunHdpxParallel).
 
--low.confidence.signatures.post.sample.number.csv 
+-**low.confidence.signatures.post.sample.number.csv** 
 
 A csv file with two columns. The first column contains the signature names correspond to low.confidence.signatures.csv, the second column contains the number of posterior samples extracted the corresponding signature.
 
+-**Diagnostic_Plots** folder contains five diagnostic plots:
 
-```{r Diagnostic likelihood plot,echo=F}
+  - **diagnostics_likelihood.pdf**. To check if the likelihood is converged for each chain.
+
+```{r Diagnostic likelihood plot,out.width = "50%",echo=F}
 knitr::include_graphics("vignettes/Diagnostic_Plots/diagnostics_likelihood.pdf")
 
 ```
+ 
+  - **diagnostics_numcluster.pdf**. To show the number of clusters in each posterior sample.
 
-
-```{r Diagnostic number of clusters plot,echo=F}
+```{r Diagnostic number of clusters plot,out.width = "50%",echo=F}
 knitr::include_graphics("vignettes/Diagnostic_Plots/diagnostics_numcluster.pdf")
 
 ```
 
-```{r Diagnostic signatures plot,echo=F}
+  - **diagnostics_signatures.pdf**. To show the 95\% CI of each category of extracted signatures.
+  
+```{r Diagnostic signatures plot,out.width = "50%",echo=F}
 knitr::include_graphics("vignettes/Diagnostic_Plots/diagnostics_signatures.pdf")
 
 ```
-
-```{r Diagnostic extraction in gibbs sampling plot,echo=F}
+ 
+  - **diagnostics_component_distribution_in_posterior_samples.pdf**. To show the posterior samples that 
+  contribute to the aggregation of every extracted signature.
+  
+```{r Diagnostic extraction in gibbs sampling plot,out.width = "50%",echo=F}
 knitr::include_graphics("vignettes/Diagnostic_Plots/diagnostics_component_distribution_in_posterior_samples.pdf")
 
 ```
-
-```{r Diagnostic example tumors for each signature plot,echo=F}
+  
+  - **diagnostics_hdp_signature_exposure_each_sample.pdf**. Every extracted signature has two plots: (1) the scatter plots shows the proportion and counts of each signature in every tumor. (2) the 5 tumors with the highest proportion of this signature.
+  
+```{r Diagnostic example tumors for each signature plot,out.width = "50%",echo=F}
 knitr::include_graphics("vignettes/Diagnostic_Plots/diagnostics_hdp_signature_exposure_each_sample.pdf")
 
 ```
