@@ -120,6 +120,13 @@ RunHdpxParallel <- function(input.catalog,
   # Step 3: Save and plot signatures, exposures, diagnostics
 
   if(!is.null(out.dir)) {
+    if (dir.exists(out.dir)) {
+      if (!overwrite) stop(out.dir, " already exists")
+      if (verbose) message("Using existing out.dir ", out.dir)
+    } else {
+      dir.create(out.dir, recursive = T)
+      if (verbose) message("Created new out.dir ", out.dir)
+    }
     save(retval, input.catalog, file = file.path(out.dir, "hdp.retval.Rdata"))
     AnalyzeAndPlotretval(retval                = retval,
                          input.catalog         = input.catalog,

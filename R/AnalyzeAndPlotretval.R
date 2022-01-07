@@ -26,14 +26,6 @@ AnalyzeAndPlotretval <- function(retval,
                                  overwrite        = TRUE,
                                  diagnostic.plot  = TRUE) {
 
-  if (dir.exists(out.dir)) {
-    if (!overwrite) stop(out.dir, " already exists")
-    if (verbose) message("Using existing out.dir ", out.dir)
-  } else {
-    dir.create(out.dir, recursive = T)
-    if (verbose) message("Created new out.dir ", out.dir)
-  }
-
   # Fragile, to be replaced by an ICAMS function
   # add in more conditions here because it breaks when input.catalog is a subset of an ICAMS catalog
   # e.g. input.catalog <- ICAMS.catalog[1:10,]
