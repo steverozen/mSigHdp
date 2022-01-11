@@ -6,7 +6,7 @@ output:
   html_document: default
 ---
 
-This vignette is to introduce how to use mSigHdp (Liu et al., 2021)
+How to use mSigHdp to discover mutational signatures (Liu et al., 2021)
 
 ```{r ,eval=F}
 devtools::install_github("steverozen/mSigHdp",ref="master")
@@ -51,9 +51,9 @@ retval <- mSigHdp::RunHdpxParallel(
   gamma.alpha              = 1,
   gamma.beta               = 20, 
   high.confidence.prop     = 0.9,
-  checkpoint.chlist        = T,
-  checkpoint.1.chain       = T,
-  posterior.checkpoint     = T) 
+  checkpoint.chlist        = FALSE,
+  checkpoint.1.chain       = FALSE,
+  posterior.checkpoint     = FALSE) 
 
 ```
 
@@ -63,31 +63,31 @@ retval <- mSigHdp::RunHdpxParallel(
 
 There are several outputs in the out.dir (in this vignettes, we saved outputs to data-raw/vignettes/results_from_vignettes)
 
--**extracted.signatures.csv** and **extracted.signatures.pdf**
+- **extracted.signatures.csv** and **extracted.signatures.pdf**
 
 These two files are profiles and visualization of extracted signatures.
 
--**extracted.signatures.post.samp.number.csv**
+- **extracted.signatures.post.samp.number.csv**
 
 A csv file with two columns. The first column contains the signature names correspond to extracted.signatures.csv, the second column contains the number of posterior samples extracted the corresponding signature.
 
--**inferred.exposures.csv**
+- **inferred.exposures.csv**
 
 Exposures inferred from HDP. Because there is no sparsity constraint of assignment in HDP. We recommend to use a signature assignment program to re-analyze the exposure, e.g. mSigAct, MutationalPatterns..
 
--**inferred.exposure.count.pdf and inferred.exposure.proportion.pdf**
+- **inferred.exposure.count.pdf and inferred.exposure.proportion.pdf**
 
 Barplots of the counts and exposures of extracted signatures in each tumor.
 
--**low.confidence.signatures.csv** 
+- **low.confidence.signatures.csv** 
 
 The profiles of extracted signatures with low confidence (i.e. the proportion of posterior samples with these signatures is less than pre-defined high.confidence.prop in RunHdpxParallel).
 
--**low.confidence.signatures.post.sample.number.csv** 
+- **low.confidence.signatures.post.sample.number.csv** 
 
 A csv file with two columns. The first column contains the signature names correspond to low.confidence.signatures.csv, the second column contains the number of posterior samples extracted the corresponding signature.
 
--**Diagnostic_Plots** folder contains five diagnostic plots:
+- **Diagnostic_Plots** folder contains five diagnostic plots:
 
 - **diagnostics_likelihood.pdf**. To check if the likelihood is converged for each chain.
 
