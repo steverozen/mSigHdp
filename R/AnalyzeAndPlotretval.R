@@ -31,6 +31,13 @@ AnalyzeAndPlotretval <- function(retval,
   # e.g. input.catalog <- ICAMS.catalog[1:10,]
   IS.ICAMS <- (any(grepl("Catalog", class(input.catalog)))&&
                  nrow(input.catalog) %in% c(96,192,1536,78,144,136,83,166,1697))
+  if (dir.exists(out.dir)) {
+    if (!overwrite) stop(out.dir, " already exists")
+    if (verbose) message("Using existing out.dir ", out.dir)
+  } else {
+    dir.create(out.dir, recursive = T)
+    if (verbose) message("Created new out.dir ", out.dir)
+  }
 
   if (verbose) message("Writing signatures")
   if(IS.ICAMS){
