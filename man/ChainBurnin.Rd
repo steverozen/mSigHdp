@@ -11,7 +11,7 @@ ChainBurnin(
   cpiter = 3,
   burnin.verbosity = 0,
   burnin.multiplier = 2,
-  burnin.checkpoint = TRUE
+  checkpoint = TRUE
 )
 }
 \arguments{
@@ -52,3 +52,4 @@ an \code{\link[hdpx]{hdpState-class}} object.}
 \description{
 Prepare an \code{\link[hdpx]{hdpState-class}} object and run the Gibbs sampling burnin.
 }
+\keyword{internal}

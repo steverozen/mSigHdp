@@ -26,3 +26,4 @@ of chlist has class try-error.
 If the job is stopped with, e.g. a segfault,
 the \code{chlist} element is NULL.
 }
+\keyword{internal}

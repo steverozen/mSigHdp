@@ -20,7 +20,9 @@
 #' @param oma See ?par
 #' @importFrom graphics barplot
 #' @importFrom reshape2 melt
-#' @export
+#'
+#' @keywords internal
+
 PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
                                   col_comp = NULL,
                                   incl_numdata_plot=F,

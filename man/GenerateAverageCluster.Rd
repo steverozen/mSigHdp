@@ -18,3 +18,4 @@ and a list of matrices containing the sum of each cluster in each posterior chai
 Generate average pattern of clusters of each posterior chain
 from combined list of multiple posterior sample chains
 }
+\keyword{internal}

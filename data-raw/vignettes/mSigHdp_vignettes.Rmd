@@ -41,7 +41,6 @@ retval <- mSigHdp::RunHdpxParallel(
   CPU.cores                = 4,
   seedNumber               = 123,
   K.guess                  = 5,
-  burnin.checkpoint        = T,
   burnin                   = 100,
   burnin.multiplier        = 2,
   post.n                   = 20, 
@@ -51,9 +50,8 @@ retval <- mSigHdp::RunHdpxParallel(
   gamma.alpha              = 1,
   gamma.beta               = 20, 
   high.confidence.prop     = 0.9,
-  checkpoint.chlist        = FALSE,
-  checkpoint.1.chain       = FALSE,
-  posterior.checkpoint     = FALSE) 
+  checkpoint               = FALSE,
+  checkpoint.1.chain       = FALSE) 
 
 ```
 

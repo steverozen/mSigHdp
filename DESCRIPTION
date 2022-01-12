@@ -12,7 +12,7 @@ Authors@R:
            role = c("aut"),
            email = "liumolm@gmail.com",
            comment = c(ORCID = "0000-0001-5990-6585")))
-Description: Mutational signature discovery using hierarchichal Dirichlet
+Description: Mutational signature discovery using hierarchical Dirichlet
              process mixture modeling. mSigHdp stands for 'mutational
              signature (discovery using) hierarchical dirichlet processes.
              This packages uses https://github.com/steverozen/hdpx for the
@@ -29,7 +29,7 @@ Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
 Imports: hdpx (>= 0.3.8),
     ICAMS (>= 2.2.4),
-    mSigAct (>= 2.1.3.9009),
+    mSigAct (>= 2.1.3.9007),
     reshape2,
     data.table
 Suggests: testthat,

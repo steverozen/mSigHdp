@@ -21,7 +21,7 @@
 #' If not \code{FALSE}, HDP will have one parent node for each sample type
 #' and one grandparent node.
 #'
-#' @export
+#' @keywords internal
 
 
 Generateppindex <- function(multi.types, input.catalog) {

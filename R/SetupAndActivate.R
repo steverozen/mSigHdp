@@ -7,7 +7,7 @@
 #' @return Invisibly, an \code{\link[hdpx]{hdpState-class}} object
 #'  as returned from \code{\link[hdpx]{dp_activate}}.
 #'
-#' @export
+#' @keywords internal
 
 SetupAndActivate <- function(input.catalog,
                              seedNumber          = 1,

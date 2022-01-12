@@ -39,7 +39,7 @@
 #'   the Dirichlet process concentration parameters (\eqn{\gamma_0})
 #'   for \eqn{G_0}.
 #'
-#' @export
+#' @keywords internal
 
 PrepInit <- function(multi.types,
                      input.catalog,

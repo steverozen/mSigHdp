@@ -1,22 +1,23 @@
-#' Extract components and exposures from multiple posterior sample chains
-#' This function returns signatures with high confidence (found in more than 90% #' posterior samples)
+#' Extract signatures, exposures, and other information from multiple posterior sample chains.
 #'
-#' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+#' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}}
+#'  objects, typically returned from \code{MultipleSetupAndPosterior}.
 #'  Each element is the result of one posterior sample chain.
 #'
-#' @param input.catalog Input spectra catalog as a matrix or
-#' in \code{\link[ICAMS]{ICAMS}} format.
+#' @param input.catalog Input spectra catalog as a matrix.
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
-#' @param high.confidence.prop Pass to \code{\link[hdpx]{interpret_components}}.
-#'                       raw clusters (mutation cluster)
+#' @param high.confidence.prop
+#'                       Raw clusters of mutations
 #'                       found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
 #'                       samples are signatures with high confidence.
+#'                       (Passed to \code{\link[hdpx]{interpret_components}}).
 #'
-#' @param hc.cutoff Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
-#'                  height of hierarchical clustering dendrogram, used in combining
-#'                  raw clusters (mutation clusters) into agreggated clusters.
+#' @param hc.cutoff The cutoff of
+#'                  height of the hierarchical clustering dendrogram used in combining
+#'                  raw clusters of mutations into aggregated clusters.
+#'                  (Passed to \code{\link[hdpx]{extract_components_from_clusters}}.)
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #'\item{signature}{The extracted signature profiles as a matrix;
@@ -24,29 +25,38 @@
 #'                 high confidence.}
 #'
 #' \item{signature.post.samp.number}{A data frame with two columns. The first
-#'                                   column corresponds to each signature in \code{signature}
-#'                                   and the second columns contains the number of posterior
-#'                                   samples that found the raw clusters contributing to the signature.}
+#'            column corresponds to each signature in \code{signature}
+#'            and the second columns contains the number of posterior
+#'            samples that found the raw clusters contributing to the signature.}
 #'
 #' \item{signature.cdc}{A numeric data frame. Each column corresponds
-#'                  to the sum of all mutations contributing to each signature in \code{signature}}
+#'                  to the sum of all mutations contributing to each
+#'                  signature in \code{signature}.}
 #'
-#' \item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
-#'                      rows are signatures, columns are samples (e.g. tumors). This is
-#'                      similar to \code{signature.cdc} but every column was normalized to sum of 1}
+#' \item{exposureProbs}{The inferred exposures as a matrix
+#'        of mutation probabilities;
+#'        rows are signatures, columns are samples (e.g. tumors). This is
+#'        similar to \code{signature.cdc}, but every column was normalized
+#'        to sum to 1.}
 #'
-#' \item{low.confidence.signature}{The profiles of signatures extracted with low confidence as a matrix; rows are mutation types,
-#'                        columns are signatures with less than \code{high.confidence.prop} of posterior samples }
+#' \item{low.confidence.signature}{The profiles of signatures extracted
+#'     with low confidence as a matrix; rows are mutation types,
+#'     columns are signatures with < than
+#'     \code{high.confidence.prop} of posterior samples.}
 #'
-#' \item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
-#'                               to each signature in \code{low.confidence.signature} and the second
-#'                               column contains the number of posterior samples that found
-#'                               the raw clusters contributing to the signature.}
+#' \item{low.confidence.post.samp.number}{A data frame with two columns.
+#'        The first columns correspond
+#'        to each signature in \code{low.confidence.signature}
+#'        and the second
+#'        column contains the number of posterior samples that contained
+#'        the raw mutation clusters contributing to the signature.}
 #'
 #' \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
-#'                  to the sum of all mutations contributing to each signature in \code{low.confidence.signature}}
+#'       to the sum of all mutations contributing to
+#'       each signature in \code{low.confidence.signature}.}
 #'
-#' \item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
+#' \item{extracted.retval}{A list object returned from
+#'          code{\link[hdpx]{extract_components_from_clusters}}.}
 #'
 #' }
 #'

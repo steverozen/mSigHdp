@@ -7,8 +7,6 @@
 #' @param num.child.process Number of posterior sampling chains; can set to
 #'   1 for testing. We recommend 20 for real data analysis
 #'
-#' @param checkpoint.chlist If \code{TRUE}, checkpoint the (unclean)
-#'    chlist to "initial.chlist.Rdata" in the current working directory.
 #' @return Invisibly,
 #'    the clean \code{chlist} (output of \code{CleanChlist}).
 #'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
@@ -23,7 +21,6 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       verbose             = TRUE,
                                       burnin              = 5000,
                                       burnin.multiplier   = 2,
-                                      burnin.checkpoint   = TRUE,
                                       post.n              = 200,
                                       post.space          = 100,
                                       post.cpiter         = 3,
@@ -34,18 +31,15 @@ MultipleSetupAndPosterior <- function(input.catalog,
                                       gamma.beta          = 20,
                                       gamma0.alpha        = gamma.alpha,
                                       gamma0.beta         = gamma.beta,
-                                      checkpoint.chlist   = TRUE,
-                                      checkpoint.1.chain  = TRUE,
+                                      checkpoint          = TRUE,
                                       prior.sigs          = NULL,
-                                      prior.pseudoc       = NULL,
-                                      posterior.checkpoint= FALSE
-                                      ) {
+                                      prior.pseudoc       = NULL) {
 
 
   run.setup.and.posterior <- function(seedNumber) {
 
     if (verbose) message("Runing run.setup.and.posterior on ", seedNumber)
-    sample.chain <-SetupAndPosterior(
+    sample.chain <- SetupAndPosterior(
       input.catalog,
       seedNumber          = seedNumber,
       K.guess             = K.guess,
@@ -60,12 +54,10 @@ MultipleSetupAndPosterior <- function(input.catalog,
       gamma.beta          = gamma.beta,
       gamma0.alpha        = gamma0.alpha,
       gamma0.beta         = gamma0.beta,
-      checkpoint.1.chain  = checkpoint.1.chain,
       prior.sigs          = prior.sigs,
       prior.pseudoc       = prior.pseudoc,
       burnin.multiplier   = burnin.multiplier,
-      burnin.checkpoint   = burnin.checkpoint,
-      posterior.checkpoint= posterior.checkpoint)
+      checkpoint          = checkpoint)
     return(sample.chain)
   }
 
@@ -75,17 +67,11 @@ MultipleSetupAndPosterior <- function(input.catalog,
     FUN = run.setup.and.posterior,
     mc.cores = CPU.cores)
 
-  if (checkpoint.chlist) {
+  if (FALSE) { # For debugging
     save(chlist, file = paste0("initial.chlist.Rdata"))
   }
 
   clean.chlist <- CleanChlist(chlist, verbose)
-
-  # This was for debugging when there were numerous
-  # memory corruption errors in the C code.
-  # if (checkpoint.chlist) {
-  #   save(clean.chlist, file = "clean.chlist.Rdata")
-  # }
 
   return(invisible(clean.chlist))
 }

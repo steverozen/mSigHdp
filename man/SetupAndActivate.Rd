@@ -81,3 +81,4 @@ as returned from \code{\link[hdpx]{dp_activate}}.
 \description{
 Generate an HDP Gibbs sampling chain from a spectra catalog.
 }
+\keyword{internal}

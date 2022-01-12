@@ -1,25 +1,22 @@
-#' Generate multiple plots for for a hdpSampleMulti object.
+#' Generate multiple plots from the return value of \code{\link{CombineChainsAndExtractSigs}}.
 #'
-#' @param retval Return from \code{\link{CombineChainsAndExtractSigs}}
+#' @param retval Return from \code{\link{CombineChainsAndExtractSigs}.}
 #'
-#' @param input.catalog Input spectra catalog as a matrix or
-#' in \code{\link[ICAMS]{ICAMS}} format.
+#' @param input.catalog Input spectra catalog as a matrix.
 #'
 #' @inheritParams AnalyzeAndPlotretval
-#'
-#' @param IS.ICAMS If TRUE, then plot diagnostics.hdp.signature.exposure.each.sample.pdf.
 #'
 #' @importFrom grDevices dev.off pdf
 #'
 #' @importFrom graphics par
 #'
-#' @details Generates the plots diagnostics.hdp.signature.exposure.each.sample.pdf,
-#'  diagnostics.component.distribution.in.posterior.samples.pdf,
-#'  diagnostics.likelihood.pdf,
-#'  diagnostics.numcluster.pdf,
-#'  diagnostics.signatures.pdf
+#' @details Generates the plots
 #'
-#'
+#'  - diagnostics.hdp.signature.exposure.each.sample.pdf,
+#'  - diagnostics.component.distribution.in.posterior.samples.pdf,
+#'  - diagnostics.likelihood.pdf,
+#'  - diagnostics.numcluster.pdf,
+#'  - diagnostics.signatures.pdf
 #'
 #' @export
 
@@ -28,8 +25,10 @@
 ComponentDiagnosticPlotting <- function(retval,
                                         input.catalog,
                                         out.dir,
-                                        verbose,
-                                        IS.ICAMS=T){
+                                        verbose){
+
+  IS.ICAMS <- IsICAMSCatalog(input.catalog)
+
   multi <- retval$extracted.retval[["multi.chains"]] # class hdpSampleMulti
   chains <- hdpx::chains(multi)      # list of hdpSampleChain
 
@@ -52,13 +51,12 @@ ComponentDiagnosticPlotting <- function(retval,
     myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
     graphics::par(mfrow=c(1,1), mar=c(1, 1, 2, 1))
 
-    mSigHdp::PlotSamplesHighSigExp(retval           = retval,
-                                   hdpsample        = multi,
-                                   input.catalog    = input.catalog)
+    PlotSamplesHighSigExp(retval           = retval,
+                          hdpsample        = multi,
+                          input.catalog    = input.catalog)
 
     grDevices::dev.off()
   }
-
 
   #because extract_component_from_clusters extract informations across chains
   #so the chain information was not recorded as NR's hdp_extract_components

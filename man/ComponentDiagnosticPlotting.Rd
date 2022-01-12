@@ -2,37 +2,30 @@
 % Please edit documentation in R/ComponentDiagnosticPlotting.R
 \name{ComponentDiagnosticPlotting}
 \alias{ComponentDiagnosticPlotting}
-\title{Generate multiple plots for for a hdpSampleMulti object.}
+\title{Generate multiple plots from the return value of \code{\link{CombineChainsAndExtractSigs}}.}
 \usage{
-ComponentDiagnosticPlotting(
-  retval,
-  input.catalog,
-  out.dir,
-  verbose,
-  IS.ICAMS = T
-)
+ComponentDiagnosticPlotting(retval, input.catalog, out.dir, verbose)
 }
 \arguments{
-\item{retval}{Return from \code{\link{CombineChainsAndExtractSigs}}}
+\item{retval}{Return from \code{\link{CombineChainsAndExtractSigs}.}}
 
-\item{input.catalog}{Input spectra catalog as a matrix or
-in \code{\link[ICAMS]{ICAMS}} format.}
+\item{input.catalog}{Input spectra catalog as a matrix.}
 
-\item{out.dir}{Directory that will be created for the output;
-if \code{overwrite} is \code{FALSE} then
-abort if \code{out.dir} already exits.}
+\item{out.dir}{Directory that will be created for the output, including
+csv files and plots (pdfs) of extracted signatures and their exposures.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
-
-\item{IS.ICAMS}{If TRUE, then plot diagnostics.hdp.signature.exposure.each.sample.pdf.}
 }
 \description{
-Generate multiple plots for for a hdpSampleMulti object.
+Generate multiple plots from the return value of \code{\link{CombineChainsAndExtractSigs}}.
 }
 \details{
-Generates the plots diagnostics.hdp.signature.exposure.each.sample.pdf,
-diagnostics.component.distribution.in.posterior.samples.pdf,
-diagnostics.likelihood.pdf,
-diagnostics.numcluster.pdf,
-diagnostics.signatures.pdf
+Generates the plots
+\itemize{
+\item diagnostics.hdp.signature.exposure.each.sample.pdf,
+\item diagnostics.component.distribution.in.posterior.samples.pdf,
+\item diagnostics.likelihood.pdf,
+\item diagnostics.numcluster.pdf,
+\item diagnostics.signatures.pdf
+}
 }

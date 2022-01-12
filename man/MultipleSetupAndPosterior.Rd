@@ -12,7 +12,6 @@ MultipleSetupAndPosterior(
   verbose = TRUE,
   burnin = 5000,
   burnin.multiplier = 2,
-  burnin.checkpoint = TRUE,
   post.n = 200,
   post.space = 100,
   post.cpiter = 3,
@@ -23,11 +22,9 @@ MultipleSetupAndPosterior(
   gamma.beta = 20,
   gamma0.alpha = gamma.alpha,
   gamma0.beta = gamma.beta,
-  checkpoint.chlist = TRUE,
-  checkpoint.1.chain = TRUE,
+  checkpoint = TRUE,
   prior.sigs = NULL,
-  prior.pseudoc = NULL,
-  posterior.checkpoint = FALSE
+  prior.pseudoc = NULL
 )
 }
 \arguments{
@@ -71,8 +68,6 @@ A total number of 10,000 iterations is recommended for most analysis. Therefore 
 The dataset with more mutations require longer burn-ins. According to our experience,
 50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
-
-\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burn-in will be created.}
 
 \item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{n}.The number of posterior samples to collect.}
@@ -120,21 +115,20 @@ distribution priors for
 the Dirichlet process concentration parameters (\eqn{\gamma_0})
 for \eqn{G_0}.}
 
-\item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
-chlist to "initial.chlist.Rdata" in the current working directory.}
-
-\item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
+\item{checkpoint}{If \code{TRUE}, then:
+- checkpoint the sample
 chain to current working directory, in a file called
-sample.chain.\emph{seed_number}.Rdata.}
+sample.chain.\emph{seed_number}.Rdata, and
+- checkpoint the posterior sampling after every 10
+posterior samples collected.
+- checkpoint the burnin
+All checkpoint files go in current working directory.}
 
-\item{prior.sigs}{A matrix containing prior signatures.}
+\item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
 
-\item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
+\item{prior.pseudoc}{DELETE ME LATER, NOT SUPPORTED. A numeric list. Pseudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
-
-\item{posterior.checkpoint}{If \code{TRUE} checkpoint the posterior sampling after every 10
-posterior samples collected}
 }
 \value{
 Invisibly,

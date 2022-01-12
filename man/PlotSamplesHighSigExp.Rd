@@ -56,3 +56,4 @@ top 5 samples with the highest exposure to a signature.
 Each spectrum's title is in the form of: SampleName(Proportion of Signature Assginment)
 This function is here because it is specific for signature extraction application.
 }
+\keyword{internal}

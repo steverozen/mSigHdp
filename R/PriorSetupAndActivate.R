@@ -31,17 +31,16 @@
 #'   the Dirichlet process concentration parameters (\eqn{\gamma_0})
 #'   for \eqn{G_0}.
 #'
+#' @param prior.sigs DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.
 #'
-#' @param prior.sigs A matrix containing prior signatures.
-#'
-#' @param prior.pseudoc A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
+#' @param prior.pseudoc DELETE ME LATER, NOT SUPPORTED. A numeric list. Pseudo counts of each prior signature. Recommended is 1000. In practice,
 #'                       it may be advisable to put lower weights on prior signatures that you do not expect
 #'                       to be present in your dataset, or even exclude some priors entirely.
 #'
 #' @return Invisibly, an \code{\link[hdpx]{hdpState-class}} object
 #'  as returned from \code{\link[hdpx]{dp_activate}}.
 #'
-#' @export
+#' @keywords internal
 
 PriorSetupAndActivate <- function(prior.sigs,
                                   prior.pseudoc,

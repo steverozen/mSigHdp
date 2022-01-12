@@ -1,20 +1,20 @@
-#' Evaluate and plot retval from \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
-#' This function now works for both NR's pipeline and Mo's pipeline
-
-#' @param retval the output from function  \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
+#' Evaluate and plot the return value from \code{CombineChainsAndExtractSigs}.
 #'
-#' @param out.dir Directory that will be created for the output;
-#'   if \code{overwrite} is \code{FALSE} then
-#'   abort if \code{out.dir} already exits.
-#' @param overwrite If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.
+#' @param retval The output from \code{CombineChainsAndExtractSigs}.
+#'
+#' @param out.dir Directory that will be created for the output, including
+#'   csv files and plots (pdfs) of extracted signatures and their exposures.
+#'
+#' @param overwrite If \code{TRUE} overwrite \code{out.dir}
+#'    if it exists, otherwise raise an error.
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
 #' @param input.catalog input catalog matrix or
 #'                            path to file with input catalog
 #'
-#' @param diagnostic.plot If \code{TRUE} plot diagnostic plot.
-#'    This is optional because there are cases having error
+#' @param diagnostic.plot If \code{TRUE} plot diagnostic plots
+#'   in a subdirectory \code{Diagnostic_Plots} of \code{out.dir}.
 #'
 #' @export
 #'
@@ -26,11 +26,7 @@ AnalyzeAndPlotretval <- function(retval,
                                  overwrite        = TRUE,
                                  diagnostic.plot  = TRUE) {
 
-  # Fragile, to be replaced by an ICAMS function
-  # add in more conditions here because it breaks when input.catalog is a subset of an ICAMS catalog
-  # e.g. input.catalog <- ICAMS.catalog[1:10,]
-  IS.ICAMS <- (any(grepl("Catalog", class(input.catalog)))&&
-                 nrow(input.catalog) %in% c(96,192,1536,78,144,136,83,166,1697))
+  IS.ICAMS <- IsICAMSCatalog(input.catalog)
   if (dir.exists(out.dir)) {
     if (!overwrite) stop(out.dir, " already exists")
     if (verbose) message("Using existing out.dir ", out.dir)
@@ -78,8 +74,11 @@ AnalyzeAndPlotretval <- function(retval,
 
     signature.post.samp.number <- data.frame(signature.post.samp.number)
     colnames(signature.post.samp.number) <- c("Signature","NumberOfPostSamples")
-    utils::write.csv(signature.post.samp.number
-                     ,file = file.path(out.dir, "extracted.signatures.post.samp.number.csv"),row.names = F,quote=F)
+    utils::write.csv(
+      signature.post.samp.number,
+      file = file.path(out.dir,
+                       "extracted.signatures.post.samp.number.csv"),
+      row.names = F,quote=F)
 
     low.confidence.signature <- retval$low.confidence.signature
 
@@ -119,17 +118,16 @@ AnalyzeAndPlotretval <- function(retval,
 
     }
 
-  if(diagnostic.plot){
+  if (diagnostic.plot) {
 
-      dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
-      ##this calls the diagnostic plotting function
-      ##compatible with ML's component extraction
+    dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
+    ##this calls the diagnostic plotting function
+    ##compatible with ML's component extraction
 
-      mSigHdp::ComponentDiagnosticPlotting(retval        = retval,
-                                           input.catalog = input.catalog,
-                                           IS.ICAMS      = IS.ICAMS,
-                                           out.dir       = paste0(out.dir,"/Diagnostic_Plots"),
-                                           verbose       = verbose)
+    ComponentDiagnosticPlotting(retval        = retval,
+                                input.catalog = input.catalog,
+                                out.dir       = paste0(out.dir,"/Diagnostic_Plots"),
+                                verbose       = verbose)
   }
 }
 

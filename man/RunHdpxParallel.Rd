@@ -14,7 +14,6 @@ RunHdpxParallel(
   verbose = TRUE,
   burnin = 1000,
   burnin.multiplier = 10,
-  burnin.checkpoint = FALSE,
   post.n = 200,
   post.space = 100,
   post.cpiter = 3,
@@ -29,11 +28,9 @@ RunHdpxParallel(
   gamma.beta = 20,
   gamma0.alpha = gamma.alpha,
   gamma0.beta = gamma.beta,
-  checkpoint.chlist = TRUE,
-  checkpoint.1.chain = TRUE,
+  checkpoint = TRUE,
   prior.sigs = NULL,
-  prior.pseudoc = NULL,
-  posterior.checkpoint = FALSE
+  prior.pseudoc = NULL
 )
 }
 \arguments{
@@ -78,8 +75,6 @@ The dataset with more mutations require longer burn-ins. According to our experi
 50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
 
-\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burn-in will be created.}
-
 \item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{n}.The number of posterior samples to collect.}
 
@@ -99,20 +94,21 @@ No need to change unless for development purpose}
 \item{num.child.process}{Number of posterior sampling chains; can set to
 1 for testing. We recommend 20 for real data analysis}
 
-\item{high.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
-raw clusters (mutation cluster)
+\item{high.confidence.prop}{Raw clusters of mutations
 found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
-samples are signatures with high confidence.}
+samples are signatures with high confidence.
+(Passed to \code{\link[hdpx]{interpret_components}}).}
 
-\item{hc.cutoff}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
-height of hierarchical clustering dendrogram, used in combining
-raw clusters (mutation clusters) into agreggated clusters.}
+\item{hc.cutoff}{The cutoff of
+height of the hierarchical clustering dendrogram used in combining
+raw clusters of mutations into aggregated clusters.
+(Passed to \code{\link[hdpx]{extract_components_from_clusters}}.)}
 
-\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
+\item{overwrite}{If \code{TRUE} overwrite \code{out.dir}
+if it exists, otherwise raise an error.}
 
-\item{out.dir}{Directory that will be created for the output;
-if \code{overwrite} is \code{FALSE} then
-abort if \code{out.dir} already exits.}
+\item{out.dir}{Directory that will be created for the output, including
+csv files and plots (pdfs) of extracted signatures and their exposures.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration
@@ -141,21 +137,20 @@ distribution priors for
 the Dirichlet process concentration parameters (\eqn{\gamma_0})
 for \eqn{G_0}.}
 
-\item{checkpoint.chlist}{If \code{TRUE}, checkpoint the (unclean)
-chlist to "initial.chlist.Rdata" in the current working directory.}
-
-\item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
+\item{checkpoint}{If \code{TRUE}, then:
+- checkpoint the sample
 chain to current working directory, in a file called
-sample.chain.\emph{seed_number}.Rdata.}
+sample.chain.\emph{seed_number}.Rdata, and
+- checkpoint the posterior sampling after every 10
+posterior samples collected.
+- checkpoint the burnin
+All checkpoint files go in current working directory.}
 
-\item{prior.sigs}{A matrix containing prior signatures.}
+\item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
 
-\item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
+\item{prior.pseudoc}{DELETE ME LATER, NOT SUPPORTED. A numeric list. Pseudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
-
-\item{posterior.checkpoint}{If \code{TRUE} checkpoint the posterior sampling after every 10
-posterior samples collected}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
@@ -184,7 +179,8 @@ column contains the number of posterior samples that found
 the raw clusters contributing to the signature.}
 
 \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
-to the sum of all mutations contributing to each signature in \code{low.confidence.signature}}
+to the sum of all mutations contributing to each
+signature in \code{low.confidence.signature}}
 
 \item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
 

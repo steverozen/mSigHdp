@@ -78,3 +78,4 @@ Initialize hdp object
 Allocate process index for hdp initialization.
 Prepare for \code{\link[hdpx]{hdp_init}}
 }
+\keyword{internal}

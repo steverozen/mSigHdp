@@ -2,8 +2,7 @@
 % Please edit documentation in R/AnalyzeAndPlotretval.R
 \name{AnalyzeAndPlotretval}
 \alias{AnalyzeAndPlotretval}
-\title{Evaluate and plot retval from \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
-This function now works for both NR's pipeline and Mo's pipeline}
+\title{Evaluate and plot the return value from \code{CombineChainsAndExtractSigs}.}
 \usage{
 AnalyzeAndPlotretval(
   retval,
@@ -15,23 +14,22 @@ AnalyzeAndPlotretval(
 )
 }
 \arguments{
-\item{retval}{the output from function  \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}}
+\item{retval}{The output from \code{CombineChainsAndExtractSigs}.}
 
 \item{input.catalog}{input catalog matrix or
 path to file with input catalog}
 
-\item{out.dir}{Directory that will be created for the output;
-if \code{overwrite} is \code{FALSE} then
-abort if \code{out.dir} already exits.}
+\item{out.dir}{Directory that will be created for the output, including
+csv files and plots (pdfs) of extracted signatures and their exposures.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{overwrite}{If \code{TRUE} overwrite \code{out.dir} if it exists, otherwise raise an error.}
+\item{overwrite}{If \code{TRUE} overwrite \code{out.dir}
+if it exists, otherwise raise an error.}
 
-\item{diagnostic.plot}{If \code{TRUE} plot diagnostic plot.
-This is optional because there are cases having error}
+\item{diagnostic.plot}{If \code{TRUE} plot diagnostic plots
+in a subdirectory \code{Diagnostic_Plots} of \code{out.dir}.}
 }
 \description{
-Evaluate and plot retval from \code{CombinePosteriorChains} or \code{CombineChainsAndExtractSigs}
-This function now works for both NR's pipeline and Mo's pipeline
+Evaluate and plot the return value from \code{CombineChainsAndExtractSigs}.
 }

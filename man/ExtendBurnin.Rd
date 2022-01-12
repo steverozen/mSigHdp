@@ -2,35 +2,33 @@
 % Please edit documentation in R/ExtendBurnin.R
 \name{ExtendBurnin}
 \alias{ExtendBurnin}
-\title{Extend Burn in iteration for a list representation of
-an \code{\link[hdpx]{hdpState-class}} object. This list
-is an output from \code{\link[hdpx]{hdp_burnin}} or
-\code{ActivateandBurnin}.}
+\title{Extend burnin iterations generated from \code{\link{ChainBurnin}}.}
 \usage{
 ExtendBurnin(hdplist, seedNumber = 1, burnin = 4000, cpiter = 3, verbosity = 0)
 }
 \arguments{
 \item{hdplist}{A list representation of
-an \code{\link[hdpx]{hdpState-class}} object}
+an \code{\link[hdpx]{hdpState-class}} object;
+a return value \code{\link{ChainBurnin}}.}
 
 \item{seedNumber}{A random seed for setting the environment of
 \code{\link[hdpx]{hdp_burnin}}.}
 
-\item{burnin}{Pass to \code{\link[hdpx]{hdp_posterior}}
+\item{burnin}{Passed to \code{\link[hdpx]{hdp_posterior}}
 \code{burnin}.}
 
-\item{cpiter}{Pass to \code{\link[hdpx]{hdp_posterior}}
-\code{cpiter}.}
+\item{cpiter}{Passed to \code{\link[hdpx]{hdp_posterior}}
+\code{cpiter}. Please see that documentation.}
 
-\item{verbosity}{Pass to \code{\link[hdpx]{hdp_posterior}}
+\item{verbosity}{Passed to \code{\link[hdpx]{hdp_posterior}}
 \code{verbosity}.}
 }
 \value{
-A list with hdp object after burn-in iteration and likelihood of iteration
+The same type of object as returned from
+\code{\link{ChainBurnin}.}
+
+The envisioned application is extending burnins from burnin checkpoints.
 }
 \description{
-Extend Burn in iteration for a list representation of
-an \code{\link[hdpx]{hdpState-class}} object. This list
-is an output from \code{\link[hdpx]{hdp_burnin}} or
-\code{ActivateandBurnin}.
+Extend burnin iterations generated from \code{\link{ChainBurnin}}.
 }

@@ -20,7 +20,7 @@
 #'
 #' @param nps Number of prior signatures
 #'
-#' @export
+#' @keywords internal
 
 GeneratePriorppindex <- function(multi.types, input.catalog, nps){
   number.samples <- ncol(input.catalog)

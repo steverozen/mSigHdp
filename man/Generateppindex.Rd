@@ -31,3 +31,4 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 \description{
 Generate index for a HDP structure and num.tumor.types for other functions
 }
+\keyword{internal}

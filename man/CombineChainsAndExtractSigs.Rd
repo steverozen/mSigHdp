@@ -2,8 +2,7 @@
 % Please edit documentation in R/CombineChainsAndExtractSigs.R
 \name{CombineChainsAndExtractSigs}
 \alias{CombineChainsAndExtractSigs}
-\title{Extract components and exposures from multiple posterior sample chains
-This function returns signatures with high confidence (found in more than 90\% #' posterior samples)}
+\title{Extract signatures, exposures, and other information from multiple posterior sample chains.}
 \usage{
 CombineChainsAndExtractSigs(
   clean.chlist,
@@ -14,22 +13,23 @@ CombineChainsAndExtractSigs(
 )
 }
 \arguments{
-\item{clean.chlist}{A list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+\item{clean.chlist}{A list of \code{\link[hdpx]{hdpSampleChain-class}}
+objects, typically returned from \code{MultipleSetupAndPosterior}.
 Each element is the result of one posterior sample chain.}
 
-\item{input.catalog}{Input spectra catalog as a matrix or
-in \code{\link[ICAMS]{ICAMS}} format.}
+\item{input.catalog}{Input spectra catalog as a matrix.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{high.confidence.prop}{Pass to \code{\link[hdpx]{interpret_components}}.
-raw clusters (mutation cluster)
+\item{high.confidence.prop}{Raw clusters of mutations
 found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
-samples are signatures with high confidence.}
+samples are signatures with high confidence.
+(Passed to \code{\link[hdpx]{interpret_components}}).}
 
-\item{hc.cutoff}{Pass to \code{\link[hdpx]{extract_components_from_clusters}}. The cutoff of
-height of hierarchical clustering dendrogram, used in combining
-raw clusters (mutation clusters) into agreggated clusters.}
+\item{hc.cutoff}{The cutoff of
+height of the hierarchical clustering dendrogram used in combining
+raw clusters of mutations into aggregated clusters.
+(Passed to \code{\link[hdpx]{extract_components_from_clusters}}.)}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
@@ -43,28 +43,36 @@ and the second columns contains the number of posterior
 samples that found the raw clusters contributing to the signature.}
 
 \item{signature.cdc}{A numeric data frame. Each column corresponds
-to the sum of all mutations contributing to each signature in \code{signature}}
+to the sum of all mutations contributing to each
+signature in \code{signature}.}
 
-\item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
+\item{exposureProbs}{The inferred exposures as a matrix
+of mutation probabilities;
 rows are signatures, columns are samples (e.g. tumors). This is
-similar to \code{signature.cdc} but every column was normalized to sum of 1}
+similar to \code{signature.cdc}, but every column was normalized
+to sum to 1.}
 
-\item{low.confidence.signature}{The profiles of signatures extracted with low confidence as a matrix; rows are mutation types,
-columns are signatures with less than \code{high.confidence.prop} of posterior samples }
+\item{low.confidence.signature}{The profiles of signatures extracted
+with low confidence as a matrix; rows are mutation types,
+columns are signatures with < than
+\code{high.confidence.prop} of posterior samples.}
 
-\item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
-to each signature in \code{low.confidence.signature} and the second
-column contains the number of posterior samples that found
-the raw clusters contributing to the signature.}
+\item{low.confidence.post.samp.number}{A data frame with two columns.
+The first columns correspond
+to each signature in \code{low.confidence.signature}
+and the second
+column contains the number of posterior samples that contained
+the raw mutation clusters contributing to the signature.}
 
 \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
-to the sum of all mutations contributing to each signature in \code{low.confidence.signature}}
+to the sum of all mutations contributing to
+each signature in \code{low.confidence.signature}.}
 
-\item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
+\item{extracted.retval}{A list object returned from
+code{\link[hdpx]{extract_components_from_clusters}}.}
 
 }
 }
 \description{
-Extract components and exposures from multiple posterior sample chains
-This function returns signatures with high confidence (found in more than 90\% #' posterior samples)
+Extract signatures, exposures, and other information from multiple posterior sample chains.
 }

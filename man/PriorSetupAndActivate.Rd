@@ -19,9 +19,9 @@ PriorSetupAndActivate(
 )
 }
 \arguments{
-\item{prior.sigs}{A matrix containing prior signatures.}
+\item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
 
-\item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
+\item{prior.pseudoc}{DELETE ME LATER, NOT SUPPORTED. A numeric list. Pseudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
 
@@ -82,3 +82,4 @@ as returned from \code{\link[hdpx]{dp_activate}}.
 \description{
 Generate an HDP Gibbs sampling chain from a spectra catalog.
 }
+\keyword{internal}

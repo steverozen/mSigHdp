@@ -19,12 +19,10 @@ SetupAndPosterior(
   gamma.beta = 20,
   gamma0.alpha = gamma.alpha,
   gamma0.beta = gamma.beta,
-  checkpoint.1.chain = TRUE,
   burnin.multiplier = 2,
-  burnin.checkpoint = TRUE,
+  checkpoint = TRUE,
   prior.sigs = NULL,
-  prior.pseudoc = NULL,
-  posterior.checkpoint = F
+  prior.pseudoc = NULL
 )
 }
 \arguments{
@@ -102,10 +100,6 @@ distribution priors for
 the Dirichlet process concentration parameters (\eqn{\gamma_0})
 for \eqn{G_0}.}
 
-\item{checkpoint.1.chain}{If \code{TRUE} checkpoint the sample
-chain to current working directory, in a file called
-sample.chain.\emph{seed_number}.Rdata.}
-
 \item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
 After each round, a burn-in chain will be save for checkpoint.
 A total number of 10,000 iterations is recommended for most analysis. Therefore we set the default of \code{burnin} to
@@ -114,16 +108,20 @@ The dataset with more mutations require longer burn-ins. According to our experi
 50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
 
-\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burn-in will be created.}
+\item{checkpoint}{If \code{TRUE}, then:
+- checkpoint the sample
+chain to current working directory, in a file called
+sample.chain.\emph{seed_number}.Rdata, and
+- checkpoint the posterior sampling after every 10
+posterior samples collected.
+- checkpoint the burnin
+All checkpoint files go in current working directory.}
 
-\item{prior.sigs}{A matrix containing prior signatures.}
+\item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
 
-\item{prior.pseudoc}{A numeric list. Pesudo counts of each prior signature. Recommended is 1000. In practice,
+\item{prior.pseudoc}{DELETE ME LATER, NOT SUPPORTED. A numeric list. Pseudo counts of each prior signature. Recommended is 1000. In practice,
 it may be advisable to put lower weights on prior signatures that you do not expect
 to be present in your dataset, or even exclude some priors entirely.}
-
-\item{posterior.checkpoint}{If \code{TRUE} checkpoint the posterior sampling after every 10
-posterior samples collected}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
@@ -132,3 +130,4 @@ as returned from \code{\link[hdpx]{hdp_posterior}}.
 \description{
 Generate an HDP Gibbs sampling chain from a spectra catalog.
 }
+\keyword{internal}

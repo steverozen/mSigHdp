@@ -11,7 +11,7 @@
 #' @return Invisibly, the clean, non-error \code{chlist}
 #'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 #'
-#' @export
+#' @keywords internal
 #'
 #'
 CleanChlist <- function(chlist, verbose = FALSE) {

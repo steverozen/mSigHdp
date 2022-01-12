@@ -22,17 +22,19 @@
 #'      \code{verbosity}. Verbosity of debugging statements.
 #'       No need to change unless for development purpose
 #'
-#' @param checkpoint.1.chain If \code{TRUE} checkpoint the sample
-#'      chain to current working directory, in a file called
-#'      sample.chain.*seed_number*.Rdata.
-#'
-#' @param posterior.checkpoint If \code{TRUE} checkpoint the posterior sampling after every 10
-#'                             posterior samples collected
+#' @param checkpoint If \code{TRUE}, then:
+#'      - checkpoint the sample
+#'        chain to current working directory, in a file called
+#'        sample.chain.*seed_number*.Rdata, and
+#'      - checkpoint the posterior sampling after every 10
+#'        posterior samples collected.
+#'      - checkpoint the burnin
+#'      All checkpoint files go in current working directory.
 #'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 #'  as returned from \code{\link[hdpx]{hdp_posterior}}.
 #'
-#' @export
+#' @keywords internal
 
 SetupAndPosterior <-
   function(input.catalog,
@@ -49,12 +51,10 @@ SetupAndPosterior <-
            gamma.beta          = 20,
            gamma0.alpha        = gamma.alpha,
            gamma0.beta         = gamma.beta,
-           checkpoint.1.chain  = TRUE,
            burnin.multiplier   = 2,
-           burnin.checkpoint   = TRUE,
+           checkpoint          = TRUE,
            prior.sigs          = NULL,
-           prior.pseudoc       = NULL,
-           posterior.checkpoint= F)
+           prior.pseudoc       = NULL)
   {
 
     if(!is.null(prior.sigs)){
@@ -87,8 +87,6 @@ SetupAndPosterior <-
                                     gamma0.beta   = gamma0.beta)
     }
 
-
-
     if (verbose) message("calling hdp_posterior, seed = ",
                          seedNumber, " ", Sys.time())
 
@@ -100,24 +98,19 @@ SetupAndPosterior <-
       cpiter            = post.cpiter,
       seedNumber        = seedNumber,
       burnin.multiplier = burnin.multiplier,
-      burnin.checkpoint = burnin.checkpoint)
+      checkpoint        = checkpoint)
 
     posterior.time <- system.time(
-
       sample.chain <- hdpx::hdp_posterior_sample(post.input     = burnin.output,
                                                  post.n         = post.n,
                                                  post.space     = post.space,
                                                  post.cpiter    = post.cpiter,
                                                  seed           = seedNumber,
                                                  post.verbosity = post.verbosity,
-                                                 checkpoint     = posterior.checkpoint)
-
+                                                 checkpoint     = checkpoint)
     )
 
-
-
-    if (checkpoint.1.chain) {
-
+    if (checkpoint) {
       save(sample.chain, file = paste0("sample.chain.", seedNumber, ".Rdata"))
     }
 

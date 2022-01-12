@@ -26,7 +26,7 @@
 #' @param burnin.verbosity Pass to \code{\link[hdpx]{hdp_burnin}}
 #'      \code{verbosity}.Verbosity of debugging statements.
 #'#'
-#' @param burnin.checkpoint If \code{TRUE}, a checkpoint for burn-in will be created.
+#' @param checkpoint If \code{TRUE}, a checkpoint for burn-in will be created.
 #'
 #' @return A list with 2 elements: \describe{
 #' \item{\code{hdplist}}{A list representation of
@@ -34,7 +34,7 @@
 #' \item{likelihood}{A numeric vector with the likelihood at each iteration.}
 #' }
 #'
-#' @export
+#' @keywords internal
 #'
 ChainBurnin <-
   function(hdp.state,
@@ -43,8 +43,8 @@ ChainBurnin <-
            cpiter            = 3,
            burnin.verbosity  = 0,
            burnin.multiplier = 2,
-           burnin.checkpoint = TRUE
-  ) { # 10 arguments
+           checkpoint        = TRUE
+  ) {
 
     set.seed(seedNumber)
 
@@ -52,11 +52,10 @@ ChainBurnin <-
                                       burnin      = burnin,
                                       cpiter      = cpiter,
                                       verbosity   = burnin.verbosity)
-    if (burnin.checkpoint) {
-      save(burnin.checkpoint,
+    if (checkpoint) {
+      save(burnin.output,
            file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
     }
-
 
     if(burnin.multiplier>1){
       for (ii in 2:burnin.multiplier) {
@@ -67,14 +66,12 @@ ChainBurnin <-
                                           verbosity   = burnin.verbosity)
         burnin.output$likelihood <- c(old.likelihood,burnin.output$likelihood)
 
-        if (burnin.checkpoint) {
+        if (checkpoint) {
             save(burnin.output,
                file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
         }
       }
     }
-
-
 
     return(invisible(burnin.output))
   }

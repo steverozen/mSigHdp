@@ -1,24 +1,25 @@
-#' Extend Burn in iteration for a list representation of
-#'    an \code{\link[hdpx]{hdpState-class}} object. This list
-#'    is an output from \code{\link[hdpx]{hdp_burnin}} or
-#'    \code{ActivateandBurnin}.
+#' Extend burnin iterations generated from \code{\link{ChainBurnin}}.
 #'
 #' @param seedNumber A random seed for setting the environment of
 #'   \code{\link[hdpx]{hdp_burnin}}.
 #'
-#' @param burnin Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param burnin Passed to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{burnin}.
 #'
-#' @param cpiter Pass to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{cpiter}.
+#' @param cpiter Passed to \code{\link[hdpx]{hdp_posterior}}
+#'      \code{cpiter}. Please see that documentation.
 #'
-#' @param verbosity Pass to \code{\link[hdpx]{hdp_posterior}}
+#' @param verbosity Passed to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
 #'
 #' @param hdplist A list representation of
-#'    an \code{\link[hdpx]{hdpState-class}} object
+#'    an \code{\link[hdpx]{hdpState-class}} object;
+#'    a return value \code{\link{ChainBurnin}}.
 #'
-#' @return A list with hdp object after burn-in iteration and likelihood of iteration
+#' @return The same type of object as returned from
+#'  \code{\link{ChainBurnin}.}
+#'
+#' The envisioned application is extending burnins from burnin checkpoints.
 #'
 #' @export
 #'

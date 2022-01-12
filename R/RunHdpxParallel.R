@@ -35,7 +35,8 @@
 #'                               the raw clusters contributing to the signature.}
 #'
 #' \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
-#'                  to the sum of all mutations contributing to each signature in \code{low.confidence.signature}}
+#'                  to the sum of all mutations contributing to each
+#'                  signature in \code{low.confidence.signature}}
 #'
 #' \item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
 #'
@@ -50,7 +51,6 @@ RunHdpxParallel <- function(input.catalog,
                             verbose              = TRUE,
                             burnin               = 1000,
                             burnin.multiplier    = 10,
-                            burnin.checkpoint    = FALSE,
                             post.n               = 200,
                             post.space           = 100,
                             post.cpiter          = 3,
@@ -65,11 +65,9 @@ RunHdpxParallel <- function(input.catalog,
                             gamma.beta          = 20,
                             gamma0.alpha        = gamma.alpha,
                             gamma0.beta         = gamma.beta,
-                            checkpoint.chlist   = TRUE,
-                            checkpoint.1.chain  = TRUE,
+                            checkpoint          = TRUE,
                             prior.sigs          = NULL,
-                            prior.pseudoc       = NULL,
-                            posterior.checkpoint= FALSE) {
+                            prior.pseudoc       = NULL) {
 
   # Step 0: Get the input.catalog and keeping track of
   # whether it is an ICAMS catalog (encoded as an
@@ -97,13 +95,10 @@ RunHdpxParallel <- function(input.catalog,
                               gamma.beta          = gamma.beta,
                               gamma0.alpha        = gamma0.alpha,
                               gamma0.beta         = gamma0.beta,
-                              checkpoint.chlist   = checkpoint.chlist,
-                              checkpoint.1.chain  = checkpoint.1.chain,
                               prior.sigs          = prior.sigs,
                               prior.pseudoc       = prior.pseudoc,
                               burnin.multiplier   = burnin.multiplier,
-                              burnin.checkpoint   = burnin.checkpoint,
-                              posterior.checkpoint= posterior.checkpoint)
+                              checkpoint          = checkpoint)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;
