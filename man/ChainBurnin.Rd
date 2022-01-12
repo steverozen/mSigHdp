@@ -40,7 +40,7 @@ The dataset with more mutations require longer burn-ins. According to our experi
 50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
 
-\item{burnin.checkpoint}{If \code{TRUE}, a checkpoint for burn-in will be created.}
+\item{checkpoint}{If \code{TRUE}, a checkpoint for burn-in will be created.}
 }
 \value{
 A list with 2 elements: \describe{
