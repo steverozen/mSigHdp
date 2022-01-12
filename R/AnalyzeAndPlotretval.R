@@ -62,13 +62,13 @@ AnalyzeAndPlotretval <- function(retval,
   exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
   colnames(exposureCounts) <- colnames(input.catalog)
 
-  ICAMSxtra::WriteExposure(exposureCounts,
+  mSigAct::WriteExposure(exposureCounts,
                            file.path(out.dir,"inferred.exposures.csv"))
 
-  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(exposureCounts),
+  mSigAct::PlotExposureToPdf(mSigAct::SortExposure(exposureCounts),
                                file.path(out.dir,"inferred.exposure.count.pdf"))
 
-  ICAMSxtra::PlotExposureToPdf(ICAMSxtra::SortExposure(retval$exposureProbs),
+  mSigAct::PlotExposureToPdf(mSigAct::SortExposure(retval$exposureProbs),
                                file.path(out.dir,"inferred.exposure.proportion.pdf"),
                                plot.proportion = TRUE)
 

@@ -29,8 +29,8 @@ Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
 Imports: hdpx (>= 0.3.8),
     ICAMS (>= 2.2.4),
+    mSigAct (>= 2.1.3.9009),
     reshape2,
     data.table
-Suggests: ICAMSxtra (>= 0.0.2),
-    testthat,
+Suggests: testthat,
     utils
