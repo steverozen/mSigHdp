@@ -50,8 +50,7 @@ retval <- mSigHdp::RunHdpxParallel(
   gamma.alpha              = 1,
   gamma.beta               = 20, 
   high.confidence.prop     = 0.9,
-  checkpoint               = FALSE,
-  checkpoint.1.chain       = FALSE) 
+  checkpoint               = FALSE) 
 
 ```
 
