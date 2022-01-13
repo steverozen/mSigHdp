@@ -27,7 +27,7 @@ ComponentDiagnosticPlotting <- function(retval,
                                         out.dir,
                                         verbose){
 
-  IS.ICAMS <- IsICAMSCatalog(input.catalog)
+  IS.ICAMS <- ICAMS::IsICAMSCatalog(input.catalog)
 
   multi <- retval$extracted.retval[["multi.chains"]] # class hdpSampleMulti
   chains <- hdpx::chains(multi)      # list of hdpSampleChain

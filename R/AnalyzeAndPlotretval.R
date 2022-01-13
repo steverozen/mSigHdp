@@ -26,7 +26,7 @@ AnalyzeAndPlotretval <- function(retval,
                                  overwrite        = TRUE,
                                  diagnostic.plot  = TRUE) {
 
-  IS.ICAMS <- IsICAMSCatalog(input.catalog)
+  IS.ICAMS <- ICAMS::IsICAMSCatalog(input.catalog)
   if (dir.exists(out.dir)) {
     if (!overwrite) stop(out.dir, " already exists")
     if (verbose) message("Using existing out.dir ", out.dir)

@@ -108,13 +108,15 @@ The dataset with more mutations require longer burn-ins. According to our experi
 50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
 The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
 
-\item{checkpoint}{If \code{TRUE}, then:
-- checkpoint the sample
-chain to current working directory, in a file called
-sample.chain.\emph{seed_number}.Rdata, and
-- checkpoint the posterior sampling after every 10
-posterior samples collected.
-- checkpoint the burnin
+\item{checkpoint}{If \code{TRUE}, then \itemize{
+\item Checkpoint each final Gibbs sample
+chain to the current working directory, in a file called
+mSigHdp.sample.checkpoint.\emph{seed_number}.Rdata.
+\item Periodically checkpoint the burnin state
+to the current working directory, in files called
+mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
+}
+
 All checkpoint files go in current working directory.}
 
 \item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}

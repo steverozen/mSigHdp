@@ -137,13 +137,15 @@ distribution priors for
 the Dirichlet process concentration parameters (\eqn{\gamma_0})
 for \eqn{G_0}.}
 
-\item{checkpoint}{If \code{TRUE}, then:
-- checkpoint the sample
-chain to current working directory, in a file called
-sample.chain.\emph{seed_number}.Rdata, and
-- checkpoint the posterior sampling after every 10
-posterior samples collected.
-- checkpoint the burnin
+\item{checkpoint}{If \code{TRUE}, then \itemize{
+\item Checkpoint each final Gibbs sample
+chain to the current working directory, in a file called
+mSigHdp.sample.checkpoint.\emph{seed_number}.Rdata.
+\item Periodically checkpoint the burnin state
+to the current working directory, in files called
+mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
+}
+
 All checkpoint files go in current working directory.}
 
 \item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}

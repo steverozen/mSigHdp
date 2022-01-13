@@ -48,14 +48,18 @@ ChainBurnin <-
 
     set.seed(seedNumber)
 
+    my.checkpoint <- function() {
+      if (checkpoint) {
+        save(burnin.output,
+             file = paste0("mSigHdp.burnin.checkpoint.", seedNumber, ".Rdata"))
+      }
+    }
+
     burnin.output <- hdpx::hdp_burnin(hdp         = hdp.state,
                                       burnin      = burnin,
                                       cpiter      = cpiter,
                                       verbosity   = burnin.verbosity)
-    if (checkpoint) {
-      save(burnin.output,
-           file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
-    }
+    my.checkpoint()
 
     if(burnin.multiplier>1){
       for (ii in 2:burnin.multiplier) {
@@ -65,11 +69,7 @@ ChainBurnin <-
                                           cpiter      = cpiter,
                                           verbosity   = burnin.verbosity)
         burnin.output$likelihood <- c(old.likelihood,burnin.output$likelihood)
-
-        if (checkpoint) {
-            save(burnin.output,
-               file = paste0("burnin.checkpoint.", seedNumber, ".Rdata"))
-        }
+        my.checkpoint
       }
     }
 
