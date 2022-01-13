@@ -1,13 +1,10 @@
-#' Extract mutational signatures and optionally generate diagnostic plots to help
-#' understand the results: e.g. the stability each extracted signature and
-#' the tumors that drive the extraction of each signature.
+#' Extract mutational signatures from a set of mutational spectra.
 #'
 #' @inheritParams MultipleSetupAndPosterior
 #'
-#' @inheritParams AnalyzeAndPlotretval
+#' @inheritParams SaveAnalysis
 #'
 #' @inheritParams CombineChainsAndExtractSigs
-#'
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #' \item{signature}{The extracted signature profiles as a matrix;
@@ -63,8 +60,6 @@ RunHdpxParallel <- function(input.catalog,
                             out.dir             = NULL,
                             gamma.alpha         = 1,
                             gamma.beta          = 20,
-                            gamma0.alpha        = gamma.alpha,
-                            gamma0.beta         = gamma.beta,
                             checkpoint          = TRUE,
                             prior.sigs          = NULL,
                             prior.pseudoc       = NULL) {
@@ -93,8 +88,6 @@ RunHdpxParallel <- function(input.catalog,
                               num.child.process   = num.child.process,
                               gamma.alpha         = gamma.alpha,
                               gamma.beta          = gamma.beta,
-                              gamma0.alpha        = gamma0.alpha,
-                              gamma0.beta         = gamma0.beta,
                               prior.sigs          = prior.sigs,
                               prior.pseudoc       = prior.pseudoc,
                               burnin.multiplier   = burnin.multiplier,
@@ -123,11 +116,11 @@ RunHdpxParallel <- function(input.catalog,
       if (verbose) message("Created new out.dir ", out.dir)
     }
     save(retval, input.catalog, file = file.path(out.dir, "hdp.retval.Rdata"))
-    AnalyzeAndPlotretval(retval                = retval,
-                         input.catalog         = input.catalog,
-                         out.dir               = out.dir,
-                         verbose               = verbose,
-                         overwrite             = overwrite)
+    SaveAnalysis(retval                = retval,
+                 input.catalog         = input.catalog,
+                 out.dir               = out.dir,
+                 verbose               = verbose,
+                 overwrite             = overwrite)
   }
   return(invisible(retval))
 }

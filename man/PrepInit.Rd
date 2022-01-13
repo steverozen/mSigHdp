@@ -12,9 +12,7 @@ PrepInit(
   verbose = TRUE,
   K.guess,
   gamma.alpha = 1,
-  gamma.beta = 1,
-  gamma0.alpha = gamma.alpha,
-  gamma0.beta = gamma.beta
+  gamma.beta = 1
 )
 }
 \arguments{
@@ -48,30 +46,18 @@ of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration
-parameters; in this
-function the gamma distributions for all Dirichlet processes,
-except possibly the top level process, are the same.}
+parameters (\eqn{\alpha_0} and all \eqn{\alpha_j} in
+Figure B.1 of
+https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf}
 
 \item{gamma.beta}{Inverse scale parameter (rate parameter) of
 the gamma distribution prior for the Dirichlet process concentration
-parameters; in this
-function the gamma distributions for all Dirichlet processes, except
-possibly the top level process, are the same.
+parameters(\eqn{\beta_0} and all \eqn{\beta_j} in
+Figure B.1 of
+https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf
 
 We recommend gamma.alpha = 1 and gamma.beta = 20 for single-base-substitution signatures extraction;
 gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution/INDEL signature extraction}
-
-\item{gamma0.alpha}{See figure B.1 from Nicola Robert's thesis.
-The shape parameter (\eqn{\alpha_0}) of the gamma
-distribution priors for
-the Dirichlet process concentration parameters  (\eqn{\gamma_0})
-for \eqn{G_0}.}
-
-\item{gamma0.beta}{See figure B.1 from Nicola Robert's thesis.
-Inverse scale parameter (rate parameter, \eqn{\beta_0}) of the gamma
-distribution priors for
-the Dirichlet process concentration parameters (\eqn{\gamma_0})
-for \eqn{G_0}.}
 }
 \description{
 Initialize hdp object

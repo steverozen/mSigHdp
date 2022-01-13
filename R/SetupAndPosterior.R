@@ -31,8 +31,6 @@
 #'        mSigHdp.burnin.checkpoint.*seed_number*.Rdata.
 #'  }
 #'
-#'  All checkpoint files go in current working directory.
-#'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 #'  as returned from \code{\link[hdpx]{hdp_posterior}}.
 #'
@@ -51,29 +49,27 @@ SetupAndPosterior <-
            post.verbosity      = 0,
            gamma.alpha         = 1,
            gamma.beta          = 20,
-           gamma0.alpha        = gamma.alpha,
-           gamma0.beta         = gamma.beta,
            burnin.multiplier   = 2,
            checkpoint          = TRUE,
            prior.sigs          = NULL,
            prior.pseudoc       = NULL)
   {
 
-    if(!is.null(prior.sigs)){
-      if(verbose) message('Prior signatures are found')
+    if(!is.null(prior.sigs)) {
       stop("Computation with prior.sigs not currently supported")
+
+      if(verbose) message('Prior signatures are found')
+
       if(is.null(prior.pseudoc)){
         stop('Prior signatures pseudo counts are not set')
       } else {
         hdp.state <- PriorSetupAndActivate(input.catalog = input.catalog,
                                            seedNumber    = seedNumber,
                                            K.guess       = K.guess,
-                                           multi.types   = FALSE, ##multi.types=T doesn't work for now
+                                           multi.types   = FALSE, ## multi.types=T doesn't work for now
                                            verbose       = verbose,
                                            gamma.alpha   = gamma.alpha,
                                            gamma.beta    = gamma.beta,
-                                           gamma0.alpha  = gamma0.alpha,
-                                           gamma0.beta   = gamma0.beta,
                                            prior.sigs    = prior.sigs,
                                            prior.pseudoc = prior.pseudoc)
       }
@@ -85,14 +81,11 @@ SetupAndPosterior <-
                                     multi.types   = multi.types,
                                     verbose       = verbose,
                                     gamma.alpha   = gamma.alpha,
-                                    gamma.beta    = gamma.beta,
-                                    gamma0.alpha  = gamma0.alpha,
-                                    gamma0.beta   = gamma0.beta)
+                                    gamma.beta    = gamma.beta)
     }
 
     if (verbose) message("calling hdp_posterior, seed = ",
                          seedNumber, " ", Sys.time())
-
 
     burnin.output <- ChainBurnin(
       hdp.state         = hdp.state,

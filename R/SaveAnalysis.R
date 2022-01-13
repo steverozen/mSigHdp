@@ -1,4 +1,4 @@
-#' Evaluate and plot the return value from \code{CombineChainsAndExtractSigs}.
+#' Save the analysis from \code{\link{CombineChainsAndExtractSigs}} to files.
 #'
 #' @param retval The output from \code{CombineChainsAndExtractSigs}.
 #'
@@ -19,12 +19,12 @@
 #' @export
 #'
 #'
-AnalyzeAndPlotretval <- function(retval,
-                                 input.catalog,
-                                 out.dir          = NULL,
-                                 verbose          = TRUE,
-                                 overwrite        = TRUE,
-                                 diagnostic.plot  = TRUE) {
+SaveAnalysis <- function(retval,
+                         input.catalog,
+                         out.dir          = NULL,
+                         verbose          = TRUE,
+                         overwrite        = TRUE,
+                         diagnostic.plot  = TRUE) {
 
   IS.ICAMS <- ICAMS::IsICAMSCatalog(input.catalog)
   if (dir.exists(out.dir)) {
@@ -129,6 +129,8 @@ AnalyzeAndPlotretval <- function(retval,
                                 out.dir       = paste0(out.dir,"/Diagnostic_Plots"),
                                 verbose       = verbose)
   }
+
+  return(NULL)
 }
 
 

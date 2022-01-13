@@ -2,9 +2,7 @@
 % Please edit documentation in R/RunHdpxParallel.R
 \name{RunHdpxParallel}
 \alias{RunHdpxParallel}
-\title{Extract mutational signatures and optionally generate diagnostic plots to help
-understand the results: e.g. the stability each extracted signature and
-the tumors that drive the extraction of each signature.}
+\title{Extract mutational signatures from a set of mutational spectra.}
 \usage{
 RunHdpxParallel(
   input.catalog,
@@ -26,8 +24,6 @@ RunHdpxParallel(
   out.dir = NULL,
   gamma.alpha = 1,
   gamma.beta = 20,
-  gamma0.alpha = gamma.alpha,
-  gamma0.beta = gamma.beta,
   checkpoint = TRUE,
   prior.sigs = NULL,
   prior.pseudoc = NULL
@@ -67,13 +63,14 @@ and one grandparent node.}
 \item{burnin}{Pass to \code{\link[hdpx]{hdp_burnin}}
 \code{burnin}. The number of burn-in iterations}
 
-\item{burnin.multiplier}{A checkpoint setting. \code{burnin.multiplier} rounds of \code{burnin} iterations will be run.
-After each round, a burn-in chain will be save for checkpoint.
-A total number of 10,000 iterations is recommended for most analysis. Therefore we set the default of \code{burnin} to
-1000 and \code{burnin.multiplier} to 10. However, number of iterations can be adjusted based on the size of dataset.
-The dataset with more mutations require longer burn-ins. According to our experience,
-50,000 iterations are needed when analyzing all PCAWG7 genomes (2,780 samples).
-The burnin can be continued from a checkpoint file with \code{\link{ExtendBurnin}}.}
+\item{burnin.multiplier}{Run \code{burnin.multiplier} rounds of \code{burnin}
+iterations.
+If \code{checkpoint} is \code{TRUE}, save the burnin chain (see
+parameter \code{checkpoint}.)
+The diagnostic plot \code{diagnostics.likelihood.pdf} can help
+determine if the chain is stationary.
+The burnin can be continued from a checkpoint file
+with \code{\link{ExtendBurnin}} (see argument \code{checkpoint}).}
 
 \item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{n}.The number of posterior samples to collect.}
@@ -112,30 +109,18 @@ csv files and plots (pdfs) of extracted signatures and their exposures.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration
-parameters; in this
-function the gamma distributions for all Dirichlet processes,
-except possibly the top level process, are the same.}
+parameters (\eqn{\alpha_0} and all \eqn{\alpha_j} in
+Figure B.1 of
+https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf}
 
 \item{gamma.beta}{Inverse scale parameter (rate parameter) of
 the gamma distribution prior for the Dirichlet process concentration
-parameters; in this
-function the gamma distributions for all Dirichlet processes, except
-possibly the top level process, are the same.
+parameters(\eqn{\beta_0} and all \eqn{\beta_j} in
+Figure B.1 of
+https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf
 
 We recommend gamma.alpha = 1 and gamma.beta = 20 for single-base-substitution signatures extraction;
 gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution/INDEL signature extraction}
-
-\item{gamma0.alpha}{See figure B.1 from Nicola Robert's thesis.
-The shape parameter (\eqn{\alpha_0}) of the gamma
-distribution priors for
-the Dirichlet process concentration parameters  (\eqn{\gamma_0})
-for \eqn{G_0}.}
-
-\item{gamma0.beta}{See figure B.1 from Nicola Robert's thesis.
-Inverse scale parameter (rate parameter, \eqn{\beta_0}) of the gamma
-distribution priors for
-the Dirichlet process concentration parameters (\eqn{\gamma_0})
-for \eqn{G_0}.}
 
 \item{checkpoint}{If \code{TRUE}, then \itemize{
 \item Checkpoint each final Gibbs sample
@@ -144,9 +129,7 @@ mSigHdp.sample.checkpoint.\emph{seed_number}.Rdata.
 \item Periodically checkpoint the burnin state
 to the current working directory, in files called
 mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
-}
-
-All checkpoint files go in current working directory.}
+}}
 
 \item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
 
@@ -189,7 +172,5 @@ signature in \code{low.confidence.signature}}
 }
 }
 \description{
-Extract mutational signatures and optionally generate diagnostic plots to help
-understand the results: e.g. the stability each extracted signature and
-the tumors that drive the extraction of each signature.
+Extract mutational signatures from a set of mutational spectra.
 }

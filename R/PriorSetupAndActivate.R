@@ -7,6 +7,7 @@
 #'
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #' @param seedNumber A random seeds passed to \code{\link[hdpx]{dp_activate}}.
+#'
 #' @param gamma.alpha Shape parameter of
 #'   the gamma distribution prior for the Dirichlet process concentration
 #'   parameters; in this
@@ -18,18 +19,6 @@
 #'   parameters; in this
 #'   function the gamma distributions for all Dirichlet processes, except
 #'   possibly the top level process, are the same.
-#'
-#' @param gamma0.alpha See figure B.1 from Nicola Robert's thesis.
-#'   The shape parameter (\eqn{\alpha_0}) of the gamma
-#'   distribution priors for
-#'   the Dirichlet process concentration parameters  (\eqn{\gamma_0})
-#'   for \eqn{G_0}.
-#'
-#' @param gamma0.beta See figure B.1 from Nicola Robert's thesis.
-#'   Inverse scale parameter (rate parameter, \eqn{\beta_0}) of the gamma
-#'   distribution priors for
-#'   the Dirichlet process concentration parameters (\eqn{\gamma_0})
-#'   for \eqn{G_0}.
 #'
 #' @param prior.sigs DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.
 #'
@@ -45,10 +34,8 @@
 PriorSetupAndActivate <- function(prior.sigs,
                                   prior.pseudoc,
                                   gamma.alpha       = 1,
-                                  gamma.beta        = 1,
+                                  gamma.beta        = 20,
                                   K.guess,
-                                  gamma0.alpha      = gamma.alpha,
-                                  gamma0.beta       = gamma.beta,
                                   multi.types       = F,
                                   input.catalog,
                                   verbose           = TRUE,
@@ -67,38 +54,35 @@ PriorSetupAndActivate <- function(prior.sigs,
                                     alphaa=c(gamma.alpha, gamma.alpha),
                                     alphab=c(gamma.beta, gamma.beta))
 
-  ppindex <- GeneratePriorppindex(multi.types = multi.types,input.catalog = input.catalog,nps = nps)
-
+  ppindex <- GeneratePriorppindex(
+    multi.types = multi.types,
+    input.catalog = input.catalog,
+    nps = nps)
 
   dp.levels <- length(unique(ppindex$ppindex))
 
-  alphaa <- c(gamma0.alpha, rep(gamma.alpha, dp.levels - 1))
-  alphab <- c(gamma0.beta,  rep(gamma.beta,  dp.levels - 1))
+  alphaa <- rep(gamma.alpha, dp.levels)
+  alphab <- rep(gamma.beta,  dp.levels)
 
   hdp.prior <- hdpx::hdp_addconparam(hdp.prior,
-                                     alphaa = c(gamma0.alpha, rep(gamma.alpha, dp.levels - 1)),
-                                     alphab = c(gamma0.beta,  rep(gamma.beta,  dp.levels - 1)))
-
-
+                                     alphaa = alphaa,
+                                     alphab = alphab)
 
   hdp.prior <- hdpx::hdp_adddp(hdp.prior,
-                               numdp = length(ppindex$ppindex), ##number of samples + 1
+                               numdp   = length(ppindex$ppindex),
                                ppindex = ppindex$ppindex,
                                cpindex = ppindex$cpindex)
 
-
   num.process <- hdpx::numdp(hdp.prior)
-
 
   hdp.prior <- hdpx::hdp_setdata(hdp.prior,
                                  dpindex = (1+nps+1 + ppindex$num.tumor.types + 1):num.process,
                                  convSpectra)
 
   hdp.state <- hdpx::dp_activate(hdp.prior,
-                                 dpindex =  (1+nps+1):num.process,#don’t activate the frozen pseudo-count nodes for the prior signatures
+                                 dpindex =  (1+nps+1):num.process, # don’t activate the frozen pseudo-count nodes for the prior signatures
                                  initcc = nps + K.guess,
                                  seed = seedNumber)
 
   return(invisible(hdp.state))
-
 }

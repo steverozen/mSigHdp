@@ -8,10 +8,8 @@ PriorSetupAndActivate(
   prior.sigs,
   prior.pseudoc,
   gamma.alpha = 1,
-  gamma.beta = 1,
+  gamma.beta = 20,
   K.guess,
-  gamma0.alpha = gamma.alpha,
-  gamma0.beta = gamma.beta,
   multi.types = F,
   input.catalog,
   verbose = TRUE,
@@ -40,18 +38,6 @@ possibly the top level process, are the same.}
 \item{K.guess}{Suggested initial value of the number of
 signatures, passed to \code{\link[hdpx]{dp_activate}} as
 \code{initcc}.}
-
-\item{gamma0.alpha}{See figure B.1 from Nicola Robert's thesis.
-The shape parameter (\eqn{\alpha_0}) of the gamma
-distribution priors for
-the Dirichlet process concentration parameters  (\eqn{\gamma_0})
-for \eqn{G_0}.}
-
-\item{gamma0.beta}{See figure B.1 from Nicola Robert's thesis.
-Inverse scale parameter (rate parameter, \eqn{\beta_0}) of the gamma
-distribution priors for
-the Dirichlet process concentration parameters (\eqn{\gamma_0})
-for \eqn{G_0}.}
 
 \item{multi.types}{A logical scalar or
 a character vector.

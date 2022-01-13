@@ -4,7 +4,7 @@
 #'
 #' @param input.catalog Input spectra catalog as a matrix.
 #'
-#' @inheritParams AnalyzeAndPlotretval
+#' @inheritParams SaveAnalysis
 #'
 #' @importFrom grDevices dev.off pdf
 #'
@@ -19,8 +19,6 @@
 #'  - diagnostics.signatures.pdf
 #'
 #' @export
-
-
 
 ComponentDiagnosticPlotting <- function(retval,
                                         input.catalog,
