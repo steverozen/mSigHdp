@@ -69,7 +69,7 @@ parameter sampling to perform after each iteration}
 
 \item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{verbosity}. Verbosity of debugging statements.
-No need to change unless for development purpose}
+No need to change unless for development purpose. Default is 0.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration
@@ -95,14 +95,10 @@ determine if the chain is stationary.
 The burnin can be continued from a checkpoint file
 with \code{\link{ExtendBurnin}} (see argument \code{checkpoint}).}
 
-\item{checkpoint}{If \code{TRUE}, then \itemize{
-\item Checkpoint each final Gibbs sample
-chain to the current working directory, in a file called
-mSigHdp.sample.checkpoint.\emph{seed_number}.Rdata.
-\item Periodically checkpoint the burnin state
-to the current working directory, in files called
-mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
-}}
+\item{checkpoint}{If \code{TRUE}, a checkpoint
+file called mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
+will be created
+in the current working directory.}
 
 \item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
 

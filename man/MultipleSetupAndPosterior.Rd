@@ -80,7 +80,7 @@ parameter sampling to perform after each iteration}
 
 \item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{verbosity}. Verbosity of debugging statements.
-No need to change unless for development purpose}
+No need to change unless for development purpose. Default is 0.}
 
 \item{CPU.cores}{Number of CPUs to use; this should be no more than \code{num.child.process}.}
 
@@ -102,14 +102,10 @@ https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.p
 We recommend gamma.alpha = 1 and gamma.beta = 20 for single-base-substitution signatures extraction;
 gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution/INDEL signature extraction}
 
-\item{checkpoint}{If \code{TRUE}, then \itemize{
-\item Checkpoint each final Gibbs sample
-chain to the current working directory, in a file called
-mSigHdp.sample.checkpoint.\emph{seed_number}.Rdata.
-\item Periodically checkpoint the burnin state
-to the current working directory, in files called
-mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
-}}
+\item{checkpoint}{If \code{TRUE}, a checkpoint
+file called mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
+will be created
+in the current working directory.}
 
 \item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
 

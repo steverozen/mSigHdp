@@ -12,7 +12,7 @@ test_that("ChainBurnin", {
                          cpiter              = 3,
                          burnin.verbosity    = 0,
                          burnin.multiplier   = 2,
-                         checkpoint          = FALSE)
+                         checkpoint          = T)
 
   retvalx2 <- ChainBurnin(hdp.state          = hdp.state,
                          seedNumber          = (44 + 3e6),
@@ -20,7 +20,7 @@ test_that("ChainBurnin", {
                          cpiter              = 3,
                          burnin.verbosity    = 0,
                          burnin.multiplier   = 1,
-                         checkpoint          = FALSE)
+                         checkpoint          = T)
 
   # In we need to regenerate the baseline data
   # save(retvalx1, file = "RunhdpInternal.testdata/test.ChainBurnin.Rdata")

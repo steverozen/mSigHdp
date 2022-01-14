@@ -8,28 +8,7 @@
 #'
 #' @inheritParams ChainBurnin
 #'
-#' @param post.n Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{n}.The number of posterior samples to collect.
-#'
-#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{space}. The number of iterations between collected samples.
-#'
-#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-#'        \code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
-#'        parameter sampling to perform after each iteration
-#'
-#' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{verbosity}. Verbosity of debugging statements.
-#'       No need to change unless for development purpose
-#'
-#' @param checkpoint If \code{TRUE}, then \itemize{
-#'      \item Checkpoint each final Gibbs sample
-#'        chain to the current working directory, in a file called
-#'        mSigHdp.sample.checkpoint.*seed_number*.Rdata.
-#'      \item Periodically checkpoint the burnin state
-#'        to the current working directory, in files called
-#'        mSigHdp.burnin.checkpoint.*seed_number*.Rdata.
-#'  }
+#' @inheritParams GibbsSamplingAfterBurnin
 #'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 #'  as returned from \code{\link[hdpx]{hdp_posterior}}.
@@ -97,13 +76,12 @@ SetupAndPosterior <-
       checkpoint        = checkpoint)
 
     posterior.time <- system.time(
-      sample.chain <- hdpx::hdp_posterior_sample(post.input     = burnin.output,
-                                                 post.n         = post.n,
-                                                 post.space     = post.space,
-                                                 post.cpiter    = post.cpiter,
-                                                 seed           = seedNumber,
-                                                 post.verbosity = post.verbosity,
-                                                 checkpoint     = checkpoint)
+
+      sample.chain <- GibbsSamplingAfterBurnin(burnin.output     = burnin.output,
+                                                     post.n            = post.n,
+                                                     post.space        = post.space,
+                                                     post.cpiter       = post.cpiter,
+                                                     post.verbosity    = post.verbosity)
     )
 
     if (checkpoint) {
