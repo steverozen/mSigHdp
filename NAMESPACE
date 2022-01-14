@@ -3,6 +3,7 @@
 export(CombineChainsAndExtractSigs)
 export(ComponentDiagnosticPlotting)
 export(ExtendBurnin)
+export(GibbsSamplingAfterBurnin)
 export(MultipleSetupAndPosterior)
 export(RunHdpxParallel)
 export(SaveAnalysis)

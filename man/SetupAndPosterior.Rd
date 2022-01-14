@@ -27,7 +27,8 @@ SetupAndPosterior(
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
 
-\item{seedNumber}{A random seeds passed to \code{\link[hdpx]{dp_activate}}.}
+\item{seedNumber}{A random seed that ensures ensures reproducible
+results.}
 
 \item{K.guess}{Suggested initial value of the number of
 clusters. Usually, the number of clusters is two times of the number

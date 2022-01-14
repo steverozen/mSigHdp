@@ -2,7 +2,8 @@
 #'
 #' @inheritParams PrepInit
 #'
-#' @param seedNumber A random seeds passed to \code{\link[hdpx]{dp_activate}}.
+#' @param seedNumber A random seed that ensures ensures reproducible
+#'   results.
 #'
 #' @return Invisibly, an \code{\link[hdpx]{hdpState-class}} object
 #'  as returned from \code{\link[hdpx]{dp_activate}}.

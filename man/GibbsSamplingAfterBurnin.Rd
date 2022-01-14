@@ -2,7 +2,7 @@
 % Please edit documentation in R/GibbsSamplingAfterBurnin.R
 \name{GibbsSamplingAfterBurnin}
 \alias{GibbsSamplingAfterBurnin}
-\title{Start Gibbs sampling after burnin}
+\title{Start Gibbs sampling on one chain after burnin.}
 \usage{
 GibbsSamplingAfterBurnin(
   burnin.output = burnin.output,
@@ -14,27 +14,37 @@ GibbsSamplingAfterBurnin(
 )
 }
 \arguments{
-\item{burnin.output}{A path to burnin checkpoint Rdata or An S4 object from \code{ChainBurnin}}
+\item{burnin.output}{A path to burnin checkpoint Rdata
+or to an S4 object from \code{ChainBurnin}}
 
-\item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{n}.The number of posterior samples to collect.}
+\item{post.n}{The number of posterior samples to collect.
+(Passed to argument \code{n} in
+\code{\link[hdpx]{hdp_posterior_sample}}.)}
 
-\item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{space}. The number of iterations between collected samples.}
+\item{post.space}{The number of iterations between collected samples.
+(Passed to argument \code{space} in
+\code{\link[hdpx]{hdp_posterior_sample}}.)}
 
-\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-\code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
-parameter sampling to perform after each iteration}
+\item{post.cpiter}{The number of iterations of concentration
+parameter sampling to perform after each main
+Gibbs sampling iteration.
+(Passed to argument \code{cpiter} in
+\code{\link[hdpx]{hdp_posterior_sample}} and
+\code{\link[hdpx]{hdp_burnin}}.)}
 
-\item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{verbosity}. Verbosity of debugging statements.
-No need to change unless for development purpose. Default is 0.}
+\item{post.verbosity}{Verbosity of debugging statements.
+No need to change unless for testing or debugging. Default is 0.
+(Passed to argument \code{verbosity} in
+\code{\link[hdpx]{hdp_posterior_sample}}.)}
+
+\item{seedNumber}{A random seed that ensures ensures reproducible
+results.}
 }
 \value{
 A hdpSampleChain object with the salient information from each
-posterior sample. See \code{\link{hdpSampleChain-class}}
+posterior sample. See \code{\link{hdpSampleChain-class}}.
 }
 \description{
-Start Gibbs sampling after burnin
+This function might be used to start Gibbs sampling after
+\code{\link{ExtendBurnin}}.
 }
-\keyword{internal}

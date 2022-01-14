@@ -44,7 +44,8 @@ ComponentDiagnosticPlotting <- function(retval,
   grDevices::dev.off()
 
   if (IS.ICAMS) {
-    grDevices::pdf(file = file.path(out.dir,"diagnostics_hdp_signature_exposure_each_sample.pdf"),
+    grDevices::pdf(file = file.path(out.dir,
+                                    "diagnostics_hdp_signature_exposure_each_sample.pdf"),
                    paper = "a4")
     myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
     graphics::par(mfrow=c(1,1), mar=c(1, 1, 2, 1))

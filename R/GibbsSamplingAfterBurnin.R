@@ -1,27 +1,41 @@
-#' Start Gibbs sampling after burnin
+#' Start Gibbs sampling on one chain after burnin.
 #'
+#' This function might be used to start Gibbs sampling after
+#' \code{\link{ExtendBurnin}}.
 #'
-#' @param burnin.output A path to burnin checkpoint Rdata or An S4 object from \code{ChainBurnin}
+#' @param burnin.output A path to burnin checkpoint Rdata
+#'  or to an S4 object from \code{ChainBurnin}
 #'
-#'@param post.n Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{n}.The number of posterior samples to collect.
+#' @param post.n The number of posterior samples to collect.
+#'   (Passed to argument \code{n} in
+#'   \code{\link[hdpx]{hdp_posterior_sample}}.)
 #'
-#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{space}. The number of iterations between collected samples.
+#' @param post.space The number of iterations between collected samples.
+#'       (Passed to argument \code{space} in
+#'        \code{\link[hdpx]{hdp_posterior_sample}}.)
 #'
-#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-#'        \code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
-#'        parameter sampling to perform after each iteration
+#' @param post.cpiter The number of iterations of concentration
+#'        parameter sampling to perform after each main
+#'        Gibbs sampling iteration.
+#'        (Passed to argument \code{cpiter} in
+#'        \code{\link[hdpx]{hdp_posterior_sample}} and
+#'        \code{\link[hdpx]{hdp_burnin}}.)
 #'
-#' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{verbosity}. Verbosity of debugging statements.
-#'       No need to change unless for development purpose. Default is 0.
+#' @param post.verbosity Verbosity of debugging statements.
+#'       No need to change unless for testing or debugging. Default is 0.
+#'       (Passed to argument \code{verbosity} in
+#'        \code{\link[hdpx]{hdp_posterior_sample}}.)
 #'
 #' @return  A hdpSampleChain object with the salient information from each
-#'  posterior sample. See \code{\link{hdpSampleChain-class}}
-#' @keywords internal
+#'  posterior sample. See \code{\link{hdpSampleChain-class}}.
+#'
+#' @param seedNumber A random seed that ensures ensures reproducible
+#'   results.
+#'
+#'
+#' @export
 
-GibbsSamplingAfterBurnin<- function(burnin.output     = burnin.output,
+GibbsSamplingAfterBurnin<- function(burnin.output  = burnin.output,
                                     post.n         = post.n,
                                     post.space     = post.space,
                                     post.cpiter    = 3,
