@@ -73,7 +73,7 @@ SaveAnalysis <- function(retval,
     signature.post.samp.number[,1] <- colnames(retval$signature)
 
     signature.post.samp.number <- data.frame(signature.post.samp.number)
-    colnames(signature.post.samp.number) <- c("Signature","NumberOfPostSamples")
+
     utils::write.csv(
       signature.post.samp.number,
       file = file.path(out.dir,
@@ -88,10 +88,7 @@ SaveAnalysis <- function(retval,
       low.confidence.signature <- apply(low.confidence.signature,2,function(x)x/sum(x))
       low.confidence.signature.post.samp.number <-
         retval$low.confidence.post.samp.number
-      low.confidence.signature <- data.frame(low.confidence.signature)
-      colnames(low.confidence.signature) <-
-        paste0("low confidence hdp.",1:ncol(low.confidence.signature))
-      low.confidence.signature.post.samp.number[,1] <- colnames(low.confidence.signature)
+
       row.names(low.confidence.signature) <- NULL
 
       if(IS.ICAMS){
@@ -110,7 +107,6 @@ SaveAnalysis <- function(retval,
       }
 
       low.confidence.signature.post.samp.number <- data.frame(low.confidence.signature.post.samp.number)
-      colnames(low.confidence.signature.post.samp.number) <- c("Signature","NumberOfPostSamples")
       utils::write.csv(low.confidence.signature.post.samp.number,
                        file = file.path(out.dir,
                                         "low.confidence.signatures.post.samp.number.csv"),

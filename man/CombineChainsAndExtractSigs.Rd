@@ -35,23 +35,16 @@ raw clusters of mutations into aggregated clusters.
 Invisibly, a list with the following elements:\describe{
 \item{signature}{The extracted signature profiles as a matrix;
 rows are mutation types, columns are signatures with
-high confidence based on argument
-\code{high.confidence.prop}.}
+high confidence.}
 
 \item{signature.post.samp.number}{A data frame with two columns. The first
-column contains the indices
-of columns in \code{signature}.
-The second columns contains the number
-of posterior Gibbs samples that found a raw cluster
-contributing to the corresponding signature.}
+column corresponds to each signature in \code{signature}
+and the second columns contains the number of posterior
+samples that found the raw clusters contributing to the signature.}
 
-\item{signature.cdc}{
-A numeric data frame.
-Each column corresponds to a column in \code{signature}.
-Each row represents a biological sample or
-MO CHECK an internal Dirichlet process node.
-The column sum is the count of all mutations
-contributing to corresponding signature.}
+\item{signature.cdc}{A numeric data frame. Each column corresponds
+to the sum of all mutations contributing to each
+signature in \code{signature}.}
 
 \item{exposureProbs}{The inferred exposures as a matrix
 of mutation probabilities;
@@ -61,16 +54,19 @@ to sum to 1.}
 
 \item{low.confidence.signature}{The profiles of signatures extracted
 with low confidence as a matrix; rows are mutation types,
-columns are signatures found in <
+columns are signatures with < than
 \code{high.confidence.prop} of posterior samples.}
 
-\item{low.confidence.post.samp.number}{
-Analogous to \code{signature.post.samp.number}, except for
-signatures in \code{low.confidence.signature}.}
+\item{low.confidence.post.samp.number}{A data frame with two columns.
+The first columns correspond
+to each signature in \code{low.confidence.signature}
+and the second
+column contains the number of posterior samples that contained
+the raw mutation clusters contributing to the signature.}
 
-\item{low.confidence.cdc}{Analogous to
-\code{signature.cdc}, except for signatures
-in \code{low.confidence.signature}.}
+\item{low.confidence.cdc}{A numeric data frame. Each column corresponds
+to the sum of all mutations contributing to
+each signature in \code{low.confidence.signature}.}
 
 \item{extracted.retval}{A list object returned from
 code{\link[hdpx]{extract_components_from_clusters}}.}
