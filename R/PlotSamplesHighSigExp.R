@@ -1,23 +1,40 @@
-#' Plot hdp signature exposure in each sample. This function returns the plot of
+#' Plot hdp signature exposure in each sample.
+#' This function returns the plot of
 #' top 5 samples with the highest exposure to a signature.
-#' Each spectrum's title is in the form of: SampleName(Proportion of Signature Assginment)
-#' This function is here because it is specific for signature extraction application.
+#' Each spectrum's title is in the form of: <Sample Name>
+#' (Proportion of Signature Assignment)
+#' This function is here because it is
+#' specific for the signature extraction application.
 #'
-#' @param hdpsample  A \code{\link[hdpx]{hdpSampleChain-class}} or \code{\link[hdpx]{hdpSampleMulti-class}} object including output
-#'  from \code{\link[hdpx]{extract_components_from_clusters}}
-#' @param retval An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}
+#' @param hdpsample  A \code{\link[hdpx]{hdpSampleChain-class}} or
+#'  \code{\link[hdpx]{hdpSampleMulti-class}} object including output
+#'  from \code{\link[hdpx]{extract_components_from_clusters}}.
+#'
+#' @param retval An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}.
+#'
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.
-#' @param col_comp Colours of each component, from 0 to the max number. If NULL,                          default colors will be used
+#'
+#' @param col_comp Colors of each component, from 0 to the max number.
+#'   If NULL, default colors will be used.
+#'
 #' @param incl_numdata_plot Logical - should an upper barplot indicating the number of
-#'  data items per DP be included? (Default TRUE)
-#' @param ylab_numdata Vertical axis label for numdata plot
-#' @param ylab_exp Vertical exis label for exposure plot
-#' @param leg.title Legend title
-#' @param cex.names Expansion factor for bar labels (dpnames) in exposure plot
-#' @param cex.axis Expansion factor for vertical-axis annotation
+#'  data items per DP be included? (Default TRUE).
+#'
+#' @param ylab_numdata Vertical axis label for \code{numdata} plot.
+#'
+#' @param ylab_exp Vertical axis label for exposure plot.
+#'
+#' @param leg.title Legend title.
+#'
+#' @param cex.names Expansion factor for bar labels (\code{dpnames})
+#'   in exposure plot.
+#'
+#' @param cex.axis Expansion factor for vertical-axis annotation.
+#'
 #' @param mar See ?par
 #' @param oma See ?par
+#'
 #' @importFrom graphics barplot
 #' @importFrom reshape2 melt
 #'

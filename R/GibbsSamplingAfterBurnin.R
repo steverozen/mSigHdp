@@ -26,7 +26,8 @@
 #'       (Passed to argument \code{verbosity} in
 #'        \code{\link[hdpx]{hdp_posterior_sample}}.)
 #'
-#' @return  A hdpSampleChain object with the salient information from each
+#' @return  An \code{hdpSampleChain}
+#'  object with the salient information from each
 #'  posterior sample. See \code{\link{hdpSampleChain-class}}.
 #'
 #' @param seedNumber A random seed that ensures ensures reproducible

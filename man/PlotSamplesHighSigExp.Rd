@@ -2,10 +2,13 @@
 % Please edit documentation in R/PlotSamplesHighSigExp.R
 \name{PlotSamplesHighSigExp}
 \alias{PlotSamplesHighSigExp}
-\title{Plot hdp signature exposure in each sample. This function returns the plot of
+\title{Plot hdp signature exposure in each sample.
+This function returns the plot of
 top 5 samples with the highest exposure to a signature.
-Each spectrum's title is in the form of: SampleName(Proportion of Signature Assginment)
-This function is here because it is specific for signature extraction application.}
+Each spectrum's title is in the form of: <Sample Name>
+(Proportion of Signature Assignment)
+This function is here because it is
+specific for the signature extraction application.}
 \usage{
 PlotSamplesHighSigExp(
   retval,
@@ -23,37 +26,43 @@ PlotSamplesHighSigExp(
 )
 }
 \arguments{
-\item{retval}{An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}}
+\item{retval}{An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}.}
 
-\item{hdpsample}{A \code{\link[hdpx]{hdpSampleChain-class}} or \code{\link[hdpx]{hdpSampleMulti-class}} object including output
-from \code{\link[hdpx]{extract_components_from_clusters}}}
+\item{hdpsample}{A \code{\link[hdpx]{hdpSampleChain-class}} or
+\code{\link[hdpx]{hdpSampleMulti-class}} object including output
+from \code{\link[hdpx]{extract_components_from_clusters}}.}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}
 
-\item{col_comp}{Colours of each component, from 0 to the max number. If NULL,                          default colors will be used}
+\item{col_comp}{Colors of each component, from 0 to the max number.
+If NULL, default colors will be used.}
 
 \item{incl_numdata_plot}{Logical - should an upper barplot indicating the number of
-data items per DP be included? (Default TRUE)}
+data items per DP be included? (Default TRUE).}
 
-\item{ylab_numdata}{Vertical axis label for numdata plot}
+\item{ylab_numdata}{Vertical axis label for \code{numdata} plot.}
 
-\item{ylab_exp}{Vertical exis label for exposure plot}
+\item{ylab_exp}{Vertical axis label for exposure plot.}
 
-\item{leg.title}{Legend title}
+\item{leg.title}{Legend title.}
 
-\item{cex.names}{Expansion factor for bar labels (dpnames) in exposure plot}
+\item{cex.names}{Expansion factor for bar labels (\code{dpnames})
+in exposure plot.}
 
-\item{cex.axis}{Expansion factor for vertical-axis annotation}
+\item{cex.axis}{Expansion factor for vertical-axis annotation.}
 
 \item{mar}{See ?par}
 
 \item{oma}{See ?par}
 }
 \description{
-Plot hdp signature exposure in each sample. This function returns the plot of
+Plot hdp signature exposure in each sample.
+This function returns the plot of
 top 5 samples with the highest exposure to a signature.
-Each spectrum's title is in the form of: SampleName(Proportion of Signature Assginment)
-This function is here because it is specific for signature extraction application.
+Each spectrum's title is in the form of: <Sample Name>
+(Proportion of Signature Assignment)
+This function is here because it is
+specific for the signature extraction application.
 }
 \keyword{internal}

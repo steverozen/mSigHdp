@@ -12,11 +12,11 @@
 #'
 #' @details Generates the plots
 #'
-#'  - diagnostics.hdp.signature.exposure.each.sample.pdf,
-#'  - diagnostics.component.distribution.in.posterior.samples.pdf,
-#'  - diagnostics.likelihood.pdf,
-#'  - diagnostics.numcluster.pdf,
-#'  - diagnostics.signatures.pdf
+#'  - \code{diagnostics.hdp.signature.exposure.each.sample.pdf}
+#'  - \code{diagnostics.component.distribution.in.posterior.samples.pdf}
+#'  - \code{diagnostics.likelihood.pdf}
+#'  - \code{diagnostics.numcluster.pdf}
+#'  - \code{diagnostics.signatures.pdf}
 #'
 #' @export
 

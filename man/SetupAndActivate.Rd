@@ -58,8 +58,10 @@ parameters(\eqn{\beta_0} and all \eqn{\beta_j} in
 Figure B.1 of
 https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf
 
-We recommend gamma.alpha = 1 and gamma.beta = 20 for single-base-substitution signatures extraction;
-gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution/INDEL signature extraction}
+We recommend gamma.alpha = 1 and gamma.beta = 20 for
+single-base-substitution signature extraction;
+gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution
+and indel signature extraction}
 }
 \value{
 Invisibly, an \code{\link[hdpx]{hdpState-class}} object

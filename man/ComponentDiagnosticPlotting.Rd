@@ -22,10 +22,10 @@ Generate multiple plots from the return value of \code{\link{CombineChainsAndExt
 \details{
 Generates the plots
 \itemize{
-\item diagnostics.hdp.signature.exposure.each.sample.pdf,
-\item diagnostics.component.distribution.in.posterior.samples.pdf,
-\item diagnostics.likelihood.pdf,
-\item diagnostics.numcluster.pdf,
-\item diagnostics.signatures.pdf
+\item \code{diagnostics.hdp.signature.exposure.each.sample.pdf}
+\item \code{diagnostics.component.distribution.in.posterior.samples.pdf}
+\item \code{diagnostics.likelihood.pdf}
+\item \code{diagnostics.numcluster.pdf}
+\item \code{diagnostics.signatures.pdf}
 }
 }

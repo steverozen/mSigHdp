@@ -28,7 +28,7 @@ and before the call of \code{\link[hdpx]{hdp_burnin}}.}
 \item{cpiter}{Pass to \code{\link[hdpx]{hdp_burnin}}
 \code{cpiter}. The number of iterations of concentration
 parameter sampling
-to perform after each iteration. (See Teh et al.
+to perform after each iteration. (See Teh et al.,
 Association 2006;101(476):1566-1581
 (https://doi.org/10.1198/016214506000000302).)}
 

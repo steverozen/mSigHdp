@@ -1,13 +1,17 @@
 ACA
 AdenoCA
+al
 AnalyzeAndPlotretval
 arg
+bitstream
 burnin
 checkpointing
 chlist
 CombineChainsAndExtractSigs
 CombinePosteriorChains
 csv
+doi
+et
 github
 hdp
 HDP
@@ -16,6 +20,7 @@ hdpSampleMulti
 hdpx
 https
 ICAMSxtra
+indel
 init
 MatchSigsAndRelabel
 mclapply
@@ -28,6 +33,11 @@ Rdata
 README
 retval
 RunhdpInternal
+RunHdpxParallel
 steverozen
 stirling
+Teh
+uk
 WORDLIST
+www
+

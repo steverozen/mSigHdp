@@ -41,7 +41,8 @@ No need to change unless for testing or debugging. Default is 0.
 results.}
 }
 \value{
-A hdpSampleChain object with the salient information from each
+An \code{hdpSampleChain}
+object with the salient information from each
 posterior sample. See \code{\link{hdpSampleChain-class}}.
 }
 \description{
