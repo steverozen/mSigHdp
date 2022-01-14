@@ -34,8 +34,8 @@ test_that("ChainBurnin", {
 
 
 
-  # In we need to regenerate the baseline data
-  save(sample.chain.1,sample.chain.2, file = "RunhdpInternal.testdata/test.GibbsSamplingAfterBurnin.Rdata")
+  # If we need to regenerate the baseline data
+  # save(sample.chain.1,sample.chain.2, file = "RunhdpInternal.testdata/test.GibbsSamplingAfterBurnin.Rdata")
 
   expect_equal(sample.chain.1, reg$sample.chain.1)
   expect_equal(sample.chain.2, reg$sample.chain.2)
