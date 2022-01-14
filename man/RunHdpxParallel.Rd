@@ -94,13 +94,11 @@ No need to change unless for development purpose}
 
 \item{high.confidence.prop}{Raw clusters of mutations
 found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
-samples are signatures with high confidence.
-(Passed to \code{\link[hdpx]{interpret_components}}).}
+samples are signatures with high confidence.}
 
 \item{hc.cutoff}{The cutoff of
 height of the hierarchical clustering dendrogram used in combining
-raw clusters of mutations into aggregated clusters.
-(Passed to \code{\link[hdpx]{extract_components_from_clusters}}.)}
+raw clusters of mutations into aggregated clusters.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir}
 if it exists, otherwise raise an error.}
@@ -110,16 +108,19 @@ csv files and plots (pdfs) of extracted signatures and their exposures.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration
-parameters (\eqn{\alpha_0} and all \eqn{\alpha_j} in
-Figure B.1 of
-https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf}
+parameters \eqn{\alpha_0} and all \eqn{\alpha_j} in
+Figure B.1 of \itemize{
+\item https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf
+}}
 
 \item{gamma.beta}{Inverse scale parameter (rate parameter) of
 the gamma distribution prior for the Dirichlet process concentration
-parameters(\eqn{\beta_0} and all \eqn{\beta_j} in
-Figure B.1 of
-https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf
+parameters:
+\eqn{\beta_0} and all \eqn{\beta_j} in
+Figure B.1 of \itemize{
 
+\item https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf
+}
 We recommend gamma.alpha = 1 and gamma.beta = 20 for
 single-base-substitution signature extraction;
 gamma.alpha = 1 and gamma.beta = 50  for doublet-base-substitution
@@ -152,25 +153,32 @@ and the second columns contains the number of posterior
 samples that found the raw clusters contributing to the signature.}
 
 \item{signature.cdc}{A numeric data frame. Each column corresponds
-to the sum of all mutations contributing to each signature in \code{signature}}
-
-\item{exposureProbs}{The inferred exposures as a matrix of mutation probabilities;
-rows are signatures, columns are samples (e.g. tumors). This is
-similar to \code{signature.cdc} but every column was normalized to sum of 1}
-
-\item{low.confidence.signature}{The profiles of signatures extracted with low confidence as a matrix; rows are mutation types,
-columns are signatures with less than \code{high.confidence.prop} of posterior samples }
-
-\item{low.confidence.post.samp.number}{A data frame with two columns. The first column corresponds
-to each signature in \code{low.confidence.signature} and the second
-column contains the number of posterior samples that found
-the raw clusters contributing to the signature.}
-
-\item{low.confidence.cdc}{A numeric data frame. Each column corresponds
 to the sum of all mutations contributing to each
-signature in \code{low.confidence.signature}}
+signature in \code{signature}.}
 
-\item{extracted.retval}{A list object returned from code{\link[hdpx]{extract_components_from_clusters}}.}
+\item{exposureProbs}{The inferred exposures as a matrix
+of mutation probabilities;
+rows are signatures, columns are samples (e.g. tumors). This is
+similar to \code{signature.cdc}, but every column was normalized
+to sum to 1.}
+
+\item{low.confidence.signature}{The profiles of signatures extracted
+with low confidence as a matrix; rows are mutation types,
+columns are signatures with < than
+\code{high.confidence.prop} of posterior samples.}
+
+\item{low.confidence.post.samp.number}{
+Analogous to \code{signature.post.samp.number}, except that
+this one is for
+signatures in \code{low.confidence.signature}.}
+
+\item{low.confidence.cdc}{Analogous to
+\code{signature.cdc}, except that this one is for signatures
+in \code{low.confidence.signature}.}
+
+\item{extracted.retval}{A list object returned from
+\code{\link[hdpx]{extract_components_from_clusters}}
+in package hdpx.}
 
 }
 }

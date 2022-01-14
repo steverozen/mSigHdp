@@ -1,7 +1,7 @@
 #' Extract signatures, exposures, and other information from multiple posterior sample chains.
 #'
 #' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}}
-#'  objects, typically returned from \code{MultipleSetupAndPosterior}.
+#'  objects (from package hdpx), typically returned from \code{MultipleSetupAndPosterior}.
 #'  Each element is the result of one posterior sample chain.
 #'
 #' @param input.catalog Input spectra catalog as a matrix.
@@ -12,12 +12,14 @@
 #'                       Raw clusters of mutations
 #'                       found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
 #'                       samples are signatures with high confidence.
-#'                       (Passed to \code{\link[hdpx]{interpret_components}}).
+#'
+#                       (Passed to \code{\link[hdpx]{interpret_components}}).
 #'
 #' @param hc.cutoff The cutoff of
 #'                  height of the hierarchical clustering dendrogram used in combining
 #'                  raw clusters of mutations into aggregated clusters.
-#'                  (Passed to \code{\link[hdpx]{extract_components_from_clusters}}.)
+#'
+#                  (Passed to \code{hdpx::\link[hdpx]{extract_components_from_clusters}}.)
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #'\item{signature}{The extracted signature profiles as a matrix;
@@ -44,19 +46,19 @@
 #'     columns are signatures with < than
 #'     \code{high.confidence.prop} of posterior samples.}
 #'
-#' \item{low.confidence.post.samp.number}{A data frame with two columns.
-#'        The first columns correspond
-#'        to each signature in \code{low.confidence.signature}
-#'        and the second
-#'        column contains the number of posterior samples that contained
-#'        the raw mutation clusters contributing to the signature.}
+
+#' \item{low.confidence.post.samp.number}{
+#'      Analogous to \code{signature.post.samp.number}, except that
+#'      this one is for
+#'      signatures in \code{low.confidence.signature}.}
 #'
-#' \item{low.confidence.cdc}{A numeric data frame. Each column corresponds
-#'       to the sum of all mutations contributing to
-#'       each signature in \code{low.confidence.signature}.}
+#' \item{low.confidence.cdc}{Analogous to
+#'      \code{signature.cdc}, except that this one is for signatures
+#'      in \code{low.confidence.signature}.}
 #'
 #' \item{extracted.retval}{A list object returned from
-#'          code{\link[hdpx]{extract_components_from_clusters}}.}
+#'          \code{\link[hdpx]{extract_components_from_clusters}}
+#'          in package hdpx.}
 #'
 #' }
 #'
