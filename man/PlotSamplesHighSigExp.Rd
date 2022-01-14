@@ -5,8 +5,8 @@
 \title{Plot hdp signature exposure in each sample.
 This function returns the plot of
 top 5 samples with the highest exposure to a signature.
-Each spectrum's title is in the form of: <Sample Name>
-(Proportion of Signature Assignment)
+Each spectrum's title is in the form of: \emph{Sample Name
+(Proportion of Signature Assignment)}.
 This function is here because it is
 specific for the signature extraction application.}
 \usage{
@@ -60,8 +60,8 @@ in exposure plot.}
 Plot hdp signature exposure in each sample.
 This function returns the plot of
 top 5 samples with the highest exposure to a signature.
-Each spectrum's title is in the form of: <Sample Name>
-(Proportion of Signature Assignment)
+Each spectrum's title is in the form of: \emph{Sample Name
+(Proportion of Signature Assignment)}.
 This function is here because it is
 specific for the signature extraction application.
 }

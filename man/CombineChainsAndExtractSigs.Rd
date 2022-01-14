@@ -14,7 +14,7 @@ CombineChainsAndExtractSigs(
 }
 \arguments{
 \item{clean.chlist}{A list of \code{\link[hdpx]{hdpSampleChain-class}}
-objects, typically returned from \code{MultipleSetupAndPosterior}.
+objects (from package hdpx), typically returned from \code{MultipleSetupAndPosterior}.
 Each element is the result of one posterior sample chain.}
 
 \item{input.catalog}{Input spectra catalog as a matrix.}
@@ -23,13 +23,11 @@ Each element is the result of one posterior sample chain.}
 
 \item{high.confidence.prop}{Raw clusters of mutations
 found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
-samples are signatures with high confidence.
-(Passed to \code{\link[hdpx]{interpret_components}}).}
+samples are signatures with high confidence.}
 
 \item{hc.cutoff}{The cutoff of
 height of the hierarchical clustering dendrogram used in combining
-raw clusters of mutations into aggregated clusters.
-(Passed to \code{\link[hdpx]{extract_components_from_clusters}}.)}
+raw clusters of mutations into aggregated clusters.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
@@ -65,15 +63,17 @@ columns are signatures found in <
 \code{high.confidence.prop} of posterior samples.}
 
 \item{low.confidence.post.samp.number}{
-Analogous to \code{signature.post.samp.number}, except for
+Analogous to \code{signature.post.samp.number}, except that
+this one is for
 signatures in \code{low.confidence.signature}.}
 
 \item{low.confidence.cdc}{Analogous to
-\code{signature.cdc}, except for signatures
+\code{signature.cdc}, except that this one is for signatures
 in \code{low.confidence.signature}.}
 
-\item{extracted.retval}{A list object returned from
-code{\link[hdpx]{extract_components_from_clusters}}.}
+\item{extracted.retval}{MO CHECK A list object returned from
+\code{\link[hdpx]{extract_components_from_clusters}}
+in package hdpx.}
 
 }
 }
