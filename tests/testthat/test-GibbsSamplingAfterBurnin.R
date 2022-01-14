@@ -1,23 +1,31 @@
 
 test_that("ChainBurnin", {
 
-  load("misc.test.data/1000044.activated.hdp.state.Rdata")
+  input.catalog <-
+    ICAMS::ReadCatalog("SBS96.ground.truth/2.type.ground.truth.syn.catalog.csv")
 
-  load("RunhdpInternal.testdata/test.ChainBurnin.Rdata")
   reg <- new.env()
   load("RunhdpInternal.testdata/test.GibbsSamplingAfterBurnin.Rdata",
        envir = reg)
 
-  ##Generate burnin checkpoint for testing
-  burnin.output.1 <- ChainBurnin(hdp.state          = hdp.state,
-                                 seedNumber          = (44 + 3e6),
-                                 burnin              = 100,
-                                 cpiter              = 3,
-                                 burnin.verbosity    = 0,
-                                 burnin.multiplier   = 1,
-                                 checkpoint          = T)
+  hdp.state.1 <- SetupAndActivate(input.catalog[1:10 , 1:15],
+                                  seedNumber          = (44 + 2e6),
+                                  K.guess             = 5,
+                                  multi.types         = TRUE,
+                                  verbose             = TRUE,
+                                  gamma.alpha         = 1,
+                                  gamma.beta          = 20)
 
-  burnin.output.2 <- ChainBurnin(hdp.state          = hdp.state,
+  hdp.state.2 <- SetupAndActivate(input.catalog[1:10 , 1:15],
+                                  seedNumber          = (44 + 3e6),
+                                  K.guess             = 5,
+                                  multi.types         = TRUE,
+                                  verbose             = TRUE,
+                                  gamma.alpha         = 1,
+                                  gamma.beta          = 20)
+
+  ##Generate burnin checkpoint for testing
+  burnin.output.1 <- ChainBurnin(hdp.state          = hdp.state.1,
                                  seedNumber          = (44 + 2e6),
                                  burnin              = 100,
                                  cpiter              = 3,
@@ -25,10 +33,18 @@ test_that("ChainBurnin", {
                                  burnin.multiplier   = 1,
                                  checkpoint          = T)
 
-  sample.chain.1 <- GibbsSamplingAfterBurnin(burnin.output     = "mSigHdp.burnin.checkpoint.3000044.Rdata",
+  burnin.output.2 <- ChainBurnin(hdp.state          = hdp.state.2,
+                                 seedNumber          = (44 + 3e6),
+                                 burnin              = 100,
+                                 cpiter              = 3,
+                                 burnin.verbosity    = 0,
+                                 burnin.multiplier   = 1,
+                                 checkpoint          = T)
+
+  sample.chain.1 <- GibbsSamplingAfterBurnin(burnin.output     = "mSigHdp.burnin.checkpoint.2000044.Rdata",
                                              post.n         = 10,
                                              post.space     = 5)
-  sample.chain.2 <- GibbsSamplingAfterBurnin(burnin.output     = "mSigHdp.burnin.checkpoint.2000044.Rdata",
+  sample.chain.2 <- GibbsSamplingAfterBurnin(burnin.output     = "mSigHdp.burnin.checkpoint.3000044.Rdata",
                                              post.n         = 10,
                                              post.space     = 5)
 
