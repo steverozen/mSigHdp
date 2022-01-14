@@ -9,17 +9,18 @@ test_that("RunHdpxParallel-fast96", {
        envir = reg)
 
   retvalx <- RunHdpxParallel(
-    input.catalog = input.catalog[1:10,1:15],
-    CPU.cores     = 2,
-    seedNumber    = 44,
-    K.guess       = 5,
-    multi.types   = FALSE,
-    verbose       = TRUE,
+    input.catalog     = input.catalog[1:10,1:15],
+    CPU.cores         = 2,
+    seedNumber        = 44,
+    K.guess           = 5,
+    multi.types       = FALSE,
+    verbose           = TRUE,
     num.child.process =  2,
-    burnin   = 50, # Super low for fast testing
-    post.space    = 5,  # Low for fast testing
-    post.cpiter   = 1,  # Low for fast testing
-    overwrite     = TRUE
+    burnin            = 50, # Super low for fast testing
+    post.space        = 5,  # Low for fast testing
+    post.cpiter       = 1,  # Low for fast testing
+    overwrite         = TRUE,
+    checkpoint        = FALSE
   )
 
   #save(retvalx, file = "RunhdpInternal.testdata/NewRunHdpParallel-fast96-2-cores.Rdata")
