@@ -31,9 +31,10 @@
 #'            and the second columns contains the number of posterior
 #'            samples that found the raw clusters contributing to the signature.}
 #'
-#' \item{signature.cdc}{A numeric data frame. Each column corresponds
-#'                  to the sum of all mutations contributing to each
-#'                  signature in \code{signature}.}
+#' \item{signature.cdc}{
+#'      A numeric data frame. One columns correspond to signatures
+#'      as in \code{signature}. Rows correspond to either biological
+#'      samples or to parent and grandparent Dirichlet processes.}
 #'
 #' \item{exposureProbs}{The inferred exposures as a matrix
 #'        of mutation probabilities;
@@ -54,7 +55,8 @@
 #'
 #' \item{low.confidence.cdc}{Analogous to
 #'      \code{signature.cdc}, except that this one is for signatures
-#'      in \code{low.confidence.signature}.}
+#'      in \code{low.confidence.signature}. TODO: how are junk
+#'      signatures defined?}
 #'
 #' \item{extracted.retval}{A list object returned from
 #'          \code{\link[hdpx]{extract_components_from_clusters}}

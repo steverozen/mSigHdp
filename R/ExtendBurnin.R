@@ -6,8 +6,14 @@
 #' @param burnin Passed to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{burnin}.
 #'
-#' @param cpiter Passed to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{cpiter}. Please see that documentation.
+#' @param cpiter The number of iterations of concentration
+#'  parameter sampling
+#'  to perform after each main Gibbs-sample iteration. (See Teh et al.,
+#' "Hierarchical Dirichlet Processes", Journal of the American Statistical
+#' Association 2006;101(476):1566-1581
+#' (https://doi.org/10.1198/016214506000000302).)
+#  Passed to argument \code{cpiter} in \code{\link[hdpx]{hdp_burnin argument}}
+#' in package hdpx.
 #'
 #' @param verbosity Passed to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.
@@ -29,7 +35,7 @@ ExtendBurnin <-
            burnin    = 4000,
            cpiter    = 3,
            verbosity = 0
-  ) { # 11 arguments
+  ) {
 
     as.hdpState <- utils::getFromNamespace(x = "as.hdpState", ns = "hdpx")
 
