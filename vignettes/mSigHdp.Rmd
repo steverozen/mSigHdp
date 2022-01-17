@@ -37,19 +37,12 @@ toy_data[91:96, ]
 We set the _num.child.process_ and _CPU.cores_ to 4 for a quick run. 
 *Add checkpoint*
 
-```{r RunHdpxParallel,include=T,echo=T,warning=F,message=F,error=F,results='hide'}
-
-old.wd <- getwd() # No sure if we will need this
-new.dir <- tempfile()
-dir.create(new.dir)
-cat(new.dir)
-setwd(new.dir)
-
+```{r RunHdpxParallel,include=T,echo=T,warning=F,message=F,error=F}
 
 
 retval <- mSigHdp::RunHdpxParallel(
   input.catalog       = toy_data,
-  out.dir             = new.dir,
+  out.dir             = "output",
   num.child.process        = 4, 
   CPU.cores                = 4,
   seedNumber               = 123,
@@ -67,8 +60,8 @@ retval <- mSigHdp::RunHdpxParallel(
   verbose                  = FALSE) 
 
 dir()
+dir("output")
 
-dir(new.dir)
 
 ```
 
