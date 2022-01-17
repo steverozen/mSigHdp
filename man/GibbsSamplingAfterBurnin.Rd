@@ -22,8 +22,11 @@ or to an S4 object from \code{ChainBurnin}}
 \item{post.space}{The number of iterations between collected samples.}
 
 \item{post.cpiter}{The number of iterations of concentration
-parameter sampling to perform after each main
-Gibbs sampling iteration.}
+parameter sampling
+to perform after each main Gibbs-sample iteration. (See Teh et al.,
+"Hierarchical Dirichlet Processes", Journal of the American Statistical
+Association 2006;101(476):1566-1581
+(https://doi.org/10.1198/016214506000000302).)}
 
 \item{post.verbosity}{Verbosity of debugging statements.
 No need to change unless for testing or debugging. Default is 0.}

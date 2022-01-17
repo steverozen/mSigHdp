@@ -40,9 +40,10 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
 \item{K.guess}{Suggested initial value of the number of
-clusters. Usually, the number of clusters is two times of the number
-of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
-\code{initcc}.}
+raw clusters. Usually, the number of raw clusters is
+roughly twice the number
+of extracted signatures.
+Passed to hdpx::dp_activate as argument initcc.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration

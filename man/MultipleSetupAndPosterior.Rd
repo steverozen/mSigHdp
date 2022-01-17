@@ -33,9 +33,10 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 results.}
 
 \item{K.guess}{Suggested initial value of the number of
-clusters. Usually, the number of clusters is two times of the number
-of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
-\code{initcc}.}
+raw clusters. Usually, the number of raw clusters is
+roughly twice the number
+of extracted signatures.
+Passed to hdpx::dp_activate as argument initcc.}
 
 \item{multi.types}{A logical scalar or
 a character vector.
@@ -57,8 +58,10 @@ and one grandparent node.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{burnin}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{burnin}. The number of burn-in iterations}
+\item{burnin}{\code{burnin}. The number of burn-in iterations in
+one batch. The total number of burnin iterations is
+\code{burnin * burnin.multiplier}.
+Passed to argument burnin of hdpx::hdp_burnin}
 
 \item{burnin.multiplier}{Run \code{burnin.multiplier} rounds of \code{burnin}
 iterations.

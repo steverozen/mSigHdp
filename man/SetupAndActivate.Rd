@@ -22,9 +22,10 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 results.}
 
 \item{K.guess}{Suggested initial value of the number of
-clusters. Usually, the number of clusters is two times of the number
-of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
-\code{initcc}.}
+raw clusters. Usually, the number of raw clusters is
+roughly twice the number
+of extracted signatures.
+Passed to hdpx::dp_activate as argument initcc.}
 
 \item{multi.types}{A logical scalar or
 a character vector.

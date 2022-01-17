@@ -17,8 +17,13 @@ a return value \code{\link{ChainBurnin}}.}
 \item{burnin}{Passed to \code{\link[hdpx]{hdp_posterior}}
 \code{burnin}.}
 
-\item{cpiter}{Passed to \code{\link[hdpx]{hdp_posterior}}
-\code{cpiter}. Please see that documentation.}
+\item{cpiter}{The number of iterations of concentration
+parameter sampling
+to perform after each main Gibbs-sample iteration. (See Teh et al.,
+"Hierarchical Dirichlet Processes", Journal of the American Statistical
+Association 2006;101(476):1566-1581
+(https://doi.org/10.1198/016214506000000302).)
+in package hdpx.}
 
 \item{verbosity}{Passed to \code{\link[hdpx]{hdp_posterior}}
 \code{verbosity}.}

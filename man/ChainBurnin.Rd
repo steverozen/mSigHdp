@@ -18,22 +18,24 @@ ChainBurnin(
 \item{hdp.state}{An \code{\link[hdpx]{hdpState-class}} object or a list
 representation of an \code{\link[hdpx]{hdpState-class}} object.}
 
-\item{seedNumber}{An integer that is used to generate separate
-random seeds for the call to \code{\link[hdpx]{dp_activate}},
-and before the call of \code{\link[hdpx]{hdp_burnin}}.}
+\item{seedNumber}{Used to create the checkpoint file name if \code{checkpoint}
+is \code{TRUE}.}
 
-\item{burnin}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{burnin}. The number of burn-in iterations}
+\item{burnin}{\code{burnin}. The number of burn-in iterations in
+one batch. The total number of burnin iterations is
+\code{burnin * burnin.multiplier}.
+Passed to argument burnin of hdpx::hdp_burnin}
 
-\item{cpiter}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{cpiter}. The number of iterations of concentration
+\item{cpiter}{The number of iterations of concentration
 parameter sampling
-to perform after each iteration. (See Teh et al.,
+to perform after each main Gibbs-sample iteration. (See Teh et al.,
+"Hierarchical Dirichlet Processes", Journal of the American Statistical
 Association 2006;101(476):1566-1581
-(https://doi.org/10.1198/016214506000000302).)}
+(https://doi.org/10.1198/016214506000000302).)
+in package hdpx.}
 
 \item{burnin.verbosity}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{verbosity}.Verbosity of debugging statements.
+\code{verbosity}. Verbosity of debugging statements.
 #'}
 
 \item{burnin.multiplier}{Run \code{burnin.multiplier} rounds of \code{burnin}

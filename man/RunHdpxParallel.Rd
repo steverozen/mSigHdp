@@ -37,9 +37,10 @@ in \code{\link[ICAMS]{ICAMS}} format.}
 results.}
 
 \item{K.guess}{Suggested initial value of the number of
-clusters. Usually, the number of clusters is two times of the number
-of extracted signatures. Passed to \code{\link[hdpx]{dp_activate}} as
-\code{initcc}.}
+raw clusters. Usually, the number of raw clusters is
+roughly twice the number
+of extracted signatures.
+Passed to hdpx::dp_activate as argument initcc.}
 
 \item{multi.types}{A logical scalar or
 a character vector.
@@ -61,8 +62,10 @@ and one grandparent node.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{burnin}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{burnin}. The number of burn-in iterations}
+\item{burnin}{\code{burnin}. The number of burn-in iterations in
+one batch. The total number of burnin iterations is
+\code{burnin * burnin.multiplier}.
+Passed to argument burnin of hdpx::hdp_burnin}
 
 \item{burnin.multiplier}{Run \code{burnin.multiplier} rounds of \code{burnin}
 iterations.
@@ -152,9 +155,10 @@ column corresponds to each signature in \code{signature}
 and the second columns contains the number of posterior
 samples that found the raw clusters contributing to the signature.}
 
-\item{signature.cdc}{A numeric data frame. Each column corresponds
-to the sum of all mutations contributing to each
-signature in \code{signature}.}
+\item{signature.cdc}{
+A numeric data frame. One columns correspond to signatures
+as in \code{signature}. Rows correspond to either biological
+samples or to parent and grandparent Dirichlet processes.}
 
 \item{exposureProbs}{The inferred exposures as a matrix
 of mutation probabilities;
@@ -174,7 +178,8 @@ signatures in \code{low.confidence.signature}.}
 
 \item{low.confidence.cdc}{Analogous to
 \code{signature.cdc}, except that this one is for signatures
-in \code{low.confidence.signature}.}
+in \code{low.confidence.signature}. TODO: how are junk
+signatures defined?}
 
 \item{extracted.retval}{A list object returned from
 \code{\link[hdpx]{extract_components_from_clusters}}
