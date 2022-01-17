@@ -11,6 +11,7 @@ CombineChainsAndExtractSigs
 CombinePosteriorChains
 csv
 doi
+dp
 et
 github
 hdp
@@ -22,6 +23,7 @@ https
 ICAMSxtra
 indel
 init
+initcc
 MatchSigsAndRelabel
 mclapply
 md
