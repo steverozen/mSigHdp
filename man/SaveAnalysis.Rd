@@ -28,7 +28,7 @@ csv files and plots (pdfs) of extracted signatures and their exposures.}
 if it exists, otherwise raise an error.}
 
 \item{diagnostic.plot}{If \code{TRUE} plot diagnostic plots
-in a subdirectory \code{Diagnostic_Plots} of \code{out.dir}.}
+in \code{out.dir}.}
 }
 \description{
 Save the analysis from \code{\link{CombineChainsAndExtractSigs}} to files.

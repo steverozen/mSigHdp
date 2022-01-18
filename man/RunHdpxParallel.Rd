@@ -177,9 +177,11 @@ this one is for
 signatures in \code{low.confidence.signature}.}
 
 \item{low.confidence.cdc}{Analogous to
-\code{signature.cdc}, except that this one is for signatures
-in \code{low.confidence.signature}. TODO: how are junk
-signatures defined?}
+\code{signature.cdc}, except that columns in this
+matrix correspond to columns
+in \code{low.confidence.signature}. Raw clusters of mutations
+TODO FINISH WITH MO'S HELP
+}
 
 \item{extracted.retval}{A list object returned from
 \code{\link[hdpx]{extract_components_from_clusters}}

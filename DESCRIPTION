@@ -1,6 +1,6 @@
 Package: mSigHdp
 Title: Mutational signature extraction using hdp (Hierarchical Dirichlet Process)
-Version: 1.2.3
+Version: 1.2.4
 Authors@R: 
     c(person(given = "Steven",
            family = "Rozen",
@@ -34,8 +34,9 @@ Imports: hdpx (>= 0.3.8),
     reshape2,
     data.table
 Suggests: 
-    rmarkdown,
     knitr,
+    qpdf,
+    rmarkdown,
     testthat,
     utils
 VignetteBuilder: knitr

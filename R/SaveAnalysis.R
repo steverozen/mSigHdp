@@ -14,7 +14,7 @@
 #'                            path to file with input catalog
 #'
 #' @param diagnostic.plot If \code{TRUE} plot diagnostic plots
-#'   in a subdirectory \code{Diagnostic_Plots} of \code{out.dir}.
+#'        in \code{out.dir}.
 #'
 #' @export
 #'
@@ -36,23 +36,25 @@ SaveAnalysis <- function(retval,
   }
 
   if (verbose) message("Writing signatures")
-  if(IS.ICAMS){
+
+  if (IS.ICAMS) {
     extractedSignatures <- ICAMS::as.catalog(retval$signature,
                                              region       = "unknown",
                                              catalog.type = "counts.signature")
+
+    cat("XXXXXX\n")
     ICAMS::WriteCatalog(extractedSignatures,
                         file.path(out.dir,"extracted.signatures.csv"))
 
     ICAMS::PlotCatalogToPdf(extractedSignatures,
                             file.path(out.dir, "extracted.signature.pdf"))
 
-  }else{
+  } else {
     extractedSignatures <- retval$signature
-    utils::write.csv(extractedSignatures,file.path(out.dir,"extracted.signatures.csv"),
+    utils::write.csv(extractedSignatures,
+                     file.path(out.dir, "extracted.signatures.csv"),
                      row.names=F,quote=F)
   }
-
-
 
   if (verbose) message("Writing exposures")
   exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
@@ -61,26 +63,28 @@ SaveAnalysis <- function(retval,
   mSigAct::WriteExposure(exposureCounts,
                            file.path(out.dir,"inferred.exposures.csv"))
 
-  mSigAct::PlotExposureToPdf(mSigAct::SortExposure(exposureCounts),
-                               file.path(out.dir,"inferred.exposure.count.pdf"))
+  mSigAct::PlotExposureToPdf(
+    mSigAct::SortExposure(exposureCounts),
+    file.path(out.dir,"inferred.exposure.count.pdf"))
 
-  mSigAct::PlotExposureToPdf(mSigAct::SortExposure(retval$exposureProbs),
-                               file.path(out.dir,"inferred.exposure.proportion.pdf"),
-                               plot.proportion = TRUE)
+  mSigAct::PlotExposureToPdf(
+    mSigAct::SortExposure(retval$exposureProbs),
+    file.path(out.dir,"inferred.exposure.proportion.pdf"),
+    plot.proportion = TRUE)
 
-    signature.post.samp.number <- retval$signature.post.samp.number
+  signature.post.samp.number <- retval$signature.post.samp.number
 
-    signature.post.samp.number[,1] <- colnames(retval$signature)
+  signature.post.samp.number[,1] <- colnames(retval$signature)
 
-    signature.post.samp.number <- data.frame(signature.post.samp.number)
+  signature.post.samp.number <- data.frame(signature.post.samp.number)
 
-    utils::write.csv(
-      signature.post.samp.number,
-      file = file.path(out.dir,
-                       "extracted.signatures.post.samp.number.csv"),
-      row.names = F,quote=F)
+  utils::write.csv(
+    signature.post.samp.number,
+    file = file.path(out.dir,
+                     "extracted.signatures.post.samp.number.csv"),
+    row.names = F,quote=F)
 
-    low.confidence.signature <- retval$low.confidence.signature
+  low.confidence.signature <- retval$low.confidence.signature
 
     if(!is.null(ncol(low.confidence.signature)) &&
        (ncol(data.frame(low.confidence.signature))>0)) {
@@ -107,22 +111,17 @@ SaveAnalysis <- function(retval,
       }
 
       low.confidence.signature.post.samp.number <- data.frame(low.confidence.signature.post.samp.number)
-      utils::write.csv(low.confidence.signature.post.samp.number,
-                       file = file.path(out.dir,
-                                        "low.confidence.signatures.post.samp.number.csv"),
-                       row.names = F,quote=F)
-
+      utils::write.csv(
+        low.confidence.signature.post.samp.number,
+        file = file.path(out.dir,
+                         "low.confidence.signatures.post.samp.number.csv"),
+        row.names = F,quote=F)
     }
 
   if (diagnostic.plot) {
-
-    dir.create(paste0(out.dir,"/Diagnostic_Plots"), recursive = T)
-    ##this calls the diagnostic plotting function
-    ##compatible with ML's component extraction
-
     ComponentDiagnosticPlotting(retval        = retval,
                                 input.catalog = input.catalog,
-                                out.dir       = paste0(out.dir,"/Diagnostic_Plots"),
+                                out.dir       = out.dir,
                                 verbose       = verbose)
   }
 

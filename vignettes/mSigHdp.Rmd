@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(mSigHdp)
-library(PCAWG7)
+library(ICAMS)
 ```
 
 mSigHdp focuses on using hierarchical Dirichlet process mixture modeling
@@ -28,8 +28,9 @@ We take the mutational spectra from
 Consortium (PCAWG).
 
 ```{r get_spectra}
-toy_data <- PCAWG7::spectra$PCAWG$SBS96[ , 1:10]
-colnames(toy_data) <- paste("T", 1:10, sep="")
+# toy_data <- PCAWG7::spectra$PCAWG$SBS96[ , 1:10]
+# colnames(toy_data) <- paste("T", 1:10, sep="")
+toy_data <- ICAMS::ReadCatalog("toy_data.csv")
 toy_data[1:5,  ]
 toy_data[91:96, ]
 ```
@@ -44,12 +45,12 @@ retval <- mSigHdp::RunHdpxParallel(
   input.catalog       = toy_data,
   out.dir             = "output",
   num.child.process        = 4, 
-  CPU.cores                = 4,
+  CPU.cores                = 1,
   seedNumber               = 123,
   K.guess                  = 5,
   burnin                   = 100,
   burnin.multiplier        = 2,
-  post.n                   = 20, 
+  post.n                   = 5, 
   post.space               = 10, 
   multi.types              = FALSE, 
   overwrite                = TRUE,
@@ -59,8 +60,7 @@ retval <- mSigHdp::RunHdpxParallel(
   checkpoint               = TRUE,
   verbose                  = FALSE) 
 
-dir()
-dir("output")
+warnings()
 
 
 ```
