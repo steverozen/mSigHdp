@@ -1,3 +1,5 @@
 *.html
 *.R
 *.Rdata
+*.csv
+*.pdf
