@@ -124,7 +124,7 @@ CombineChainsAndExtractSigs <-
     combined.cdc  <- intepret.comp.retval$high_confidence_components_cdc
 
     if (verbose) message("extracting signatures exposures ", Sys.time())
-browser()
+
     exposureProbs <- t(apply(combined.cdc,1,function(x){x/sum(x)}))
     if(nrow(exposureProbs)==1){
       exposureProbs <- t(exposureProbs)
