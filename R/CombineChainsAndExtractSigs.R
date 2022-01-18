@@ -103,13 +103,13 @@ CombineChainsAndExtractSigs <-
       }
     }
 
-    intepret.comp.retval <-  hdpx::interpret_components(multi.chains.retval = multi.chains.retval,
-                                                        high.confidence.prop      = high.confidence.prop,
-                                                        # moderate.confidence.prop          = moderate.confidence.prop,
-                                                        verbose            = verbose)
+    intepret.comp.retval <-
+      hdpx::interpret_components(multi.chains.retval  = multi.chains.retval,
+                                 high.confidence.prop = high.confidence.prop,
+                                 verbose              = verbose)
 
-
-    confidentSignatures <- data.frame(intepret.comp.retval$high_confidence_components)
+    confidentSignatures <-
+      data.frame(intepret.comp.retval$high_confidence_components)
 
     rownames(confidentSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
@@ -124,7 +124,7 @@ CombineChainsAndExtractSigs <-
     combined.cdc  <- intepret.comp.retval$high_confidence_components_cdc
 
     if (verbose) message("extracting signatures exposures ", Sys.time())
-
+browser()
     exposureProbs <- t(apply(combined.cdc,1,function(x){x/sum(x)}))
     if(nrow(exposureProbs)==1){
       exposureProbs <- t(exposureProbs)

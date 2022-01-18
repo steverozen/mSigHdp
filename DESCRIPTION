@@ -27,7 +27,8 @@ Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
 Remotes: github::steverozen/hdpx@*release,
-    github::steverozen/ICAMSxtra@*release
+    github::steverozen/ICAMSxtra@*release,
+    github::steverozen/PCAWG7@*release
 Imports: hdpx (>= 0.3.8),
     ICAMS (>= 2.2.4),
     mSigAct (>= 2.1.3.9007),
@@ -35,6 +36,7 @@ Imports: hdpx (>= 0.3.8),
     data.table
 Suggests: 
     knitr,
+    PCAWG7,
     qpdf,
     rmarkdown,
     testthat,
