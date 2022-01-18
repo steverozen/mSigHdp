@@ -37,7 +37,7 @@ toy_data[91:96, ]
 We set the _num.child.process_ and _CPU.cores_ to 4 for a quick run. 
 *Add checkpoint*
 
-```{r RunHdpxParallel,include=T,echo=T,warning=F,message=F,error=F}
+```{r RunHdpxParallel}
 
 
 retval <- mSigHdp::RunHdpxParallel(
