@@ -141,13 +141,18 @@ CombineChainsAndExtractSigs <-
       combined.stats[,1] <-
       colnames(combinedSignatures)
 
-    low.confidence.signature <- data.frame(intepret.comp.retval$low_confidence_components)
+    low.confidence.signature <-
+      data.frame(intepret.comp.retval$low_confidence_components)
 
-    low.confidence.post.samp.number      <- data.frame(intepret.comp.retval$low_confidence_components_post_number)
+    low.confidence.post.samp.number <-
+      data.frame(intepret.comp.retval$low_confidence_components_post_number)
 
+    browser()
+
+    ## TODO CHECK WITH MO
     ##Exclude some junk signatures from every chain. They are only found in one posterior sample on one chain
-    low.confidence.cdc                   <-  data.frame(intepret.comp.retval$low_confidence_components_cdc[,1:ncol(low.confidence.signature)])
-
+    low.confidence.cdc <-
+      data.frame(intepret.comp.retval$low_confidence_components_cdc[,1:ncol(low.confidence.signature)])
 
     if(!is.null(ncol(low.confidence.signature)) &&
        (ncol(data.frame(low.confidence.signature))>0)) {

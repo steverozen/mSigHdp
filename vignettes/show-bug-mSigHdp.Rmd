@@ -16,32 +16,37 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(mSigHdp)
+library(PCAWG7)
 library(ICAMS)
 ```
 
-mSigHdp uses hierarchical Dirichlet process mixture modeling
+mSigHdp focuses on using hierarchical Dirichlet process mixture modeling
 to discover mutational signatures. 
 For real data this is very compute intensive, 
 so here we will show only a toy example with tumors and the typical
-classification of single-base-substitution (SBS) mutations in 96 types. We generate the synthetic spectra based on two mutational
-signatures, SBS1 and SBS22. MORE MORE
+classification of single-base-substitution (SBS) mutations in 96 types <ref>.
+We take the mutational spectra from
+10 tumors from the ICGC/TCGA Pan Cancer Analysis of Whole Genomes
+Consortium (PCAWG).
 
 ```{r get_spectra}
+# toy_data <- PCAWG7::spectra$PCAWG$SBS96[ , 1:10]
 sigs <- 
   cosmicsig::COSMIC_v3.2$signature$GRCh37$SBS96[  , c("SBS1", "SBS22")]
 set.seed(2022)
-n.tumor <- 10
-exposures1 <- c(rnbinom(n.tumor, mu = 2000, size = 5), 10000, 100)
-exposures2 <- c(rnbinom(n.tumor, mu = 10000, size = 1000), 100, 5000)
+# n.tumor <- 10
+n.tumor <- 20
+exposures1 <- rnbinom(n.tumor, mu = 2000, size = 5)
+exposures2 <- rnbinom(n.tumor, mu = 10000, size = 1000)
+# n.tumor <- 10
+# good exposures1 <- c(rnbinom(n.tumor, mu = 2000, size = 5), 10000, 100)
+# good exposures2 <- c(rnbinom(n.tumor, mu = 10000, size = 1000), 100, 5000)
 exposures <- rbind(exposures1, exposures2)
 toy_data <- round(sigs %*% exposures)
-colnames(toy_data) <- paste("T", 1:(n.tumor + 2), sep="")
+# colnames(toy_data) <- paste("T", 1:(n.tumor + 2), sep="")
+colnames(toy_data) <- paste("T", 1:(n.tumor), sep="")
 toy_data <- ICAMS::as.catalog(toy_data, catalog.type = "counts")
-```
 
-Here are the first few and last few rows of the 12 spectra:
-
-```{r show_spectra}
 knitr::kable(toy_data[1:5,  ])
 knitr::kable(toy_data[91:96, ])
 ```
@@ -58,7 +63,8 @@ retval <- mSigHdp::RunHdpxParallel(
   CPU.cores                = 1,
   seedNumber               = 123,
   K.guess                  = 5,
-  burnin                   = 100,
+  # good burnin                   = 100,
+  burnin                   = 1000,
   burnin.multiplier        = 2,
   post.n                   = 5, 
   post.space               = 10, 
