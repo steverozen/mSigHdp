@@ -11,8 +11,12 @@ ComponentDiagnosticPlotting(retval, input.catalog, out.dir, verbose)
 
 \item{input.catalog}{Input spectra catalog as a matrix.}
 
-\item{out.dir}{Directory that will be created for the output, including
-csv files and plots (pdfs) of extracted signatures and their exposures.}
+\item{out.dir}{If not \code{NULL} then
+a character string specifying
+a directory that will be created for the output, including
+csv files and plots (pdfs) of extracted signatures and their exposures.
+If \code{NULL} no directory will be created and no files
+will be generated.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 }
@@ -22,8 +26,8 @@ Generate multiple plots from the return value of \code{\link{CombineChainsAndExt
 \details{
 Generates the plots
 \itemize{
-\item \code{diagnostics.hdp.signature.exposure.each.sample.pdf}
-\item \code{diagnostics.component.distribution.in.posterior.samples.pdf}
+\item \code{diagnostics.signature.exposure.each.sample.pdf}
+\item \code{diagnostics.components.in.which.gibbs.samples.pdf}
 \item \code{diagnostics.likelihood.pdf}
 \item \code{diagnostics.numcluster.pdf}
 \item \code{diagnostics.signatures.pdf}

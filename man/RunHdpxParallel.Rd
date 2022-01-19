@@ -106,8 +106,12 @@ raw clusters of mutations into aggregated clusters.}
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir}
 if it exists, otherwise raise an error.}
 
-\item{out.dir}{Directory that will be created for the output, including
-csv files and plots (pdfs) of extracted signatures and their exposures.}
+\item{out.dir}{If not \code{NULL} then
+a character string specifying
+a directory that will be created for the output, including
+csv files and plots (pdfs) of extracted signatures and their exposures.
+If \code{NULL} no directory will be created and no files
+will be generated.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration

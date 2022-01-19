@@ -2,8 +2,12 @@
 #'
 #' @param retval The output from \code{CombineChainsAndExtractSigs}.
 #'
-#' @param out.dir Directory that will be created for the output, including
+#' @param out.dir If not \code{NULL} then
+#'   a character string specifying
+#'   a directory that will be created for the output, including
 #'   csv files and plots (pdfs) of extracted signatures and their exposures.
+#'   If \code{NULL} no directory will be created and no files
+#'   will be generated.
 #'
 #' @param overwrite If \code{TRUE} overwrite \code{out.dir}
 #'    if it exists, otherwise raise an error.
@@ -25,6 +29,8 @@ SaveAnalysis <- function(retval,
                          verbose          = TRUE,
                          overwrite        = TRUE,
                          diagnostic.plot  = TRUE) {
+
+  if (is.null(out.dir)) return(NULL)
 
   IS.ICAMS <- ICAMS::IsICAMSCatalog(input.catalog)
   if (dir.exists(out.dir)) {
@@ -112,7 +118,8 @@ SaveAnalysis <- function(retval,
                          row.names=F,quote=F)
       }
 
-      low.confidence.signature.post.samp.number <- data.frame(low.confidence.signature.post.samp.number)
+      low.confidence.signature.post.samp.number <-
+        data.frame(low.confidence.signature.post.samp.number)
       utils::write.csv(
         low.confidence.signature.post.samp.number,
         file = file.path(out.dir,

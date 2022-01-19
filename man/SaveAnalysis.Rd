@@ -19,8 +19,12 @@ SaveAnalysis(
 \item{input.catalog}{input catalog matrix or
 path to file with input catalog}
 
-\item{out.dir}{Directory that will be created for the output, including
-csv files and plots (pdfs) of extracted signatures and their exposures.}
+\item{out.dir}{If not \code{NULL} then
+a character string specifying
+a directory that will be created for the output, including
+csv files and plots (pdfs) of extracted signatures and their exposures.
+If \code{NULL} no directory will be created and no files
+will be generated.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 

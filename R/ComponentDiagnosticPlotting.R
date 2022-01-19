@@ -12,8 +12,8 @@
 #'
 #' @details Generates the plots
 #'
-#'  - \code{diagnostics.hdp.signature.exposure.each.sample.pdf}
-#'  - \code{diagnostics.component.distribution.in.posterior.samples.pdf}
+#'  - \code{diagnostics.signature.exposure.each.sample.pdf}
+#'  - \code{diagnostics.components.in.which.gibbs.samples.pdf}
 #'  - \code{diagnostics.likelihood.pdf}
 #'  - \code{diagnostics.numcluster.pdf}
 #'  - \code{diagnostics.signatures.pdf}
@@ -32,21 +32,22 @@ ComponentDiagnosticPlotting <- function(retval,
 
   if (verbose) message("Writing HDP diagnostics")
 
-  pdf(file = file.path(out.dir,"diagnostics_likelihood.pdf"))
+  pdf(file = file.path(out.dir,"diagnostics.likelihood.pdf"))
   par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
   lapply(chains, hdpx::plot_lik, bty = "L")
   dev.off()
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics_numcluster.pdf"))
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.numcluster.pdf"))
   # This is the number of raw clusters sampled along each chain
   par(mfrow=c(2,2), mar=c(4, 4, 2, 1))
   lapply(chains, hdpx::plot_numcluster, bty = "L")
   grDevices::dev.off()
 
   if (IS.ICAMS) {
-    grDevices::pdf(file = file.path(out.dir,
-                                    "diagnostics_hdp_signature_exposure_each_sample.pdf"),
-                   paper = "a4")
+    grDevices::pdf(
+      file = file.path(out.dir,
+                       "diagnostics.signature.exposure.each.sample.pdf"),
+      paper = "a4")
     myCol <- grDevices::rainbow(ncol(retval$signature), alpha = 1)
     graphics::par(mfrow=c(1,1), mar=c(1, 1, 2, 1))
 
@@ -57,7 +58,7 @@ ComponentDiagnosticPlotting <- function(retval,
     grDevices::dev.off()
   }
 
-  #because extract_component_from_clusters extract informations across chains
+  #because extract_component_from_clusters extract information across chains
   #so the chain information was not recorded as NR's hdp_extract_components
   #therefore, we use extract_ccc_from_hdp to seek for the information of
   #raw clusters that highly similar as components (most likely these clusters
@@ -81,7 +82,7 @@ ComponentDiagnosticPlotting <- function(retval,
                                ccc_0 = ccc_0,
                                cos.merge = 0.90)})
 
-  grDevices::pdf(file = file.path(out.dir,"diagnostics_signatures.pdf"))
+  grDevices::pdf(file = file.path(out.dir,"diagnostics.signatures.pdf"))
   graphics::par(mfrow=c(8, 1), mar = c(1, 1, 1, 1))
   # This plots the component (signature) profiles with
   # 95% credibility intervals
@@ -90,7 +91,9 @@ ComponentDiagnosticPlotting <- function(retval,
 
 
 
-  grDevices::pdf(file.path(out.dir,"diagnostics_component_distribution_in_posterior_samples.pdf"))
+  grDevices::pdf(
+    file.path(out.dir,
+              "diagnostics.components.in.which.gibbs.samples.pdf"))
   graphics::par(mfrow=c(1,1), mar=c(5, 4, 4, 2))
   hdpx::plot_component_posterior_samples(components = retval$signature,
                                          retval = sigmatchretval)
