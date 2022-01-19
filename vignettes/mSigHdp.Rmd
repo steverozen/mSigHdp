@@ -1,8 +1,8 @@
 ---
-title: "mSigHdp"
+title: "Discovering mutational signatures with mSigHdp"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{mSigHdp}
+  %\VignetteIndexEntry{Discovering mutational signatures with mSigHdp}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,16 +23,29 @@ mSigHdp uses hierarchical Dirichlet process mixture modeling
 to discover mutational signatures. 
 For real data this is very compute intensive, 
 so here we will show only a toy example with tumors and the typical
-classification of single-base-substitution (SBS) mutations in 96 types. We generate the synthetic spectra based on two mutational
-signatures, SBS1 and SBS22. MORE MORE
+classification of single-base-substitution (SBS) mutations in 96 types. 
+We generate the synthetic spectra based on two mutational
+signatures, SBS1 and SBS22. We get the signatures from CRAN package,
+which provides signatures from https://cancer.sanger.ac.uk/signatures/.
+We set a specific seed so the synthetic spectra are the 
+same every time we run the vignette.
+
 
 ```{r get_spectra}
 sigs <- cosmicsig::COSMIC_v3.2$signature$GRCh37$SBS96[  , c("SBS1", "SBS22")]
 set.seed(2022)
 n.tumor <- 10
+
+# Exposures to SBS1
 exposures1 <- c(rnbinom(n.tumor, mu = 2000, size = 5), 10000, 100)
+
+# Exposures to SBS22
 exposures2 <- c(rnbinom(n.tumor, mu = 10000, size = 1000), 100, 5000)
+
 exposures <- rbind(exposures1, exposures2)
+
+# Create the matrix, give column names (sample names), and
+# make it an ICAMS catalog to enable better plotting later
 toy_data <- round(sigs %*% exposures)
 colnames(toy_data) <- paste("T", 1:(n.tumor + 2), sep="")
 toy_data <- ICAMS::as.catalog(toy_data, catalog.type = "counts")
@@ -45,28 +58,40 @@ knitr::kable(toy_data[1:5,  ])
 knitr::kable(toy_data[91:96, ])
 ```
 
-We set the _num.child.process_ and _CPU.cores_ to 4 for a quick run. 
-*Add checkpoint*
+RunHdxParallel is the function most people will want to use.
+Most of the parameters in the example here are not suitable for real data.
+Please see our paper to be posted on bioRxiv soon for suggestions
+for actual values to use.  In particular, here we set
+CPU.cores to 1 because some package checking does not allow
+use of multiple cores.
 
 ```{r RunHdpxParallel}
 
 retval <- mSigHdp::RunHdpxParallel(
-  input.catalog       = toy_data,
-  out.dir             = "output",
-  num.child.process        = 4, 
-  CPU.cores                = 1,
-  seedNumber               = 123,
-  K.guess                  = 5,
-  burnin                   = 100,
-  burnin.multiplier        = 2,
-  post.n                   = 5, 
-  post.space               = 10, 
-  multi.types              = FALSE, 
-  overwrite                = TRUE,
-  gamma.alpha              = 1,
-  gamma.beta               = 20, 
-  high.confidence.prop     = 0.9,
-  checkpoint               = TRUE,
-  verbose                  = FALSE) 
+  input.catalog        = toy_data,
+  out.dir              = "vignette_output",
+  num.child.process    = 4, 
+  CPU.cores            = 1,
+  seedNumber           = 123,
+  K.guess              = 5,
+  burnin               = 100,
+  burnin.multiplier    = 2,
+  post.n               = 5, 
+  post.space           = 10, 
+  multi.types          = FALSE, 
+  overwrite            = TRUE,
+  gamma.alpha          = 1,
+  gamma.beta           = 20, 
+  high.confidence.prop = 0.9,
+  checkpoint           = TRUE,
+  verbose              = FALSE) 
+```
+
+The output is in subdirectory vignette_output. 
+A plot of the extracted (discovered) signatures is
+in file extracted.signatures.pdf.
+
+```{r sigplot, out.width="100%", out.height="50%", echo=F}
+knitr::include_graphics("vignette_output/extracted.signatures.pdf")
 ```
 

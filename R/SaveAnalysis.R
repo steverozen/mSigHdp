@@ -11,7 +11,7 @@
 #' @param verbose If \code{TRUE} then \code{message} progress information.
 #'
 #' @param input.catalog input catalog matrix or
-#'                            path to file with input catalog
+#'          path to file with input catalog
 #'
 #' @param diagnostic.plot If \code{TRUE} plot diagnostic plots
 #'        in \code{out.dir}.
@@ -38,16 +38,18 @@ SaveAnalysis <- function(retval,
   if (verbose) message("Writing signatures")
 
   if (IS.ICAMS) {
-    extractedSignatures <- ICAMS::as.catalog(retval$signature,
-                                             region       = "unknown",
-                                             catalog.type = "counts.signature")
+    # TODO, get the region and abundance and infer the catalog type
+    # from input.catalog.
+    extractedSignatures <-
+      ICAMS::as.catalog(retval$signature,
+                        region       = "unknown",
+                        catalog.type = "counts.signature")
 
-    cat("XXXXXX\n")
     ICAMS::WriteCatalog(extractedSignatures,
                         file.path(out.dir,"extracted.signatures.csv"))
 
     ICAMS::PlotCatalogToPdf(extractedSignatures,
-                            file.path(out.dir, "extracted.signature.pdf"))
+                            file.path(out.dir, "extracted.signatures.pdf"))
 
   } else {
     extractedSignatures <- retval$signature

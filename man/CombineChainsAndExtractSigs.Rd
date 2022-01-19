@@ -14,8 +14,9 @@ CombineChainsAndExtractSigs(
 }
 \arguments{
 \item{clean.chlist}{A list of \code{\link[hdpx]{hdpSampleChain-class}}
-objects (from package hdpx), typically returned from \code{MultipleSetupAndPosterior}.
-Each element is the result of one posterior sample chain.}
+objects (from package hdpx), typically returned from
+\code{MultipleSetupAndPosterior}.
+Each element must be the result of one posterior sample chain.}
 
 \item{input.catalog}{Input spectra catalog as a matrix.}
 

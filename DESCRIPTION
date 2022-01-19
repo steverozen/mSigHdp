@@ -17,7 +17,7 @@ Description: Mutational signature discovery using hierarchical Dirichlet
              signature (discovery using) hierarchical Dirichlet processes.
              This packages uses https://github.com/steverozen/hdpx for the
              hierarchical Dirichlet process implementation. Most users
-             will want to start with the function RunHdpxParallel.
+             will start with the function RunHdpxParallel.
 License: GPL-3
 Encoding: UTF-8
 Language: en-US
@@ -27,17 +27,14 @@ Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
 Remotes: github::steverozen/hdpx@*release,
-    github::steverozen/ICAMSxtra@*release,
-    github::steverozen/PCAWG7@*release
-Imports: hdpx (>= 0.3.8),
+    github::steverozen/ICAMSxtra@*release
+Imports: data.table,
+    hdpx (>= 0.3.8),
     ICAMS (>= 2.2.4),
     mSigAct (>= 2.1.3.9007),
-    reshape2,
-    data.table
-Suggests: 
+    reshape2
+Suggests: cosmicsig,
     knitr,
-    PCAWG7,
-    qpdf,
     rmarkdown,
     testthat,
     utils
