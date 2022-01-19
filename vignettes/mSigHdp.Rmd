@@ -27,8 +27,7 @@ classification of single-base-substitution (SBS) mutations in 96 types. We gener
 signatures, SBS1 and SBS22. MORE MORE
 
 ```{r get_spectra}
-sigs <- 
-  cosmicsig::COSMIC_v3.2$signature$GRCh37$SBS96[  , c("SBS1", "SBS22")]
+sigs <- cosmicsig::COSMIC_v3.2$signature$GRCh37$SBS96[  , c("SBS1", "SBS22")]
 set.seed(2022)
 n.tumor <- 10
 exposures1 <- c(rnbinom(n.tumor, mu = 2000, size = 5), 10000, 100)

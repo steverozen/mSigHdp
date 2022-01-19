@@ -1,8 +1,11 @@
 #' Extract signatures, exposures, and other information from multiple posterior sample chains.
-#'
+#
+# TODO Steve change names
 #' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}}
-#'  objects (from package hdpx), typically returned from \code{MultipleSetupAndPosterior}.
-#'  Each element is the result of one posterior sample chain.
+#'  objects (from package hdpx), typically returned from
+#'  \code{MultipleSetupAndPosterior}.
+#'  Each element must be the result of one posterior sample chain.
+#'
 #'
 #' @param input.catalog Input spectra catalog as a matrix.
 #'
@@ -47,7 +50,6 @@
 #'     columns are signatures with < than
 #'     \code{high.confidence.prop} of posterior samples.}
 #'
-
 #' \item{low.confidence.post.samp.number}{
 #'      Analogous to \code{signature.post.samp.number}, except that
 #'      this one is for
