@@ -75,14 +75,14 @@ for actual values to use.
 
 ```{r RunHdpxParallel}
 
-retval <- mSigHdp::RunHdpxParallel(
+results <- mSigHdp::RunHdpxParallel(
   input.catalog        = toy_data,
   out.dir              = "vignette_output",
   num.child.process    = 4, 
   CPU.cores            = 4,
   seedNumber           = 123,
   K.guess              = 5,
-  burnin               = 100,
+  burnin               = 1000,
   burnin.multiplier    = 2,
   post.n               = 5, 
   post.space           = 10, 
@@ -95,15 +95,18 @@ retval <- mSigHdp::RunHdpxParallel(
   verbose              = FALSE) 
 ```
 
-The results are in both `retval` and in subdirectory `vignette_output`,
+The results are in both the variable `results` and the
+directory `vignette_output`,
 which also contains plots of the output and diagnostic plots. 
 It is convenient to automatically save the results to files
 since the program will likely have been running for days, and you will
-likely want to save the outputs to files in any case.
+likely want to save the outputs for later 
+examination in any case.
 The return value of `RunHdpParallel` will be included in the
 directory in binary form as `hdp.retval.Rdata`.
 
-The directory contains a plot of the extracted (discovered) signatures
+The directory `vignette_output` 
+contains a plot of the extracted (discovered) signatures
 in file `extracted.signatures.pdf`.
 
 ```{r sigplot, out.width="100%", out.height="50%", echo=F}
@@ -113,13 +116,17 @@ knitr::include_graphics("vignette_output/extracted.signatures.pdf")
 The signatures in numerical form are in file `extracted.signatures.csv`.
 
 ```{r extracted_sigs}
-# dir()
-# dir("vignette_output")
 extracted.sigs <- ICAMS::ReadCatalog("vignette_output/extracted.signatures.csv")
 knitr::kable(extracted.sigs[1:10, ])
 
 ```
 
+```{r}
+dir()
+getwd()
+dir("vignette_output")
+
+```
 
 
 
