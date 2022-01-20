@@ -2,7 +2,7 @@
 % Please edit documentation in R/ChainBurnin.R
 \name{ChainBurnin}
 \alias{ChainBurnin}
-\title{Prepare an \code{\link[hdpx]{hdpState-class}} object and run the Gibbs sampling burnin.}
+\title{Run the Gibbs sampling burnin (one thread)}
 \usage{
 ChainBurnin(
   hdp.state,
@@ -18,25 +18,20 @@ ChainBurnin(
 \item{hdp.state}{An \code{\link[hdpx]{hdpState-class}} object or a list
 representation of an \code{\link[hdpx]{hdpState-class}} object.}
 
-\item{seedNumber}{Used to create the checkpoint file name if \code{checkpoint}
-is \code{TRUE}.}
+\item{seedNumber}{Set the random seed to this value.}
 
 \item{burnin}{\code{burnin}. The number of burn-in iterations in
 one batch. The total number of burnin iterations is
-\code{burnin * burnin.multiplier}.
-Passed to argument burnin of hdpx::hdp_burnin}
+\code{burnin * burnin.multiplier}.}
 
 \item{cpiter}{The number of iterations of concentration
 parameter sampling
 to perform after each main Gibbs-sample iteration. (See Teh et al.,
 "Hierarchical Dirichlet Processes", Journal of the American Statistical
 Association 2006;101(476):1566-1581
-(https://doi.org/10.1198/016214506000000302).)
-in package hdpx.}
+(https://doi.org/10.1198/016214506000000302).)}
 
-\item{burnin.verbosity}{Pass to \code{\link[hdpx]{hdp_burnin}}
-\code{verbosity}. Verbosity of debugging statements.
-#'}
+\item{burnin.verbosity}{Verbosity of message statements.}
 
 \item{burnin.multiplier}{Run \code{burnin.multiplier} rounds of \code{burnin}
 iterations.
@@ -60,6 +55,5 @@ an \code{\link[hdpx]{hdpState-class}} object.}
 }
 }
 \description{
-Prepare an \code{\link[hdpx]{hdpState-class}} object and run the Gibbs sampling burnin.
+Run the Gibbs sampling burnin (one thread)
 }
-\keyword{internal}

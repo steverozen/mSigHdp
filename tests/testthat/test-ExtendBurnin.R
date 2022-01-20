@@ -10,11 +10,13 @@ test_that("ExtendBurnin", {
        envir = reg)
 
   retvalx  <- ExtendBurnin(hdplist    = input$retvalx$hdplist,
-                          burnin      = 100,
-                          cpiter      = 3,
-                          verbosity   = 0)
+                           seedNumber  = 1,
+                           burnin      = 100,
+                           cpiter      = 3,
+                           verbosity   = 0)
 
-  #save(retvalx, file = "RunhdpInternal.testdata/test.ExtendBurnin.Rdata")
+  # If we need to regenerate the test data:
+  # save(retvalx, file = "RunhdpInternal.testdata/test.ExtendBurnin.Rdata")
 
   expect_equal(retvalx, reg$retvalx)
 

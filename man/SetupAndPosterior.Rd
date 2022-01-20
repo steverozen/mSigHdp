@@ -58,8 +58,7 @@ and one grandparent node.}
 
 \item{burnin}{\code{burnin}. The number of burn-in iterations in
 one batch. The total number of burnin iterations is
-\code{burnin * burnin.multiplier}.
-Passed to argument burnin of hdpx::hdp_burnin}
+\code{burnin * burnin.multiplier}.}
 
 \item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{n}.The number of posterior samples to collect.}

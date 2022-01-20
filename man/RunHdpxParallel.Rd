@@ -64,8 +64,7 @@ and one grandparent node.}
 
 \item{burnin}{\code{burnin}. The number of burn-in iterations in
 one batch. The total number of burnin iterations is
-\code{burnin * burnin.multiplier}.
-Passed to argument burnin of hdpx::hdp_burnin}
+\code{burnin * burnin.multiplier}.}
 
 \item{burnin.multiplier}{Run \code{burnin.multiplier} rounds of \code{burnin}
 iterations.

@@ -22,7 +22,7 @@ test_that("ChainBurnin", {
                          burnin.multiplier   = 1,
                          checkpoint          = FALSE)
 
-  # In we need to regenerate the baseline data
+  # If we need to regenerate the baseline data:
   # save(retvalx1, file = "RunhdpInternal.testdata/test.ChainBurnin.Rdata")
   # save(retvalx, file = "RunhdpInternal.testdata/test.ChainBurnin.Rdata")
 

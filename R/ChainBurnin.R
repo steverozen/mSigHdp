@@ -1,22 +1,15 @@
-
-#'
-#' Prepare an \code{\link[hdpx]{hdpState-class}} object and run the Gibbs sampling burnin.
+#' Run the Gibbs sampling burnin (one thread)
 #'
 #' @param hdp.state An \code{\link[hdpx]{hdpState-class}} object or a list
 #'   representation of an \code{\link[hdpx]{hdpState-class}} object.
 #'
-#' @param seedNumber Used to create the checkpoint file name if \code{checkpoint}
-#'  is \code{TRUE}.
-#   TODO: CHECK, probably wrong:
-#   An integer that is used to generate separate
-#   random seeds for the call to \code{\link[hdpx]{dp_activate}},
-#   and before the call of \code{\link[hdpx]{hdp_burnin}}.
+#' @param seedNumber Set the random seed to this value.
 #'
 #' @param burnin \code{burnin}. The number of burn-in iterations in
 #'      one batch. The total number of burnin iterations is
 #'      \code{burnin * burnin.multiplier}.
-#'      Passed to argument burnin of hdpx::hdp_burnin
-
+#      Passed to argument burnin of hdpx::hdp_burnin
+#'
 #' @param burnin.multiplier Run \code{burnin.multiplier} rounds of \code{burnin}
 #'   iterations.
 #'   If \code{checkpoint} is \code{TRUE}, save the burnin chain (see
@@ -33,11 +26,11 @@
 #' Association 2006;101(476):1566-1581
 #' (https://doi.org/10.1198/016214506000000302).)
 #  Passed to argument \code{cpiter} in \code{\link[hdpx]{hdp_burnin argument}}
-#' in package hdpx.
+#  in package hdpx.
 #'
-#' @param burnin.verbosity Pass to \code{\link[hdpx]{hdp_burnin}}
-#'      \code{verbosity}. Verbosity of debugging statements.
-#'#'
+#' @param burnin.verbosity Verbosity of message statements.
+#  Passed to \code{\link[hdpx]{hdp_burnin}} \code{verbosity}.
+#'
 #' @param checkpoint If \code{TRUE}, a checkpoint
 #'  file called mSigHdp.burnin.checkpoint.*seed_number*.Rdata.
 #'  will be created
@@ -49,7 +42,7 @@
 #' \item{likelihood}{A numeric vector with the likelihood at each iteration.}
 #' }
 #'
-#' @keywords internal
+#' @export
 #'
 ChainBurnin <-
   function(hdp.state,
