@@ -69,7 +69,7 @@ RunHdpxParallel <- function(input.catalog,
                         checkpoint          = checkpoint)
 
   # For preparing test data
-  if (TRUE) {
+  if (FALSE) {
     save(chlist, file = "big.chlist.from.ParallelGibbsSample.Rdata")
   }
 
