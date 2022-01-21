@@ -2,7 +2,7 @@
 % Please edit documentation in R/RunHdpxParallel.R
 \name{RunHdpxParallel}
 \alias{RunHdpxParallel}
-\title{Extract mutational signatures from a set of mutational spectra.}
+\title{Extract (discover) mutational signatures from a matrix of mutational spectra}
 \usage{
 RunHdpxParallel(
   input.catalog,
@@ -86,7 +86,8 @@ parameter samplings to perform after each iteration.}
 \item{post.verbosity}{Verbosity of debugging statements.
 No need to change except for development purposes.}
 
-\item{CPU.cores}{Number of CPUs to use; this should be no more than \code{num.child.process}.}
+\item{CPU.cores}{Number of CPUs to use; this should be no
+more than \code{num.child.process}.}
 
 \item{num.child.process}{Number of posterior sampling chains; can set to
 1 for testing. We recommend 20 for real data analysis}
@@ -179,9 +180,7 @@ signatures in \code{low.confidence.signature}.}
 \item{low.confidence.cdc}{Analogous to
 \code{signature.cdc}, except that columns in this
 matrix correspond to columns
-in \code{low.confidence.signature}. Raw clusters of mutations
-TODO FINISH WITH MO'S HELP
-}
+in \code{low.confidence.signature}.}
 
 \item{extracted.retval}{A list object returned from
 \code{\link[hdpx]{extract_components_from_clusters}}
@@ -190,5 +189,5 @@ in package hdpx.}
 }
 }
 \description{
-Extract mutational signatures from a set of mutational spectra.
+Extract (discover) mutational signatures from a matrix of mutational spectra
 }

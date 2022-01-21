@@ -2,7 +2,7 @@
 % Please edit documentation in R/ParallelGibbsSample.R
 \name{ParallelGibbsSample}
 \alias{ParallelGibbsSample}
-\title{Activate hierarchical Dirichlet processes and run posterior sampling in parallel.}
+\title{Setup hierarchical Dirichlet processes and run parallel Gibbs sampling chains}
 \usage{
 ParallelGibbsSample(
   input.catalog,
@@ -82,7 +82,8 @@ parameter samplings to perform after each iteration.}
 \item{post.verbosity}{Verbosity of debugging statements.
 No need to change except for development purposes.}
 
-\item{CPU.cores}{Number of CPUs to use; this should be no more than \code{num.child.process}.}
+\item{CPU.cores}{Number of CPUs to use; this should be no
+more than \code{num.child.process}.}
 
 \item{num.child.process}{Number of posterior sampling chains; can set to
 1 for testing. We recommend 20 for real data analysis}
@@ -125,8 +126,9 @@ to be present in your dataset, or even exclude some priors entirely.}
 \value{
 Invisibly,
 the clean \code{chlist} (output of \code{CleanChlist}).
-This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+This is a list of \code{\link[hdpx]{hdpSampleChain-class}}
+objects (see package hdpx).
 }
 \description{
-Activate hierarchical Dirichlet processes and run posterior sampling in parallel.
+Setup hierarchical Dirichlet processes and run parallel Gibbs sampling chains
 }

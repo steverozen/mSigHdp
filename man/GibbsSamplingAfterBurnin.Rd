@@ -2,7 +2,7 @@
 % Please edit documentation in R/GibbsSamplingAfterBurnin.R
 \name{GibbsSamplingAfterBurnin}
 \alias{GibbsSamplingAfterBurnin}
-\title{Start Gibbs sampling on one chain after burnin.}
+\title{Start Gibbs sampling on one chain after burnin}
 \usage{
 GibbsSamplingAfterBurnin(
   burnin.output = burnin.output,

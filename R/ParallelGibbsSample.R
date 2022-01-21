@@ -1,15 +1,17 @@
-#' Activate hierarchical Dirichlet processes and run posterior sampling in parallel.
+#' Setup hierarchical Dirichlet processes and run parallel Gibbs sampling chains
 #'
 #' @inheritParams SetupAndPosterior
 #'
-#' @param CPU.cores Number of CPUs to use; this should be no more than \code{num.child.process}.
+#' @param CPU.cores Number of CPUs to use; this should be no
+#'   more than \code{num.child.process}.
 #'
 #' @param num.child.process Number of posterior sampling chains; can set to
 #'   1 for testing. We recommend 20 for real data analysis
 #'
 #' @return Invisibly,
 #'    the clean \code{chlist} (output of \code{CleanChlist}).
-#'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
+#'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}}
+#'    objects (see package hdpx).
 #'
 #' @export
 

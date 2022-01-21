@@ -1,4 +1,4 @@
-#' Extract mutational signatures from a set of mutational spectra.
+#' Extract (discover) mutational signatures from a matrix of mutational spectra
 #'
 #' @inheritParams ParallelGibbsSample
 #'
@@ -67,6 +67,11 @@ RunHdpxParallel <- function(input.catalog,
                         prior.pseudoc       = prior.pseudoc,
                         burnin.multiplier   = burnin.multiplier,
                         checkpoint          = checkpoint)
+
+  # For preparing test data
+  if (TRUE) {
+    save(chlist, file = "big.chlist.from.ParallelGibbsSample.Rdata")
+  }
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;

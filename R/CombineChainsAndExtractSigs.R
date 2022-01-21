@@ -1,6 +1,5 @@
-#' Extract signatures, exposures, and other information from multiple posterior sample chains.
+#' Extract signatures etc. from multiple Gibbs sample chains
 #
-# TODO Steve change names
 #' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}}
 #'  objects (from package hdpx), typically returned from
 #'  \code{ParallelGibbsSample}.
@@ -58,9 +57,7 @@
 #' \item{low.confidence.cdc}{Analogous to
 #'      \code{signature.cdc}, except that columns in this
 #'      matrix correspond to columns
-#'      in \code{low.confidence.signature}. Raw clusters of mutations
-#'      TODO FINISH WITH MO'S HELP
-#'       }
+#'      in \code{low.confidence.signature}.}
 #'
 #' \item{extracted.retval}{A list object returned from
 #'          \code{\link[hdpx]{extract_components_from_clusters}}

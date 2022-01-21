@@ -1,4 +1,4 @@
-#' Start Gibbs sampling on one chain after burnin.
+#' Start Gibbs sampling on one chain after burnin
 #'
 #' This function might be used to start Gibbs sampling after
 #' \code{\link{ExtendBurnin}}.

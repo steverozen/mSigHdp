@@ -2,7 +2,7 @@
 % Please edit documentation in R/CombineChainsAndExtractSigs.R
 \name{CombineChainsAndExtractSigs}
 \alias{CombineChainsAndExtractSigs}
-\title{Extract signatures, exposures, and other information from multiple posterior sample chains.}
+\title{Extract signatures etc. from multiple Gibbs sample chains}
 \usage{
 CombineChainsAndExtractSigs(
   clean.chlist,
@@ -65,9 +65,7 @@ signatures in \code{low.confidence.signature}.}
 \item{low.confidence.cdc}{Analogous to
 \code{signature.cdc}, except that columns in this
 matrix correspond to columns
-in \code{low.confidence.signature}. Raw clusters of mutations
-TODO FINISH WITH MO'S HELP
-}
+in \code{low.confidence.signature}.}
 
 \item{extracted.retval}{A list object returned from
 \code{\link[hdpx]{extract_components_from_clusters}}
@@ -76,5 +74,5 @@ in package hdpx.}
 }
 }
 \description{
-Extract signatures, exposures, and other information from multiple posterior sample chains.
+Extract signatures etc. from multiple Gibbs sample chains
 }
