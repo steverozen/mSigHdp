@@ -1,7 +1,7 @@
 
 test_that("RunHdpxParallel-slot-mutliF", {
   if (Sys.getenv("MSIGHDP_LONG") == "") {
-    # skip("Sys.setenv(MSIGHDP_LONG, \"Y\") to run test-RunHdpxParallel-mutlitypeF-slow")
+    skip("Sys.setenv(MSIGHDP_LONG, \"Y\") to run test-RunHdpxParallel-multiF-slow")
   }
   require(ICAMS)
   input.catalog <- PCAWG7::spectra$PCAWG$ID
@@ -19,7 +19,7 @@ test_that("RunHdpxParallel-slot-mutliF", {
     CPU.cores         = 20,
     seedNumber        = 44,
     K.guess           = 5,
-    multi.types       = TRUE,
+    multi.types       = FALSE,
     verbose           = FALSE,
     num.child.process = 20,
     burnin            = 500,
@@ -32,7 +32,7 @@ test_that("RunHdpxParallel-slot-mutliF", {
   )
 
   # To save a new version of the output:
-  save(retvalx, file = "tdata/RunHdpParallel-slow-multiF.Rdata")
-  # expect_equal(retvalx, reg$retvalx)
+  # save(retvalx, file = "tdata/RunHdpParallel-slow-multiF.Rdata")
+  expect_equal(retvalx, reg$retvalx)
 
 })
