@@ -19,7 +19,7 @@ test_that("RunHdpxParallel-slot-mutliF", {
     CPU.cores         = 20,
     seedNumber        = 44,
     K.guess           = 5,
-    multi.types       = FALSE,
+    multi.types       = TRUE,
     verbose           = FALSE,
     num.child.process = 20,
     burnin            = 500,
