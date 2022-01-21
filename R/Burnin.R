@@ -44,7 +44,7 @@
 #'
 #' @export
 #'
-ChainBurnin <-
+Burnin <-
   function(hdp.state,
            seedNumber        = 1,
            burnin            = 5000,

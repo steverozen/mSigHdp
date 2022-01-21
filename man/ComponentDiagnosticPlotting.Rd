@@ -2,7 +2,7 @@
 % Please edit documentation in R/ComponentDiagnosticPlotting.R
 \name{ComponentDiagnosticPlotting}
 \alias{ComponentDiagnosticPlotting}
-\title{Generate multiple plots from the return value of \code{\link{CombineChainsAndExtractSigs}}.}
+\title{Generate diagnostic plots from the return value of \code{\link{CombineChainsAndExtractSigs}}}
 \usage{
 ComponentDiagnosticPlotting(retval, input.catalog, out.dir, verbose)
 }
@@ -21,7 +21,7 @@ will be generated.}
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 }
 \description{
-Generate multiple plots from the return value of \code{\link{CombineChainsAndExtractSigs}}.
+Generate diagnostic plots from the return value of \code{\link{CombineChainsAndExtractSigs}}
 }
 \details{
 Generates the plots
@@ -33,3 +33,4 @@ Generates the plots
 \item \code{diagnostics.signatures.pdf}
 }
 }
+\keyword{internal}

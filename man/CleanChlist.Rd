@@ -2,7 +2,7 @@
 % Please edit documentation in R/CleanChlist.R
 \name{CleanChlist}
 \alias{CleanChlist}
-\title{If the job of Gibbs sampling from \code{MultipleSetupAndPosterior}
+\title{If the job of Gibbs sampling from \code{ParallelGibbsSamble}
 has an error caught by R, the corresponding element
 of chlist has class try-error.
 If the job is stopped with, e.g. a segfault,
@@ -20,7 +20,7 @@ Invisibly, the clean, non-error \code{chlist}
 This is a list of \code{\link[hdpx]{hdpSampleChain-class}} objects.
 }
 \description{
-If the job of Gibbs sampling from \code{MultipleSetupAndPosterior}
+If the job of Gibbs sampling from \code{ParallelGibbsSamble}
 has an error caught by R, the corresponding element
 of chlist has class try-error.
 If the job is stopped with, e.g. a segfault,

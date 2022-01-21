@@ -1,4 +1,4 @@
-#' Generate multiple plots from the return value of \code{\link{CombineChainsAndExtractSigs}}.
+#' Generate diagnostic plots from the return value of \code{\link{CombineChainsAndExtractSigs}}
 #'
 #' @param retval Return from \code{\link{CombineChainsAndExtractSigs}.}
 #'
@@ -18,7 +18,7 @@
 #'  - \code{diagnostics.numcluster.pdf}
 #'  - \code{diagnostics.signatures.pdf}
 #'
-#' @export
+#' @keywords internal
 
 ComponentDiagnosticPlotting <- function(retval,
                                         input.catalog,

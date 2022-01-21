@@ -14,24 +14,24 @@
 #' @export
 
 
-MultipleSetupAndPosterior <- function(input.catalog,
-                                      seedNumber          = 1,
-                                      K.guess,
-                                      multi.types         = FALSE,
-                                      verbose             = TRUE,
-                                      burnin              = 5000,
-                                      burnin.multiplier   = 2,
-                                      post.n              = 200,
-                                      post.space          = 100,
-                                      post.cpiter         = 3,
-                                      post.verbosity      = 0,
-                                      CPU.cores           = 20,
-                                      num.child.process   = 20,
-                                      gamma.alpha         = 1,
-                                      gamma.beta          = 20,
-                                      checkpoint          = TRUE,
-                                      prior.sigs          = NULL,
-                                      prior.pseudoc       = NULL) {
+ParallelGibbsSample <- function(input.catalog,
+                                seedNumber          = 1,
+                                K.guess,
+                                multi.types         = FALSE,
+                                verbose             = TRUE,
+                                burnin              = 5000,
+                                burnin.multiplier   = 2,
+                                post.n              = 200,
+                                post.space          = 100,
+                                post.cpiter         = 3,
+                                post.verbosity      = 0,
+                                CPU.cores           = 20,
+                                num.child.process   = 20,
+                                gamma.alpha         = 1,
+                                gamma.beta          = 20,
+                                checkpoint          = TRUE,
+                                prior.sigs          = NULL,
+                                prior.pseudoc       = NULL) {
 
 
   run.setup.and.posterior <- function(seedNumber) {

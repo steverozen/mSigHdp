@@ -1,7 +1,6 @@
-#' Extend burnin iterations generated from \code{\link{ChainBurnin}}.
+#' Extend burnin iterations generated from \code{\link{Burnin}}
 #'
-#' @param seedNumber A random seed for setting the environment of
-#'   \code{\link[hdpx]{hdp_burnin}}.
+#' @param seedNumber A random seed for reproducible results.
 #'
 #' @param burnin Passed to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{burnin}.
@@ -20,10 +19,10 @@
 #'
 #' @param hdplist A list representation of
 #'    an \code{\link[hdpx]{hdpState-class}} object;
-#'    a return value \code{\link{ChainBurnin}}.
+#'    a return value \code{\link{Burnin}}.
 #'
 #' @return The same type of object as returned from
-#'  \code{\link{ChainBurnin}.}
+#'  \code{\link{Burnin}.}
 #'
 #' The envisioned application is extending burnins from burnin checkpoints.
 #'

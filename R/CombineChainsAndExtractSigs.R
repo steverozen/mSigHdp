@@ -3,7 +3,7 @@
 # TODO Steve change names
 #' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}}
 #'  objects (from package hdpx), typically returned from
-#'  \code{MultipleSetupAndPosterior}.
+#'  \code{ParallelGibbsSample}.
 #'  Each element must be the result of one posterior sample chain.
 #'
 #'
@@ -149,7 +149,7 @@ CombineChainsAndExtractSigs <-
     low.confidence.post.samp.number <-
       data.frame(intepret.comp.retval$low_confidence_components_post_number)
 
-    browser()
+    # browser()
 
     ## TODO CHECK WITH MO
     ##Exclude some junk signatures from every chain. They are only found in one posterior sample on one chain

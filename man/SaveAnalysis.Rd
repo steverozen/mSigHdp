@@ -37,3 +37,4 @@ in \code{out.dir}.}
 \description{
 Save the analysis from \code{\link{CombineChainsAndExtractSigs}} to files.
 }
+\keyword{internal}

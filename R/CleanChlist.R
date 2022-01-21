@@ -1,4 +1,4 @@
-#' If the job of Gibbs sampling from \code{MultipleSetupAndPosterior}
+#' If the job of Gibbs sampling from \code{ParallelGibbsSamble}
 #' has an error caught by R, the corresponding element
 #' of chlist has class try-error.
 #' If the job is stopped with, e.g. a segfault,

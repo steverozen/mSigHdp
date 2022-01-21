@@ -20,7 +20,7 @@
 #' @param diagnostic.plot If \code{TRUE} plot diagnostic plots
 #'        in \code{out.dir}.
 #'
-#' @export
+#' @keywords internal
 #'
 #'
 SaveAnalysis <- function(retval,

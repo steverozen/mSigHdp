@@ -75,19 +75,16 @@ determine if the chain is stationary.
 The burnin can be continued from a checkpoint file
 with \code{\link{ExtendBurnin}} (see argument \code{checkpoint}).}
 
-\item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{n}.The number of posterior samples to collect.}
+\item{post.n}{The number of posterior samples to collect.}
 
 \item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{space}. The number of iterations between collected samples.}
 
-\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-\code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
-parameter sampling to perform after each iteration}
+\item{post.cpiter}{The number of iterations of concentration
+parameter samplings to perform after each iteration.}
 
-\item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{verbosity}. Verbosity of debugging statements.
-No need to change unless for development purpose}
+\item{post.verbosity}{Verbosity of debugging statements.
+No need to change except for development purposes.}
 
 \item{CPU.cores}{Number of CPUs to use; this should be no more than \code{num.child.process}.}
 

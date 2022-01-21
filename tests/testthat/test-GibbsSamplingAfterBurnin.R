@@ -1,5 +1,5 @@
 
-test_that("ChainBurnin", {
+test_that("Gibbs sampling after burnin", {
 
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/2.type.ground.truth.syn.catalog.csv")
@@ -27,24 +27,24 @@ test_that("ChainBurnin", {
                                   gamma.beta          = 20)
 
   ##Generate burnin checkpoint for testing
-  burnin.output.1 <- ChainBurnin(hdp.state          = hdp.state.1,
-                                 seedNumber          = (44 + 2e6),
-                                 burnin              = 100,
-                                 cpiter              = 3,
-                                 burnin.verbosity    = 0,
-                                 burnin.multiplier   = 1,
-                                 checkpoint          = T)
+  burnin.output.1 <- Burnin(hdp.state          = hdp.state.1,
+                            seedNumber          = (44 + 2e6),
+                            burnin              = 100,
+                            cpiter              = 3,
+                            burnin.verbosity    = 0,
+                            burnin.multiplier   = 1,
+                            checkpoint          = T)
 
-  burnin.output.2 <- ChainBurnin(hdp.state          = hdp.state.2,
-                                 seedNumber          = (44 + 3e6),
-                                 burnin              = 100,
-                                 cpiter              = 3,
-                                 burnin.verbosity    = 0,
-                                 burnin.multiplier   = 1,
-                                 checkpoint          = T)
+  burnin.output.2 <- Burnin(hdp.state          = hdp.state.2,
+                            seedNumber          = (44 + 3e6),
+                            burnin              = 100,
+                            cpiter              = 3,
+                            burnin.verbosity    = 0,
+                            burnin.multiplier   = 1,
+                            checkpoint          = T)
 
   # The names of the burnin checkpoint files are based on
-  # the seedNumber arguments to the two calls to ChainBurnin, above.
+  # the seedNumber arguments to the two calls to Burnin, above.
   sample.chain.1 <- GibbsSamplingAfterBurnin(burnin.output  = "mSigHdp.burnin.checkpoint.2000044.Rdata",
                                              post.n         = 10,
                                              post.space     = 5)

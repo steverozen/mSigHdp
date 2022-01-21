@@ -1,6 +1,6 @@
 #' Extract mutational signatures from a set of mutational spectra.
 #'
-#' @inheritParams MultipleSetupAndPosterior
+#' @inheritParams ParallelGibbsSample
 #'
 #' @inheritParams SaveAnalysis
 #'
@@ -44,24 +44,24 @@ RunHdpxParallel <- function(input.catalog,
   # chlist is a list of hdpSampleChain-class objects.
 
   chlist <-
-    MultipleSetupAndPosterior(input.catalog,
-                              seedNumber          = seedNumber,
-                              K.guess             = K.guess,
-                              multi.types         = multi.types,
-                              verbose             = verbose,
-                              burnin              = burnin,
-                              post.n              = post.n,
-                              post.space          = post.space,
-                              post.cpiter         = post.cpiter,
-                              post.verbosity      = post.verbosity,
-                              CPU.cores           = CPU.cores,
-                              num.child.process   = num.child.process,
-                              gamma.alpha         = gamma.alpha,
-                              gamma.beta          = gamma.beta,
-                              prior.sigs          = prior.sigs,
-                              prior.pseudoc       = prior.pseudoc,
-                              burnin.multiplier   = burnin.multiplier,
-                              checkpoint          = checkpoint)
+    ParallelGibbsSample(input.catalog,
+                        seedNumber          = seedNumber,
+                        K.guess             = K.guess,
+                        multi.types         = multi.types,
+                        verbose             = verbose,
+                        burnin              = burnin,
+                        post.n              = post.n,
+                        post.space          = post.space,
+                        post.cpiter         = post.cpiter,
+                        post.verbosity      = post.verbosity,
+                        CPU.cores           = CPU.cores,
+                        num.child.process   = num.child.process,
+                        gamma.alpha         = gamma.alpha,
+                        gamma.beta          = gamma.beta,
+                        prior.sigs          = prior.sigs,
+                        prior.pseudoc       = prior.pseudoc,
+                        burnin.multiplier   = burnin.multiplier,
+                        checkpoint          = checkpoint)
 
   # Step 2: Combine the posterior chains and extract
   # signatures and exposures;

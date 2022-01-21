@@ -1,4 +1,4 @@
-#' Generate an HDP Gibbs sampling chain from a spectra catalog.
+#' Generate an HDP Gibbs sampling chain from a spectra catalog
 #'
 #' @inheritParams PrepInit
 #'
@@ -6,21 +6,23 @@
 #'
 #' @inheritParams PriorSetupAndActivate
 #'
-#' @inheritParams ChainBurnin
+#' @inheritParams Burnin
 #'
-#' @param post.n Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{n}.The number of posterior samples to collect.
+#' @param post.n The number of posterior samples to collect.
+# Pass to \code{\link[hdpx]{hdp_posterior_sample}} \code{n}.
 #'
 #' @param post.space Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 #'      \code{space}. The number of iterations between collected samples.
 #'
-#' @param post.cpiter Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-#'        \code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
-#'        parameter sampling to perform after each iteration
+#' @param post.cpiter The number of iterations of concentration
+#'        parameter samplings to perform after each iteration.
+#        Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
+#         \code{\link[hdpx]{hdp_burnin}} \code{cpiter}.
 #'
-#' @param post.verbosity Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{verbosity}. Verbosity of debugging statements.
-#'       No need to change unless for development purpose
+#' @param post.verbosity Verbosity of debugging statements.
+#'       No need to change except for development purposes.
+#        Pass to \code{\link[hdpx]{hdp_posterior_sample}}
+#        \code{verbosity}.
 #'
 #' @param checkpoint If \code{TRUE}, then \itemize{
 #'      \item Checkpoint each final Gibbs sample
@@ -87,7 +89,7 @@ SetupAndPosterior <-
     if (verbose) message("calling hdp_posterior, seed = ",
                          seedNumber, " ", Sys.time())
 
-    burnin.output <- ChainBurnin(
+    burnin.output <- Burnin(
       hdp.state         = hdp.state,
       burnin.verbosity  = post.verbosity,
       burnin            = burnin,

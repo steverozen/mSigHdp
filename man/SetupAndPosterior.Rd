@@ -2,7 +2,7 @@
 % Please edit documentation in R/SetupAndPosterior.R
 \name{SetupAndPosterior}
 \alias{SetupAndPosterior}
-\title{Generate an HDP Gibbs sampling chain from a spectra catalog.}
+\title{Generate an HDP Gibbs sampling chain from a spectra catalog}
 \usage{
 SetupAndPosterior(
   input.catalog,
@@ -60,19 +60,16 @@ and one grandparent node.}
 one batch. The total number of burnin iterations is
 \code{burnin * burnin.multiplier}.}
 
-\item{post.n}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{n}.The number of posterior samples to collect.}
+\item{post.n}{The number of posterior samples to collect.}
 
 \item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
 \code{space}. The number of iterations between collected samples.}
 
-\item{post.cpiter}{Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-\code{\link[hdpx]{hdp_burnin}} \code{cpiter}.The number of iterations of concentration
-parameter sampling to perform after each iteration}
+\item{post.cpiter}{The number of iterations of concentration
+parameter samplings to perform after each iteration.}
 
-\item{post.verbosity}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{verbosity}. Verbosity of debugging statements.
-No need to change unless for development purpose}
+\item{post.verbosity}{Verbosity of debugging statements.
+No need to change except for development purposes.}
 
 \item{gamma.alpha}{Shape parameter of
 the gamma distribution prior for the Dirichlet process concentration
@@ -123,6 +120,6 @@ Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object
 as returned from \code{\link[hdpx]{hdp_posterior}}.
 }
 \description{
-Generate an HDP Gibbs sampling chain from a spectra catalog.
+Generate an HDP Gibbs sampling chain from a spectra catalog
 }
 \keyword{internal}
