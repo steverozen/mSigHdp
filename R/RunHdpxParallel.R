@@ -34,6 +34,11 @@ RunHdpxParallel <- function(input.catalog,
                             prior.sigs          = NULL,
                             prior.pseudoc       = NULL) {
 
+  # Check for suitable version of hdpx
+  if (packageVersion("hdpx") < "0.3.9") {
+    stop("hdpx version must be >= 0.3.9")
+  }
+
   # Step 0: Get the input.catalog and keeping track of
   # whether it is an ICAMS catalog (encoded as an
   # additional class).
