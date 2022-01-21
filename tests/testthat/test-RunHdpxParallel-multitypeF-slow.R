@@ -1,7 +1,7 @@
 
 test_that("RunHdpxParallel-slot-mutliF", {
   if (Sys.getenv("MSIGHDP_LONG") == "") {
-    # skip("Sys.setenv(MSIGHDP_LONG, \"Y\") to run test-RunHdpxParallel-mutlitypeF-slow")
+    skip("Sys.setenv(MSIGHDP_LONG, \"Y\") to run test-RunHdpxParallel-mutlitypeF-slow")
   }
   require(ICAMS)
   input.catalog <- PCAWG7::spectra$PCAWG$ID
