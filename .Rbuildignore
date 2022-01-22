@@ -3,6 +3,5 @@
 ^LICENSE\.md$
 ^tests/testthat/.*_out_dir$
 ^data-raw$
-^README\.Rmd$
-^\.travis\.yml$
+^mSigHdp.html$
 ^mSigHdp_.*\.pdf$

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Discovering mutational signatures with mSigHdp</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Discovering mutational signatures with mSigHdp</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mSigHdp)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ICAMS)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cosmicsig)</span></code></pre></div>
+<p>mSigHdp uses hierarchical Dirichlet process mixture modeling to discover mutational signatures. For real data this is very compute intensive, so here we will show only a toy example with tumors and the typical classification of single-base-substitution (SBS) mutations in 96 types. We generate the synthetic spectra based on two mutational signatures, SBS1 and SBS22. We get the signatures from CRAN package cosmicsig, which provides signatures from <a href="https://cancer.sanger.ac.uk/signatures/" class="uri">https://cancer.sanger.ac.uk/signatures/</a>. We set a specific seed so that the synthetic spectra are the same every time we run the vignette.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sigs <span class="ot">&lt;-</span> cosmicsig<span class="sc">::</span>COSMIC_v3<span class="fl">.2</span><span class="sc">$</span>signature<span class="sc">$</span>GRCh37<span class="sc">$</span>SBS96[  , <span class="fu">c</span>(<span class="st">&quot;SBS1&quot;</span>, <span class="st">&quot;SBS22&quot;</span>)]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span></code></pre></div>
+<p>We generate 10 random exposures and 2 highly-enriched exposures for each signature (so we can discover them quickly), and make them into an exposure matrix.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n.tumor <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>exposures1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnbinom</span>(n.tumor, <span class="at">mu =</span> <span class="dv">2000</span>, <span class="at">size =</span> <span class="dv">5</span>), <span class="dv">10000</span>, <span class="dv">100</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>exposures2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnbinom</span>(n.tumor, <span class="at">mu =</span> <span class="dv">10000</span>, <span class="at">size =</span> <span class="dv">1000</span>), <span class="dv">100</span>, <span class="dv">5000</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>exposures <span class="ot">&lt;-</span> <span class="fu">rbind</span>(exposures1, exposures2)</span></code></pre></div>
+<p>Then we generate spectra by multiplying the signatures times the exposures and rounding, because we need integer mutation counts. We convert the matrix into an ICAMS catalog so we can use custom plotting later.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>toy_data <span class="ot">&lt;-</span> <span class="fu">round</span>(sigs <span class="sc">%*%</span> exposures)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(toy_data) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;T&quot;</span>, <span class="dv">1</span><span class="sc">:</span>(n.tumor <span class="sc">+</span> <span class="dv">2</span>), <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>toy_data <span class="ot">&lt;-</span> ICAMS<span class="sc">::</span><span class="fu">as.catalog</span>(toy_data, <span class="at">catalog.type =</span> <span class="st">&quot;counts&quot;</span>)</span></code></pre></div>
+<p>Here are the first few and last few rows of the 12 spectra. Each column is one of the 12 synthetic tumors. Each row is a mutation type, for example in in row 5 the row name CCAA indicates a mutation from CCA to CAA.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(toy_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,  ])</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">T1</th>
+<th align="right">T2</th>
+<th align="right">T3</th>
+<th align="right">T4</th>
+<th align="right">T5</th>
+<th align="right">T6</th>
+<th align="right">T7</th>
+<th align="right">T8</th>
+<th align="right">T9</th>
+<th align="right">T10</th>
+<th align="right">T11</th>
+<th align="right">T12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ACAA</td>
+<td align="right">61</td>
+<td align="right">62</td>
+<td align="right">62</td>
+<td align="right">59</td>
+<td align="right">64</td>
+<td align="right">65</td>
+<td align="right">61</td>
+<td align="right">60</td>
+<td align="right">60</td>
+<td align="right">61</td>
+<td align="right">9</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">ACCA</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="right">5</td>
+<td align="right">12</td>
+<td align="right">6</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">8</td>
+<td align="right">23</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">ACGA</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">9</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">2</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">ACTA</td>
+<td align="right">20</td>
+<td align="right">20</td>
+<td align="right">21</td>
+<td align="right">19</td>
+<td align="right">20</td>
+<td align="right">24</td>
+<td align="right">20</td>
+<td align="right">20</td>
+<td align="right">19</td>
+<td align="right">20</td>
+<td align="right">13</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">CCAA</td>
+<td align="right">19</td>
+<td align="right">19</td>
+<td align="right">19</td>
+<td align="right">18</td>
+<td align="right">20</td>
+<td align="right">20</td>
+<td align="right">19</td>
+<td align="right">18</td>
+<td align="right">18</td>
+<td align="right">19</td>
+<td align="right">3</td>
+<td align="right">9</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(toy_data[<span class="dv">91</span><span class="sc">:</span><span class="dv">96</span>, ])</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">T1</th>
+<th align="right">T2</th>
+<th align="right">T3</th>
+<th align="right">T4</th>
+<th align="right">T5</th>
+<th align="right">T6</th>
+<th align="right">T7</th>
+<th align="right">T8</th>
+<th align="right">T9</th>
+<th align="right">T10</th>
+<th align="right">T11</th>
+<th align="right">T12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">GTGG</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">GTTG</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">TTAG</td>
+<td align="right">50</td>
+<td align="right">51</td>
+<td align="right">49</td>
+<td align="right">48</td>
+<td align="right">53</td>
+<td align="right">51</td>
+<td align="right">50</td>
+<td align="right">48</td>
+<td align="right">49</td>
+<td align="right">49</td>
+<td align="right">1</td>
+<td align="right">25</td>
+</tr>
+<tr class="even">
+<td align="left">TTCG</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">1</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TTGG</td>
+<td align="right">56</td>
+<td align="right">57</td>
+<td align="right">56</td>
+<td align="right">54</td>
+<td align="right">59</td>
+<td align="right">59</td>
+<td align="right">56</td>
+<td align="right">55</td>
+<td align="right">56</td>
+<td align="right">55</td>
+<td align="right">6</td>
+<td align="right">28</td>
+</tr>
+<tr class="even">
+<td align="left">TTTG</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p>Most people will want to use the <code>RunHdxParallel</code> function. <em>Most of the parameters in the example here are not suitable for real data</em>. Please see our paper to be posted on bioRxiv soon for suggestions for actual values to use.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> mSigHdp<span class="sc">::</span><span class="fu">RunHdpxParallel</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">input.catalog        =</span> toy_data,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">out.dir              =</span> <span class="st">&quot;vignette_output&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">num.child.process    =</span> <span class="dv">4</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">CPU.cores            =</span> <span class="dv">4</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">seedNumber           =</span> <span class="dv">123</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">K.guess              =</span> <span class="dv">5</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">burnin               =</span> <span class="dv">1000</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">burnin.multiplier    =</span> <span class="dv">2</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">post.n               =</span> <span class="dv">5</span>, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">post.space           =</span> <span class="dv">10</span>, </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">multi.types          =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">overwrite            =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">gamma.alpha          =</span> <span class="dv">1</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">gamma.beta           =</span> <span class="dv">20</span>, </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">high.confidence.prop =</span> <span class="fl">0.9</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">checkpoint           =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose              =</span> <span class="cn">FALSE</span>) </span></code></pre></div>
+<p>The results are in both the variable <code>results</code> and the directory <code>vignette_output</code>, which also contains plots of the output and diagnostic plots. It is convenient to automatically save the results to files since the program will likely have been running for days, and you will likely want to save the outputs for later examination in any case. The return value of <code>RunHdpxParallel</code> will be included in the directory in binary form as <code>hdp.retval.Rdata</code>.</p>
+<p>The directory <code>vignette_output</code> contains a plot of the extracted (discovered) signatures in file <code>extracted.signatures.pdf</code>.</p>
+<embed src="data:application/pdf;base64,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" width="100%" height="50%" type="application/pdf"></embed>
+<p>The signatures in numerical form are in file <code>extracted.signatures.csv</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>extracted.sigs <span class="ot">&lt;-</span> ICAMS<span class="sc">::</span><span class="fu">ReadCatalog</span>(<span class="st">&quot;vignette_output/extracted.signatures.csv&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(extracted.sigs[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, ])</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">hdp.1</th>
+<th align="right">hdp.2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ACAA</td>
+<td align="right">0.0053182</td>
+<td align="right">0.0009715</td>
+</tr>
+<tr class="even">
+<td align="left">ACCA</td>
+<td align="right">0.0001797</td>
+<td align="right">0.0021319</td>
+</tr>
+<tr class="odd">
+<td align="left">ACGA</td>
+<td align="right">0.0008169</td>
+<td align="right">0.0002030</td>
+</tr>
+<tr class="even">
+<td align="left">ACTA</td>
+<td align="right">0.0016349</td>
+<td align="right">0.0013338</td>
+</tr>
+<tr class="odd">
+<td align="left">CCAA</td>
+<td align="right">0.0018098</td>
+<td align="right">0.0002975</td>
+</tr>
+<tr class="even">
+<td align="left">CCCA</td>
+<td align="right">0.0048482</td>
+<td align="right">0.0018781</td>
+</tr>
+<tr class="odd">
+<td align="left">CCGA</td>
+<td align="right">0.0001511</td>
+<td align="right">0.0001241</td>
+</tr>
+<tr class="even">
+<td align="left">CCTA</td>
+<td align="right">0.0000939</td>
+<td align="right">0.0000437</td>
+</tr>
+<tr class="odd">
+<td align="left">GCAA</td>
+<td align="right">0.0024087</td>
+<td align="right">0.0017047</td>
+</tr>
+<tr class="even">
+<td align="left">GCCA</td>
+<td align="right">0.0015977</td>
+<td align="right">0.0004371</td>
+</tr>
+</tbody>
+</table>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -42,9 +42,8 @@ determine if the chain is stationary.
 The burnin can be continued from a checkpoint file
 with \code{\link{ExtendBurnin}} (see argument \code{checkpoint}).}
 
-\item{checkpoint}{If \code{TRUE}, a checkpoint
-file called mSigHdp.burnin.checkpoint.\emph{seeddNumber}.Rdata.
-will be created
+\item{checkpoint}{If \code{TRUE}, create a checkpoint
+file called mSigHdp.burnin.checkpoint.\emph{seedNumber}.Rdata
 in the current working directory.}
 }
 \value{
