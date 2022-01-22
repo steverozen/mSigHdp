@@ -35,8 +35,8 @@ RunHdpxParallel <- function(input.catalog,
                             prior.pseudoc       = NULL) {
 
   # Check for suitable version of hdpx
-  if (utils::packageVersion("hdpx") < "1.0.0") {
-    stop("hdpx version must be >= 1.0.0")
+  if (utils::packageVersion("hdpx") < "0.3.9") {
+    stop("hdpx version must be >= 0.3.9")
   }
 
   # Step 0: Get the input.catalog and keeping track of
