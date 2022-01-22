@@ -27,7 +27,8 @@ Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
 Remotes: github::steverozen/hdpx@*release,
-    github::steverozen/ICAMSxtra@*release
+    github::steverozen/ICAMSxtra@*release,
+    github::steverozen/ICAMS@*release
 Imports: data.table,
     hdpx (>= 0.3.8),
     ICAMS (>= 2.2.4),
