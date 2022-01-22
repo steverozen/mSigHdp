@@ -1,8 +1,9 @@
 
 # mSigHdp
 
-The goal of mSigHdp is to do mutational signature extraction using hdp
-(Hierarchical Dirichlet Process).
+The goal of mSigHdp is mutational signature discovery using 
+hierarchical Dirichlet process (HDP) mixture models. mSigHdp
+is only supported on Linux systems.
 
 ## Installation
 
