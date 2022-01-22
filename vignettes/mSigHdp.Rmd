@@ -121,12 +121,6 @@ knitr::kable(extracted.sigs[1:10, ])
 
 ```
 
-```{r}
-dir()
-getwd()
-dir("vignette_output")
-
-```
 
 
 
