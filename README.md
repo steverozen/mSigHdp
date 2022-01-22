@@ -3,7 +3,11 @@
 
 The goal of mSigHdp is mutational signature discovery using 
 hierarchical Dirichlet process (HDP) mixture models. mSigHdp
-is only supported on Linux systems.
+is only supported on Linux systems. 
+
+This package uses https://github.com/steverozen/hdpx for the
+hierarchical Dirichlet process implementation. Most users
+will use the function RunHdpxParallel.
 
 ## Installation
 
