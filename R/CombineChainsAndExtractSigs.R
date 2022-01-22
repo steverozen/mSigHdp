@@ -34,7 +34,7 @@
 #'            samples that found the raw clusters contributing to the signature.}
 #'
 #' \item{signature.cdc}{
-#'      A numeric data frame. One columns correspond to signatures
+#'      A numeric data frame. Columns correspond to signatures
 #'      as in \code{signature}. Rows correspond to either biological
 #'      samples or to parent and grandparent Dirichlet processes.}
 #'
@@ -46,7 +46,7 @@
 #'
 #' \item{low.confidence.signature}{The profiles of signatures extracted
 #'     with low confidence as a matrix; rows are mutation types,
-#'     columns are signatures with < than
+#'     columns are signatures with <
 #'     \code{high.confidence.prop} of posterior samples.}
 #'
 #' \item{low.confidence.post.samp.number}{
@@ -70,7 +70,7 @@
 CombineChainsAndExtractSigs <-
   function(clean.chlist,
            input.catalog,
-           verbose              = TRUE,
+           verbose              = FALSE,
            high.confidence.prop = 0.9,
            hc.cutoff            = 0.10
   ) {

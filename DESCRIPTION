@@ -1,5 +1,5 @@
 Package: mSigHdp
-Title: Mutational signature extraction using hdp (Hierarchical Dirichlet Process)
+Title: Mutational signature discovery using HDP (hierarchical Dirichlet process)
 Version: 1.2.5
 Authors@R: 
     c(person(given = "Steven",
@@ -14,8 +14,8 @@ Authors@R:
            comment = c(ORCID = "0000-0001-5990-6585")))
 Description: Mutational signature discovery using hierarchical Dirichlet
              process mixture modeling. mSigHdp stands for 'mutational
-             signature (discovery using) hierarchical Dirichlet processes.
-             This packages uses https://github.com/steverozen/hdpx for the
+             signature (discovery using) hierarchical Dirichlet processes'.
+             This package uses https://github.com/steverozen/hdpx for the
              hierarchical Dirichlet process implementation. Most users
              will start with the function RunHdpxParallel.
 License: GPL-3
@@ -27,10 +27,10 @@ Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
 Remotes: github::steverozen/hdpx@*release,
-    github::steverozen/ICAMSxtra@*release,
+    github::steverozen/mSigAct@*release,
     github::steverozen/ICAMS@*release
 Imports: data.table,
-    hdpx (>= 0.3.8),
+    hdpx (>= 1.0.0),
     ICAMS (>= 2.2.4),
     mSigAct (>= 2.1.3.9007),
     reshape2

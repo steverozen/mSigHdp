@@ -9,7 +9,7 @@ ParallelGibbsSample(
   seedNumber = 1,
   K.guess,
   multi.types = FALSE,
-  verbose = TRUE,
+  verbose = FALSE,
   burnin = 5000,
   burnin.multiplier = 2,
   post.n = 200,
@@ -58,7 +58,7 @@ and one grandparent node.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{burnin}{\code{burnin}. The number of burn-in iterations in
+\item{burnin}{The number of burn-in iterations in
 one batch. The total number of burnin iterations is
 \code{burnin * burnin.multiplier}.}
 
@@ -111,10 +111,12 @@ and indel signature extraction}
 \item{checkpoint}{If \code{TRUE}, then \itemize{
 \item Checkpoint each final Gibbs sample
 chain to the current working directory, in a file called
-mSigHdp.sample.checkpoint.\emph{seed_number}.Rdata.
+mSigHdp.sample.checkpoint.\emph{x}.Rdata, where
+\emph{x} depends on \code{seedNumber}.
 \item Periodically checkpoint the burnin state
 to the current working directory, in files called
-mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
+mSigHdp.burnin.checkpoint.\emph{x}.Rdata,
+where \emph{x} depends on the \code{seedNumber}.
 }}
 
 \item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}

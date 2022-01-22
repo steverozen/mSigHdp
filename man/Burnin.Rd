@@ -20,7 +20,7 @@ representation of an \code{\link[hdpx]{hdpState-class}} object.}
 
 \item{seedNumber}{Set the random seed to this value.}
 
-\item{burnin}{\code{burnin}. The number of burn-in iterations in
+\item{burnin}{The number of burn-in iterations in
 one batch. The total number of burnin iterations is
 \code{burnin * burnin.multiplier}.}
 
@@ -43,7 +43,7 @@ The burnin can be continued from a checkpoint file
 with \code{\link{ExtendBurnin}} (see argument \code{checkpoint}).}
 
 \item{checkpoint}{If \code{TRUE}, a checkpoint
-file called mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
+file called mSigHdp.burnin.checkpoint.\emph{seeddNumber}.Rdata.
 will be created
 in the current working directory.}
 }
@@ -51,7 +51,7 @@ in the current working directory.}
 A list with 2 elements: \describe{
 \item{\code{hdplist}}{A list representation of
 an \code{\link[hdpx]{hdpState-class}} object.}
-\item{likelihood}{A numeric vector with the likelihood at each iteration.}
+\item{\code{likelihood}}{A numeric vector with the likelihood at each iteration.}
 }
 }
 \description{

@@ -2,8 +2,9 @@
 #'
 #' @param seedNumber A random seed for reproducible results.
 #'
-#' @param burnin Passed to \code{\link[hdpx]{hdp_posterior}}
-#'      \code{burnin}.
+#' @param burnin The number of burnin iterations to perform.
+# Passed \code{\link[hdpx]{hdp_posterior}} argument
+#      \code{burnin} (package hdpx).
 #'
 #' @param cpiter The number of iterations of concentration
 #'  parameter sampling
@@ -11,8 +12,8 @@
 #' "Hierarchical Dirichlet Processes", Journal of the American Statistical
 #' Association 2006;101(476):1566-1581
 #' (https://doi.org/10.1198/016214506000000302).)
-#  Passed to argument \code{cpiter} in \code{\link[hdpx]{hdp_burnin argument}}
-#' in package hdpx.
+#  Passed to argument \code{cpiter} in \code{\link[hdpx]{hdp_burnin}}
+#  in package hdpx.
 #'
 #' @param verbosity Passed to \code{\link[hdpx]{hdp_posterior}}
 #'      \code{verbosity}.

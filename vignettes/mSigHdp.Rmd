@@ -26,8 +26,8 @@ For real data this is very compute intensive,
 so here we will show only a toy example with tumors and the typical
 classification of single-base-substitution (SBS) mutations in 96 types. 
 We generate the synthetic spectra based on two mutational
-signatures, SBS1 and SBS22. We get the signatures from CRAN package,
-which provides signatures from https://cancer.sanger.ac.uk/signatures/.
+signatures, SBS1 and SBS22. We get the signatures from CRAN package
+cosmicsig, which provides signatures from https://cancer.sanger.ac.uk/signatures/.
 We set a specific seed so that the synthetic spectra are the 
 same every time we run the vignette.
 
@@ -68,7 +68,7 @@ knitr::kable(toy_data[1:5,  ])
 knitr::kable(toy_data[91:96, ])
 ```
 
-Must people will want to use the `RunHdxParallel` function.
+Most people will want to use the `RunHdxParallel` function.
 *Most of the parameters in the example here are not suitable for real data*.
 Please see our paper to be posted on bioRxiv soon for suggestions
 for actual values to use.
@@ -102,7 +102,7 @@ It is convenient to automatically save the results to files
 since the program will likely have been running for days, and you will
 likely want to save the outputs for later 
 examination in any case.
-The return value of `RunHdpParallel` will be included in the
+The return value of `RunHdpxParallel` will be included in the
 directory in binary form as `hdp.retval.Rdata`.
 
 The directory `vignette_output` 

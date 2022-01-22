@@ -1,0 +1,4 @@
+To discuss:
+rationalize arguments and return values to extendburnin, burnin, gibbs after burnin
+error in show bug **
+Sys.info()["sysname"]

@@ -27,10 +27,12 @@
 #' @param checkpoint If \code{TRUE}, then \itemize{
 #'      \item Checkpoint each final Gibbs sample
 #'        chain to the current working directory, in a file called
-#'        mSigHdp.sample.checkpoint.*seed_number*.Rdata.
+#'        mSigHdp.sample.checkpoint.*x*.Rdata, where
+#'        *x* depends on \code{seedNumber}.
 #'      \item Periodically checkpoint the burnin state
 #'        to the current working directory, in files called
-#'        mSigHdp.burnin.checkpoint.*seed_number*.Rdata.
+#'        mSigHdp.burnin.checkpoint.*x*.Rdata,
+#'        where *x* depends on the \code{seedNumber}.
 #'  }
 #'
 #' @return Invisibly, an \code{\link[hdpx]{hdpSampleChain-class}} object

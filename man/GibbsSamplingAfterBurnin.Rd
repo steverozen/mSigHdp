@@ -5,9 +5,9 @@
 \title{Start Gibbs sampling on one chain after burnin}
 \usage{
 GibbsSamplingAfterBurnin(
-  burnin.output = burnin.output,
-  post.n = post.n,
-  post.space = post.space,
+  burnin.output,
+  post.n,
+  post.space,
   post.cpiter = 3,
   post.verbosity = 0,
   seedNumber = NULL
@@ -15,7 +15,7 @@ GibbsSamplingAfterBurnin(
 }
 \arguments{
 \item{burnin.output}{A path to burnin checkpoint Rdata
-or to an S4 object from \code{ChainBurnin}}
+or to an S4 object from \code{\link{Burnin}}.}
 
 \item{post.n}{The number of posterior samples to collect.}
 
@@ -29,9 +29,9 @@ Association 2006;101(476):1566-1581
 (https://doi.org/10.1198/016214506000000302).)}
 
 \item{post.verbosity}{Verbosity of debugging statements.
-No need to change unless for testing or debugging. Default is 0.}
+No need to change unless for testing or debugging.}
 
-\item{seedNumber}{A random seed that ensures ensures reproducible
+\item{seedNumber}{A random seed that ensures reproducible
 results.}
 }
 \value{

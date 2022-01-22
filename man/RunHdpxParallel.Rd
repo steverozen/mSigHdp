@@ -62,7 +62,7 @@ and one grandparent node.}
 
 \item{verbose}{If \code{TRUE} then \code{message} progress information.}
 
-\item{burnin}{\code{burnin}. The number of burn-in iterations in
+\item{burnin}{The number of burn-in iterations in
 one batch. The total number of burnin iterations is
 \code{burnin * burnin.multiplier}.}
 
@@ -133,10 +133,12 @@ and indel signature extraction}
 \item{checkpoint}{If \code{TRUE}, then \itemize{
 \item Checkpoint each final Gibbs sample
 chain to the current working directory, in a file called
-mSigHdp.sample.checkpoint.\emph{seed_number}.Rdata.
+mSigHdp.sample.checkpoint.\emph{x}.Rdata, where
+\emph{x} depends on \code{seedNumber}.
 \item Periodically checkpoint the burnin state
 to the current working directory, in files called
-mSigHdp.burnin.checkpoint.\emph{seed_number}.Rdata.
+mSigHdp.burnin.checkpoint.\emph{x}.Rdata,
+where \emph{x} depends on the \code{seedNumber}.
 }}
 
 \item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
@@ -157,7 +159,7 @@ and the second columns contains the number of posterior
 samples that found the raw clusters contributing to the signature.}
 
 \item{signature.cdc}{
-A numeric data frame. One columns correspond to signatures
+A numeric data frame. Columns correspond to signatures
 as in \code{signature}. Rows correspond to either biological
 samples or to parent and grandparent Dirichlet processes.}
 
@@ -169,7 +171,7 @@ to sum to 1.}
 
 \item{low.confidence.signature}{The profiles of signatures extracted
 with low confidence as a matrix; rows are mutation types,
-columns are signatures with < than
+columns are signatures with <
 \code{high.confidence.prop} of posterior samples.}
 
 \item{low.confidence.post.samp.number}{

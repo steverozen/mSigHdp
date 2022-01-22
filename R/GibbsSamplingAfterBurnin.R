@@ -4,7 +4,7 @@
 #' \code{\link{ExtendBurnin}}.
 #'
 #' @param burnin.output A path to burnin checkpoint Rdata
-#'  or to an S4 object from \code{ChainBurnin}
+#'  or to an S4 object from \code{\link{Burnin}}.
 #'
 #' @param post.n The number of posterior samples to collect.
 #   (Passed to argument \code{n} in
@@ -25,7 +25,7 @@
 #        \code{\link[hdpx]{hdp_burnin}}.)
 #'
 #' @param post.verbosity Verbosity of debugging statements.
-#'       No need to change unless for testing or debugging. Default is 0.
+#'       No need to change unless for testing or debugging.
 #       (Passed to argument \code{verbosity} in
 #        \code{\link[hdpx]{hdp_posterior_sample}}.)
 #'
@@ -33,15 +33,15 @@
 #'  object with the salient information from each
 #'  posterior sample. See \code{\link{hdpSampleChain-class}}.
 #'
-#' @param seedNumber A random seed that ensures ensures reproducible
+#' @param seedNumber A random seed that ensures reproducible
 #'   results.
 #'
 #'
 #' @export
 
-GibbsSamplingAfterBurnin<- function(burnin.output  = burnin.output,
-                                    post.n         = post.n,
-                                    post.space     = post.space,
+GibbsSamplingAfterBurnin<- function(burnin.output,
+                                    post.n,
+                                    post.space,
                                     post.cpiter    = 3,
                                     post.verbosity = 0,
                                     seedNumber     = NULL){
@@ -51,7 +51,6 @@ GibbsSamplingAfterBurnin<- function(burnin.output  = burnin.output,
     }else{
       stop("The input is not a burnin checkpoint")
     }
-
   }
 
   #We allow the user to use a different seed when running Gibbs sampling, but we don't recommend.
@@ -66,5 +65,4 @@ GibbsSamplingAfterBurnin<- function(burnin.output  = burnin.output,
                                              seed           = seedNumber,
                                              post.verbosity = post.verbosity)
   return(sample.chain)
-
 }

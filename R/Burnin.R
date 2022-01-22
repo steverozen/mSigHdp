@@ -5,7 +5,7 @@
 #'
 #' @param seedNumber Set the random seed to this value.
 #'
-#' @param burnin \code{burnin}. The number of burn-in iterations in
+#' @param burnin The number of burn-in iterations in
 #'      one batch. The total number of burnin iterations is
 #'      \code{burnin * burnin.multiplier}.
 #      Passed to argument burnin of hdpx::hdp_burnin
@@ -32,14 +32,14 @@
 #  Passed to \code{\link[hdpx]{hdp_burnin}} \code{verbosity}.
 #'
 #' @param checkpoint If \code{TRUE}, a checkpoint
-#'  file called mSigHdp.burnin.checkpoint.*seed_number*.Rdata.
+#'  file called mSigHdp.burnin.checkpoint.*seeddNumber*.Rdata.
 #'  will be created
 #'  in the current working directory.
 #'
 #' @return A list with 2 elements: \describe{
 #' \item{\code{hdplist}}{A list representation of
 #'    an \code{\link[hdpx]{hdpState-class}} object.}
-#' \item{likelihood}{A numeric vector with the likelihood at each iteration.}
+#' \item{\code{likelihood}}{A numeric vector with the likelihood at each iteration.}
 #' }
 #'
 #' @export
