@@ -31,9 +31,8 @@
 #' @param burnin.verbosity Verbosity of message statements.
 #  Passed to \code{\link[hdpx]{hdp_burnin}} \code{verbosity}.
 #'
-#' @param checkpoint If \code{TRUE}, a checkpoint
-#'  file called mSigHdp.burnin.checkpoint.*seeddNumber*.Rdata.
-#'  will be created
+#' @param checkpoint If \code{TRUE}, create a checkpoint
+#'  file called mSigHdp.burnin.checkpoint.*seedNumber*.Rdata
 #'  in the current working directory.
 #'
 #' @return A list with 2 elements: \describe{
