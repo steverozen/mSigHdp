@@ -14,7 +14,7 @@ test_that("RunHdpxParallel-fast96", {
     seedNumber        = 44,
     K.guess           = 5,
     multi.types       = FALSE,
-    verbose           = TRUE,
+    verbose           = FALSE,
     num.child.process =  2,
     burnin            = 50, # Super low for fast testing
     post.space        = 5,  # Low for fast testing
@@ -23,7 +23,10 @@ test_that("RunHdpxParallel-fast96", {
     checkpoint        = FALSE
   )
 
-  #save(retvalx, file = "RunhdpInternal.testdata/NewRunHdpParallel-fast96-2-cores.Rdata")
+  if (FALSE) { # To regenerate test data
+    save(retvalx,
+         file = "RunhdpInternal.testdata/NewRunHdpParallel-fast96-2-cores.Rdata")
+  }
   expect_equal(retvalx, reg$retvalx)
 
 })

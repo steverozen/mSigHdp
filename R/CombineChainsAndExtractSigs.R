@@ -157,8 +157,16 @@ CombineChainsAndExtractSigs <-
     if(!is.null(ncol(low.confidence.signature)) &&
        (ncol(data.frame(low.confidence.signature))>0)) {
 
+      if (FALSE) {
       low.confidence.cdc <-
         data.frame(intepret.comp.retval$low_confidence_components_cdc[,1:ncol(low.confidence.signature)])
+      } else {
+        low.confidence.cdc <-
+          data.frame(intepret.comp.retval$low_confidence_components_cdc)
+      }
+      # browser() # The next line is hack for testing -- previously these rownames
+      # were sometimes integer and sometimes character.
+      rownames(low.confidence.cdc) <- as.character(rownames(low.confidence.cdc))
 
       colnames(low.confidence.cdc) <-
         low.confidence.post.samp.number[,1] <-
