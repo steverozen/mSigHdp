@@ -74,11 +74,15 @@ CombineChainsAndExtractSigs <-
            high.confidence.prop = 0.9,
            hc.cutoff            = 0.10
   ) {
-    if (mode(input.catalog) == "character") {
-      if (verbose) message("Reading input catalog file ", input.catalog)
-      input.catalog <- ICAMS::ReadCatalog(input.catalog)
-    } else {
-      input.catalog <- input.catalog
+
+    input.catalog <- GetPossibleICAMSCatalog(input.catalog)
+    if (FALSE) {
+      if (mode(input.catalog) == "character") {
+        if (verbose) message("Reading input catalog file ", input.catalog)
+        input.catalog <- ICAMS::ReadCatalog(input.catalog)
+      } else {
+        input.catalog <- input.catalog
+      }
     }
     input.catalog <- input.catalog[,colSums(input.catalog)>0]
     convSpectra <- t(input.catalog)
@@ -129,7 +133,7 @@ CombineChainsAndExtractSigs <-
       exposureProbs <- t(exposureProbs)
     }
     # Remove columns corresponding to parent or grandparent nodes
-    # (leaving only columns corresponding to samples.
+    # (leaving only columns corresponding to samples.)
     # Transpose so it conforms to SynSigEval format
     exposureProbs <- t(exposureProbs[-c(1:(nrow(exposureProbs)-ncol(input.catalog))), ])
 
@@ -138,7 +142,9 @@ CombineChainsAndExtractSigs <-
     row.names(exposureProbs) <-
       colnames(combined.cdc) <-
       combined.stats[,1] <-
-      colnames(combinedSignatures)
+      colnames(combinedSignatures) # These are the
+
+    colnames(combined.stats) <- c("Signature","NumberOfPostSamples")
 
     low.confidence.signature <-
       data.frame(intepret.comp.retval$low_confidence_components)
@@ -148,25 +154,25 @@ CombineChainsAndExtractSigs <-
 
     # browser()
 
-    ## TODO CHECK WITH MO
-    ##Exclude some junk signatures from every chain. They are only found in one posterior sample on one chain
-    low.confidence.cdc <-
-      data.frame(intepret.comp.retval$low_confidence_components_cdc[,1:ncol(low.confidence.signature)])
-
     if(!is.null(ncol(low.confidence.signature)) &&
        (ncol(data.frame(low.confidence.signature))>0)) {
 
-        colnames(low.confidence.cdc) <- low.confidence.post.samp.number[,1] <- colnames(low.confidence.signature) <-
-        paste("low confidence hdp", c(1:ncol(low.confidence.signature)), sep = ".")
+      low.confidence.cdc <-
+        data.frame(intepret.comp.retval$low_confidence_components_cdc[,1:ncol(low.confidence.signature)])
 
-        colnames(low.confidence.post.samp.number) <- c("Signature","NumberOfPostSamples")
-    }else{
-      low.confidence.signature <- low.confidence.post.samp.number <- low.confidence.cdc <- NULL
+      colnames(low.confidence.cdc) <-
+        low.confidence.post.samp.number[,1] <-
+        colnames(low.confidence.signature) <-
+        paste("low confidence hdp", 1:ncol(low.confidence.signature), sep = ".")
+
+      colnames(low.confidence.post.samp.number) <-
+        c("Signature","NumberOfPostSamples")
+
+    } else {
+      low.confidence.signature <-
+        low.confidence.post.samp.number <-
+        low.confidence.cdc <- NULL
     }
-
-
-    colnames(combined.stats) <- c("Signature","NumberOfPostSamples")
-
 
     return(invisible(list(signature                   = combinedSignatures,
                           signature.post.samp.number  = combined.stats,

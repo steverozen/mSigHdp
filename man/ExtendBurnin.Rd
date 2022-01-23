@@ -4,14 +4,18 @@
 \alias{ExtendBurnin}
 \title{Extend burnin iterations generated from \code{\link{Burnin}}}
 \usage{
-ExtendBurnin(hdplist, seedNumber = 1, burnin = 4000, cpiter = 3, verbosity = 0)
+ExtendBurnin(
+  previous.burnin.output,
+  burnin = 5000,
+  cpiter = 3,
+  burnin.verbosity = 0,
+  seedNumber = NULL
+)
 }
 \arguments{
-\item{hdplist}{A list representation of
-an \code{\link[hdpx]{hdpState-class}} object;
-a return value \code{\link{Burnin}}.}
-
-\item{seedNumber}{A random seed for reproducible results.}
+\item{previous.burnin.output}{Output from
+\code{\link{Burnin}} or the file path of
+a checkpoint file written by \code{\link{Burnin}}.}
 
 \item{burnin}{The number of burnin iterations to perform.}
 
@@ -22,8 +26,10 @@ to perform after each main Gibbs-sample iteration. (See Teh et al.,
 Association 2006;101(476):1566-1581
 (https://doi.org/10.1198/016214506000000302).)}
 
-\item{verbosity}{Passed to \code{\link[hdpx]{hdp_posterior}}
-\code{verbosity}.}
+\item{burnin.verbosity}{Number that controls whether progress
+messages are printed.}
+
+\item{seedNumber}{A random seed for reproducible results.}
 }
 \value{
 The same type of object as returned from

@@ -1,3 +1,9 @@
+# [ 1.2.6 ]
+ * Added more tests
+ * Major documentation cleanup
+ * Some function renaming
+ * Made some functions internal
+
 # [ 1.2.1 ]
  * Removed "moderate" classification of confidence in aggregated clusters / signatures.
  * Incremented version of hdpx required.

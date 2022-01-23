@@ -4,11 +4,15 @@ al
 AnalyzeAndPlotretval
 arg
 bitstream
+bioRxiv
 burnin
+CAA
+CCAA
 checkpointing
 chlist
 CombineChainsAndExtractSigs
 CombinePosteriorChains
+cosmicsig
 csv
 doi
 dp
@@ -20,6 +24,7 @@ hdplist
 hdpSampleMulti
 hdpx
 https
+ICAMS
 ICAMSxtra
 indel
 init
@@ -36,6 +41,8 @@ README
 retval
 RunhdpInternal
 RunHdpxParallel
+SBS
+seedNumber
 steverozen
 stirling
 Teh

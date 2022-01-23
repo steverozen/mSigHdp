@@ -51,6 +51,8 @@ A list with 2 elements: \describe{
 \item{\code{hdplist}}{A list representation of
 an \code{\link[hdpx]{hdpState-class}} object.}
 \item{\code{likelihood}}{A numeric vector with the likelihood at each iteration.}
+This is the same type as returned from \code{link[hdp]{hdp_burnin}}
+in package hdpx.
 }
 }
 \description{

@@ -39,6 +39,8 @@
 #' \item{\code{hdplist}}{A list representation of
 #'    an \code{\link[hdpx]{hdpState-class}} object.}
 #' \item{\code{likelihood}}{A numeric vector with the likelihood at each iteration.}
+#' This is the same type as returned from \code{link[hdp]{hdp_burnin}}
+#' in package hdpx.
 #' }
 #'
 #' @export
@@ -61,7 +63,8 @@ Burnin <-
              file = paste0("mSigHdp.burnin.checkpoint.", seedNumber, ".Rdata"))
       }
     }
-
+    # burnin.output will be a list with elements hdplist
+    # and likelihood is a numeric vector and
     burnin.output <- hdpx::hdp_burnin(hdp         = hdp.state,
                                       burnin      = burnin,
                                       cpiter      = cpiter,
@@ -76,7 +79,7 @@ Burnin <-
                                           cpiter      = cpiter,
                                           verbosity   = burnin.verbosity)
         burnin.output$likelihood <- c(old.likelihood,burnin.output$likelihood)
-        my.checkpoint
+        my.checkpoint()
       }
     }
 
