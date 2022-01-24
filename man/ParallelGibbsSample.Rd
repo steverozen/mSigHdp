@@ -20,9 +20,7 @@ ParallelGibbsSample(
   num.child.process = 20,
   gamma.alpha = 1,
   gamma.beta = 20,
-  checkpoint = TRUE,
-  prior.sigs = NULL,
-  prior.pseudoc = NULL
+  checkpoint = TRUE
 )
 }
 \arguments{
@@ -118,12 +116,6 @@ to the current working directory, in files called
 mSigHdp.burnin.checkpoint.\emph{x}.Rdata,
 where \emph{x} depends on the \code{seedNumber}.
 }}
-
-\item{prior.sigs}{DELETE ME LATER, NOT SUPPORTED. A matrix containing prior signatures.}
-
-\item{prior.pseudoc}{DELETE ME LATER, NOT SUPPORTED. A numeric list. Pseudo counts of each prior signature. Recommended is 1000. In practice,
-it may be advisable to put lower weights on prior signatures that you do not expect
-to be present in your dataset, or even exclude some priors entirely.}
 }
 \value{
 Invisibly,
@@ -134,3 +126,4 @@ objects (see package hdpx).
 \description{
 Setup hierarchical Dirichlet processes and run parallel Gibbs sampling chains
 }
+\keyword{internal}

@@ -4,8 +4,6 @@
 #'
 #' @inheritParams SetupAndActivate
 #'
-#' @inheritParams PriorSetupAndActivate
-#'
 #' @inheritParams Burnin
 #'
 #' @param post.n The number of posterior samples to collect.
@@ -54,39 +52,16 @@ SetupAndPosterior <-
            gamma.alpha         = 1,
            gamma.beta          = 20,
            burnin.multiplier   = 2,
-           checkpoint          = TRUE,
-           prior.sigs          = NULL,
-           prior.pseudoc       = NULL)
+           checkpoint          = TRUE)
   {
 
-    if(!is.null(prior.sigs)) {
-      stop("Computation with prior.sigs not currently supported")
-
-      if(verbose) message('Prior signatures are found')
-
-      if(is.null(prior.pseudoc)){
-        stop('Prior signatures pseudo counts are not set')
-      } else {
-        hdp.state <- PriorSetupAndActivate(input.catalog = input.catalog,
-                                           seedNumber    = seedNumber,
-                                           K.guess       = K.guess,
-                                           multi.types   = FALSE, ## multi.types=T doesn't work for now
-                                           verbose       = verbose,
-                                           gamma.alpha   = gamma.alpha,
-                                           gamma.beta    = gamma.beta,
-                                           prior.sigs    = prior.sigs,
-                                           prior.pseudoc = prior.pseudoc)
-      }
-
-    } else { # No prior signatures (is.null(prior.sigs))
-      hdp.state <- SetupAndActivate(input.catalog = input.catalog,
-                                    seedNumber    = seedNumber,
-                                    K.guess       = K.guess,
-                                    multi.types   = multi.types,
-                                    verbose       = verbose,
-                                    gamma.alpha   = gamma.alpha,
-                                    gamma.beta    = gamma.beta)
-    }
+    hdp.state <- SetupAndActivate(input.catalog = input.catalog,
+                                  seedNumber    = seedNumber,
+                                  K.guess       = K.guess,
+                                  multi.types   = multi.types,
+                                  verbose       = verbose,
+                                  gamma.alpha   = gamma.alpha,
+                                  gamma.beta    = gamma.beta)
 
     if (verbose) message("calling hdp_posterior, seed = ",
                          seedNumber, " ", Sys.time())

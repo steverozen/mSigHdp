@@ -36,8 +36,9 @@ results.}
 }
 \value{
 An \code{hdpSampleChain}
-object with the salient information from each
-posterior sample. See \code{\link{hdpSampleChain-class}}.
+S4 object with the salient information from each
+posterior sample. See \code{\link{hdpSampleChain-class}}
+in package hdpx.
 }
 \description{
 This function might be used to start Gibbs sampling after

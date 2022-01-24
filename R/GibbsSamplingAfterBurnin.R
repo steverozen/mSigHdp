@@ -30,8 +30,9 @@
 #        \code{\link[hdpx]{hdp_posterior_sample}}.)
 #'
 #' @return  An \code{hdpSampleChain}
-#'  object with the salient information from each
-#'  posterior sample. See \code{\link{hdpSampleChain-class}}.
+#'  S4 object with the salient information from each
+#'  posterior sample. See \code{\link{hdpSampleChain-class}}
+#'  in package hdpx.
 #'
 #' @param seedNumber A random seed that ensures reproducible
 #'   results.

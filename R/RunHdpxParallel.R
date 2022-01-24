@@ -30,9 +30,7 @@ RunHdpxParallel <- function(input.catalog,
                             out.dir             = NULL,
                             gamma.alpha         = 1,
                             gamma.beta          = 20,
-                            checkpoint          = TRUE,
-                            prior.sigs          = NULL,
-                            prior.pseudoc       = NULL) {
+                            checkpoint          = TRUE) {
 
   # Check for suitable version of hdpx
   if (utils::packageVersion("hdpx") < "0.3.9") {
@@ -63,8 +61,6 @@ RunHdpxParallel <- function(input.catalog,
                         num.child.process   = num.child.process,
                         gamma.alpha         = gamma.alpha,
                         gamma.beta          = gamma.beta,
-                        prior.sigs          = prior.sigs,
-                        prior.pseudoc       = prior.pseudoc,
                         burnin.multiplier   = burnin.multiplier,
                         checkpoint          = checkpoint)
 

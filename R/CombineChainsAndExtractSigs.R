@@ -1,10 +1,9 @@
 #' Extract signatures etc. from multiple Gibbs sample chains
 #
 #' @param clean.chlist A list of \code{\link[hdpx]{hdpSampleChain-class}}
-#'  objects (from package hdpx), typically returned from
-#'  \code{ParallelGibbsSample}.
-#'  Each element must be the result of one posterior sample chain.
-#'
+#'  S4 objects, each with the information from one
+#'  Gibbs sampling chain. See \code{\link{hdpSampleChain-class}}
+#'  in package hdpx.
 #'
 #' @param input.catalog Input spectra catalog as a matrix.
 #'

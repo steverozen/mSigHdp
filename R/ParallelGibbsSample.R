@@ -13,7 +13,7 @@
 #'    This is a list of \code{\link[hdpx]{hdpSampleChain-class}}
 #'    objects (see package hdpx).
 #'
-#' @export
+#' @keywords internal
 
 
 ParallelGibbsSample <- function(input.catalog,
@@ -31,9 +31,7 @@ ParallelGibbsSample <- function(input.catalog,
                                 num.child.process   = 20,
                                 gamma.alpha         = 1,
                                 gamma.beta          = 20,
-                                checkpoint          = TRUE,
-                                prior.sigs          = NULL,
-                                prior.pseudoc       = NULL) {
+                                checkpoint          = TRUE) {
 
 
   run.setup.and.posterior <- function(seedNumber) {
@@ -52,8 +50,6 @@ ParallelGibbsSample <- function(input.catalog,
       post.verbosity      = post.verbosity,
       gamma.alpha         = gamma.alpha,
       gamma.beta          = gamma.beta,
-      prior.sigs          = prior.sigs,
-      prior.pseudoc       = prior.pseudoc,
       burnin.multiplier   = burnin.multiplier,
       checkpoint          = checkpoint)
     return(sample.chain)
