@@ -1,3 +1,6 @@
+# [ 2.0.0 ] 
+ * Removing "frozen nodes" (still in branch "last-with-NR-frozen-nodes")
+
 # [ 1.2.7 ]
  * Dependency on new version of hdpx
 
