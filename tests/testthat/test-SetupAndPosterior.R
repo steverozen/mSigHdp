@@ -13,8 +13,9 @@ test_that("SetupAndPosterior-fast", {
     seedNumber    = 44,
     K.guess       = 5,
     multi.types   = FALSE,
-    verbose       = TRUE,
-    burnin   = 50
+    verbose       = FALSE,
+    burnin        = 50,
+    checkpoint    = FALSE
   )
 
   #save(retvalx, file = "RunhdpInternal.testdata/test.SetupAndPosterior.Rdata")

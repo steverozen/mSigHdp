@@ -1,5 +1,5 @@
 
-test_that("RunHdpxParallel-slot-multiT", {
+test_that("RunHdpxParallel-slow-multiT", {
   if (Sys.getenv("MSIGHDP_LONG") == "") {
     skip("Sys.setenv(MSIGHDP_LONG=\"Y\") to run test-RunHdpxParallel-multiT-slow")
     # Sys.setenv(MSIGHDP_LONG = "Y")
