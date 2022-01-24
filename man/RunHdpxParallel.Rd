@@ -183,5 +183,5 @@ in package hdpx.}
 }
 }
 \description{
-Extract (discover) mutational signatures from a matrix of mutational spectra
+Please see the vignette for an example.
 }
