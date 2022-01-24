@@ -1,5 +1,7 @@
 #' Extract (discover) mutational signatures from a matrix of mutational spectra
 #'
+#' Please see the vignette for an example.
+#'
 #' @inheritParams ParallelGibbsSample
 #'
 #' @inheritParams SaveAnalysis
@@ -7,7 +9,6 @@
 #' @inheritParams CombineChainsAndExtractSigs
 #'
 #' @inherit CombineChainsAndExtractSigs return
-#'
 #'
 #' @export
 

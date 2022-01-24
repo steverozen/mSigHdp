@@ -17,8 +17,8 @@ Description: Mutational signature discovery using hierarchical Dirichlet
              signature (discovery using) hierarchical Dirichlet processes'.
              This package uses https://github.com/steverozen/hdpx for the
              hierarchical Dirichlet process implementation. Most users
-             will start with the function RunHdpxParallel. Only supported
-             on Linux systems.
+             will start with the function RunHdpxParallel. Please see the
+             vignette for an example. Only supported on Linux systems.
 License: GPL-3
 Encoding: UTF-8
 Language: en-US

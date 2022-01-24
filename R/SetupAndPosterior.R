@@ -7,20 +7,19 @@
 #' @inheritParams Burnin
 #'
 #' @param post.n The number of posterior samples to collect.
-# Pass to \code{\link[hdpx]{hdp_posterior_sample}} \code{n}.
+#   Pass to \code{\link[hdpx]{hdp_posterior_sample}}.
 #'
-#' @param post.space Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#'      \code{space}. The number of iterations between collected samples.
+#' @param post.space The number of iterations between collected samples.
+#   Pass to \code{\link[hdpx]{hdp_posterior_sample}}.
 #'
 #' @param post.cpiter The number of iterations of concentration
 #'        parameter samplings to perform after each iteration.
 #        Pass to \code{\link[hdpx]{hdp_posterior_sample}} and
-#         \code{\link[hdpx]{hdp_burnin}} \code{cpiter}.
+#         \code{\link[hdpx]{hdp_burnin}}.
 #'
 #' @param post.verbosity Verbosity of debugging statements.
 #'       No need to change except for development purposes.
-#        Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-#        \code{verbosity}.
+#        Pass to \code{\link[hdpx]{hdp_posterior_sample}}.
 #'
 #' @param checkpoint If \code{TRUE}, then \itemize{
 #'      \item Checkpoint each final Gibbs sample
