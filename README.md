@@ -15,7 +15,7 @@ hierarchical Dirichlet process implementation.
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/mSigHdp")
+remotes::install_github(repo = "steverozen/mSigHdp", vignette = T)
 ```
 
 ### Get the development version
@@ -31,4 +31,4 @@ remotes::install_github(repo = "steverozen/mSigHdp", ref = "master")
 
 ## Reference manual
 
-<https://github.com/steverozen/mSigHdp/blob/v1.1.7-branch/mSigHdp_1.1.2001.pdf>
+<https://github.com/steverozen/mSigHdp/blob/v2.0.0-branch/mSigHdp_2.0.0.pdf>
