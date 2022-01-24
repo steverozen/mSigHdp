@@ -60,8 +60,7 @@ one batch. The total number of burnin iterations is
 
 \item{post.n}{The number of posterior samples to collect.}
 
-\item{post.space}{Pass to \code{\link[hdpx]{hdp_posterior_sample}}
-\code{space}. The number of iterations between collected samples.}
+\item{post.space}{The number of iterations between collected samples.}
 
 \item{post.cpiter}{The number of iterations of concentration
 parameter samplings to perform after each iteration.}
