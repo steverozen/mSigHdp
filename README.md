@@ -15,7 +15,7 @@ hierarchical Dirichlet process implementation.
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/mSigHdp", vignette = T)
+remotes::install_github(repo = "steverozen/mSigHdp", build_vignettes = T)
 ```
 
 ### Get the development version
