@@ -8,9 +8,10 @@
 #'
 #' @param hdpsample  A \code{\link[hdpx]{hdpSampleChain-class}} or
 #'  \code{\link[hdpx]{hdpSampleMulti-class}} object including output
-#'  from \code{\link[hdpx]{extract_components_from_clusters}}.
+#'  from \code{\link[hdpx]{extract_components}} in package hdpx.
 #'
-#' @param retval An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}.
+#' @param retval An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}
+#'  in package hdpx.
 #'
 #' @param input.catalog Input spectra catalog as a matrix or
 #' in \code{\link[ICAMS]{ICAMS}} format.

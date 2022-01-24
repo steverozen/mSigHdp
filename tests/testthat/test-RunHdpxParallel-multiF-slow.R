@@ -1,6 +1,7 @@
 
 test_that("RunHdpxParallel-slot-multiF", {
   if (Sys.getenv("MSIGHDP_LONG") == "") {
+    # Sys.setenv(MSIGHDP_LONG="Y")
     skip("Sys.setenv(MSIGHDP_LONG=\"Y\") to run test-RunHdpxParallel-multiF-slow")
   }
   require(ICAMS)

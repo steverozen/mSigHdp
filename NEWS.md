@@ -1,3 +1,6 @@
+# [ 1.2.7 ]
+ * Dependency on new version of hdpx
+
 # [ 1.2.6 ]
  * Added more tests
  * Major documentation cleanup

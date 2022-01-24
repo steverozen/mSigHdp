@@ -58,11 +58,11 @@ ComponentDiagnosticPlotting <- function(retval,
     grDevices::dev.off()
   }
 
-  #because extract_component_from_clusters extract information across chains
-  #so the chain information was not recorded as NR's hdp_extract_components
-  #therefore, we use extract_ccc_from_hdp to seek for the information of
-  #raw clusters that highly similar as components (most likely these clusters
-  #contribute to the components during extract_component_from_clusters).
+  # hdpx::extract_components extracts information across chains
+  # and does not have the chain information.
+  # Therefore, we use hdpx::extract_ccc_from_hdp to find which
+  # raw clusters are highly similar to components (most likely these clusters
+  # contributed to the components during extract_components).
 
   ccc_0 <- lapply(chains, function(ch){
     lapply(hdpx::clust_categ_counts(ch), function(x){
@@ -89,8 +89,6 @@ ComponentDiagnosticPlotting <- function(retval,
   hdpx::plot_component_with_credint(retval =sigmatchretval)
   grDevices::dev.off()
 
-
-
   grDevices::pdf(
     file.path(out.dir,
               "diagnostics.components.in.which.gibbs.samples.pdf"))
@@ -98,8 +96,6 @@ ComponentDiagnosticPlotting <- function(retval,
   hdpx::plot_component_posterior_samples(components = retval$signature,
                                          retval = sigmatchretval)
   grDevices::dev.off()
-
-
 }
 
 

@@ -26,11 +26,12 @@ PlotSamplesHighSigExp(
 )
 }
 \arguments{
-\item{retval}{An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}.}
+\item{retval}{An object return from \code{\link[hdpx]{extract_ccc_from_hdp}}
+in package hdpx.}
 
 \item{hdpsample}{A \code{\link[hdpx]{hdpSampleChain-class}} or
 \code{\link[hdpx]{hdpSampleMulti-class}} object including output
-from \code{\link[hdpx]{extract_components_from_clusters}}.}
+from \code{\link[hdpx]{extract_components}} in package hdpx.}
 
 \item{input.catalog}{Input spectra catalog as a matrix or
 in \code{\link[ICAMS]{ICAMS}} format.}

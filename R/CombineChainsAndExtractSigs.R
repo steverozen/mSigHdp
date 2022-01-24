@@ -21,7 +21,7 @@
 #'                  height of the hierarchical clustering dendrogram used in combining
 #'                  raw clusters of mutations into aggregated clusters.
 #'
-#                  (Passed to \code{hdpx::\link[hdpx]{extract_components_from_clusters}}.)
+#                  (Passed to \code{hdpx::\link[hdpx]{extract_components}}.)
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #'\item{signature}{The extracted signature profiles as a matrix;
@@ -60,7 +60,7 @@
 #'      in \code{low.confidence.signature}.}
 #'
 #' \item{extracted.retval}{A list object returned from
-#'          \code{\link[hdpx]{extract_components_from_clusters}}
+#'          \code{\link[hdpx]{extract_components}}
 #'          in package hdpx.}
 #'
 #' }
@@ -90,17 +90,17 @@ CombineChainsAndExtractSigs <-
     number.samples  <- ncol(input.catalog)
 
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-    if (verbose) message("calling extract_components_from_clusters ", Sys.time())
+    if (verbose) message("calling extract_components ", Sys.time())
     # Group raw "clusters" into "components" (i.e. signatures).
 
     extract.time <- system.time(
       multi.chains.retval <-
-        hdpx::extract_components_from_clusters(multi.chains,
-                                               hc.cutoff = hc.cutoff)
+        hdpx::extract_components(multi.chains,
+                                 hc.cutoff = hc.cutoff)
     )
 
     if (verbose) {
-      message("extract_sigs_from_clusters time: ")
+      message("extract_components time: ")
       for (xn in names(extract.time)) {
         message(" ", xn, " ", extract.time[[xn]])
       }

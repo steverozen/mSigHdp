@@ -68,7 +68,7 @@ matrix correspond to columns
 in \code{low.confidence.signature}.}
 
 \item{extracted.retval}{A list object returned from
-\code{\link[hdpx]{extract_components_from_clusters}}
+\code{\link[hdpx]{extract_components}}
 in package hdpx.}
 
 }
