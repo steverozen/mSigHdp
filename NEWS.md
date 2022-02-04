@@ -1,3 +1,6 @@
+# [ 2.0.1 ]
+ * Added pointers to the paper on bioRxiv
+
 # [ 2.0.0 ] 
  * Removing "frozen nodes" (still in branch "last-with-NR-frozen-nodes")
 
