@@ -9,7 +9,7 @@ will use the function RunHdpxParallel.
 This package uses https://github.com/steverozen/hdpx for the
 hierarchical Dirichlet process implementation.
 
-Please also so see our paper: 
+Please also see our paper: 
 Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
 mSigHdp: hierarchical Dirichlet process mixture modeling 
 for mutational signature discovery, 
