@@ -10,6 +10,10 @@
 #'
 #' @inherit CombineChainsAndExtractSigs return
 #'
+#' @details Please see our paper at
+#' https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1
+#' for suggestions on argument values to use.
+#'
 #' @export
 
 RunHdpxParallel <- function(input.catalog,
