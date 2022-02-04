@@ -18,7 +18,7 @@ Description: Mutational signature discovery using hierarchical Dirichlet
              This package uses https://github.com/steverozen/hdpx for the
              hierarchical Dirichlet process implementation. Most users
              will start with the function RunHdpxParallel. Please see the
-             vignette for an example. Please also so see our paper: 
+             vignette for an example. Please also see our paper: 
              Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
              mSigHdp: hierarchical Dirichlet process mixture modeling 
              for mutational signature discovery, 
