@@ -79,7 +79,7 @@ knitr::kable(toy_data[91:96, ])
 
 Most people will want to use the `RunHdxParallel` function.
 *Most of the parameters in the example here are not suitable for real data*.
-Please see our paper on bioRxiv 
+Please see  
 <https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1>
 for suggestions
 for actual values to use.

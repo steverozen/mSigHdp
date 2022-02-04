@@ -184,3 +184,8 @@ in package hdpx.}
 \description{
 Please see the vignette for an example.
 }
+\details{
+Please see our paper at
+https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1
+for suggestions on argument values to use.
+}
