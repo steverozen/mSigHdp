@@ -7,7 +7,14 @@ is only supported on Linux systems. Most users
 will use the function RunHdpxParallel.
 
 This package uses https://github.com/steverozen/hdpx for the
-hierarchical Dirichlet process implementation. 
+hierarchical Dirichlet process implementation.
+
+Please also so see our paper: 
+Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
+mSigHdp: hierarchical Dirichlet process mixture modeling 
+for mutational signature discovery, 
+https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1.
+
 
 ## Installation
 
@@ -29,6 +36,6 @@ install.packages("remotes")
 remotes::install_github(repo = "steverozen/mSigHdp", ref = "master")
 ```
 
-## Reference manual
+## Reference manual for stable version
 
-<https://github.com/steverozen/mSigHdp/blob/v2.0.0-branch/mSigHdp_2.0.0.pdf>
+<https://github.com/steverozen/mSigHdp/blob/v2.0.1-branch/mSigHdp_2.0.1.pdf>
