@@ -1,6 +1,6 @@
 Package: mSigHdp
 Title: Mutational signature discovery using HDP (hierarchical Dirichlet process)
-Version: 2.0.0
+Version: 2.0.0.0009
 Authors@R: 
     c(person(given = "Steven",
            family = "Rozen",
@@ -18,7 +18,12 @@ Description: Mutational signature discovery using hierarchical Dirichlet
              This package uses https://github.com/steverozen/hdpx for the
              hierarchical Dirichlet process implementation. Most users
              will start with the function RunHdpxParallel. Please see the
-             vignette for an example. Only supported on Linux systems.
+             vignette for an example. Please also so see our paper: 
+             Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
+             mSigHdp: hierarchical Dirichlet process mixture modeling 
+             for mutational signature discovery, 
+             https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1.
+             Only supported on Linux systems.
 License: GPL-3
 Encoding: UTF-8
 Language: en-US
