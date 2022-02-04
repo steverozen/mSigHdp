@@ -30,12 +30,13 @@ For information on using mSigHdp on realistically sized input, please
 see Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
 *mSigHdp: hierarchical Dirichlet process mixture modeling 
 for mutational signature discovery*, 
-https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1.
+<https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1>.
 
 For the toy data in this vignette, 
 we generate the synthetic spectra from two mutational
 signatures, SBS1 and SBS22. We get the signatures from CRAN package
-cosmicsig, which provides signatures from https://cancer.sanger.ac.uk/signatures/.
+[cosmicsig](https://cran.r-project.org/package=cosmicsig),
+which provides signatures from https://cancer.sanger.ac.uk/signatures/.
 We set a specific seed so that the synthetic spectra are the 
 same every time we run the vignette.
 
@@ -78,7 +79,9 @@ knitr::kable(toy_data[91:96, ])
 
 Most people will want to use the `RunHdxParallel` function.
 *Most of the parameters in the example here are not suitable for real data*.
-Please see our paper to be posted on bioRxiv soon for suggestions
+Please see our paper on bioRxiv 
+<https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1>
+for suggestions
 for actual values to use.
 
 ```{r RunHdpxParallel}
