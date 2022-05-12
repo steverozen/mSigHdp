@@ -1,6 +1,9 @@
 
 # mSigHdp
-
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/steverozen/mSigHdp/workflows/R-CMD-check/badge.svg)](https://github.com/steverozen/mSigHdp/actions)
+  <!-- badges: end -->
+  
 The goal of mSigHdp is mutational signature discovery using 
 hierarchical Dirichlet process (HDP) mixture models. mSigHdp
 is only supported on Linux systems. Most users

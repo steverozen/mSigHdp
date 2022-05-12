@@ -5,3 +5,4 @@
 ^data-raw$
 ^mSigHdp.html$
 ^mSigHdp_.*\.pdf$
+^\.github$
