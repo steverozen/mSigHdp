@@ -41,4 +41,4 @@ remotes::install_github(repo = "steverozen/mSigHdp", ref = "master")
 
 ## Reference manual for stable version
 
-<https://github.com/steverozen/mSigHdp/blob/v2.0.1-branch/mSigHdp_2.0.1.pdf>
+<https://github.com/steverozen/mSigHdp/blob/v2.0.2-branch/mSigHdp_2.0.2.pdf>
