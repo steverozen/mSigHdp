@@ -14,7 +14,7 @@ Encoding: UTF-8
 LazyData: true
 Language: en-US
 biocViews:
-Imports: hdpx (>= 0.1.5.0014),
+Imports: hdpx (== 0.1.5.0099),
     SynSigGen
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 3.5)
