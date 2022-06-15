@@ -2,3 +2,4 @@
 .Rhistory
 .RData
 .Ruserdata
+tests/testthat/test_AnalyzeAndPlotretval_out_dir/*
