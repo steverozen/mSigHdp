@@ -32,7 +32,7 @@ biocViews:
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.2
-Remotes: github::steverozen/hdpx@*release,
+Remotes: github::steverozen/hdpx@v1.0.1-branch,
     github::steverozen/mSigAct@*release,
     github::steverozen/ICAMS@*release
 Imports: data.table,
