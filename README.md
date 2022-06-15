@@ -21,6 +21,7 @@ source](https://raw.githubusercontent.com/steverozen/mSigHdp/master/data-raw/sou
 file to your computer and install mSigHdp locally:
 
 ``` r
+remotes::install_github("steverozen/hdpx", ref = "NR-version-plus-fixes")
 install.packages(pkgs = "path-to-package-source", repos = NULL, type = "source")
 ```
 
