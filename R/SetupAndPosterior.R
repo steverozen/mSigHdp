@@ -64,10 +64,6 @@ SetupAndPosterior <-
            post.verbosity      = 0)
 { # 10 arguments
 
-    # if (!exists("stir.closure", envir = .GlobalEnv)) {
-    #   assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
-    # }
-
 
     prep_val <- PrepInit(multi.types = multi.types,
                          input.catalog = input.catalog,
@@ -78,8 +74,8 @@ SetupAndPosterior <-
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
                                 cpindex = prep_val$cpindex,
                                 hh      = rep(1,prep_val$number.channels),
-                                alphaa  = GLOBAL.gamma.alpha,
-                                alphab  = GLOBAL.gamma.beta)
+                                alphaa  = rep(GLOBAL.gamma.alpha, length(prep_val$a1)),
+                                alphab  = rep(GLOBAL.gamma.beta,  length(prep_val$a1))
 
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)
