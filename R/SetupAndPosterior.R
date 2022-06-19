@@ -62,7 +62,7 @@ SetupAndPosterior <-
            post.space          = 50,
            post.cpiter         = 3,
            post.verbosity      = 0)
-{ # 14 arguments
+{ # 10 arguments
 
     # if (!exists("stir.closure", envir = .GlobalEnv)) {
     #   assign("stir.closure", hdpx::xmake.s(), envir = .GlobalEnv)
@@ -78,8 +78,8 @@ SetupAndPosterior <-
     hdpObject <- hdpx::hdp_init(ppindex = prep_val$ppindex,
                                 cpindex = prep_val$cpindex,
                                 hh      = rep(1,prep_val$number.channels),
-                                alphaa  = prep_val$al,
-                                alphab  = prep_val$al)
+                                alphaa  = GLOBAL.gamma.alpha,
+                                alphab  = GLOBAL.gamma.beta)
 
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)
