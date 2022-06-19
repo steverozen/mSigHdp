@@ -75,7 +75,7 @@ SetupAndPosterior <-
                                 cpindex = prep_val$cpindex,
                                 hh      = rep(1,prep_val$number.channels),
                                 alphaa  = rep(GLOBAL.gamma.alpha, length(prep_val$a1)),
-                                alphab  = rep(GLOBAL.gamma.beta,  length(prep_val$a1))
+                                alphab  = rep(GLOBAL.gamma.beta,  length(prep_val$a1)))
 
     # num.process is the number of samples plus number of cancer types plus 1 (grandparent)
     num.process <- hdpx::numdp(hdpObject)
