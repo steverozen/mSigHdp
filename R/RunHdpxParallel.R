@@ -8,6 +8,8 @@
 #'
 #' @inheritParams CombineChainsAndExtractSigs
 #'
+#' @param hc.cutoff Deprecated, use \code{merge.raw.cluster.args}.
+#'
 #' @inherit CombineChainsAndExtractSigs return
 #'
 #' @details Please see our paper at
@@ -17,30 +19,39 @@
 #' @export
 
 RunHdpxParallel <- function(input.catalog,
-                            seedNumber           = 123,
+                            seedNumber             = 123,
                             K.guess,
-                            multi.types          = FALSE,
-                            verbose              = FALSE,
-                            burnin               = 1000,
-                            burnin.multiplier    = 10,
-                            post.n               = 200,
-                            post.space           = 100,
-                            post.cpiter          = 3,
-                            post.verbosity       = 0,
-                            CPU.cores            = 20,
-                            num.child.process    = 20,
-                            high.confidence.prop = 0.9,
-                            hc.cutoff           = 0.10,
-                            overwrite           = TRUE,
-                            out.dir             = NULL,
-                            gamma.alpha         = 1,
-                            gamma.beta          = 20,
-                            checkpoint          = TRUE) {
+                            multi.types            = FALSE,
+                            verbose                = FALSE,
+                            burnin                 = 1000,
+                            burnin.multiplier      = 10,
+                            post.n                 = 200,
+                            post.space             = 100,
+                            post.cpiter            = 3,
+                            post.verbosity         = 0,
+                            CPU.cores              = 20,
+                            num.child.process      = 20,
+                            high.confidence.prop   = 0.9,
+                            hc.cutoff              = NULL,
+                            merge.raw.cluster.args =
+                              hdpx::default_merge_raw_cluster_args(),
+                            overwrite              = TRUE,
+                            out.dir                = NULL,
+                            gamma.alpha            = 1,
+                            gamma.beta             = 20,
+                            checkpoint             = TRUE) {
 
   # Check for suitable version of hdpx
-  if (utils::packageVersion("hdpx") < "0.3.9") {
-    stop("hdpx version must be >= 0.3.9")
+  if (utils::packageVersion("hdpx") < "1.0.3.0009") {
+    stop("hdpx version must be >= 1.0.3.0009")
   }
+
+  if (!is.null(hc.cutoff)) {
+    merge.raw.cluster.args <- hdpx::default_merge_raw_cluster_args()
+    merge.raw.cluster.args$clustering.cutoff <- 1 - hc.cutoff
+    warning("hc.cutoff is deprecated, use merge.raw.cluster.args")
+  }
+  rm(hc.cutoff)
 
   # Step 0: Get the input.catalog and keeping track of
   # whether it is an ICAMS catalog (encoded as an
@@ -81,10 +92,10 @@ RunHdpxParallel <- function(input.catalog,
 
   retval <-
     CombineChainsAndExtractSigs(chlist,
-                                input.catalog  = input.catalog,
-                                verbose        = verbose,
-                                high.confidence.prop = high.confidence.prop,
-                                hc.cutoff      = hc.cutoff)
+                                input.catalog          = input.catalog,
+                                verbose                = verbose,
+                                high.confidence.prop   = high.confidence.prop,
+                                merge.raw.cluster.args = merge.raw.cluster.args)
 
   # Step 3: Save and plot signatures, exposures, diagnostics
 

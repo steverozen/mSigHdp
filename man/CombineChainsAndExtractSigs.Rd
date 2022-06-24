@@ -9,7 +9,7 @@ CombineChainsAndExtractSigs(
   input.catalog,
   verbose = FALSE,
   high.confidence.prop = 0.9,
-  hc.cutoff = 0.1
+  merge.raw.cluster.args = hdpx::default_merge_raw_cluster_args()
 )
 }
 \arguments{
@@ -26,9 +26,7 @@ in package hdpx.}
 found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
 samples are signatures with high confidence.}
 
-\item{hc.cutoff}{The cutoff of
-height of the hierarchical clustering dendrogram used in combining
-raw clusters of mutations into aggregated clusters.}
+\item{merge.raw.cluster.args}{See \code{\link[hdpx]{default_merge_raw_cluster_args}}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

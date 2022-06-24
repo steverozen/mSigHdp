@@ -16,11 +16,8 @@
 #'
 #                       (Passed to \code{\link[hdpx]{interpret_components}}).
 #'
-#' @param hc.cutoff The cutoff of
-#'                  height of the hierarchical clustering dendrogram used in combining
-#'                  raw clusters of mutations into aggregated clusters.
-#'
-#                  (Passed to \code{hdpx::\link[hdpx]{extract_components}}.)
+#' @param merge.raw.cluster.args
+#'           See \code{\link[hdpx]{default_merge_raw_cluster_args}}.
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #'\item{signature}{The extracted signature profiles as a matrix;
@@ -69,10 +66,9 @@
 CombineChainsAndExtractSigs <-
   function(clean.chlist,
            input.catalog,
-           verbose              = FALSE,
-           high.confidence.prop = 0.9,
-           hc.cutoff            = 0.10
-  ) {
+           verbose                = FALSE,
+           high.confidence.prop   = 0.9,
+           merge.raw.cluster.args = hdpx::default_merge_raw_cluster_args()) {
 
     input.catalog <- GetPossibleICAMSCatalog(input.catalog)
     if (FALSE) {
@@ -93,9 +89,9 @@ CombineChainsAndExtractSigs <-
     # Group raw "clusters" into "components" (i.e. signatures).
 
     extract.time <- system.time(
-      multi.chains.retval <-
-        hdpx::extract_components(multi.chains,
-                                 hc.cutoff = hc.cutoff)
+      multi.chains.retval <- hdpx::extract_components(
+        multi.chains,
+        merge.raw.cluster.args = merge.raw.cluster.args)
     )
 
     if (verbose) {

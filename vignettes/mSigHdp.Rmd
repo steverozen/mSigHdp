@@ -79,7 +79,7 @@ results <- mSigHdp::RunHdpxParallel(
   input.catalog        = toy_data,
   out.dir              = "vignette_output",
   num.child.process    = 4, 
-  CPU.cores            = 4,
+  CPU.cores            = 2,
   seedNumber           = 123,
   K.guess              = 5,
   burnin               = 1000,
