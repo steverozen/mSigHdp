@@ -1,5 +1,5 @@
 # [ 2.0.1.0009 ]
- * Replaced hc.cutoff with merge.raw.cluster.args; passes check except for
+ * 2022 06 24 Replaced hc.cutoff with merge.raw.cluster.args; passes check except for
    2 warnings unrelated to hc.cutoff, which I cannot figure out how to
    silence.
 
