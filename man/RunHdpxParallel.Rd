@@ -25,7 +25,8 @@ RunHdpxParallel(
   out.dir = NULL,
   gamma.alpha = 1,
   gamma.beta = 20,
-  checkpoint = TRUE
+  checkpoint = TRUE,
+  downsample_threshold = NULL
 )
 }
 \arguments{
@@ -138,6 +139,8 @@ to the current working directory, in files called
 mSigHdp.burnin.checkpoint.\emph{x}.Rdata,
 where \emph{x} depends on the \code{seedNumber}.
 }}
+
+\item{downsample_threshold}{See \code{\link{downsample_spectra}}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

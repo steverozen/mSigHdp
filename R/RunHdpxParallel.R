@@ -10,6 +10,8 @@
 #'
 #' @param hc.cutoff Deprecated, use \code{merge.raw.cluster.args}.
 #'
+#' @param downsample_threshold See \code{\link{downsample_spectra}}.
+#'
 #' @inherit CombineChainsAndExtractSigs return
 #'
 #' @details Please see our paper at
@@ -39,7 +41,8 @@ RunHdpxParallel <- function(input.catalog,
                             out.dir                = NULL,
                             gamma.alpha            = 1,
                             gamma.beta             = 20,
-                            checkpoint             = TRUE) {
+                            checkpoint             = TRUE,
+                            downsample_threshold   = NULL) {
 
   # Check for suitable version of hdpx
   if (utils::packageVersion("hdpx") < "1.0.3.0009") {
@@ -58,27 +61,43 @@ RunHdpxParallel <- function(input.catalog,
   # additional class).
   input.catalog <- GetPossibleICAMSCatalog(input.catalog)
 
+  if (!is.null(downsample_threshold)) {
+    tmp.catalog <-
+      downsample_spectra(input.catalog,
+                         thres = downsample_threshold)$down_spec
+    if (ICAMS::IsICAMSCatalog(input.catalog)) {
+      tmp.catalog <-
+        ICAMS::as.catalog(tmp.catalog,
+                          ref.genome   = attr(input.catalog, "ref.genome"),
+                          region       = attr(input.catalog, "region"),
+                          catalog.type = attr(input.catalog, "catalog,type"),
+                          abundance    = attr(input.catalog, "abundance"))
+    }
+    input.catalog <- tmp.catalog
+    rm(tmp.catalog)
+  }
+
   # Step 1: Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
   # chlist is a list of hdpSampleChain-class objects.
 
   chlist <-
     ParallelGibbsSample(input.catalog,
-                        seedNumber          = seedNumber,
-                        K.guess             = K.guess,
-                        multi.types         = multi.types,
-                        verbose             = verbose,
-                        burnin              = burnin,
-                        post.n              = post.n,
-                        post.space          = post.space,
-                        post.cpiter         = post.cpiter,
-                        post.verbosity      = post.verbosity,
-                        CPU.cores           = CPU.cores,
-                        num.child.process   = num.child.process,
-                        gamma.alpha         = gamma.alpha,
-                        gamma.beta          = gamma.beta,
-                        burnin.multiplier   = burnin.multiplier,
-                        checkpoint          = checkpoint)
+                        seedNumber            = seedNumber,
+                        K.guess               = K.guess,
+                        multi.types           = multi.types,
+                        verbose               = verbose,
+                        burnin                = burnin,
+                        post.n                = post.n,
+                        post.space            = post.space,
+                        post.cpiter           = post.cpiter,
+                        post.verbosity        = post.verbosity,
+                        CPU.cores             = CPU.cores,
+                        num.child.process     = num.child.process,
+                        gamma.alpha           = gamma.alpha,
+                        gamma.beta            = gamma.beta,
+                        burnin.multiplier     = burnin.multiplier,
+                        checkpoint            = checkpoint)
 
   # For preparing test data
   if (FALSE) {
