@@ -19,12 +19,14 @@ RunHdpxParallel(
   CPU.cores = 20,
   num.child.process = 20,
   high.confidence.prop = 0.9,
-  hc.cutoff = 0.1,
+  hc.cutoff = NULL,
+  merge.raw.cluster.args = hdpx::default_merge_raw_cluster_args(),
   overwrite = TRUE,
   out.dir = NULL,
   gamma.alpha = 1,
   gamma.beta = 20,
-  checkpoint = TRUE
+  checkpoint = TRUE,
+  downsample_threshold = NULL
 )
 }
 \arguments{
@@ -93,9 +95,9 @@ more than \code{num.child.process}.}
 found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
 samples are signatures with high confidence.}
 
-\item{hc.cutoff}{The cutoff of
-height of the hierarchical clustering dendrogram used in combining
-raw clusters of mutations into aggregated clusters.}
+\item{hc.cutoff}{Deprecated, use \code{merge.raw.cluster.args}.}
+
+\item{merge.raw.cluster.args}{See \code{\link[hdpx]{default_merge_raw_cluster_args}}.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir}
 if it exists, otherwise raise an error.}
@@ -137,6 +139,8 @@ to the current working directory, in files called
 mSigHdp.burnin.checkpoint.\emph{x}.Rdata,
 where \emph{x} depends on the \code{seedNumber}.
 }}
+
+\item{downsample_threshold}{See \code{\link{downsample_spectra}}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

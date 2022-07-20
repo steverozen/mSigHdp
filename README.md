@@ -1,6 +1,10 @@
 
 # mSigHdp
-
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/steverozen/mSigHdp/workflows/R-CMD-check/badge.svg)](https://github.com/steverozen/mSigHdp/actions)
+  ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+  <!-- badges: end -->
+  
 The goal of mSigHdp is mutational signature discovery using 
 hierarchical Dirichlet process (HDP) mixture models. mSigHdp
 is only supported on Linux systems. Most users
@@ -36,6 +40,6 @@ install.packages("remotes")
 remotes::install_github(repo = "steverozen/mSigHdp", ref = "master")
 ```
 
-## Reference manual for stable version
+## Reference manual for development version
 
-<https://github.com/steverozen/mSigHdp/blob/master/mSigHdp_2.0.1.0009.pdf>
+<https://github.com/steverozen/mSigHdp/blob/master/mSigHdp_2.0.1.0010.pdf>
