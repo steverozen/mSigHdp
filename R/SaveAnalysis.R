@@ -68,15 +68,15 @@ SaveAnalysis <- function(retval,
   exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
   colnames(exposureCounts) <- colnames(input.catalog)
 
-  mSigAct::WriteExposure(exposureCounts,
+  mSigTools::write_exposure(exposureCounts,
                            file.path(out.dir,"inferred.exposures.csv"))
 
-  mSigAct::PlotExposureToPdf(
-    mSigAct::SortExposure(exposureCounts),
+  mSigTools::plot_exposure_to_pdf(
+    mSigTools::sort_exposure(exposureCounts),
     file.path(out.dir,"inferred.exposure.count.pdf"))
 
-  mSigAct::PlotExposureToPdf(
-    mSigAct::SortExposure(retval$exposureProbs),
+  mSigTools::plot_exposure_to_pdf(
+    mSigTools::sort_exposure(retval$exposureProbs),
     file.path(out.dir,"inferred.exposure.proportion.pdf"),
     plot.proportion = TRUE)
 

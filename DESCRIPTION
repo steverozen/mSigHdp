@@ -33,12 +33,12 @@ Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.2.0
 Remotes: github::steverozen/hdpx@v1.0.3-branch,
-    github::steverozen/mSigAct@v2.3.3-branch,
-    github::steverozen/ICAMS@v3.0.6-branch
+    github::steverozen/ICAMS@v3.0.6-branch,
+    github::Rozen-Lab/mSigTools@v1.0.0-branch
 Imports: data.table,
     hdpx (>= 1.0.3),
     ICAMS (>= 2.2.4),
-    mSigAct (>= 2.1.3),
+    mSigTools,
     reshape2
 Suggests: cosmicsig,
     knitr,
