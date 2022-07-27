@@ -31,7 +31,7 @@ BuildManual: no
 biocViews:
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Remotes: github::steverozen/hdpx@v1.0.4-branch,
     github::steverozen/ICAMS@v3.0.6-branch,
     github::Rozen-Lab/mSigTools@v1.0.0-branch
