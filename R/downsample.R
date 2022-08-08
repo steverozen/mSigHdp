@@ -1,14 +1,17 @@
-#' Down sample a vector of type \code{numeric}; nonsensical for negative values
+#' Down sample a vector of type \code{numeric}; nonsensical for negative values.
 #'
 #' @param x A \code{numeric} vector.
 #'
-#' @param thres Values $le$ \code{thres} are unmodified; for values of
-#'   \code{thres} > 3,000 some of the return values will also not be
-#'   reduced.
+#' @param thres If \code{thres} > 3,000, then in
+#' all input values > \code{thres} are
+#' downsampled.
+#' If \code{thres} $le$ 3,000,
+#'  some input values > \code{thres} are
+#'  downsampled.
 #'
 #' @return A vector of integers (type \code{numeric}) of the same
-#'   length as \code{x}, with elements that were $ge$ \code{thres} in
-#'   \code{x} reduced.
+#'   length as \code{x} downsampled as described in the
+#'   documentation for the \code{thres} argument.
 #'
 #' @export
 #'
@@ -27,8 +30,10 @@ downsample <- function(x, thres = 3000) {
 #' @param thres See \code{\link{downsample}}.
 #'
 #' @return A numeric matrix with same shape as \code{spec},
-#'   with each column down-sampled by
-#'   \code{\link{downsample}} based on its \code{colSums}.
+#'   with the entries each column reduced based on
+#'   the ratio of
+#'   \code{\link{downsample}(colSums(spec))} to
+#'   \code{colSums(spec)}.
 #'
 #' @export
 #'
