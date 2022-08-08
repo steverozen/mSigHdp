@@ -1,13 +1,13 @@
-#' Down sample a vector of integers; nonsensical for negative values
+#' Down sample a vector of type \code{numeric}; nonsensical for negative values
 #'
-#' @param x Vector of integers
+#' @param x A \code{numeric} vector.
 #'
 #' @param thres Values $le$ \code{thres} are unmodified; for values of
 #'   \code{thres} > 3,000 some of the return values will also not be
 #'   reduced.
 #'
 #' @return A vector of integers (type \code{numeric}) of the same
-#'   length as \code{x}, with elements that were $le$ \code{thres} in
+#'   length as \code{x}, with elements that were $ge$ \code{thres} in
 #'   \code{x} reduced.
 #'
 #' @export

@@ -36,7 +36,8 @@ y_df <-
 ggObj <- 
   ggplot2::ggplot(y_df) + xlab("Counts") + ylab("Downsampled counts") +
   geom_point(mapping = aes(x = x, y = y, color = as.factor(thres))) +
-  guides(color = guide_legend(title = "thres"))
+  guides(color = guide_legend(title = "thres")) +
+  geom_hline(yintercept = 1000)
 ggObj
 ```
 
