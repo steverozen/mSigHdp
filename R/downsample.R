@@ -2,15 +2,15 @@
 #'
 #' @param x A \code{numeric} vector.
 #'
-#' @param thres If \code{thres} > 3,000, then in
+#' @param thres If \code{thres} ≥ 3,000, then in
 #' all input values > \code{thres} are
 #' downsampled.
-#' If \code{thres} $le$ 3,000,
+#' If \code{thres} < 3,000,
 #'  some input values > \code{thres} are
 #'  downsampled.
 #'
 #' @return A vector of integers (type \code{numeric}) of the same
-#'   length as \code{x} downsampled as described in the
+#'   length as \code{x}, downsampled as described in the
 #'   documentation for the \code{thres} argument.
 #'
 #' @export
