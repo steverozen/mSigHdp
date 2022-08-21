@@ -70,7 +70,7 @@ RunHdpxParallel <- function(input.catalog,
         ICAMS::as.catalog(tmp.catalog,
                           ref.genome   = attr(input.catalog, "ref.genome"),
                           region       = attr(input.catalog, "region"),
-                          catalog.type = attr(input.catalog, "catalog,type"),
+                          catalog.type = attr(input.catalog, "catalog.type"),
                           abundance    = attr(input.catalog, "abundance"))
     }
     input.catalog <- tmp.catalog
