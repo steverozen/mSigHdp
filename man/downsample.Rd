@@ -9,7 +9,7 @@ downsample(x, thres = 3000)
 \arguments{
 \item{x}{A \code{numeric} vector.}
 
-\item{thres}{If \code{thres} ≥ 3,000, then in
+\item{thres}{If \code{thres} >= 3,000, then in
 all input values > \code{thres} are
 downsampled.
 If \code{thres} < 3,000,

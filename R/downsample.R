@@ -2,7 +2,7 @@
 #'
 #' @param x A \code{numeric} vector.
 #'
-#' @param thres If \code{thres} ≥ 3,000, then in
+#' @param thres If \code{thres} >= 3,000, then in
 #' all input values > \code{thres} are
 #' downsampled.
 #' If \code{thres} < 3,000,
