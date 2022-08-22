@@ -14,8 +14,10 @@ each column is a spectrum, each row is a mutation type (e.g. CAG -> CTG).}
 }
 \value{
 A numeric matrix with same shape as \code{spec},
-with each column down-sampled by
-\code{\link{downsample}} based on its \code{colSums}.
+with the entries each column reduced based on
+the ratio of
+\code{\link{downsample}(colSums(spec))} to
+\code{colSums(spec)}.
 }
 \description{
 Down sample a set of mutational spectra
