@@ -24,11 +24,12 @@ biocViews:
 Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.1.1
-Remotes: github::steverozen/hdpx@*release,
-    github::steverozen/ICAMSxtra@*release
-Imports: hdpx (>= 0.3.0),
+Remotes: github::steverozen/hdpx@0.3.0-branch,
+    github::steverozen/ICAMSxtra@v0.0.8-branch
+Imports: hdpx (== 0.3.0),
     ICAMS (>= 2.2.4),
+    ICAMSxtra (== 0.0.8),
     reshape2
-Suggests: ICAMSxtra (>= 0.0.2),
+Suggests: 
     testthat,
     utils
