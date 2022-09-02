@@ -24,7 +24,7 @@ Depends: R (>= 3.5)
 RoxygenNote: 7.1.1
 Remotes: github::steverozen/hdpx@*release,
     github::steverozen/ICAMSxtra@*release
-Imports: hdpx (>= 0.3.0),
+Imports: hdpx (== 0.3.0),
     ICAMS (>= 2.2.4),
     reshape2
 Suggests: ICAMSxtra (>= 0.0.2),
