@@ -22,6 +22,8 @@ Section 4.2.2, "Extracting Consensus Signatures" from
 
 Roberts, N. D. (2018). Patterns of somatic genome rearrangement in human cancer. (PhD Thesis). Cambridge University, Cambridge, England, United Kingdom. Retrieved from https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf
 
+We do not recommend using this version.
+
 ## Installation
 
 ``` r
