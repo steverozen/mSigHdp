@@ -1,5 +1,6 @@
 AdenoCA
 arg
+bitstream
 burnin
 CombinePosteriorChains
 github
@@ -18,4 +19,6 @@ retval
 RunhdpInternal
 steverozen
 stirling
+uk
 WORDLIST
+www
