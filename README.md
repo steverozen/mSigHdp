@@ -3,39 +3,30 @@
 
 # mSigHdp
 
-<!-- badges: start -->
+The goal of mSigHdp is to do mutational signature extraction using the
+hdpx package This branch of mSigHdp depends on a branch of hdpx that was
+forked from Nicola Roberts’s hdp package, and that still implements the
+algorithm from Section 4.2.2, “Extracting Consensus Signatures” from
 
-[![Travis build
-status](https://travis-ci.com/steverozen/mSigHdp.svg?token=4tzsJkhpLqWUuJC1zszF&branch=master)](https://travis-ci.com/steverozen/mSigHdp)
-<!-- badges: end -->
-
-The goal of mSigHdp is to do mutational signature extraction using hdp
-(Hierarchical Dirichlet Process).
+Roberts, N. D. (2018). Patterns of somatic genome rearrangement in human
+cancer. (PhD Thesis). Cambridge University, Cambridge, England, United
+Kingdom. Retrieved from
+<https://www.repository.cam.ac.uk/bitstream/handle/1810/275454/Roberts-2018-PhD.pdf>
 
 ## Installation
 
-### Stable version
-
-Download the [package
-source](https://raw.githubusercontent.com/steverozen/mSigHdp/master/data-raw/source-file/mSigHdp_0.0.0.9015.tar.gz?token=AKPYULDJID7QLDIJJEXSTMC64S2TS)
-file to your computer and install mSigHdp locally:
-
 ``` r
-install.packages(pkgs = "path-to-package-source", repos = NULL, type = "source")
-```
-
-### Development version
-
-Install the development version of mSigHdp from
-[GitHub](https://github.com/) with the R command line:
-
-``` r
-# To install from a private repo, use auth_token with a token
-# from https://github.com/settings/tokens. You only need the
-# repo scope. Best practice is to save your PAT in env var called
-# GITHUB_PAT.
-install.packages("devtools")
-devtools::install_github("steverozen/mSigHdp", auth_token = "abc")
+mSigHdp.version <- "0.0.0.9019"
+if (system.file(package = "mSigHdp") != "") {
+  if (packageVersion("mSigHdp") != mSigHdp.version) {
+    remove.packages("mSigHdp")
+    remotes::install_github(repo = "steverozen/mSigHdp", 
+                            ref = "for-NR-version-plus-fixes")
+  }
+} else {
+  remotes::install_github(repo = "steverozen/mSigHdp", 
+                          ref = "for-NR-version-plus-fixes")
+}
 ```
 
 ## Reference manual
