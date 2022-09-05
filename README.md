@@ -17,7 +17,7 @@ We do not recommend using this version.
 
 ## Installation
 
-*This version *must* use hdpx branch \`NR-version-plus-fixes*.
+*This version *must* use hdpx branch NR-version-plus-fixes*.
 
 ``` r
 # Always install the version of hdpx and mSigHdp with the Nicola
