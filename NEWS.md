@@ -1,3 +1,7 @@
+# [ 2.1.0 ]
+ * Replaced `mSigAct` with `mSigTools` for writing and plotting exposure.
+ * Updated required branch for hdpx.
+
 # [ 2.0.1.0010 ]
  * Added downsampling capability.
 
