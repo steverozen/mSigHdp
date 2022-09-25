@@ -1,3 +1,6 @@
+# [ 2.1.0.1]
+ * Added function `show_downsample_curves`.
+
 # [ 2.1.0 ]
  * Replaced `mSigAct` with `mSigTools` for writing and plotting exposure.
  * Updated required branch for hdpx.
