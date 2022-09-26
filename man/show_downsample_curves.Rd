@@ -10,6 +10,9 @@ show_downsample_curves(...)
 \item{...}{One or more postive numbers to use as
 possible values for \code{downsample_threshold}.}
 }
+\value{
+Called for side effects.
+}
 \description{
 Show the effects of the downsample_threshold argument to \code{\link{RunHdpxParallel}}.
 }

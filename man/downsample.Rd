@@ -2,25 +2,28 @@
 % Please edit documentation in R/downsample.R
 \name{downsample}
 \alias{downsample}
-\title{Down sample a vector of type \code{numeric}; nonsensical for negative values.}
+\title{Downsample a vector of type \code{numeric}; nonsensical for negative values.}
 \usage{
-downsample(x, thres = 3000)
+downsample(x, thres = NULL, downsample_threshold = 3000)
 }
 \arguments{
 \item{x}{A \code{numeric} vector.}
 
-\item{thres}{If \code{thres} >= 3,000, then in
-all input values > \code{thres} are
+\item{thres}{Deprected alternative to \code{downsample_threshold}.}
+
+\item{downsample_threshold}{If \code{downsample_threshold} >= 3,000, then
+all input values > \code{downsample_threshold} are
 downsampled.
-If \code{thres} < 3,000,
-some input values > \code{thres} are
-downsampled.}
+If \code{downsample_threshold} < 3,000,
+only some input values > \code{downsample_threshold} are
+downsampled but all input values > 3000
+are downsampled. See \code{\link{show_downsample_curves}}.}
 }
 \value{
 A vector of integers (type \code{numeric}) of the same
 length as \code{x}, downsampled as described in the
-documentation for the \code{thres} argument.
+documentation for the \code{downsample_threshold} argument.
 }
 \description{
-Down sample a vector of type \code{numeric}; nonsensical for negative values.
+Downsample a vector of type \code{numeric}; nonsensical for negative values.
 }

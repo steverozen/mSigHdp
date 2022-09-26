@@ -1,3 +1,8 @@
+# [ 2.1.0.2 ]
+ * Deprecated argument `thres` in `downsample` and `downsample_spectra` and
+   replaced it with `downsample_threshold`. 
+ * Minor documentation updates.
+
 # [ 2.1.0.1]
  * Added function `show_downsample_curves`.
 

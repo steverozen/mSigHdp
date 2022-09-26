@@ -2,15 +2,18 @@
 % Please edit documentation in R/downsample.R
 \name{downsample_spectra}
 \alias{downsample_spectra}
-\title{Down sample a set of mutational spectra}
+\title{Downsample a set of mutational spectra}
 \usage{
-downsample_spectra(spec, thres)
+downsample_spectra(spec, downsample_threshold = NULL, thres = NULL)
 }
 \arguments{
 \item{spec}{Input spectra as a numerical matrix or similar \code{data.frame};
 each column is a spectrum, each row is a mutation type (e.g. CAG -> CTG).}
 
-\item{thres}{See \code{\link{downsample}}.}
+\item{downsample_threshold}{See \code{\link{downsample}}
+and \code{\link{show_downsample_curves}}.}
+
+\item{thres}{Deprecated alternative to \code{downsample_threshold}.}
 }
 \value{
 A numeric matrix with same shape as \code{spec},
@@ -20,5 +23,5 @@ the ratio of
 \code{colSums(spec)}.
 }
 \description{
-Down sample a set of mutational spectra
+Downsample a set of mutational spectra
 }

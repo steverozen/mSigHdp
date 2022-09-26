@@ -10,7 +10,8 @@
 #'
 #' @param hc.cutoff Deprecated, use \code{merge.raw.cluster.args}.
 #'
-#' @param downsample_threshold See \code{\link{downsample_spectra}}.
+#' @param downsample_threshold See \code{\link{downsample_spectra}}
+#'        and \code{link{show_downsample_curves}}.
 #'
 #' @inherit CombineChainsAndExtractSigs return
 #'
@@ -64,7 +65,7 @@ RunHdpxParallel <- function(input.catalog,
   if (!is.null(downsample_threshold)) {
     tmp.catalog <-
       downsample_spectra(input.catalog,
-                         thres = downsample_threshold)$down_spec
+                         downsample_threshold = downsample_threshold)$down_spec
     if (ICAMS::IsICAMSCatalog(input.catalog)) {
       tmp.catalog <-
         ICAMS::as.catalog(tmp.catalog,

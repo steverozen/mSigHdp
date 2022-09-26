@@ -140,7 +140,8 @@ mSigHdp.burnin.checkpoint.\emph{x}.Rdata,
 where \emph{x} depends on the \code{seedNumber}.
 }}
 
-\item{downsample_threshold}{See \code{\link{downsample_spectra}}.}
+\item{downsample_threshold}{See \code{\link{downsample_spectra}}
+and \code{link{show_downsample_curves}}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
