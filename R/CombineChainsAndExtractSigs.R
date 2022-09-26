@@ -17,7 +17,8 @@
 #                       (Passed to \code{\link[hdpx]{interpret_components}}).
 #'
 #' @param merge.raw.cluster.args
-#'           See \code{\link[hdpx]{default_merge_raw_cluster_args}}.
+#'           See \code{\link[hdpx]{default_merge_raw_cluster_args}} in
+#'           package \code{hdpx}.
 #'
 #' @return Invisibly, a list with the following elements:\describe{
 #'\item{signature}{The extracted signature profiles as a matrix;

@@ -97,7 +97,8 @@ samples are signatures with high confidence.}
 
 \item{hc.cutoff}{Deprecated, use \code{merge.raw.cluster.args}.}
 
-\item{merge.raw.cluster.args}{See \code{\link[hdpx]{default_merge_raw_cluster_args}}.}
+\item{merge.raw.cluster.args}{See \code{\link[hdpx]{default_merge_raw_cluster_args}} in
+package \code{hdpx}.}
 
 \item{overwrite}{If \code{TRUE} overwrite \code{out.dir}
 if it exists, otherwise raise an error.}

@@ -26,7 +26,8 @@ in package hdpx.}
 found in \eqn{>=} \code{high.confidence.prop} proportion of posterior
 samples are signatures with high confidence.}
 
-\item{merge.raw.cluster.args}{See \code{\link[hdpx]{default_merge_raw_cluster_args}}.}
+\item{merge.raw.cluster.args}{See \code{\link[hdpx]{default_merge_raw_cluster_args}} in
+package \code{hdpx}.}
 }
 \value{
 Invisibly, a list with the following elements:\describe{
