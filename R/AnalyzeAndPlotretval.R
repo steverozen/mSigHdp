@@ -40,9 +40,10 @@ AnalyzeAndPlotretval <- function(retval,
   save(retval, file = file.path(out.dir, "hdp.retval.Rdata"))
 
   # Plot the diagnostics of sampling chains.
-  ChainsDiagnosticPlot(retval  = retval,
-                       out.dir = out.dir,
-                       verbose = verbose)
+  # Commented out 2022 09 26
+  # ChainsDiagnosticPlot(retval  = retval,
+  #                     out.dir = out.dir,
+  #                     verbose = verbose)
 
   if (verbose) message("Writing signatures")
   extractedSignatures <- ICAMS::as.catalog(retval$signature,
