@@ -7,7 +7,7 @@
 show_downsample_curves(...)
 }
 \arguments{
-\item{...}{One or more postive numbers to use as
+\item{...}{One or more positive numbers to use as
 possible values for \code{downsample_threshold}.}
 }
 \value{

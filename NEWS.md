@@ -1,3 +1,6 @@
+# [ 2.1.0.3 ]
+ * Documentation correction for `downsample_spectra` and typos.
+
 # [ 2.1.0.2 ]
  * Deprecated argument `thres` in `downsample` and `downsample_spectra` and
    replaced it with `downsample_threshold`. 
@@ -14,8 +17,8 @@
  * Added downsampling capability.
 
 # [ 2.0.1.0009 ]
- * 2022 06 24 Replaced hc.cutoff with merge.raw.cluster.args; passes check except for
-   2 warnings unrelated to hc.cutoff, which I cannot figure out how to
+ * 2022 06 24 Replaced `hc.cutoff` with `merge.raw.cluster.args`; passes check except for
+   2 warnings unrelated to `hc.cutoff`, which I cannot figure out how to
    silence.
 
 # [ 2.0.1 ]

@@ -1,6 +1,6 @@
 Package: mSigHdp
 Title: Mutational signature discovery using HDP (hierarchical Dirichlet process)
-Version: 2.1.0.2
+Version: 2.1.0.3
 Authors@R: 
     c(person(given = "Steven",
            family = "Rozen",

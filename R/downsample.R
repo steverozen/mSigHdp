@@ -11,7 +11,7 @@
 #'  downsampled but all input values > 3000
 #'  are downsampled. See \code{\link{show_downsample_curves}}.
 #'
-#' @param thres Deprected alternative to \code{downsample_threshold}.
+#' @param thres Deprecated alternative to \code{downsample_threshold}.
 #'
 #' @return A vector of integers (type \code{numeric}) of the same
 #'   length as \code{x}, downsampled as described in the
@@ -41,9 +41,15 @@ downsample <- function(x, thres = NULL, downsample_threshold = 3000) {
 #' @param downsample_threshold See \code{\link{downsample}}
 #'   and \code{\link{show_downsample_curves}}.
 #'
-#' @return A numeric matrix with same shape as \code{spec},
-#'   with the entries each column reduced based on
-#'   the ratio of
+#' @md
+#'
+#' @return A list with elements:
+#'
+#'  * `down_spec`: A numeric matrix with same shape as \code{spec},
+#'   with the mutation counts in each column reduced based on
+#'   the corresponding ratio in the second element of this list, `down_factor`.
+#'
+#'  * `down_factor` Numeric vector of the ratios of
 #'   \code{\link{downsample}(colSums(spec))} to
 #'   \code{colSums(spec)}.
 #'

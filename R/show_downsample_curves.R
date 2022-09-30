@@ -1,6 +1,6 @@
 #' Show the effects of the downsample_threshold argument to \code{\link{RunHdpxParallel}}.
 #'
-#' @param ... One or more postive numbers to use as
+#' @param ... One or more positive numbers to use as
 #'            possible values for \code{downsample_threshold}.
 #'
 #' @export

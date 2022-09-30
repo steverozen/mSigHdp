@@ -16,11 +16,15 @@ and \code{\link{show_downsample_curves}}.}
 \item{thres}{Deprecated alternative to \code{downsample_threshold}.}
 }
 \value{
-A numeric matrix with same shape as \code{spec},
-with the entries each column reduced based on
-the ratio of
+A list with elements:
+\itemize{
+\item \code{down_spec}: A numeric matrix with same shape as \code{spec},
+with the mutation counts in each column reduced based on
+the corresponding ratio in the second element of this list, \code{down_factor}.
+\item \code{down_factor} Numeric vector of the ratios of
 \code{\link{downsample}(colSums(spec))} to
 \code{colSums(spec)}.
+}
 }
 \description{
 Downsample a set of mutational spectra

@@ -9,7 +9,7 @@ downsample(x, thres = NULL, downsample_threshold = 3000)
 \arguments{
 \item{x}{A \code{numeric} vector.}
 
-\item{thres}{Deprected alternative to \code{downsample_threshold}.}
+\item{thres}{Deprecated alternative to \code{downsample_threshold}.}
 
 \item{downsample_threshold}{If \code{downsample_threshold} >= 3,000, then
 all input values > \code{downsample_threshold} are
