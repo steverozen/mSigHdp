@@ -33,7 +33,6 @@ Roxygen: list(markdown = TRUE)
 Depends: R (>= 4.0)
 RoxygenNote: 7.2.1
 Remotes: github::steverozen/hdpx@master,
-    github::steverozen/mSigAct@*release,
     github::steverozen/ICAMS@*release
 Imports: data.table,
     hdpx (>= 1.0.5),
