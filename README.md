@@ -22,7 +22,7 @@ https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1.
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.0-branch", build_vignettes = TRUE)
+remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.1-branch", build_vignettes = TRUE)
 ```
 
 ### Get the development version
@@ -36,6 +36,6 @@ install.packages("remotes")
 remotes::install_github(repo = "steverozen/mSigHdp", ref = "master")
 ```
 
-## Reference manual for development version
+## Reference manual
 
-<https://github.com/steverozen/mSigHdp/blob/v2.1.0-branch/mSigHdp_2.1.0.pdf>
+<https://github.com/steverozen/mSigHdp/blob/v2.1.0-branch/mSigHdp_2.1.1.pdf>
