@@ -1,3 +1,6 @@
+# [ 2.1.1 ]
+ * No changes from 2.1.0.3
+
 # [ 2.1.0.3 ]
  * Documentation correction for `downsample_spectra` and typos.
 
