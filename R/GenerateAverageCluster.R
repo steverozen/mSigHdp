@@ -13,10 +13,10 @@ GenerateAverageCluster <- function(clean.chlist){
 
   x <- hdpx::hdp_multi_chain(clean.chlist)
   # input checks
-  if (class(x)=="hdpSampleChain") {
+  if (inherits(x, "hdpSampleChain")) {
     warning('Extracting components on single posterior sampling chain. Recommend switching to multiple independent chains in a hdpSampleMulti object, see ?hdp_multi_chain')
     is_multi <- FALSE
-  } else if (class(x)=="hdpSampleMulti") {
+  } else if (inherits(x, "hdpSampleMulti")) {
     is_multi <- TRUE
   } else {
     stop("x must have class hdpSampleChain or hdpSampleMulti")

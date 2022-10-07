@@ -74,7 +74,7 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
   }
 
 
-  if(class(incl_numdata_plot) != "logical") {
+  if(!inherits(incl_numdata_plot, "logical")) {
     stop("incl_numdata_plot must be TRUE or FALSE")
   }
 
@@ -83,9 +83,9 @@ PlotSamplesHighSigExp <- function(retval, hdpsample, input.catalog,
   on.exit(par(par_old), add=TRUE)
 
   # Number of data items per DP
-  if (class(hdpsample) == "hdpSampleChain") {
+  if (inherits(hdpsample, "hdpSampleChain")) {
     dps <- hdpx::dp(hdpx::final_hdpState(hdpsample))[dpindices]
-  } else if (class(hdpsample) == "hdpSampleMulti") {
+  } else if (inherits(hdpsample, "hdpSampleMulti")) {
     dps <- hdpx::dp(hdpx::final_hdpState(hdpx::chains(hdpsample)[[1]]))[dpindices]
 
   }
