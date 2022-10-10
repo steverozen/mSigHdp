@@ -1,0 +1,55 @@
+---
+title: Function to downsample mutations in input spectra for mSigHdp
+author: Wu Yang
+date: "`r Sys.Date()`"
+GitHub: WuyangFF95
+---
+
+
+```{r, echo = FALSE}
+require(ggplot2, quietly = TRUE)
+```
+
+mSigHdp can downsample input spectra to reduce mutation counts 
+in more highly
+mutated tumors, while leaving the mutational spectra with lower 
+mutation counts as they are. The operational definition of
+"highly" or "lower" is governed by argument \code{thres}.
+
+Downsampling reduces running time for burnin and Gibbs sampling.
+
+
+```{r}
+x_vec <- seq(0, 2e+04, 100)
+thres_vals <- c(1000, 3000, 5000, 10000)
+
+y_df <- 
+  do.call(rbind, 
+          lapply(
+            X = thres_vals,
+            function(thres_val) {
+              data.frame(thres = thres_val, 
+                         x     = x_vec, 
+                         y     = mSigHdp::downsample(x_vec, thres = thres_val))
+              }))
+
+ggObj <- 
+  ggplot2::ggplot(y_df) + xlab("Counts") + ylab("Downsampled counts") +
+  ylim(0, 12000) +
+  geom_point(mapping = aes(x = x, y = y, color = as.factor(thres)), 
+             size = 0.05) +
+  guides(color = guide_legend(title = "thres"))
+
+for(thres_val in thres_vals){
+  ggObj <- ggObj +
+    geom_hline(yintercept = thres_val, size = 0.25) 
+}
+  
+ggObj
+```
+
+
+
+```{r}
+version
+```
