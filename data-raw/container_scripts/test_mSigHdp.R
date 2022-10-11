@@ -8,11 +8,11 @@
 # nice singularity exec <my_R_container> Rscript --vanilla test_mSigHdp.R 123 >& log.txt &
 
 # We need to tell R to look for packages first inside the container
-# but also to be able to look outside the container (the users "host"
-# system). This works only if the host OS is the same
-# the container OS, or the libraries in the host system do not
+# but also to be able to look outside the container (the "host"
+# system). This works only if the host OS is the same as
+# the container OS, or if the libraries in the host system do not
 # have compiled code. In the last case, you would have to
-# convert the container to sandbox, add the necessary libraries,
+# convert the container to a sandbox, add the necessary libraries,
 # and then convert back to a .sif.
 .libPaths(c("/usr/local/lib/R/site-library", .libPaths()))
 
