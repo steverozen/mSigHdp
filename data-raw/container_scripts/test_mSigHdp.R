@@ -9,7 +9,7 @@
 
 # We need to tell R to look for packages first inside the container
 # but also to be able to look outside the container (the "host"
-# system). This works only if the host OS is the same
+# system). This works only if the host OS is the same as
 # the container OS, or if the libraries in the host system do not
 # have compiled code. In the last case, you would have to
 # convert the container to a sandbox, add the necessary libraries,
