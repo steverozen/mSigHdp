@@ -22,7 +22,7 @@ RunHdpxParallel(
   hc.cutoff = NULL,
   merge.raw.cluster.args = hdpx::default_merge_raw_cluster_args(),
   overwrite = TRUE,
-  out.dir = NULL,
+  out.dir = paste0("./RunHdpxParallel_out_", as.numeric(Sys.time())),
   gamma.alpha = 1,
   gamma.beta = 20,
   checkpoint = TRUE,

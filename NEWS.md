@@ -1,5 +1,9 @@
+# [ 2.2.2 ]
+ * New default value for argument out.dir of RunHdxParallel and early
+   error checking on creating / writing to out.dir.
+
 # [ 2.1.1 ]
- * No changes from 2.1.0.3
+ * No changes from 2.1.0.3.
 
 # [ 2.1.0.3 ]
  * Documentation correction for `downsample_spectra` and typos.

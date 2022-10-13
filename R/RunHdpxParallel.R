@@ -21,29 +21,30 @@
 #'
 #' @export
 
-RunHdpxParallel <- function(input.catalog,
-                            seedNumber             = 123,
-                            K.guess,
-                            multi.types            = FALSE,
-                            verbose                = FALSE,
-                            burnin                 = 1000,
-                            burnin.multiplier      = 10,
-                            post.n                 = 200,
-                            post.space             = 100,
-                            post.cpiter            = 3,
-                            post.verbosity         = 0,
-                            CPU.cores              = 20,
-                            num.child.process      = 20,
-                            high.confidence.prop   = 0.9,
-                            hc.cutoff              = NULL,
-                            merge.raw.cluster.args =
-                              hdpx::default_merge_raw_cluster_args(),
-                            overwrite              = TRUE,
-                            out.dir                = NULL,
-                            gamma.alpha            = 1,
-                            gamma.beta             = 20,
-                            checkpoint             = TRUE,
-                            downsample_threshold   = NULL) {
+RunHdpxParallel <- function(
+    input.catalog,
+    seedNumber             = 123,
+    K.guess,
+    multi.types            = FALSE,
+    verbose                = FALSE,
+    burnin                 = 1000,
+    burnin.multiplier      = 10,
+    post.n                 = 200,
+    post.space             = 100,
+    post.cpiter            = 3,
+    post.verbosity         = 0,
+    CPU.cores              = 20,
+    num.child.process      = 20,
+    high.confidence.prop   = 0.9,
+    hc.cutoff              = NULL,
+    merge.raw.cluster.args = hdpx::default_merge_raw_cluster_args(),
+    overwrite              = TRUE,
+    out.dir                = paste0("./RunHdpxParallel_out_",
+                                    as.numeric(Sys.time())),
+    gamma.alpha            = 1,
+    gamma.beta             = 20,
+    checkpoint             = TRUE,
+    downsample_threshold   = NULL) {
 
   # Check for suitable version of hdpx
   if (utils::packageVersion("hdpx") < "1.0.3.0009") {
@@ -57,10 +58,29 @@ RunHdpxParallel <- function(input.catalog,
   }
   rm(hc.cutoff)
 
-  # Step 0: Get the input.catalog and keeping track of
+  # Get the input.catalog and keep track of
   # whether it is an ICAMS catalog (encoded as an
   # additional class).
   input.catalog <- GetPossibleICAMSCatalog(input.catalog)
+
+  if (is.null(out.dir)) {
+    warning(
+      "RunHdpxParallel: out.dir is NULL; results will not be saved to disk")
+  } else {
+    if (dir.exists(out.dir)) {
+      if (!overwrite) stop(out.dir, " already exists")
+      if (verbose) message("Using existing out.dir ", out.dir)
+    } else {
+      if (!dir.create(out.dir, recursive = T, showWarnings = FALSE)) {
+        stop("Unable to create ", out.dir)
+      }
+      if (verbose) message("Created new out.dir ", out.dir)
+    }
+    cat("test", file = file.path(out.dir, "test"))
+    if (!0 == unlink(file.path(out.dir, "test"))) {
+      stop("Problem unlinking ", file.path(out.dir, "test"))
+    }
+  }
 
   if (!is.null(downsample_threshold)) {
     tmp.catalog <-
@@ -78,7 +98,7 @@ RunHdpxParallel <- function(input.catalog,
     rm(tmp.catalog)
   }
 
-  # Step 1: Activate hierarchical Dirichlet processes and
+  # Activate hierarchical Dirichlet processes and
   # run posterior sampling in parallel;
   # chlist is a list of hdpSampleChain-class objects.
 
@@ -105,7 +125,7 @@ RunHdpxParallel <- function(input.catalog,
     save(chlist, file = "big.chlist.from.ParallelGibbsSample.Rdata")
   }
 
-  # Step 2: Combine the posterior chains and extract
+  # Combine the posterior chains and extract
   # signatures and exposures;
   # retval has signatures, exposures, and multi.chains, a
   # hdpSampleMulti-class object.
@@ -117,16 +137,9 @@ RunHdpxParallel <- function(input.catalog,
                                 high.confidence.prop   = high.confidence.prop,
                                 merge.raw.cluster.args = merge.raw.cluster.args)
 
-  # Step 3: Save and plot signatures, exposures, diagnostics
+  # Save and plot signatures, exposures, diagnostics
 
   if(!is.null(out.dir)) {
-    if (dir.exists(out.dir)) {
-      if (!overwrite) stop(out.dir, " already exists")
-      if (verbose) message("Using existing out.dir ", out.dir)
-    } else {
-      dir.create(out.dir, recursive = T)
-      if (verbose) message("Created new out.dir ", out.dir)
-    }
     save(retval, input.catalog, file = file.path(out.dir, "hdp.retval.Rdata"))
     SaveAnalysis(retval                = retval,
                  input.catalog         = input.catalog,

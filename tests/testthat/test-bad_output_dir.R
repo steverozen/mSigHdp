@@ -1,12 +1,18 @@
 
-test_that("RunHdpxParallel-fast96", {
+test_that("Bad output dir", {
 
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/ground.truth.syn.catalog.csv")
 
-  reg <- new.env()
-  load("RunhdpInternal.testdata/NewRunHdpParallel-fast96-2-cores.Rdata",
-       envir = reg)
+  expect_error(
+    retvalx <- RunHdpxParallel(input.catalog = input.catalog[1:10 , 1:15],
+                                out.dir      = foobar)
+  )
+
+  expect_error(
+    retvalx <- RunHdpxParallel(input.catalog = input.catalog[1:10 , 1:15],
+                               out.dir       = "/yyy/")
+  )
 
   retvalx <- RunHdpxParallel(
     input.catalog     = input.catalog[1:10,1:15],
@@ -20,14 +26,11 @@ test_that("RunHdpxParallel-fast96", {
     post.space        = 5,  # Low for fast testing
     post.cpiter       = 1,  # Low for fast testing
     overwrite         = TRUE,
-    checkpoint        = FALSE,
-    out.dir           = tmpdir()
-  )
+    checkpoint        = FALSE)
 
-  if (FALSE) { # To regenerate test data
-    save(retvalx,
-         file = "RunhdpInternal.testdata/NewRunHdpParallel-fast96-2-cores.Rdata")
-  }
-  expect_equal(retvalx, reg$retvalx)
+  new.dirs <- dir(".", pattern = "RunHdpxParallel_out_", full.names = TRUE)
+  expect_equal(length(new.dirs), 1)
+  unlink(new.dirs, recursive = TRUE)
+
 
 })
