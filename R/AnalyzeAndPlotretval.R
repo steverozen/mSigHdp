@@ -68,7 +68,7 @@ AnalyzeAndPlotretval <- function(retval,
 
   if (verbose) message("Writing exposures")
   exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
-
+  colnames(exposureCounts) <- colnames(input.catalog)
   ICAMSxtra::WriteExposure(exposureCounts,
                            file.path(out.dir,"inferred.exposures.csv"))
 
