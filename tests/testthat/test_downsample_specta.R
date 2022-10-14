@@ -4,5 +4,3 @@ test_that("downsample_spectra", {
   res <- downsample_spectra(reg$test.ex, downsample_threshold = 3000)
   expect_equal(res, reg$res)
 })
-
-

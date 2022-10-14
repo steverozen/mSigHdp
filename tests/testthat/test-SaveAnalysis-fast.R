@@ -8,14 +8,15 @@ test_that("SaveAnalysis", {
   input.catalog <-
     ICAMS::ReadCatalog("SBS96.ground.truth/ground.truth.syn.catalog.csv")
 
+  my.tmpfile <- tempfile()
   retvalx <-
     SaveAnalysis(retval = input$retvalx,
-                 out.dir = "./tmp",
+                 out.dir = my.tmpfile,
                  diagnostic.plot = T,
                  overwrite = T,
                  input.catalog = input.catalog[1:10 , 1:15]
     )
-  unlink("./tmp",recursive = T) #remove the out.dir to avoid warning
+  unlink(my.tmpfile, recursive = T) #remove the out.dir to avoid warning
 
   expect_null(retvalx)
 

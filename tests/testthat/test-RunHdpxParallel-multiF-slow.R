@@ -28,7 +28,7 @@ test_that("RunHdpxParallel-slow-multiF", {
     post.n            = 25,
     overwrite         = TRUE,
     checkpoint        = FALSE,
-    out.dir           = NULL
+    out.dir           = tempfile()
 
   )
 

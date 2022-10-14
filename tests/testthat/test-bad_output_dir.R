@@ -28,7 +28,7 @@ test_that("Bad output dir", {
     overwrite         = TRUE,
     checkpoint        = FALSE)
 
-  new.dirs <- dir(".", pattern = "RunHdpxParallel_out_", full.names = TRUE)
+  new.dirs <- dir(".", pattern = "^RunHdpxParallel_out_\\d", full.names = TRUE)
   expect_equal(length(new.dirs), 1)
   unlink(new.dirs, recursive = TRUE)
 

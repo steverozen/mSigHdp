@@ -22,7 +22,8 @@ test_that("RunHdpxParallel-multi-type-T-fast96", {
     post.cpiter       = 1,  # Low for fast testing
     overwrite         = TRUE,
     burnin.multiplier = 2,
-    checkpoint        = FALSE
+    checkpoint        = FALSE,
+    out.dir           = tempfile()
   )
 
   retvalx2 <- RunHdpxParallel(
@@ -39,7 +40,8 @@ test_that("RunHdpxParallel-multi-type-T-fast96", {
     post.cpiter       = 1,  # Low for fast testing
     overwrite         = TRUE,
     burnin.multiplier = 1,
-    checkpoint        = FALSE
+    checkpoint        = FALSE,
+    out.dir           = tempfile()
   )
 
   #save(retvalx1, file = "RunhdpInternal.testdata/NewRunHdpParallel-fast96-2-cores-multi-type-T.Rdata")

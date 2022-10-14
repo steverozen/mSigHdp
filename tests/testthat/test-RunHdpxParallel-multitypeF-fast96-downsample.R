@@ -21,7 +21,8 @@ test_that("RunHdpxParallel-fast96-downsample", {
     post.cpiter           = 1,  # Low for fast testing
     overwrite             = TRUE,
     checkpoint            = FALSE,
-    downsample_threshold  = 1e6 # Very high; should have no effect
+    downsample_threshold  = 1e6, # Very high; should have no effect
+    out.dir               = tempfile()
   )
 
   if (FALSE) { # To regenerate test data
@@ -44,7 +45,8 @@ test_that("RunHdpxParallel-fast96-downsample", {
     post.cpiter           = 1,  # Low for fast testing
     overwrite             = TRUE,
     checkpoint            = FALSE,
-    downsample_threshold  = 1e3 # Unrealistically low because this is toy data
+    downsample_threshold  = 1e3, # Unrealistically low because this is toy data
+    out.dir               = tempfile()
   )
 
   if (FALSE) { # To regenerate test data

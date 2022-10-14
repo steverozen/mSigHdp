@@ -21,7 +21,7 @@ test_that("RunHdpxParallel-fast96", {
     post.cpiter       = 1,  # Low for fast testing
     overwrite         = TRUE,
     checkpoint        = FALSE,
-    out.dir           = tmpdir()
+    out.dir           = tempfile()
   )
 
   if (FALSE) { # To regenerate test data
