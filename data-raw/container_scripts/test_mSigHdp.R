@@ -21,7 +21,7 @@ args <- commandArgs(trailingOnly = TRUE)
 if (length(args) == 0) {
   stop("Please provide the random seed as an argument")
 }
-seed <- args[1]
+seed <- as.numeric(args[1])
 
 library(ICAMS)
 library(mSigHdp)
