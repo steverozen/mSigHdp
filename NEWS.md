@@ -1,4 +1,4 @@
-# [ 2.2.2 ]
+# [ 2.1.2 ]
  * New default value for argument out.dir of RunHdxParallel and early
    error checking on creating / writing to out.dir.
 
