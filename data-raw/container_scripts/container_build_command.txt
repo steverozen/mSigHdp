@@ -1,0 +1,2 @@
+# The whole build process can take about 1 hour
+singularity build --fakeroot msighdp.sif msighdp.def
