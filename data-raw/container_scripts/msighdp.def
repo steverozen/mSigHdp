@@ -1,0 +1,15 @@
+Bootstrap: docker
+From: r-base:4.2.1
+
+%post
+    apt-get update
+
+    # Install system dependencies for mSigHdp
+    apt-get -y install libcurl4-openssl-dev libxml2-dev
+    
+    # Specify path for installing R libraries inside container
+    Rscript -e '.libPaths("/usr/local/lib/R/site-library")'
+    
+    # Install R package mSigHdp
+    Rscript -e 'install.packages(pkgs = "remotes")'
+    Rscript -e 'remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.2-branch")'
