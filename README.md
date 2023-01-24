@@ -18,6 +18,13 @@ https://doi.org/10.1093/nargab/lqad005.
 
 ## Installation
 
+### Singularity/Apptainer
+
+`singularity pull library://rozen-lab/msighdp/msighdp:2.1.2`
+
+A toy-example R script for using this container is available at 
+https://github.com/steverozen/mSigHdp/blob/v2.1.2-branch/data-raw/container_scripts/test_mSigHdp.R.
+
 ### Latest stable version
 
 ``` r
