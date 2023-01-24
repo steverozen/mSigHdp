@@ -1,5 +1,5 @@
 
-# mSigHdp
+# mSigHdp: Mutational Signature Discovery Using Hierarchical Dirichlet Processes
   
 The goal of mSigHdp is mutational signature discovery using 
 hierarchical Dirichlet process (HDP) mixture models. mSigHdp
@@ -13,7 +13,7 @@ Please also see our paper:
 Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
 mSigHdp: hierarchical Dirichlet process mixture modeling 
 for mutational signature discovery, 
-https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1.
+https://doi.org/10.1093/nargab/lqad005.
 
 
 ## Installation
