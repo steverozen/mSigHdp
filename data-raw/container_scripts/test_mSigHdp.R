@@ -63,7 +63,7 @@ print(packageVersion("mSigHdp"))
 # Mo Liu, Yang Wu, Nanhai Jiang, Arnoud Boot, Steven G. Rozen,
 # mSigHdp: hierarchical Dirichlet process mixture modeling
 # for mutational signature discovery,
-# https://www.biorxiv.org/content/10.1101/2022.01.31.478587v1
+# https://doi.org/10.1093/nargab/lqad005
 
 mSigHdp::RunHdpxParallel(
   input.catalog = input_catalog,
