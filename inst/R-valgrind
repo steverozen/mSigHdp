@@ -1,0 +1,32 @@
+#!/bin/bash
+# Wrapper to run R under Valgrind for memory debugging
+
+# Valgrind options for R packages
+# --leak-check=full: detailed leak information
+# --track-origins=yes: track origins of uninitialized values
+# --show-leak-kinds=all: show all types of leaks
+# --log-file: save output to file
+# --num-callers: show more stack frames for better traces
+
+# Build valgrind command
+VALGRIND_CMD="valgrind \
+  --leak-check=full \
+  --track-origins=yes \
+  --show-leak-kinds=all \
+  --num-callers=20 \
+  --log-file=valgrind-hdpx.log"
+
+# Add suppressions files if they exist
+# Check for system R suppressions
+if [ -f "/usr/lib/R/etc/valgrind-suppressions.supp" ]; then
+  VALGRIND_CMD="$VALGRIND_CMD --suppressions=/usr/lib/R/etc/valgrind-suppressions.supp"
+elif [ -f "/usr/share/R/etc/valgrind-suppressions.supp" ]; then
+  VALGRIND_CMD="$VALGRIND_CMD --suppressions=/usr/share/R/etc/valgrind-suppressions.supp"
+fi
+
+# Add local suppressions if available
+if [ -f "valgrind-suppressions.supp" ]; then
+  VALGRIND_CMD="$VALGRIND_CMD --suppressions=valgrind-suppressions.supp"
+fi
+
+exec $VALGRIND_CMD R --vanilla "$@"
