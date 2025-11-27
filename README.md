@@ -28,23 +28,24 @@ https://github.com/steverozen/mSigHdp/blob/master/data-raw/container_scripts/mSi
 A toy-example R script for using this container is available at 
 https://github.com/steverozen/mSigHdp/blob/v2.1.2-branch/data-raw/container_scripts/test_mSigHdp.R.
 
-### Latest stable version
+### Newest stable version
+
+*Compatible with current Rcpp*
+
+``` r
+install.packages("remotes")
+remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch", build_vignettes = TRUE)
+```
+### Previous stable version
+
+*Incompatible with current Rcpp*
 
 ``` r
 install.packages("remotes")
 remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.2-branch", build_vignettes = TRUE)
 ```
 
-### Get the development version
 
-To use new features in the development version, you can install mSigHdp
-from the master branch on [GitHub](https://github.com/), which may not
-be stable:
-
-``` r
-install.packages("remotes")
-remotes::install_github(repo = "steverozen/mSigHdp", ref = "master")
-```
 
 ## Reference manual
 
