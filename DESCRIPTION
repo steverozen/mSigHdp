@@ -1,6 +1,6 @@
 Package: mSigHdp
 Title: Mutational signature discovery using HDP (hierarchical Dirichlet process)
-Version: 2.1.2
+Version: 2.1.3
 Authors@R: 
     c(person(given = "Steven",
            family = "Rozen",
@@ -35,7 +35,7 @@ RoxygenNote: 7.2.1
 Remotes: github::steverozen/hdpx@v1.0.5-branch,
     github::steverozen/ICAMS@v3.0.6-branch
 Imports: data.table,
-    hdpx (>= 1.0.5),
+    hdpx (>= 1.0.6),
     ICAMS (>= 2.2.4),
     mSigTools,
     reshape2
