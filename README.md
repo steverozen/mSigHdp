@@ -31,6 +31,7 @@ https://github.com/steverozen/mSigHdp/blob/v2.1.2-branch/data-raw/container_scri
 ### Newest stable version
 
 *Compatible with current Rcpp*
+In progress Nov. 27 2025
 
 ``` r
 install.packages("remotes")
