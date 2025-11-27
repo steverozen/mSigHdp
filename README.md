@@ -35,7 +35,7 @@ In progress Nov. 27 2025
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch", build_vignettes = TRUE)
+remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch")
 ```
 ### Previous stable version
 
@@ -43,7 +43,7 @@ remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch", buil
 
 ``` r
 install.packages("remotes")
-remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.2-branch", build_vignettes = TRUE)
+remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.2-branch")
 ```
 
 
