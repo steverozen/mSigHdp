@@ -97,3 +97,7 @@
       
       
 
+# degenerate_hdpx_extract_components_warnings
+
+    Unable to estimate exposures; no exposure-related output generated
+

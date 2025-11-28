@@ -142,7 +142,8 @@ where \emph{x} depends on the \code{seedNumber}.
 }}
 
 \item{downsample_threshold}{See \code{\link{downsample_spectra}}
-and \code{link{show_downsample_curves}}.}
+and \code{\link{show_downsample_curves}}. If not NULL,
+then downsample to the specified threshold}
 }
 \value{
 Invisibly, a list with the following elements:\describe{

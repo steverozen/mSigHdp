@@ -1,3 +1,10 @@
+# [ 2.1.3 ]
+* Adapted to use new version of hdpx, which was updated to adapt to 
+  changes in Rcpp and to correct the error
+  Error in lower.to.upper.tri.inds(n) : 'n' must be >= 2
+* Adpated to handle output without any high-confidence signatures.
+
+
 # [ 2.1.2 ]
  * New default value for argument out.dir of RunHdxParallel and early
    error checking on creating / writing to out.dir.
@@ -56,7 +63,7 @@
 # [ 1.1.4.9001]
 * Improved error handling and reporting from mclapply child processes.
 
-# [1.0.2.003]
+# [ 1.0.2.003 ]
 * MatchSigsAndRelabel was moved to ICAMSxtra
 
 # [0.0.0.9030] - 2020-07-14
