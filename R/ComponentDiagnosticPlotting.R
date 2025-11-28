@@ -85,9 +85,9 @@ ComponentDiagnosticPlotting <- function(
       return(ans[, -ncol(ans)])
     })
   })
-  # browser()
+
   if (length(retval$signature) == 0) {
-    warning("no retval$signature, will not plot diagnostics.signatures.pdf")
+    message("no retval$signature, will not plot diagnostics.signatures.pdf")
   } else {
     sigmatchretval <- apply(retval$signature, 2, function(x) {
       hdpx::extract_ccc_from_hdp(x, ccc_0 = ccc_0, cos.merge = 0.90)
@@ -102,7 +102,7 @@ ComponentDiagnosticPlotting <- function(
   }
 
   if (length(retval$signature) == 0) {
-    warning(
+    message(
       "retval$signature is empty, will not create iagnostics.components.in.which.gibbs.samples.pdf"
     )
   } else {

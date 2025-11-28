@@ -84,7 +84,7 @@ SaveAnalysis <- function(
   }
   # browser()
   if (nrow(retval$exposureProbs) == 0) {
-    warning(
+    message(
       "Unable to estimate exposures; no exposure-related output generated"
     )
   } else {
@@ -114,7 +114,7 @@ SaveAnalysis <- function(
 
   signature.post.samp.number <- data.frame(signature.post.samp.number)
   if (nrow(signature.post.samp.number) == 0) {
-    warning("extracted.signatures.post.samp.number.csv will be empty")
+    message("extracted.signatures.post.samp.number.csv will be empty")
   }
   utils::write.csv(
     signature.post.samp.number,
