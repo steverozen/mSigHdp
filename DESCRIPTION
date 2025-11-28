@@ -42,6 +42,7 @@ Imports: data.table,
 Suggests: cosmicsig,
     knitr,
     rmarkdown,
-    testthat,
+    testthat (>= 3.0.0),
     utils
 VignetteBuilder: knitr
+Config/testthat/edition: 3
