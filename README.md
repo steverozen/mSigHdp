@@ -20,7 +20,7 @@ https://doi.org/10.1093/nargab/lqad005.
 
 ### Newest stable version
 
-*Compatible with current Rcpp* Corrects `Error in lower.to.upper.tri.inds(n) : 'n' must be >= 2`
+*Compatible with current Rcpp.* Corrects `Error in lower.to.upper.tri.inds(n) : 'n' must be >= 2`
 
 ``` r
 install.packages("remotes")
@@ -40,15 +40,6 @@ https://github.com/steverozen/mSigHdp/blob/master/data-raw/container_scripts/mSi
 A toy-example R script for using this container is available at 
 https://github.com/steverozen/mSigHdp/blob/v2.1.2-branch/data-raw/container_scripts/test_mSigHdp.R.
 
-### Newest stable version
-
-*Compatible with current Rcpp*
-In progress Nov. 27 2025
-
-``` r
-install.packages("remotes")
-remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch")
-```
 ### Previous stable version
 
 *Incompatible with current Rcpp*
