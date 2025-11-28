@@ -23,118 +23,167 @@
 #' @keywords internal
 #'
 #'
-SaveAnalysis <- function(retval,
-                         input.catalog,
-                         out.dir          = NULL,
-                         verbose          = TRUE,
-                         overwrite        = TRUE,
-                         diagnostic.plot  = TRUE) {
-
-  if (is.null(out.dir)) return(NULL)
+SaveAnalysis <- function(
+  retval,
+  input.catalog,
+  out.dir = NULL,
+  verbose = TRUE,
+  overwrite = TRUE,
+  diagnostic.plot = TRUE
+) {
+  if (is.null(out.dir)) {
+    return(NULL)
+  }
 
   IS.ICAMS <- ICAMS::IsICAMSCatalog(input.catalog)
   if (dir.exists(out.dir)) {
-    if (!overwrite) stop(out.dir, " already exists")
+    if (!overwrite) {
+      stop(out.dir, " already exists")
+    }
     if (verbose) message("Using existing out.dir ", out.dir)
   } else {
     dir.create(out.dir, recursive = T)
     if (verbose) message("Created new out.dir ", out.dir)
   }
 
-  if (verbose) message("Writing signatures")
+  if (verbose) {
+    message("Writing signatures")
+  }
 
   if (IS.ICAMS) {
     # TODO, get the region and abundance and infer the catalog type
     # from input.catalog.
     extractedSignatures <-
-      ICAMS::as.catalog(retval$signature,
-                        region       = "unknown",
-                        catalog.type = "counts.signature")
+      ICAMS::as.catalog(
+        retval$signature,
+        region = "unknown",
+        catalog.type = "counts.signature"
+      )
 
-    ICAMS::WriteCatalog(extractedSignatures,
-                        file.path(out.dir,"extracted.signatures.csv"))
+    ICAMS::WriteCatalog(
+      extractedSignatures,
+      file.path(out.dir, "extracted.signatures.csv")
+    )
 
-    ICAMS::PlotCatalogToPdf(extractedSignatures,
-                            file.path(out.dir, "extracted.signatures.pdf"))
-
+    ICAMS::PlotCatalogToPdf(
+      extractedSignatures,
+      file.path(out.dir, "extracted.signatures.pdf")
+    )
   } else {
     extractedSignatures <- retval$signature
-    utils::write.csv(extractedSignatures,
-                     file.path(out.dir, "extracted.signatures.csv"),
-                     row.names=F,quote=F)
+    utils::write.csv(
+      extractedSignatures,
+      file.path(out.dir, "extracted.signatures.csv"),
+      row.names = F,
+      quote = F
+    )
   }
 
-  if (verbose) message("Writing exposures")
-  exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
-  colnames(exposureCounts) <- colnames(input.catalog)
+  if (verbose) {
+    message("Writing exposures")
+  }
+  # browser()
+  if (nrow(retval$exposureProbs) == 0) {
+    warning(
+      "Unable to estimate exposures; no exposure-related output generated"
+    )
+  } else {
+    exposureCounts <- retval$exposureProbs %*% diag(colSums(input.catalog))
+    colnames(exposureCounts) <- colnames(input.catalog)
 
-  mSigTools::write_exposure(exposureCounts,
-                           file.path(out.dir,"inferred.exposures.csv"))
+    mSigTools::write_exposure(
+      exposureCounts,
+      file.path(out.dir, "inferred.exposures.csv")
+    )
 
-  mSigTools::plot_exposure_to_pdf(
-    mSigTools::sort_exposure(exposureCounts),
-    file.path(out.dir,"inferred.exposure.count.pdf"))
+    mSigTools::plot_exposure_to_pdf(
+      mSigTools::sort_exposure(exposureCounts),
+      file.path(out.dir, "inferred.exposure.count.pdf")
+    )
 
-  mSigTools::plot_exposure_to_pdf(
-    mSigTools::sort_exposure(retval$exposureProbs),
-    file.path(out.dir,"inferred.exposure.proportion.pdf"),
-    plot.proportion = TRUE)
+    mSigTools::plot_exposure_to_pdf(
+      mSigTools::sort_exposure(retval$exposureProbs),
+      file.path(out.dir, "inferred.exposure.proportion.pdf"),
+      plot.proportion = TRUE
+    )
+  }
 
   signature.post.samp.number <- retval$signature.post.samp.number
 
-  signature.post.samp.number[,1] <- colnames(retval$signature)
+  signature.post.samp.number[, 1] <- colnames(retval$signature)
 
   signature.post.samp.number <- data.frame(signature.post.samp.number)
-
+  if (nrow(signature.post.samp.number) == 0) {
+    warning("extracted.signatures.post.samp.number.csv will be empty")
+  }
   utils::write.csv(
     signature.post.samp.number,
-    file = file.path(out.dir,
-                     "extracted.signatures.post.samp.number.csv"),
-    row.names = F,quote=F)
+    file = file.path(out.dir, "extracted.signatures.post.samp.number.csv"),
+    row.names = F,
+    quote = F
+  )
 
   low.confidence.signature <- retval$low.confidence.signature
 
-    if(!is.null(ncol(low.confidence.signature)) &&
-       (ncol(data.frame(low.confidence.signature))>0)) {
+  if (
+    !is.null(ncol(low.confidence.signature)) &&
+      (ncol(data.frame(low.confidence.signature)) > 0)
+  ) {
+    low.confidence.signature <- apply(low.confidence.signature, 2, function(x) {
+      x / sum(x)
+    })
+    low.confidence.signature.post.samp.number <-
+      retval$low.confidence.post.samp.number
 
-      low.confidence.signature <- apply(low.confidence.signature,2,function(x)x/sum(x))
-      low.confidence.signature.post.samp.number <-
-        retval$low.confidence.post.samp.number
+    row.names(low.confidence.signature) <- NULL
 
-      row.names(low.confidence.signature) <- NULL
-
-      if(IS.ICAMS){
-
-        ICAMS::PlotCatalogToPdf(ICAMS::as.catalog(
+    if (IS.ICAMS) {
+      ICAMS::PlotCatalogToPdf(
+        ICAMS::as.catalog(
           low.confidence.signature,
-          infer.rownames = T,catalog.type = "counts.signature"),
-          file.path(out.dir, "low.confidence.signatures.pdf"))
-        ICAMS::WriteCatalog(ICAMS::as.catalog(
-          low.confidence.signature,infer.rownames = T,catalog.type = "counts.signature"),
-          file.path(out.dir,"low.confidence.signatures.csv"))
-      }else{
-        utils::write.csv(low.confidence.signature,
-                         file.path(out.dir,"low.confidence.signatures.csv"),
-                         row.names=F,quote=F)
-      }
-
-      low.confidence.signature.post.samp.number <-
-        data.frame(low.confidence.signature.post.samp.number)
+          infer.rownames = T,
+          catalog.type = "counts.signature"
+        ),
+        file.path(out.dir, "low.confidence.signatures.pdf")
+      )
+      ICAMS::WriteCatalog(
+        ICAMS::as.catalog(
+          low.confidence.signature,
+          infer.rownames = T,
+          catalog.type = "counts.signature"
+        ),
+        file.path(out.dir, "low.confidence.signatures.csv")
+      )
+    } else {
       utils::write.csv(
-        low.confidence.signature.post.samp.number,
-        file = file.path(out.dir,
-                         "low.confidence.signatures.post.samp.number.csv"),
-        row.names = F,quote=F)
+        low.confidence.signature,
+        file.path(out.dir, "low.confidence.signatures.csv"),
+        row.names = F,
+        quote = F
+      )
     }
 
+    low.confidence.signature.post.samp.number <-
+      data.frame(low.confidence.signature.post.samp.number)
+    utils::write.csv(
+      low.confidence.signature.post.samp.number,
+      file = file.path(
+        out.dir,
+        "low.confidence.signatures.post.samp.number.csv"
+      ),
+      row.names = F,
+      quote = F
+    )
+  }
+
   if (diagnostic.plot) {
-    ComponentDiagnosticPlotting(retval        = retval,
-                                input.catalog = input.catalog,
-                                out.dir       = out.dir,
-                                verbose       = verbose)
+    ComponentDiagnosticPlotting(
+      retval = retval,
+      input.catalog = input.catalog,
+      out.dir = out.dir,
+      verbose = verbose
+    )
   }
 
   return(NULL)
 }
-
-
