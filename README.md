@@ -18,7 +18,19 @@ https://doi.org/10.1093/nargab/lqad005.
 
 ## Installation
 
+### Newest stable version
+
+*Compatible with current Rcpp* Corrects `Error in lower.to.upper.tri.inds(n) : 'n' must be >= 2`
+
+``` r
+install.packages("remotes")
+remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch")
+```
+
 ### Singularity/Apptainer
+
+This v2.1.2. Still has ``Error in lower.to.upper.tri.inds(n) : 'n' must be >= 2`  
+on inputs with only a single signature.
 
 `singularity pull library://rozen-lab/msighdp/msighdp:2.1.2`
 
