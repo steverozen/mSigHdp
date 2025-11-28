@@ -65,34 +65,30 @@
 #' @export
 #'
 CombineChainsAndExtractSigs <-
-  function(clean.chlist,
-           input.catalog,
-           verbose                = FALSE,
-           high.confidence.prop   = 0.9,
-           merge.raw.cluster.args = hdpx::default_merge_raw_cluster_args()) {
-
+  function(
+    clean.chlist,
+    input.catalog,
+    verbose = FALSE,
+    high.confidence.prop = 0.9,
+    merge.raw.cluster.args = hdpx::default_merge_raw_cluster_args()
+  ) {
     input.catalog <- GetPossibleICAMSCatalog(input.catalog)
-    if (FALSE) {
-      if (mode(input.catalog) == "character") {
-        if (verbose) message("Reading input catalog file ", input.catalog)
-        input.catalog <- ICAMS::ReadCatalog(input.catalog)
-      } else {
-        input.catalog <- input.catalog
-      }
-    }
-    input.catalog <- input.catalog[,colSums(input.catalog)>0]
+    input.catalog <- input.catalog[, colSums(input.catalog) > 0]
     convSpectra <- t(input.catalog)
     number.channels <- nrow(input.catalog)
-    number.samples  <- ncol(input.catalog)
+    number.samples <- ncol(input.catalog)
 
     multi.chains <- hdpx::hdp_multi_chain(clean.chlist)
-    if (verbose) message("calling extract_components ", Sys.time())
+    if (verbose) {
+      message("calling extract_components ", Sys.time())
+    }
     # Group raw "clusters" into "components" (i.e. signatures).
 
     extract.time <- system.time(
       multi.chains.retval <- hdpx::extract_components(
         multi.chains,
-        merge.raw.cluster.args = merge.raw.cluster.args)
+        merge.raw.cluster.args = merge.raw.cluster.args
+      )
     )
 
     if (verbose) {
@@ -103,44 +99,57 @@ CombineChainsAndExtractSigs <-
     }
 
     intepret.comp.retval <-
-      hdpx::interpret_components(multi.chains.retval  = multi.chains.retval,
-                                 high.confidence.prop = high.confidence.prop,
-                                 verbose              = verbose)
+      hdpx::interpret_components(
+        multi.chains.retval = multi.chains.retval,
+        high.confidence.prop = high.confidence.prop,
+        verbose = verbose
+      )
 
     confidentSignatures <-
       data.frame(intepret.comp.retval$high_confidence_components)
 
     rownames(confidentSignatures) <- rownames(input.catalog)
     # Set signature names to "hdp.0","hdp.1","hdp.2", ...
-    colnames(confidentSignatures) <-
-      paste("hdp", c(1:ncol(confidentSignatures)), sep = ".")
+    # There might be 0 confident signatures
+    if (ncol(confidentSignatures) > 0) {
+      colnames(confidentSignatures) <-
+        paste("hdp", c(1:ncol(confidentSignatures)), sep = ".")
+    }
 
     combinedSignatures <- confidentSignatures
 
-    combinedSignatures <- apply(combinedSignatures,2,function(x)x/sum(x))
+    combinedSignatures <- apply(combinedSignatures, 2, function(x) x / sum(x))
     combined.stats <- intepret.comp.retval$high_confidence_components_post_number
 
-    combined.cdc  <- intepret.comp.retval$high_confidence_components_cdc
+    combined.cdc <- intepret.comp.retval$high_confidence_components_cdc
 
-    if (verbose) message("extracting signatures exposures ", Sys.time())
+    if (verbose) {
+      message("extracting signatures exposures ", Sys.time())
+    }
 
-    exposureProbs <- t(apply(combined.cdc,1,function(x){x/sum(x)}))
-    if(nrow(exposureProbs)==1){
+    exposureProbs <- t(apply(combined.cdc, 1, function(x) {
+      x / sum(x)
+    }))
+    if (nrow(exposureProbs) == 1) {
       exposureProbs <- t(exposureProbs)
     }
     # Remove columns corresponding to parent or grandparent nodes
     # (leaving only columns corresponding to samples.)
     # Transpose so it conforms to SynSigEval format
-    exposureProbs <- t(exposureProbs[-c(1:(nrow(exposureProbs)-ncol(input.catalog))), ])
+    # browser()
+    if (nrow(exposureProbs > 0)) {
+      exposureProbs <- t(exposureProbs[
+        -c(1:(nrow(exposureProbs) - ncol(input.catalog))),
+      ])
+      colnames(exposureProbs) <- colnames(input.catalog)
 
-    colnames(exposureProbs) <- colnames(input.catalog)
+      row.names(exposureProbs) <-
+        colnames(combined.cdc) <-
+          combined.stats[, 1] <-
+            colnames(combinedSignatures) # These are the
 
-    row.names(exposureProbs) <-
-      colnames(combined.cdc) <-
-      combined.stats[,1] <-
-      colnames(combinedSignatures) # These are the
-
-    colnames(combined.stats) <- c("Signature","NumberOfPostSamples")
+      colnames(combined.stats) <- c("Signature", "NumberOfPostSamples")
+    }
 
     low.confidence.signature <-
       data.frame(intepret.comp.retval$low_confidence_components)
@@ -150,41 +159,41 @@ CombineChainsAndExtractSigs <-
 
     # browser()
 
-    if(!is.null(ncol(low.confidence.signature)) &&
-       (ncol(data.frame(low.confidence.signature))>0)) {
-
-      if (FALSE) {
+    if (
+      !is.null(ncol(low.confidence.signature)) &&
+        (ncol(data.frame(low.confidence.signature)) > 0)
+    ) {
       low.confidence.cdc <-
-        data.frame(intepret.comp.retval$low_confidence_components_cdc[,1:ncol(low.confidence.signature)])
-      } else {
-        low.confidence.cdc <-
-          data.frame(intepret.comp.retval$low_confidence_components_cdc)
-      }
+        data.frame(intepret.comp.retval$low_confidence_components_cdc)
       # browser() # The next line is hack for testing -- previously these rownames
       # were sometimes integer and sometimes character.
       rownames(low.confidence.cdc) <- as.character(rownames(low.confidence.cdc))
 
       colnames(low.confidence.cdc) <-
-        low.confidence.post.samp.number[,1] <-
-        colnames(low.confidence.signature) <-
-        paste("low confidence hdp", 1:ncol(low.confidence.signature), sep = ".")
+        low.confidence.post.samp.number[, 1] <-
+          colnames(low.confidence.signature) <-
+            paste(
+              "low confidence hdp",
+              1:ncol(low.confidence.signature),
+              sep = "."
+            )
 
       colnames(low.confidence.post.samp.number) <-
-        c("Signature","NumberOfPostSamples")
-
+        c("Signature", "NumberOfPostSamples")
     } else {
       low.confidence.signature <-
         low.confidence.post.samp.number <-
-        low.confidence.cdc <- NULL
+          low.confidence.cdc <- NULL
     }
 
-    return(invisible(list(signature                   = combinedSignatures,
-                          signature.post.samp.number  = combined.stats,
-                          signature.cdc               = combined.cdc,
-                          exposureProbs               = exposureProbs,
-                          low.confidence.signature             = low.confidence.signature,
-                          low.confidence.post.samp.number      = low.confidence.post.samp.number,
-                          low.confidence.cdc                   = low.confidence.cdc,
-                          extracted.retval            = multi.chains.retval)))
-
+    return(invisible(list(
+      signature = combinedSignatures,
+      signature.post.samp.number = combined.stats,
+      signature.cdc = combined.cdc,
+      exposureProbs = exposureProbs,
+      low.confidence.signature = low.confidence.signature,
+      low.confidence.post.samp.number = low.confidence.post.samp.number,
+      low.confidence.cdc = low.confidence.cdc,
+      extracted.retval = multi.chains.retval
+    )))
   }
