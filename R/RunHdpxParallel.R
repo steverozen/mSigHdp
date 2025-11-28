@@ -47,8 +47,8 @@ RunHdpxParallel <- function(
   downsample_threshold = NULL
 ) {
   # Check for suitable version of hdpx
-  if (utils::packageVersion("hdpx") < "1.0.3.0009") {
-    stop("hdpx version must be >= 1.0.3.0009")
+  if (utils::packageVersion("hdpx") < "1.0.6") {
+    stop("hdpx version must be >= 1.0.6")
   }
 
   if (!is.null(hc.cutoff)) {
@@ -62,6 +62,9 @@ RunHdpxParallel <- function(
   # whether it is an ICAMS catalog (encoded as an
   # additional class).
   input.catalog <- GetPossibleICAMSCatalog(input.catalog)
+  if (ncol(input.catalog) < 2) {
+    stop("Number of columns in input.catalog must be > 1")
+  }
 
   if (is.null(out.dir)) {
     warning(
@@ -138,7 +141,7 @@ RunHdpxParallel <- function(
   # signatures and exposures;
   # retval has signatures, exposures, and multi.chains, a
   # hdpSampleMulti-class object.
-
+  # browser()
   retval <-
     CombineChainsAndExtractSigs(
       chlist,
