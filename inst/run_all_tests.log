@@ -127,3 +127,809 @@ Gamma distribution was set to shape = 1 rate (inverse scale) = 1
 ✔ |          1 | PrepInit
 
 ⠏ |          0 | RunHdpxParallel-multiF-slow                                    Loading required package: ICAMS
+
+⠋ |          1 | RunHdpxParallel-multiF-slow                                    
+✔ |          1 | RunHdpxParallel-multiF-slow [1243.8s]
+
+⠏ |          0 | RunHdpxParallel-multiT-slow                                    5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+5 samples in Biliary-AdenoCA
+5 samples in Bladder-TCC
+1 samples in Bone-Benign
+4 samples in Bone-Epith
+3 samples in Bone-Osteosarc
+37 samples in Breast-AdenoCA
+4 samples in Breast-LobularCA
+13 samples in CNS-GBM
+29 samples in CNS-Medullo
+4 samples in CNS-Oligo
+1 samples in Cervix-AdenoCA
+5 samples in Cervix-SCC
+12 samples in ColoRect-AdenoCA
+14 samples in Eso-AdenoCA
+9 samples in Head-SCC
+10 samples in Kidney-ChRCC
+20 samples in Kidney-RCC
+70 samples in Liver-HCC
+7 samples in Lung-AdenoCA
+9 samples in Lung-SCC
+20 samples in Lymph-BNHL
+17 samples in Lymph-CLL
+2 samples in Myeloid-AML
+5 samples in Myeloid-MPN
+25 samples in Ovary-AdenoCA
+47 samples in Panc-AdenoCA
+13 samples in Panc-Endocrine
+50 samples in Prost-AdenoCA
+20 samples in Skin-Melanoma
+3 samples in SoftTissue-Leiomyo
+2 samples in SoftTissue-Liposarc
+20 samples in Stomach-AdenoCA
+4 samples in Thy-AdenoCA
+10 samples in Uterus-AdenoCA
+
+⠋ |          1 | RunHdpxParallel-multiT-slow                                    
+✔ |          1 | RunHdpxParallel-multiT-slow [977.4s]
+
+⠏ |          0 | RunHdpxParallel-multitypeF-fast96-downsample                   
+⠋ |          1 | RunHdpxParallel-multitypeF-fast96-downsample                   
+⠙ |          2 | RunHdpxParallel-multitypeF-fast96-downsample                   
+✔ |          2 | RunHdpxParallel-multitypeF-fast96-downsample [14.6s]
+
+⠏ |          0 | RunHdpxParallel-multitypeF-fast96                              
+⠋ |          1 | RunHdpxParallel-multitypeF-fast96                              
+✔ |          1 | RunHdpxParallel-multitypeF-fast96 [7.1s]
+
+⠏ |          0 | RunHdpxParallel-multitypeT-fast96                              Created new out.dir /tmp/RtmpIcFvJ9/filee1bb67b053236
+Runing run.setup.and.posterior on 1000044
+Guessed number of signatures (= Dirichlet process data clusters) = 5
+10 samples in b
+5 samples in a
+Gamma distribution was set to shape = 1 rate (inverse scale) = 20
+calling hdp_init 2025-11-28 12:04:47.074738
+calling hdp_setdata 2025-11-28 12:04:47.09286
+Runing run.setup.and.posterior on 2000044
+Guessed number of signatures (= Dirichlet process data clusters) = 5
+10 samples in b
+5 samples in a
+Gamma distribution was set to shape = 1 rate (inverse scale) = 20
+calling hdp_init 2025-11-28 12:04:47.095454
+calling dp_activate 2025-11-28 12:04:47.104071
+calling hdp_setdata 2025-11-28 12:04:47.106211
+calling dp_activate 2025-11-28 12:04:47.113869
+calling hdp_posterior, seed = 1000044 2025-11-28 12:04:47.118912
+calling hdp_posterior, seed = 2000044 2025-11-28 12:04:47.129526
+compute sample.chain time: 
+ user.self 0.0130000000000001
+ sys.self 0
+ elapsed 0.01299999999992
+ user.child 0
+ sys.child 0
+compute sample.chain time: 
+ user.self 0.0129999999999999
+ sys.self 0
+ elapsed 0.0140000000001237
+ user.child 0
+ sys.child 0
+calling extract_components 2025-11-28 12:04:48.924089
+extract_components time: 
+ user.self 0.0169999999999959
+ sys.self 0
+ elapsed 0.0170000000002801
+ user.child 0
+ sys.child 0
+extracting components 2025-11-28 12:04:49.467269
+extracting signatures exposures 2025-11-28 12:04:49.467722
+Using existing out.dir /tmp/RtmpIcFvJ9/filee1bb67b053236
+Writing signatures
+Writing exposures
+Writing HDP diagnostics
+Created new out.dir /tmp/RtmpIcFvJ9/filee1bb63ed0b1c5
+Runing run.setup.and.posterior on 1000044
+Guessed number of signatures (= Dirichlet process data clusters) = 5
+10 samples in b
+5 samples in a
+Gamma distribution was set to shape = 1 rate (inverse scale) = 20
+calling hdp_init 2025-11-28 12:04:49.636032
+calling hdp_setdata 2025-11-28 12:04:49.648548
+calling dp_activate 2025-11-28 12:04:49.65554
+Runing run.setup.and.posterior on 2000044
+Guessed number of signatures (= Dirichlet process data clusters) = 5
+10 samples in b
+5 samples in a
+Gamma distribution was set to shape = 1 rate (inverse scale) = 20
+calling hdp_init 2025-11-28 12:04:49.657541
+calling hdp_setdata 2025-11-28 12:04:49.667905
+calling hdp_posterior, seed = 1000044 2025-11-28 12:04:49.670553
+calling dp_activate 2025-11-28 12:04:49.675354
+calling hdp_posterior, seed = 2000044 2025-11-28 12:04:49.690861
+compute sample.chain time: 
+ user.self 0.014
+ sys.self 0
+ elapsed 0.0140000000001237
+ user.child 0
+ sys.child 0
+compute sample.chain time: 
+ user.self 0.0130000000000001
+ sys.self 0
+ elapsed 0.01299999999992
+ user.child 0
+ sys.child 0
+calling extract_components 2025-11-28 12:04:51.045143
+extract_components time: 
+ user.self 0.0180000000000007
+ sys.self 0
+ elapsed 0.0170000000002801
+ user.child 0
+ sys.child 0
+extracting components 2025-11-28 12:04:51.607099
+extracting signatures exposures 2025-11-28 12:04:51.607537
+Using existing out.dir /tmp/RtmpIcFvJ9/filee1bb63ed0b1c5
+Writing signatures
+Writing exposures
+Writing HDP diagnostics
+
+⠋ |          1 | RunHdpxParallel-multitypeT-fast96                              
+✔ |          2 | RunHdpxParallel-multitypeT-fast96 [4.7s]
+
+⠏ |          0 | SaveAnalysis-fast                                              Created new out.dir /tmp/RtmpIcFvJ9/filee1bb6a2b5c34
+Writing signatures
+Writing exposures
+Writing HDP diagnostics
+
+⠋ |          1 | SaveAnalysis-fast                                              
+✔ |          1 | SaveAnalysis-fast
+
+⠏ |          0 | SetupAndPosterior                                              
+⠋ |          1 | SetupAndPosterior                                              
+✔ |          1 | SetupAndPosterior [1.8s]
+
+══ Results ═════════════════════════════════════════════════════════════════════
+Duration: 2275.3 s
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 33 ]
+finished
