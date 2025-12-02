@@ -29,7 +29,7 @@ remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch")
 **Very Important** after intallation make sure that `packageVersion('hdpx') returns
 `"1.0.6"`.  If not, do
 ```r
-remotes::install_github(repo = "steverozen/hdpx", ref = "v1.0.6-branch")`
+remotes::install_github(repo = "steverozen/hdpx", ref = "v1.0.6-branch")
 ```
 
 ### Singularity/Apptainer
