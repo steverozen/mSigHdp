@@ -9,3 +9,9 @@ sample.chain.3020726.Rdata
 sample.chain.4020726.Rdata
 sample.chain.5020726.Rdata
 inst/doc
+
+# Apptainer/Singularity container build artifacts
+data-raw/container_scripts/*.sif
+data-raw/container_scripts/msighdp_build.log
+data-raw/container_scripts/test_log.txt
+data-raw/container_scripts/seed_*/
