@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: r-base:4.2.1
+From: r-base:4.5.3
 
 %post
     apt-get update
@@ -12,4 +12,5 @@ From: r-base:4.2.1
     
     # Install R package mSigHdp
     Rscript -e 'install.packages(pkgs = "remotes")'
-    Rscript -e 'remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.2-branch")'
+    Rscript -e 'remotes::install_github(repo = "steverozen/ICAMS", ref = "4.0.0-branch")'
+    Rscript -e 'remotes::install_github(repo = "steverozen/mSigHdp", ref = "v2.1.3-branch")'
